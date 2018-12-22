@@ -45,6 +45,8 @@
     <Compile Include="Crossovers\Crossover.cs" />
     <Compile Include="Crossovers\OrderedCrossover.cs" />
     <Compile Include="Crossovers\SinglePointCrossover.cs" />
+    <Compile Include="Crossovers\TwoPointCrossover.cs" />
+    <Compile Include="Crossovers\UniformCrossover.cs" />
     <Compile Include="FitnessCalculators\FitnessCalculator.cs" />
     <Compile Include="GAConfiguration.cs" />
     <Compile Include="Mutations\Mutation.cs" />

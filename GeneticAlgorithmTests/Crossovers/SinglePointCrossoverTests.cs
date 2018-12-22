@@ -26,5 +26,22 @@ namespace GeneticAlgorithmTests.Crossovers
                 Assert.AreNotEqual(mother.ToString(), child.ToString());
             }
         }
+
+        [TestMethod]
+        public void ItCanEnsureTheMotherAndFatherPassAtLeastOneGene()
+        {
+            var father = new Chromosome<char>('A', 'B', 'C', 'D');
+            var mother = new Chromosome<char>('Z', 'Y', 'X', 'W');
+
+            var singlePoint = new SinglePointCrossover();
+
+            for (int i = 0; i < GATestHelper.GetRandomInteger(16, 32); i++)
+            {
+                var child = singlePoint.Execute(father, mother, GATestHelper.GetDefaultSettings<char>());
+
+                Assert.AreEqual('A', child.Genes[0]);
+                Assert.AreEqual('W', child.Genes[3]);
+            }
+        }
     }
 }

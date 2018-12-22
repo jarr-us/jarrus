@@ -16,13 +16,10 @@ namespace GeneticAlgorithms.Crossovers
 
             var seen = new List<T>();
 
-            for (int i = 0; i < geneCount; i++)
+            for (int i = 0; i < crossoverPoint; i++)
             {
-                if (i < crossoverPoint)
-                {
-                    child.Genes[i] = father.Genes[i];
-                    seen.Add(father.Genes[i]);
-                }
+                child.Genes[i] = father.Genes[i];
+                seen.Add(father.Genes[i]);                
             }
 
             var count = 0;
