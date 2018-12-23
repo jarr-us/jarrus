@@ -21,7 +21,7 @@ namespace GeneticAlgorithmTests.Crossovers
         public void ItCanPerformACrossover()
         {
             var crossover = new OrderedCrossover();
-            var settings = GATestHelper.GetDefaultSettings<char>();
+            var settings = GATestHelper.GetDefaultConfiguration<char>();
 
             for (int i = 0; i < GATestHelper.GetRandomInteger(16, 32); i++)
             {

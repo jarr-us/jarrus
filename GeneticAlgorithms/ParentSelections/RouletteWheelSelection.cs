@@ -4,10 +4,10 @@
     {
         public override ChromosomeParents<T> GetParents()
         {
-            var father = GetParent(Settings.GetNextDouble());
-            var mother = GetParent(Settings.GetNextDouble());
+            var father = GetParent(Configuration.GetNextDouble());
+            var mother = GetParent(Configuration.GetNextDouble());
 
-            while (mother == father) { mother = GetParent(Settings.GetNextDouble()); }
+            while (mother == father) { mother = GetParent(Configuration.GetNextDouble()); }
 
             return new ChromosomeParents<T>
             {

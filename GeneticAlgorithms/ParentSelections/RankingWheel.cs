@@ -13,7 +13,7 @@ namespace GeneticAlgorithms.ParentSelections
         protected void GenerateRouletteWheel()
         {
             rankings = new List<double>();
-            if (Settings.LowestScoreIsBest)
+            if (Configuration.LowestScoreIsBest)
             {
                 GenerateLowestScoreIsBestWheel();
             }

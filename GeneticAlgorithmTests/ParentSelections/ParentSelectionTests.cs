@@ -13,7 +13,7 @@ namespace GeneticAlgorithmTests.ParentSelections
         {
             var genome = GATestHelper.GetTravelingSalesmanGenome();
             var parentSelection = new RouletteWheelSelection<char>();
-            parentSelection.Setup(genome, GATestHelper.GetDefaultSettings<char>());
+            parentSelection.Setup(genome, GATestHelper.GetDefaultConfiguration<char>());
         }
 
         [TestMethod]
@@ -24,7 +24,7 @@ namespace GeneticAlgorithmTests.ParentSelections
             genome[0].FitnessScore = -1;
             var parentSelection = new RouletteWheelSelection<char>();
 
-            parentSelection.Setup(genome, GATestHelper.GetDefaultSettings<char>());
+            parentSelection.Setup(genome, GATestHelper.GetDefaultConfiguration<char>());
         }
     }
 }

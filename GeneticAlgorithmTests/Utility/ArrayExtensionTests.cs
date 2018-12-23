@@ -17,7 +17,7 @@ namespace GeneticAlgorithmTests.Utility
                 allInts[i] = i;
             }
 
-            var subarray = allInts.SubArray(5, 5);
+            var subarray = allInts.Subset(5, 5);
             Assert.AreEqual(5, subarray[0]);
             Assert.AreEqual(6, subarray[1]);
             Assert.AreEqual(7, subarray[2]);
@@ -38,7 +38,7 @@ namespace GeneticAlgorithmTests.Utility
                 allInts[i] = i;
             }
 
-            var subarray = allInts.SubArray(-1, 5);
+            var subarray = allInts.Subset(-1, 5);
         }
 
         [TestMethod]

@@ -52,7 +52,7 @@ namespace GeneticAlgorithmTests
             var min = 1;
             var max = 10;
 
-            var config = GATestHelper.GetDefaultSettings<char>();
+            var config = GATestHelper.GetDefaultConfiguration<char>();
 
             for(int i = 0; i < 100; i++)
             {
@@ -70,7 +70,7 @@ namespace GeneticAlgorithmTests
 
             var forbiddenNumberFour = 4;
 
-            var config = GATestHelper.GetDefaultSettings<char>();
+            var config = GATestHelper.GetDefaultConfiguration<char>();
 
             for (int i = 0; i < 100; i++)
             {
@@ -87,7 +87,7 @@ namespace GeneticAlgorithmTests
             var min = 0;
             var max = 1;
             
-            var config = GATestHelper.GetDefaultSettings<char>();
+            var config = GATestHelper.GetDefaultConfiguration<char>();
 
             for (int i = 0; i < 100; i++)
             {
@@ -101,7 +101,7 @@ namespace GeneticAlgorithmTests
         public void ItCanGetARandomBoolean()
         {
             var truesSeen = 0;
-            var config = GATestHelper.GetDefaultSettings<char>();
+            var config = GATestHelper.GetDefaultConfiguration<char>();
 
             for (int i = 0; i < 100; i++)
             {
@@ -120,7 +120,7 @@ namespace GeneticAlgorithmTests
         {
             var chanceOfTrue = 1;
             var truesSeen = 0;
-            var config = GATestHelper.GetDefaultSettings<char>();
+            var config = GATestHelper.GetDefaultConfiguration<char>();
 
             for (int i = 0; i < 100; i++)
             {
@@ -132,6 +132,60 @@ namespace GeneticAlgorithmTests
             }
 
             Assert.IsTrue(truesSeen <= 10);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void ItThrowsAnExceptionIfMutationRateIsAboveOne()
+        {
+            var config = GATestHelper.GetDefaultConfiguration<char>();
+            config.MutationRate = 1.01;
+            config.ValidateProperties();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void ItThrowsAnExceptionIfMutationRateIsBelowZero()
+        {
+            var config = GATestHelper.GetDefaultConfiguration<char>();
+            config.MutationRate = -0.01;
+            config.ValidateProperties();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void ItThrowsAnExceptionIfCrossoverRateIsAboveOne()
+        {
+            var config = GATestHelper.GetDefaultConfiguration<char>();
+            config.CrossoverRate = 1.01;
+            config.ValidateProperties();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void ItThrowsAnExceptionIfCrossoverRateIsBelowZero()
+        {
+            var config = GATestHelper.GetDefaultConfiguration<char>();
+            config.CrossoverRate = -0.01;
+            config.ValidateProperties();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void ItThrowsAnExceptionIfElitismRateIsAboveOne()
+        {
+            var config = GATestHelper.GetDefaultConfiguration<char>();
+            config.ElitismRate = 1.01;
+            config.ValidateProperties();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void ItThrowsAnExceptionIfElitismRateIsBelowZero()
+        {
+            var config = GATestHelper.GetDefaultConfiguration<char>();
+            config.ElitismRate = -0.01;
+            config.ValidateProperties();
         }
     }
 }

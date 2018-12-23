@@ -37,7 +37,7 @@ namespace GeneticAlgorithmTests.ParentSelections
         public void ItHasAValidConstructor()
         {
             var parentSelection = new RouletteWheelSelection<char>();
-            parentSelection.Setup(_pool, GATestHelper.GetDefaultSettings<char>());
+            parentSelection.Setup(_pool, GATestHelper.GetDefaultConfiguration<char>());
             parentSelection.GetParents();
         }
 
@@ -45,7 +45,7 @@ namespace GeneticAlgorithmTests.ParentSelections
         public void ItCanGetAValidParent()
         {
             var parentSelection = new RouletteWheelSelection<char>();
-            parentSelection.Setup(_pool, GATestHelper.GetDefaultSettings<char>());
+            parentSelection.Setup(_pool, GATestHelper.GetDefaultConfiguration<char>());
 
             var parent = parentSelection.GetParent(0.22);
             Assert.IsNotNull(parent);
@@ -55,7 +55,7 @@ namespace GeneticAlgorithmTests.ParentSelections
         public void ItCanReturnParents()
         {
             var parentSelection = new RouletteWheelSelection<char>();
-            parentSelection.Setup(_pool, GATestHelper.GetDefaultSettings<char>());
+            parentSelection.Setup(_pool, GATestHelper.GetDefaultConfiguration<char>());
 
             var parent = parentSelection.GetParents();
             Assert.IsNotNull(parent);
@@ -67,7 +67,7 @@ namespace GeneticAlgorithmTests.ParentSelections
         public void ItCantReturnTheSameParentTwice()
         {
             var parentSelection = new RouletteWheelSelection<char>();
-            parentSelection.Setup(_pool, GATestHelper.GetDefaultSettings<char>());
+            parentSelection.Setup(_pool, GATestHelper.GetDefaultConfiguration<char>());
 
             for (int i = 0; i < 1000; i++)
             {

@@ -12,7 +12,7 @@ namespace GeneticAlgorithms.ParentSelections
 
         public override ChromosomeParents<T> GetParents()
         {
-            var spinValue = Settings.GetNextDouble();
+            var spinValue = Configuration.GetNextDouble();
             var oppositeSideValue = Math.Abs(spinValue - 0.5);
 
             return new ChromosomeParents<T>

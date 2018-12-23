@@ -15,7 +15,7 @@ namespace GeneticAlgorithms.Utility
 
             for (int i = 0; i < configuration.PoolSize; i++)
             {
-                possibleValues.Shuffle(configuration.Random);
+                possibleValues.Shuffle(configuration.RandomPool);
                 list[i] = new Chromosome<T>((T[])possibleValues.Clone());
             }
 

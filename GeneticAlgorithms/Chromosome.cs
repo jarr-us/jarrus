@@ -17,7 +17,7 @@ namespace GeneticAlgorithms
 
         public Chromosome(params T[] genes)
         {
-            Genes = genes;
+            Genes = (T[])genes.Clone();
         }
 
         public bool ShouldRetire(GAConfiguration<T> settings)

@@ -25,8 +25,13 @@ namespace GeneticAlgorithmTests.Models
 
         public static Chromosome<char>[] GetTravelingSalesmanGenome()
         {
+            return GetTravelingSalesmanGenome(GetDefaultConfiguration<char>());
+        }
+
+        public static Chromosome<char>[] GetTravelingSalesmanGenome(GAConfiguration<char> config)
+        {
             var chromosome = GetTravelingSalesmanChromosome();
-            return GenomeGenerator.Generate<char>(chromosome.Genes, GetDefaultSettings<char>());
+            return GenomeGenerator.Generate<char>(chromosome.Genes, config);
         }
 
         public static Chromosome<char> GetAlphabetCharacterChromosome()
@@ -34,14 +39,15 @@ namespace GeneticAlgorithmTests.Models
             return new Chromosome<char>('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J');
         }
 
-        public static GAConfiguration<T> GetDefaultSettings<T>()
+        public static GAConfiguration<T> GetDefaultConfiguration<T>()
         {
             return new GAConfiguration<T>(
                 new RouletteWheelSelection<T>(),
                 new TravelingSalesmanFitnessCalculator(),
                 new SwapMutation(),
                 new OrderedCrossover(),
-                maximumLifeSpan: 10
+                maximumLifeSpan: 10,
+                poolSize: 100
             );
         }
     }

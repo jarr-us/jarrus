@@ -5,12 +5,12 @@ namespace GeneticAlgorithms.ParentSelections
 {
     public abstract class ParentSelection<T>
     {
-        protected GAConfiguration<T> Settings;
+        protected GAConfiguration<T> Configuration;
         protected Chromosome<T>[] Genome;
 
         public void Setup(Chromosome<T>[] genome, GAConfiguration<T> settings)
         {
-            Settings = settings;
+            Configuration = settings;
             Genome = genome;
             SetupSelection();
             Validate();

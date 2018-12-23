@@ -19,7 +19,7 @@ namespace GeneticAlgorithmTests.Crossovers
 
             for (int i = 0; i < GATestHelper.GetRandomInteger(16, 32); i++)
             {
-                var child = uniform.Execute(father, mother, GATestHelper.GetDefaultSettings<char>());
+                var child = uniform.Execute(father, mother, GATestHelper.GetDefaultConfiguration<char>());
                 Console.Out.WriteLine(child.ToString());
 
                 Assert.AreNotEqual(father.ToString(), child.ToString());

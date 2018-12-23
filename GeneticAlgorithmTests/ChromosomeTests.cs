@@ -46,7 +46,7 @@ namespace GeneticAlgorithmTests
             var charChromo = new Chromosome<char>('A', 'B', 'C', 'D');
             charChromo.Age = 1;
 
-            Assert.IsFalse(charChromo.ShouldRetire(GATestHelper.GetDefaultSettings<char>()));
+            Assert.IsFalse(charChromo.ShouldRetire(GATestHelper.GetDefaultConfiguration<char>()));
         }
 
         [TestMethod]
@@ -55,7 +55,7 @@ namespace GeneticAlgorithmTests
             var charChromo = new Chromosome<char>('A', 'B', 'C', 'D');
             charChromo.Age = 100;
 
-            Assert.IsTrue(charChromo.ShouldRetire(GATestHelper.GetDefaultSettings<char>()));
+            Assert.IsTrue(charChromo.ShouldRetire(GATestHelper.GetDefaultConfiguration<char>()));
         }
 
         [TestMethod]
@@ -64,7 +64,7 @@ namespace GeneticAlgorithmTests
             var charChromo = new Chromosome<char>('A', 'B', 'C', 'D');
             charChromo.Age = 5000;
 
-            var settings = GATestHelper.GetDefaultSettings<char>();
+            var settings = GATestHelper.GetDefaultConfiguration<char>();
             settings.MaximumLifeSpan = 0;
 
             Assert.IsFalse(charChromo.ShouldRetire(settings));

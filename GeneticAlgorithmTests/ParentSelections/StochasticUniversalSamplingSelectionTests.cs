@@ -21,7 +21,7 @@ namespace GeneticAlgorithmTests.ParentSelections
         public void ItHasAValidConstructor()
         {
             var parentSelection = new StochasticUniversalSamplingSelection<char>();
-            parentSelection.Setup(_pool, GATestHelper.GetDefaultSettings<char>());
+            parentSelection.Setup(_pool, GATestHelper.GetDefaultConfiguration<char>());
             parentSelection.GetParents();
         }
 
@@ -29,7 +29,7 @@ namespace GeneticAlgorithmTests.ParentSelections
         public void ItCanGetAValidParent()
         {
             var parentSelection = new StochasticUniversalSamplingSelection<char>();
-            parentSelection.Setup(_pool, GATestHelper.GetDefaultSettings<char>());
+            parentSelection.Setup(_pool, GATestHelper.GetDefaultConfiguration<char>());
 
             var parent = parentSelection.GetParent(0.22);
             Assert.IsNotNull(parent);
@@ -39,7 +39,7 @@ namespace GeneticAlgorithmTests.ParentSelections
         public void ItCanReturnParents()
         {
             var parentSelection = new StochasticUniversalSamplingSelection<char>();
-            parentSelection.Setup(_pool, GATestHelper.GetDefaultSettings<char>());
+            parentSelection.Setup(_pool, GATestHelper.GetDefaultConfiguration<char>());
 
             var parent = parentSelection.GetParents();
             Assert.IsNotNull(parent);

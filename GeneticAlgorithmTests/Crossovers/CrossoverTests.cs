@@ -17,7 +17,7 @@ namespace GeneticAlgorithmTests.Crossovers
             var mother = new Chromosome<double>(size);
 
             var singlePointCrossover = new SinglePointCrossover();
-            singlePointCrossover.Execute(father, mother, GATestHelper.GetDefaultSettings<double>());
+            singlePointCrossover.Execute(father, mother, GATestHelper.GetDefaultConfiguration<double>());
         }
 
         [TestMethod]
@@ -29,7 +29,7 @@ namespace GeneticAlgorithmTests.Crossovers
 
             var singlePointCrossover = new SinglePointCrossover();
 
-            singlePointCrossover.Execute(father, mother, GATestHelper.GetDefaultSettings<double>());
+            singlePointCrossover.Execute(father, mother, GATestHelper.GetDefaultConfiguration<double>());
         }
 
         [TestMethod]
@@ -40,7 +40,7 @@ namespace GeneticAlgorithmTests.Crossovers
             var mother = new Chromosome<double>(GATestHelper.GetRandomInteger(1, 8));
 
             var singlePointCrossover = new SinglePointCrossover();
-            singlePointCrossover.Execute(null, mother, GATestHelper.GetDefaultSettings<double>());
+            singlePointCrossover.Execute(null, mother, GATestHelper.GetDefaultConfiguration<double>());
         }
 
         [TestMethod]
@@ -51,7 +51,7 @@ namespace GeneticAlgorithmTests.Crossovers
             var mother = new Chromosome<double>(GATestHelper.GetRandomInteger(1, 8));
 
             var singlePointCrossover = new SinglePointCrossover();
-            singlePointCrossover.Execute(father, null, GATestHelper.GetDefaultSettings<double>());
+            singlePointCrossover.Execute(father, null, GATestHelper.GetDefaultConfiguration<double>());
         }
 
         [TestMethod]
@@ -62,7 +62,7 @@ namespace GeneticAlgorithmTests.Crossovers
             var mother = new Chromosome<double>(1);
 
             var singlePointCrossover = new SinglePointCrossover();
-            singlePointCrossover.Execute(father, mother, GATestHelper.GetDefaultSettings<double>());
+            singlePointCrossover.Execute(father, mother, GATestHelper.GetDefaultConfiguration<double>());
         }
     }
 }

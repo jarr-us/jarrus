@@ -26,10 +26,13 @@ namespace GeneticAlgorithms
         public List<T> Chromosome = new List<T>();
         public int RandomSeed;
         public Random Random;
+        public int RandomPoolGenerationSeed;
+        public Random RandomPool;
 
         public GAConfiguration(ParentSelection<T> parentSelection, FitnessCalculator calculator, Mutation mutation, Crossover crossover,
             bool lowestScoreIsBest = false, int poolSize = 100, int iterations = 50, double crossoverRate = 0.83,
-            double mutationRate = 0.03, double elitismRate = 0.02, bool preventDuplicationInPool = false, int maximumLifeSpan = 0, int childrenPerCouple = 4, int randomSeed = 0)
+            double mutationRate = 0.03, double elitismRate = 0.02, bool preventDuplicationInPool = false, int maximumLifeSpan = 0,
+            int childrenPerCouple = 4, int randomSeed = 0, int randomPoolGenerationSeed = 0)
         {
             ParentSelection = parentSelection;
             Crossover = crossover;
@@ -55,17 +58,34 @@ namespace GeneticAlgorithms
             else
             {
                 RandomSeed = randomSeed;
-                Random = new Random(randomSeed);
+                Random = new Random(RandomSeed);
             }
 
-            ValidateInputs();
+            if (randomPoolGenerationSeed == 0)
+            {
+                RandomPool = new Random();
+                RandomPoolGenerationSeed = RandomPool.Next(0, int.MaxValue - 1);
+                RandomPool = new Random(RandomPoolGenerationSeed);
+            }
+            else
+            {
+                RandomPoolGenerationSeed = randomPoolGenerationSeed;
+                RandomPool = new Random(RandomPoolGenerationSeed);
+            }
+
+            ValidateProperties();
         }
 
-        private void ValidateInputs()
+        public void ValidateProperties()
         {
             if (ParentSelection == null || Crossover == null || FitnessCalculator == null || Mutation == null || ChildrenPerCouple == 0)
             {
-                throw new ArgumentException("Invalid settings passed to GASettings");
+                throw new ArgumentException("Invalid settings passed to GAConfiguration");
+            }
+
+            if (MutationRate < 0 || MutationRate > 1 || ElitismRate < 0 || ElitismRate > 1 || CrossoverRate < 0 || CrossoverRate > 1)
+            {
+                throw new ArgumentException("GAConfiguration rates must be between 0 and 1");
             }
         }
 

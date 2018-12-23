@@ -6,7 +6,7 @@ namespace GeneticAlgorithms.Utility
     {
         private static Random Random = new Random();
 
-        public static T[] SubArray<T>(this T[] data, int index, int length)
+        public static T[] Subset<T>(this T[] data, int index, int length)
         {
             T[] result = new T[length];
             Array.Copy(data, index, result, 0, length);
@@ -29,7 +29,7 @@ namespace GeneticAlgorithms.Utility
 
         public static T[] ShuffleSubset<T>(this T[] array, int start, int end, Random random = null)
         {
-            var subset = array.SubArray(start, end - start);
+            var subset = array.Subset(start, end - start);
             subset.Shuffle(random);
 
             var newArray = new T[array.Length];
