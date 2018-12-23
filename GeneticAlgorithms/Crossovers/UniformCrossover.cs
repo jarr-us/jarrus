@@ -9,7 +9,7 @@
 
             for (int i = 0; i < geneCount; i++)
             {
-                if (settings.GetBool())
+                if (settings.GetRandomBoolean())
                 {
                     child.Genes[i] = father.Genes[i];
                 }

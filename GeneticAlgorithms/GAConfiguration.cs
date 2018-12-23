@@ -88,7 +88,7 @@ namespace GeneticAlgorithms
             return randomValue;
         }
 
-        public bool GetBool(double probabilityOfTrue = 50)
+        public bool GetRandomBoolean(double probabilityOfTrue = 50)
         {
             return Random.NextDouble() < probabilityOfTrue / 100.0;
         }

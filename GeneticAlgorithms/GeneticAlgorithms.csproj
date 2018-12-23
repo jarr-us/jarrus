@@ -61,6 +61,7 @@
     <Compile Include="ParentSelections\StochasticUniversalSamplingSelection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utility\ArrayExtensions.cs" />
+    <Compile Include="Utility\GenomeGenerator.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

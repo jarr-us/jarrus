@@ -67,7 +67,10 @@
     <Compile Include="ParentSelections\RouletteWheelSelectionTests.cs" />
     <Compile Include="ParentSelections\StochasticUniversalSamplingSelectionTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="GAConfigurationTests.cs" />
+    <Compile Include="ChromosomeTests.cs" />
     <Compile Include="Utility\ArrayExtensionTests.cs" />
+    <Compile Include="Utility\GenomeGeneratorTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

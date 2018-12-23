@@ -2,6 +2,7 @@
 using GeneticAlgorithms.Crossovers;
 using GeneticAlgorithms.Mutations;
 using GeneticAlgorithms.ParentSelections;
+using GeneticAlgorithms.Utility;
 using GeneticAlgorithmTests.Models.FitnessCalculators;
 using System;
 
@@ -24,17 +25,8 @@ namespace GeneticAlgorithmTests.Models
 
         public static Chromosome<char>[] GetTravelingSalesmanGenome()
         {
-            var list = new Chromosome<char>[10];
-            var calc = new TravelingSalesmanFitnessCalculator();
-
-            for(int i = 0; i < 10; i++)
-            {
-                var chromosome = GetTravelingSalesmanChromosome();
-                chromosome.FitnessScore = calc.GetFitnessScoreFor(chromosome);
-                list[i] = chromosome;
-            }
-
-            return list;
+            var chromosome = GetTravelingSalesmanChromosome();
+            return GenomeGenerator.Generate<char>(chromosome.Genes, GetDefaultSettings<char>());
         }
 
         public static Chromosome<char> GetAlphabetCharacterChromosome()
@@ -48,7 +40,8 @@ namespace GeneticAlgorithmTests.Models
                 new RouletteWheelSelection<T>(),
                 new TravelingSalesmanFitnessCalculator(),
                 new SwapMutation(),
-                new OrderedCrossover()
+                new OrderedCrossover(),
+                maximumLifeSpan: 10
             );
         }
     }

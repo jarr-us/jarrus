@@ -20,7 +20,7 @@ namespace GeneticAlgorithms
             Genes = genes;
         }
 
-        public bool ShouldRetire(int currentGeneration, GAConfiguration<T> settings)
+        public bool ShouldRetire(GAConfiguration<T> settings)
         {
             return Age >= settings.MaximumLifeSpan && settings.MaximumLifeSpan != 0;
         }

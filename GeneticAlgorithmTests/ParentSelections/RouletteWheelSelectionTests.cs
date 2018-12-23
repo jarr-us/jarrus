@@ -1,6 +1,7 @@
 ﻿using GeneticAlgorithms;
 using GeneticAlgorithms.ParentSelections;
 using GeneticAlgorithmTests.Models;
+using GeneticAlgorithmTests.Models.FitnessCalculators;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace GeneticAlgorithmTests.ParentSelections
@@ -14,6 +15,11 @@ namespace GeneticAlgorithmTests.ParentSelections
         public void Setup()
         {
             _pool = GATestHelper.GetTravelingSalesmanGenome();
+            var calc = new TravelingSalesmanFitnessCalculator();
+            foreach (var chromosome in _pool)
+            {
+                chromosome.FitnessScore = calc.GetFitnessScoreFor(chromosome);
+            }
         }
 
         [TestMethod]
