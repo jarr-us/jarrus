@@ -4,9 +4,6 @@ using GeneticAlgorithms.Mutations;
 using GeneticAlgorithms.ParentSelections;
 using GeneticAlgorithmTests.Models.FitnessCalculators;
 using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
 
 namespace GeneticAlgorithmTests.Models
 {
@@ -20,28 +17,29 @@ namespace GeneticAlgorithmTests.Models
             return _random.Next(min, max);
         }
 
-        public static string GetRandomString(int length)
+        public static Chromosome<char> GetTravelingSalesmanChromosome()
         {
-            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-            return new string(Enumerable.Repeat(chars, length)
-              .Select(s => s[_random.Next(s.Length)]).ToArray());
+            return new Chromosome<char>('A', 'B', 'C', 'D');
         }
 
-        public static string GetRandomAlphaNumericString(int length)
+        public static Chromosome<char>[] GetTravelingSalesmanGenome()
         {
-            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-            return new string(Enumerable.Repeat(chars, length)
-              .Select(s => s[_random.Next(s.Length)]).ToArray());
+            var list = new Chromosome<char>[10];
+            var calc = new TravelingSalesmanFitnessCalculator();
+
+            for(int i = 0; i < 10; i++)
+            {
+                var chromosome = GetTravelingSalesmanChromosome();
+                chromosome.FitnessScore = calc.GetFitnessScoreFor(chromosome);
+                list[i] = chromosome;
+            }
+
+            return list;
         }
 
-        private static IEnumerable<char> RandomSequence()
+        public static Chromosome<char> GetAlphabetCharacterChromosome()
         {
-            while (true) { yield return (char)_random.Next(char.MinValue, char.MaxValue); }
-        }
-
-        public static Color GetRandomColor()
-        {
-            return Color.FromArgb(255, GetRandomInteger(0, 255), GetRandomInteger(0, 255), GetRandomInteger(0, 255));
+            return new Chromosome<char>('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J');
         }
 
         public static GAConfiguration<T> GetDefaultSettings<T>()
