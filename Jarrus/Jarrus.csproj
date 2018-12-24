@@ -88,6 +88,14 @@
     <Content Include="Resources\jarrus.ico" />
     <Content Include="Resources\jarrus1.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\GeneticAlgorithms\GeneticAlgorithms.csproj">
+      <Project>{f804e8c6-c593-46bd-9b37-74d35d3c947b}</Project>
+      <Name>GeneticAlgorithms</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Data\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

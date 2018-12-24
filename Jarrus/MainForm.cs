@@ -14,5 +14,10 @@ namespace Jarrus
         {
             Application.Exit();
         }
+
+        private void runBtn_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

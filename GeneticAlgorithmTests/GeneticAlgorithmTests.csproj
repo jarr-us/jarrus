@@ -71,8 +71,8 @@
     <Compile Include="ChromosomeTests.cs" />
     <Compile Include="GenomeTests.cs" />
     <Compile Include="GeneticAlgorithmTests.cs" />
-    <Compile Include="Utility\ArrayExtensionTests.cs" />
     <Compile Include="Utility\GenomeGeneratorTests.cs" />
+    <Compile Include="Utility\ArrayExtensionTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
