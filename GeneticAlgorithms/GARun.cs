@@ -5,6 +5,7 @@ namespace GeneticAlgorithms
     public class GARun
     {
         public int Id { get; set; }
+        public int CurrentGeneration { get; set; }
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
         public string SolutionType { get; set; }

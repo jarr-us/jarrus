@@ -32,8 +32,18 @@
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.runBtn = new System.Windows.Forms.Button();
+            this.versionLbl = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.runsCompletedLbl = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.highestScoreLbl = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.lowestScoreLbl = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.generationLbl = new System.Windows.Forms.Label();
             this.menuStrip.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip
@@ -42,7 +52,7 @@
             this.fileToolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
-            this.menuStrip.Size = new System.Drawing.Size(800, 24);
+            this.menuStrip.Size = new System.Drawing.Size(219, 24);
             this.menuStrip.TabIndex = 0;
             this.menuStrip.Text = "menuStrip";
             // 
@@ -61,22 +71,118 @@
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
-            // runBtn
+            // versionLbl
             // 
-            this.runBtn.Location = new System.Drawing.Point(713, 415);
-            this.runBtn.Name = "runBtn";
-            this.runBtn.Size = new System.Drawing.Size(75, 23);
-            this.runBtn.TabIndex = 1;
-            this.runBtn.Text = "Run";
-            this.runBtn.UseVisualStyleBackColor = true;
-            this.runBtn.Click += new System.EventHandler(this.runBtn_Click);
+            this.versionLbl.BackColor = System.Drawing.SystemColors.Control;
+            this.versionLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.versionLbl.ForeColor = System.Drawing.SystemColors.ButtonShadow;
+            this.versionLbl.Location = new System.Drawing.Point(98, 255);
+            this.versionLbl.Name = "versionLbl";
+            this.versionLbl.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.versionLbl.Size = new System.Drawing.Size(112, 24);
+            this.versionLbl.TabIndex = 1;
+            this.versionLbl.Text = "Debug Mode";
+            this.versionLbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 29);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(59, 13);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "Generation";
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.runsCompletedLbl);
+            this.groupBox1.Controls.Add(this.label2);
+            this.groupBox1.Controls.Add(this.highestScoreLbl);
+            this.groupBox1.Controls.Add(this.label5);
+            this.groupBox1.Controls.Add(this.lowestScoreLbl);
+            this.groupBox1.Controls.Add(this.label3);
+            this.groupBox1.Controls.Add(this.generationLbl);
+            this.groupBox1.Controls.Add(this.label1);
+            this.groupBox1.Location = new System.Drawing.Point(12, 27);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(195, 225);
+            this.groupBox1.TabIndex = 3;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Run Details";
+            // 
+            // runsCompletedLbl
+            // 
+            this.runsCompletedLbl.Location = new System.Drawing.Point(97, 16);
+            this.runsCompletedLbl.Name = "runsCompletedLbl";
+            this.runsCompletedLbl.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.runsCompletedLbl.Size = new System.Drawing.Size(89, 13);
+            this.runsCompletedLbl.TabIndex = 9;
+            this.runsCompletedLbl.Text = "0";
+            this.runsCompletedLbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(6, 16);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(67, 13);
+            this.label2.TabIndex = 8;
+            this.label2.Text = "Run Number";
+            // 
+            // highestScoreLbl
+            // 
+            this.highestScoreLbl.Location = new System.Drawing.Point(97, 55);
+            this.highestScoreLbl.Name = "highestScoreLbl";
+            this.highestScoreLbl.Size = new System.Drawing.Size(89, 13);
+            this.highestScoreLbl.TabIndex = 7;
+            this.highestScoreLbl.Text = "0";
+            this.highestScoreLbl.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(6, 55);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(74, 13);
+            this.label5.TabIndex = 6;
+            this.label5.Text = "Highest Score";
+            // 
+            // lowestScoreLbl
+            // 
+            this.lowestScoreLbl.Location = new System.Drawing.Point(97, 42);
+            this.lowestScoreLbl.Name = "lowestScoreLbl";
+            this.lowestScoreLbl.Size = new System.Drawing.Size(89, 13);
+            this.lowestScoreLbl.TabIndex = 5;
+            this.lowestScoreLbl.Text = "0";
+            this.lowestScoreLbl.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(6, 42);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(72, 13);
+            this.label3.TabIndex = 4;
+            this.label3.Text = "Lowest Score";
+            // 
+            // generationLbl
+            // 
+            this.generationLbl.Location = new System.Drawing.Point(97, 29);
+            this.generationLbl.Name = "generationLbl";
+            this.generationLbl.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.generationLbl.Size = new System.Drawing.Size(89, 13);
+            this.generationLbl.TabIndex = 3;
+            this.generationLbl.Text = "0";
+            this.generationLbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.runBtn);
+            this.BackColor = System.Drawing.SystemColors.Control;
+            this.ClientSize = new System.Drawing.Size(219, 281);
+            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.versionLbl);
             this.Controls.Add(this.menuStrip);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip;
@@ -84,6 +190,8 @@
             this.Text = "Jarrus";
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -94,7 +202,16 @@
         private System.Windows.Forms.MenuStrip menuStrip;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
-        private System.Windows.Forms.Button runBtn;
+        private System.Windows.Forms.Label versionLbl;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Label generationLbl;
+        private System.Windows.Forms.Label highestScoreLbl;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label lowestScoreLbl;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label runsCompletedLbl;
+        private System.Windows.Forms.Label label2;
     }
 }
 

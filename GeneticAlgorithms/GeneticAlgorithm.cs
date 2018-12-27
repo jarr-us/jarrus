@@ -11,7 +11,7 @@ namespace GeneticAlgorithms
         public GAConfiguration<T> Configuration { get; private set; }
         public int Generation { get; private set; }
         private T[] _possibleValues;
-        private GARun _run;
+        public GARun GARun;
 
         public List<Chromosome<T>> Retired = new List<Chromosome<T>>();
         public Chromosome<T> BestChromosomeEver { get; private set; }
@@ -22,8 +22,8 @@ namespace GeneticAlgorithms
             _possibleValues = possibleValues;
             ValidateSettings();
 
-            _run = new GARun();
-            _run.SetValues(Configuration);
+            GARun = new GARun();
+            GARun.SetValues(Configuration);
 
             GenerateInitialGenome();
         }
@@ -44,7 +44,7 @@ namespace GeneticAlgorithms
 
         public GARun Run()
         {
-            for (int i = 0; i < Configuration.Iterations; i++)
+            for (GARun.CurrentGeneration = 0; GARun.CurrentGeneration < Configuration.Iterations; GARun.CurrentGeneration++)
             {
                 var nextGeneration = Genome.Advance();
                 Retired = Genome.Retired.OrderBy(o => o.FitnessScore).ToList();
@@ -54,8 +54,8 @@ namespace GeneticAlgorithms
                 Genome = nextGeneration;
             }
 
-            _run.End = DateTime.UtcNow;
-            return _run;
+            GARun.End = DateTime.UtcNow;
+            return GARun;
         }
 
         private void DetermineBestChromosomeEver(Genome<T> genome)
@@ -63,16 +63,16 @@ namespace GeneticAlgorithms
             var highestScoringChromosome = Genome.Chromosomes.Where(o => o.FitnessScore == Genome.Chromosomes.Max(k => k.FitnessScore)).First();
             var lowestScoringChromosome = Genome.Chromosomes.Where(o => o.FitnessScore == Genome.Chromosomes.Min(k => k.FitnessScore)).First();
 
-            if (highestScoringChromosome.FitnessScore > _run.HighestScore || _run.HighestScore == -1)
+            if (highestScoringChromosome.FitnessScore > GARun.HighestScore || GARun.HighestScore == -1)
             {
-                _run.HighestScore = highestScoringChromosome.FitnessScore;
-                _run.HighestScoreGeneration = highestScoringChromosome.GenerationNumber;
+                GARun.HighestScore = highestScoringChromosome.FitnessScore;
+                GARun.HighestScoreGeneration = highestScoringChromosome.GenerationNumber;
             }
 
-            if (lowestScoringChromosome.FitnessScore < _run.LowestScore || _run.LowestScore == -1)
+            if (lowestScoringChromosome.FitnessScore < GARun.LowestScore || GARun.LowestScore == -1)
             {
-                _run.LowestScore = lowestScoringChromosome.FitnessScore;
-                _run.LowestScoreGeneration = lowestScoringChromosome.GenerationNumber;
+                GARun.LowestScore = lowestScoringChromosome.FitnessScore;
+                GARun.LowestScoreGeneration = lowestScoringChromosome.GenerationNumber;
             }
         }
     }
