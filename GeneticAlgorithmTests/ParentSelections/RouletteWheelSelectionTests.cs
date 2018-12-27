@@ -1,7 +1,7 @@
 ﻿using GeneticAlgorithms;
 using GeneticAlgorithms.ParentSelections;
 using GeneticAlgorithmTests.Models;
-using GeneticAlgorithmTests.Models.FitnessCalculators;
+using GeneticAlgorithmTests.Models.FitnessFunctions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace GeneticAlgorithmTests.ParentSelections

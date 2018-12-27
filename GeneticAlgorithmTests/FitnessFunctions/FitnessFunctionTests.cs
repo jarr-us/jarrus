@@ -1,12 +1,12 @@
 ﻿using System;
 using GeneticAlgorithms;
-using GeneticAlgorithmTests.Models.FitnessCalculators;
+using GeneticAlgorithmTests.Models.FitnessFunctions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace GeneticAlgorithmTests.FitnessCalculators
 {
     [TestClass]
-    public class FitnessCalculatorTests
+    public class FitnessFunctionTests
     {
         private char[] _validInputs = { 'A', 'B', 'C', 'D' };
 

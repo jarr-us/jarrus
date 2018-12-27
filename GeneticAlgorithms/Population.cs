@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace GeneticAlgorithms
 {
-    public class Genome<T>
+    public class Population<T>
     {
         public Chromosome<T>[] Chromosomes;
         public GAConfiguration<T> Configuration;
@@ -16,7 +16,7 @@ namespace GeneticAlgorithms
         public List<Chromosome<T>> Retired = new List<Chromosome<T>>();
         private T[] _possibleValues;
 
-        public Genome(GAConfiguration<T> configuration, Chromosome<T>[] chromosomes, T[] possibleValues)
+        public Population(GAConfiguration<T> configuration, Chromosome<T>[] chromosomes, T[] possibleValues)
         {
             if (configuration == null || chromosomes == null || chromosomes.Length <=2 || possibleValues == null || possibleValues.Length <= 2)
             {
@@ -31,7 +31,7 @@ namespace GeneticAlgorithms
             DetermineFitnessScores();
         }
 
-        private Genome(GAConfiguration<T> configuration, Chromosome<T>[] chromosomes, int generationNumber, T[] possibleValues, List<Chromosome<T>> retired = null)
+        private Population(GAConfiguration<T> configuration, Chromosome<T>[] chromosomes, int generationNumber, T[] possibleValues, List<Chromosome<T>> retired = null)
         {
             Chromosomes = chromosomes;
             Configuration = configuration;
@@ -66,13 +66,13 @@ namespace GeneticAlgorithms
             }
         }
 
-        public Genome<T> Advance()
+        public Population<T> Advance()
         {
             SetupNextGenerationObjects();
             DetermineNextGeneration();
             DetermineFitnessScores();
 
-            return new Genome<T>(Configuration, NextGeneration.ToArray(), GenerationNumber, _possibleValues, Retired);
+            return new Population<T>(Configuration, NextGeneration.ToArray(), GenerationNumber, _possibleValues, Retired);
         }
 
         private void DetermineFitnessScores()

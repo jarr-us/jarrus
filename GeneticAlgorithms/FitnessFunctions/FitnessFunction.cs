@@ -1,6 +1,6 @@
-﻿namespace GeneticAlgorithms.FitnessCalculators
+﻿namespace GeneticAlgorithms.FitnessFunctions
 {
-    public abstract class FitnessCalculator
+    public abstract class FitnessFunction
     {
         public abstract double GetFitnessScoreFor<T>(Chromosome<T> chromosome);
     }

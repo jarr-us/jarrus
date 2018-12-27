@@ -4,7 +4,7 @@ using GeneticAlgorithms.Crossovers;
 using GeneticAlgorithms.Mutations;
 using GeneticAlgorithms.ParentSelections;
 using GeneticAlgorithmTests.Models;
-using GeneticAlgorithmTests.Models.FitnessCalculators;
+using GeneticAlgorithmTests.Models.FitnessFunctions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace GeneticAlgorithmTests

@@ -3,7 +3,7 @@ using GeneticAlgorithms.Crossovers;
 using GeneticAlgorithms.Mutations;
 using GeneticAlgorithms.ParentSelections;
 using GeneticAlgorithms.Utility;
-using GeneticAlgorithmTests.Models.FitnessCalculators;
+using GeneticAlgorithmTests.Models.FitnessFunctions;
 using System;
 
 namespace GeneticAlgorithmTests.Models
@@ -31,7 +31,7 @@ namespace GeneticAlgorithmTests.Models
         public static Chromosome<char>[] GetTravelingSalesmanGenome(GAConfiguration<char> config)
         {
             var chromosome = GetTravelingSalesmanChromosome();
-            return GenomeGenerator.Generate<char>(chromosome.Genes, config);
+            return PopulationGenerator.Generate<char>(chromosome.Genes, config);
         }
 
         public static Chromosome<char> GetAlphabetCharacterChromosome()
