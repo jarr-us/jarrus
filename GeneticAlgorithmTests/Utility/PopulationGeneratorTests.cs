@@ -6,14 +6,14 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace GeneticAlgorithmTests.Utility
 {
     [TestClass]
-    public class GenomeGeneratorTests
+    public class PopulationGeneratorTests
     {
         [TestMethod]
         public void ItCanGenerateAGenome()
         {
             var configuration = GATestHelper.GetDefaultConfiguration<char>();
             var chromosome = GATestHelper.GetTravelingSalesmanChromosome();
-            var pool = GenomeGenerator.Generate<char>(chromosome.Genes, configuration);
+            var pool = PopulationGenerator.Generate<char>(chromosome.Genes, configuration);
             Assert.AreEqual(configuration.PoolSize, pool.Length);
         }
 
@@ -22,7 +22,7 @@ namespace GeneticAlgorithmTests.Utility
         public void ItThrowsAnExceptionWhenNullValuesArePassed()
         {
             var configuration = GATestHelper.GetDefaultConfiguration<char>();
-            var pool = GenomeGenerator.Generate<char>(null, configuration);
+            var pool = PopulationGenerator.Generate<char>(null, configuration);
         }
 
         [TestMethod]
@@ -30,7 +30,7 @@ namespace GeneticAlgorithmTests.Utility
         public void ItThrowsAnExceptionWhenNoValuesArePassed()
         {
             var configuration = GATestHelper.GetDefaultConfiguration<char>();
-            var pool = GenomeGenerator.Generate<char>(new char[1], configuration);
+            var pool = PopulationGenerator.Generate<char>(new char[1], configuration);
         }
 
         [TestMethod]
@@ -39,7 +39,7 @@ namespace GeneticAlgorithmTests.Utility
         {
             var configuration = GATestHelper.GetDefaultConfiguration<char>();
             var chromosome = GATestHelper.GetTravelingSalesmanChromosome();
-            var pool = GenomeGenerator.Generate<char>(chromosome.Genes, null);
+            var pool = PopulationGenerator.Generate<char>(chromosome.Genes, null);
         }
     }
 }

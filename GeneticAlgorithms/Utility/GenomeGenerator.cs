@@ -2,7 +2,7 @@
 
 namespace GeneticAlgorithms.Utility
 {
-    public class GenomeGenerator
+    public class PopulationGenerator
     {
         public static Chromosome<T>[] Generate<T>(T[] possibleValues, GAConfiguration<T> configuration)
         {

@@ -1,5 +1,5 @@
 ﻿using GeneticAlgorithms.Crossovers;
-using GeneticAlgorithms.FitnessCalculators;
+using GeneticAlgorithms.FitnessFunctions;
 using GeneticAlgorithms.Mutations;
 using GeneticAlgorithms.ParentSelections;
 using System;
@@ -11,7 +11,7 @@ namespace GeneticAlgorithms
     public class GAConfiguration<T>
     {
         public ParentSelection<T> ParentSelection;
-        public FitnessCalculator FitnessCalculator;
+        public FitnessFunction FitnessCalculator;
         public Crossover Crossover;
         public Mutation Mutation;
         public bool LowestScoreIsBest;
@@ -29,7 +29,7 @@ namespace GeneticAlgorithms
         public int RandomPoolGenerationSeed;
         public Random RandomPool;
 
-        public GAConfiguration(ParentSelection<T> parentSelection, FitnessCalculator calculator, Mutation mutation, Crossover crossover,
+        public GAConfiguration(ParentSelection<T> parentSelection, FitnessFunction calculator, Mutation mutation, Crossover crossover,
             bool lowestScoreIsBest = false, int poolSize = 100, int iterations = 50, double crossoverRate = 0.83,
             double mutationRate = 0.03, double elitismRate = 0.02, bool preventDuplicationInPool = false, int maximumLifeSpan = 0,
             int childrenPerCouple = 4, int randomSeed = 0, int randomPoolGenerationSeed = 0)

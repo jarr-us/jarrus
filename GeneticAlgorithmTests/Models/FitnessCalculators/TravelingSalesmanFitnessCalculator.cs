@@ -1,13 +1,13 @@
 ﻿using GeneticAlgorithms;
-using GeneticAlgorithms.FitnessCalculators;
+using GeneticAlgorithms.FitnessFunctions;
 using System.Collections.Generic;
 
-namespace GeneticAlgorithmTests.Models.FitnessCalculators
+namespace GeneticAlgorithmTests.Models.FitnessFunctions
 {
     /// <summary>
     /// https://www.geeksforgeeks.org/travelling-salesman-problem-set-1/
     /// </summary>
-    public class TravelingSalesmanFitnessCalculator : FitnessCalculator
+    public class TravelingSalesmanFitnessCalculator : FitnessFunction
     {
         private Dictionary<char, Dictionary<char, int>> _dictionary = new Dictionary<char, Dictionary<char, int>>();
 

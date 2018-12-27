@@ -7,7 +7,7 @@ namespace GeneticAlgorithms
 {
     public class GeneticAlgorithm<T>
     {
-        public Genome<T> Genome;
+        public Population<T> Genome;
         public GAConfiguration<T> Configuration { get; private set; }
         public int Generation { get; private set; }
         private T[] _possibleValues;
@@ -38,8 +38,8 @@ namespace GeneticAlgorithms
 
         private void GenerateInitialGenome()
         {
-            var randomPool = GenomeGenerator.Generate<T>(_possibleValues, Configuration);
-            Genome = new Genome<T>(Configuration, randomPool, _possibleValues);
+            var randomPool = PopulationGenerator.Generate<T>(_possibleValues, Configuration);
+            Genome = new Population<T>(Configuration, randomPool, _possibleValues);
         }
 
         public GARun Run()
@@ -58,7 +58,7 @@ namespace GeneticAlgorithms
             return _run;
         }
 
-        private void DetermineBestChromosomeEver(Genome<T> genome)
+        private void DetermineBestChromosomeEver(Population<T> genome)
         {
             var highestScoringChromosome = Genome.Chromosomes.Where(o => o.FitnessScore == Genome.Chromosomes.Max(k => k.FitnessScore)).First();
             var lowestScoringChromosome = Genome.Chromosomes.Where(o => o.FitnessScore == Genome.Chromosomes.Min(k => k.FitnessScore)).First();
