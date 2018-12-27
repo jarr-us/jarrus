@@ -31,6 +31,37 @@ namespace GeneticAlgorithmTests
         }
 
         [TestMethod]
+        public void ItWillRunMultipleGenerations()
+        {
+            var ga = new GeneticAlgorithm<char>(_configuration, _exampleGenes);
+            ga.Run();
+            Assert.AreEqual(_configuration.Iterations + 1, ga.Generation);
+        }
+
+        [TestMethod]
+        public void ItReturnsAnObjectWithDetailsOfTheRun()
+        {
+            var ga = new GeneticAlgorithm<char>(_configuration, _exampleGenes);
+            var run = ga.Run();
+
+            Assert.AreEqual(_configuration.Iterations + 1, ga.Generation);
+            Assert.AreNotEqual(-1, run.HighestScore);
+            Assert.AreNotEqual(-1, run.LowestScore);
+            Assert.AreNotEqual(-1, run.HighestScoreGeneration);
+            Assert.AreNotEqual(-1, run.LowestScoreGeneration);
+        }
+
+        [TestMethod]
+        public void ItSetsTheStartAndEndTimeOfARun()
+        {
+            var ga = new GeneticAlgorithm<char>(_configuration, _exampleGenes);
+            var run = ga.Run();
+
+            Assert.AreEqual(_configuration.Iterations + 1, ga.Generation);
+            Assert.IsTrue(run.GetTotalMSToRun() > 0);
+        }
+
+        [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void ItThrowsAnExceptionIfTheConfigurationIsNotSet()
         {

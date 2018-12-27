@@ -19,6 +19,7 @@ namespace GeneticAlgorithms.Crossovers
             return Perform<T>(father, mother, settings);
         }
 
+        public abstract int GetId();
         protected abstract Chromosome<T> Perform<T>(Chromosome<T> father, Chromosome<T> mother, GAConfiguration<T> settings);
     }
 }

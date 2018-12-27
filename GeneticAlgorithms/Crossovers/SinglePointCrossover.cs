@@ -2,6 +2,8 @@
 {
     public class SinglePointCrossover : Crossover
     {
+        public override int GetId() { return 2; }
+
         protected override Chromosome<T> Perform<T>(Chromosome<T> father, Chromosome<T> mother, GAConfiguration<T> settings)
         {
             var geneCount = father.Genes.Length;

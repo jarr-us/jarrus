@@ -11,6 +11,7 @@ namespace GeneticAlgorithms
         public GAConfiguration<T> Configuration { get; private set; }
         public int Generation { get; private set; }
         private T[] _possibleValues;
+        private GARun _run;
 
         public List<Chromosome<T>> Retired = new List<Chromosome<T>>();
         public Chromosome<T> BestChromosomeEver { get; private set; }
@@ -21,8 +22,10 @@ namespace GeneticAlgorithms
             _possibleValues = possibleValues;
             ValidateSettings();
 
+            _run = new GARun();
+            _run.SetValues(Configuration);
+
             GenerateInitialGenome();
-            Run();
         }
 
         private void ValidateSettings()
@@ -36,10 +39,10 @@ namespace GeneticAlgorithms
         private void GenerateInitialGenome()
         {
             var randomPool = GenomeGenerator.Generate<T>(_possibleValues, Configuration);
-            Genome = new Genome<T>(Configuration, randomPool);
+            Genome = new Genome<T>(Configuration, randomPool, _possibleValues);
         }
 
-        private void Run()
+        public GARun Run()
         {
             for (int i = 0; i < Configuration.Iterations; i++)
             {
@@ -50,15 +53,27 @@ namespace GeneticAlgorithms
                 Generation = nextGeneration.GenerationNumber;
                 Genome = nextGeneration;
             }
+
+            _run.End = DateTime.UtcNow;
+            return _run;
         }
 
         private void DetermineBestChromosomeEver(Genome<T> genome)
         {
-            var chromosome = Genome.Chromosomes.Where(o => o.FitnessScore == Genome.Chromosomes.Max(k => k.FitnessScore)).First();
-            if (Configuration.LowestScoreIsBest) { chromosome = Genome.Chromosomes.Where(o => o.FitnessScore == Genome.Chromosomes.Min(k => k.FitnessScore)).First(); }
+            var highestScoringChromosome = Genome.Chromosomes.Where(o => o.FitnessScore == Genome.Chromosomes.Max(k => k.FitnessScore)).First();
+            var lowestScoringChromosome = Genome.Chromosomes.Where(o => o.FitnessScore == Genome.Chromosomes.Min(k => k.FitnessScore)).First();
 
-            if (Configuration.LowestScoreIsBest && chromosome.FitnessScore != 0 && (BestChromosomeEver == null || chromosome.FitnessScore < BestChromosomeEver.FitnessScore)) { BestChromosomeEver = chromosome; }
-            if (!Configuration.LowestScoreIsBest && (BestChromosomeEver == null || chromosome.FitnessScore > BestChromosomeEver.FitnessScore)) { BestChromosomeEver = chromosome; }
+            if (highestScoringChromosome.FitnessScore > _run.HighestScore || _run.HighestScore == -1)
+            {
+                _run.HighestScore = highestScoringChromosome.FitnessScore;
+                _run.HighestScoreGeneration = highestScoringChromosome.GenerationNumber;
+            }
+
+            if (lowestScoringChromosome.FitnessScore < _run.LowestScore || _run.LowestScore == -1)
+            {
+                _run.LowestScore = lowestScoringChromosome.FitnessScore;
+                _run.LowestScoreGeneration = lowestScoringChromosome.GenerationNumber;
+            }
         }
     }
 }

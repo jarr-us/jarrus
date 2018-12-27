@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace GeneticAlgorithms.Crossovers
 {
     public class OrderedCrossover : Crossover
     {
+        public override int GetId() { return 1; }
+
         protected override Chromosome<T> Perform<T>(Chromosome<T> father, Chromosome<T> mother, GAConfiguration<T> settings)
         {
             var geneCount = father.Genes.Length;

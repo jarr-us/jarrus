@@ -49,6 +49,7 @@
     <Compile Include="Crossovers\UniformCrossover.cs" />
     <Compile Include="FitnessCalculators\FitnessCalculator.cs" />
     <Compile Include="GAConfiguration.cs" />
+    <Compile Include="GARun.cs" />
     <Compile Include="GeneticAlgorithm.cs" />
     <Compile Include="Genome.cs" />
     <Compile Include="Mutations\InversionMutation.cs" />

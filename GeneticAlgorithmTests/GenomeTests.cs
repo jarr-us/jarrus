@@ -12,6 +12,7 @@ namespace GeneticAlgorithmTests
     public class GenomeTests
     {
         private Chromosome<char>[] _pool;
+        private char[] _possibleValues = new char[] { 'A', 'B', 'C', 'D' };
 
         [TestInitialize]
         public void Setup()
@@ -22,7 +23,7 @@ namespace GeneticAlgorithmTests
         [TestMethod]
         public void ItHasAValidConstructor()
         {
-            var genome = new Genome<char>(GATestHelper.GetDefaultConfiguration<char>(), _pool);
+            var genome = new Genome<char>(GATestHelper.GetDefaultConfiguration<char>(), _pool, _possibleValues);
             Assert.IsNotNull(genome.Configuration);
             Assert.IsNotNull(genome.Chromosomes);
         }
@@ -31,27 +32,34 @@ namespace GeneticAlgorithmTests
         [ExpectedException(typeof(ArgumentException))]
         public void ItThrowsAnExceptionIfConfigurationIsNull()
         {
-            var genome = new Genome<char>(null, _pool);
+            new Genome<char>(null, _pool, _possibleValues);
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void ItThrowsAnExceptionIfThePoolIsNull()
         {
-            var genome = new Genome<char>(GATestHelper.GetDefaultConfiguration<char>(), null);
+            new Genome<char>(GATestHelper.GetDefaultConfiguration<char>(), null, _possibleValues);
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void ItThrowsAnExceptionIfThePoolIsNotLargeEnough()
         {
-            var genome = new Genome<char>(GATestHelper.GetDefaultConfiguration<char>(), _pool.Subset(0, 2));
+            new Genome<char>(GATestHelper.GetDefaultConfiguration<char>(), _pool.Subset(0, 2), _possibleValues);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void ItThrowsAnExceptionIfThePossibleValuesAreNotSet()
+        {
+            new Genome<char>(GATestHelper.GetDefaultConfiguration<char>(), _pool, null);
         }
 
         [TestMethod]
         public void ItCanAdvanceToTheNextGeneration()
         {
-            var genome = new Genome<char>(GATestHelper.GetDefaultConfiguration<char>(), _pool);
+            var genome = new Genome<char>(GATestHelper.GetDefaultConfiguration<char>(), _pool, _possibleValues);
             var nextGen = genome.Advance();
 
             Assert.AreEqual(1, genome.GenerationNumber);
@@ -65,7 +73,7 @@ namespace GeneticAlgorithmTests
             config.CrossoverRate = 0.0;
             config.ElitismRate = 0.0;
 
-            var genome = new Genome<char>(config, _pool);
+            var genome = new Genome<char>(config, _pool, _possibleValues);
             var nextGen = genome.Advance();
 
             Assert.AreEqual(1, genome.GenerationNumber);
@@ -84,7 +92,7 @@ namespace GeneticAlgorithmTests
             var config = GATestHelper.GetDefaultConfiguration<char>();
             config.ElitismRate = 0.01 * toKeep;
 
-            var genome = new Genome<char>(config, _pool);
+            var genome = new Genome<char>(config, _pool, _possibleValues);
             var nextGen = genome.Advance();
 
             Assert.AreEqual(toKeep, nextGen.Chromosomes.Where(o => o.GenerationNumber == 1).Count());
@@ -94,7 +102,7 @@ namespace GeneticAlgorithmTests
         public void ItDeterminesFitnessScoreOnCreation()
         {
             var config = GATestHelper.GetDefaultConfiguration<char>();
-            var genome = new Genome<char>(config, _pool);
+            var genome = new Genome<char>(config, _pool, _possibleValues);
             
             foreach(var chromosome in genome.Chromosomes)
             {
@@ -108,7 +116,7 @@ namespace GeneticAlgorithmTests
             var config = GATestHelper.GetDefaultConfiguration<char>();
             config.MaximumLifeSpan = 1;
 
-            var genome = new Genome<char>(config, _pool);
+            var genome = new Genome<char>(config, _pool, _possibleValues);
 
             var nextGen = genome.Advance();
             Assert.AreEqual(100, nextGen.Retired.Count());
@@ -123,7 +131,7 @@ namespace GeneticAlgorithmTests
             _pool = GATestHelper.GetTravelingSalesmanGenome(config);
 
             config.PreventDuplicationInPool = true;
-            var genome = new Genome<char>(config, _pool);
+            var genome = new Genome<char>(config, _pool, _possibleValues);
 
             var nextGen = genome.Advance();
             var hashset = new HashSet<string>();
@@ -140,7 +148,7 @@ namespace GeneticAlgorithmTests
         public void ItAllowsDuplicates()
         {
             var config = GATestHelper.GetDefaultConfiguration<char>();
-            var genome = new Genome<char>(config, _pool);
+            var genome = new Genome<char>(config, _pool, _possibleValues);
 
             var nextGen = genome.Advance();
             var hashset = new HashSet<string>();

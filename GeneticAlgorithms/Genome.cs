@@ -14,26 +14,29 @@ namespace GeneticAlgorithms
         private List<Chromosome<T>> NextGeneration = new List<Chromosome<T>>();
         public HashSet<string> OptionsInPool = new HashSet<string>();
         public List<Chromosome<T>> Retired = new List<Chromosome<T>>();
+        private T[] _possibleValues;
 
-        public Genome(GAConfiguration<T> configuration, Chromosome<T>[] chromosomes)
+        public Genome(GAConfiguration<T> configuration, Chromosome<T>[] chromosomes, T[] possibleValues)
         {
-            if (configuration == null || chromosomes == null || chromosomes.Length <=2)
+            if (configuration == null || chromosomes == null || chromosomes.Length <=2 || possibleValues == null || possibleValues.Length <= 2)
             {
                 throw new ArgumentException("Invalid parameters passed to the Genome");
             }
 
             Chromosomes = chromosomes;
             Configuration = configuration;
+            _possibleValues = possibleValues;
 
             SetChromosomesGenerationAndAge();
             DetermineFitnessScores();
         }
 
-        private Genome(GAConfiguration<T> configuration, Chromosome<T>[] chromosomes, int generationNumber, List<Chromosome<T>> retired = null)
+        private Genome(GAConfiguration<T> configuration, Chromosome<T>[] chromosomes, int generationNumber, T[] possibleValues, List<Chromosome<T>> retired = null)
         {
             Chromosomes = chromosomes;
             Configuration = configuration;
             GenerationNumber = ++generationNumber;
+            _possibleValues = possibleValues;
             Retired = retired;
 
             Retire();
@@ -69,7 +72,7 @@ namespace GeneticAlgorithms
             DetermineNextGeneration();
             DetermineFitnessScores();
 
-            return new Genome<T>(Configuration, NextGeneration.ToArray(), GenerationNumber, Retired);
+            return new Genome<T>(Configuration, NextGeneration.ToArray(), GenerationNumber, _possibleValues, Retired);
         }
 
         private void DetermineFitnessScores()
@@ -175,8 +178,8 @@ namespace GeneticAlgorithms
 
         private Chromosome<T> GetNewChromosome()
         {
-            var newChromosome = new Chromosome<T>(Chromosomes.First().Genes);
-            newChromosome.Genes.Shuffle(Configuration.Random);
+            var newChromosome = new Chromosome<T>(_possibleValues);
+            newChromosome.Genes.Shuffle(Configuration.RandomPool);
             return newChromosome;
         }
 
