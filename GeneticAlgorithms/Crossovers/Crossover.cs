@@ -22,8 +22,8 @@ namespace GeneticAlgorithms.Crossovers
             child.LastName = father.LastName;
             child.FirstName = NameGenerator.GetFirstName(configuration.RandomPool);
 
-            child.ParentsLastNames[0] = father.LastName;
-            child.ParentsLastNames[1] = mother.LastName;
+            child.ParentsLastNames.Add(father.LastName);
+            child.ParentsLastNames.Add(mother.LastName);
 
             return child;
         }

@@ -8,18 +8,18 @@ namespace GeneticAlgorithms.Utility
     {
         private static NameGenerator _generator = new NameGenerator();
 
-        public static string GetFirstName(Random random)
+        public static FirstName GetFirstName(Random random)
         {
-            if (random == null) { return null; }
-            var numberSelected = random.Next(1, _generator._firstNameEnumSize);
-            return ((FirstName)numberSelected).ToString();
+            if (random == null) { return FirstName.Aadhya; }
+            var numberSelected = random.Next(2, _generator._firstNameEnumSize);
+            return ((FirstName)numberSelected);
         }
 
-        public static string GetLastName(Random random)
+        public static LastName GetLastName(Random random)
         {
-            if (random == null) { return null; }
-            var numberSelected = random.Next(1, _generator._lastNameEnumSize);
-            return ((LastName)numberSelected).ToString();
+            if (random == null) { return LastName.Abbott; }
+            var numberSelected = random.Next(2, _generator._lastNameEnumSize);
+            return (LastName)numberSelected;
         }
 
         private int _firstNameEnumSize, _lastNameEnumSize;

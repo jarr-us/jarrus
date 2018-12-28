@@ -1,4 +1,6 @@
-﻿using System.Diagnostics;
+﻿using GeneticAlgorithms.Enums;
+using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace GeneticAlgorithms
 {
@@ -9,9 +11,9 @@ namespace GeneticAlgorithms
         public T[] Genes;
         public double FitnessScore;
         public int Children;
-        public string FirstName, LastName;
-
-        public string[] ParentsLastNames = new string[2];
+        public FirstName FirstName;
+        public LastName LastName;
+        public List<LastName> ParentsLastNames = new List<LastName>();
 
         public Chromosome(int geneSize)
         {

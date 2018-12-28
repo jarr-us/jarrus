@@ -35,15 +35,15 @@
             this.versionLbl = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.lastNameLbl = new System.Windows.Forms.Label();
+            this.allTimeBestLastNameLbl = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.msPerGenLbl = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.runsCompletedLbl = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.firstNameLbl = new System.Windows.Forms.Label();
+            this.allTimeBestFirstNameLbl = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.lowestScoreLbl = new System.Windows.Forms.Label();
+            this.allTimeBestLowestScoreLbl = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.generationLbl = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -67,6 +67,14 @@
             this.lastName8ProgressBar = new System.Windows.Forms.ProgressBar();
             this.lastName9ProgressBar = new System.Windows.Forms.ProgressBar();
             this.lastName10ProgressBar = new System.Windows.Forms.ProgressBar();
+            this.currentBestLastNameLbl = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.currentBestFirstNameLbl = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.currentBestLowestScoreLbl = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
             this.menuStrip.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -102,7 +110,7 @@
             this.versionLbl.BackColor = System.Drawing.SystemColors.Control;
             this.versionLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.versionLbl.ForeColor = System.Drawing.SystemColors.ButtonShadow;
-            this.versionLbl.Location = new System.Drawing.Point(305, 194);
+            this.versionLbl.Location = new System.Drawing.Point(313, 228);
             this.versionLbl.Name = "versionLbl";
             this.versionLbl.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.versionLbl.Size = new System.Drawing.Size(112, 24);
@@ -121,38 +129,46 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.lastNameLbl);
+            this.groupBox1.Controls.Add(this.label14);
+            this.groupBox1.Controls.Add(this.label13);
+            this.groupBox1.Controls.Add(this.currentBestLastNameLbl);
+            this.groupBox1.Controls.Add(this.label8);
+            this.groupBox1.Controls.Add(this.currentBestFirstNameLbl);
+            this.groupBox1.Controls.Add(this.label10);
+            this.groupBox1.Controls.Add(this.currentBestLowestScoreLbl);
+            this.groupBox1.Controls.Add(this.label12);
+            this.groupBox1.Controls.Add(this.allTimeBestLastNameLbl);
             this.groupBox1.Controls.Add(this.label7);
             this.groupBox1.Controls.Add(this.msPerGenLbl);
             this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.runsCompletedLbl);
             this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.firstNameLbl);
+            this.groupBox1.Controls.Add(this.allTimeBestFirstNameLbl);
             this.groupBox1.Controls.Add(this.label5);
-            this.groupBox1.Controls.Add(this.lowestScoreLbl);
+            this.groupBox1.Controls.Add(this.allTimeBestLowestScoreLbl);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.generationLbl);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Location = new System.Drawing.Point(12, 27);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(195, 164);
+            this.groupBox1.Size = new System.Drawing.Size(195, 225);
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Run Details";
             // 
-            // lastNameLbl
+            // allTimeBestLastNameLbl
             // 
-            this.lastNameLbl.Location = new System.Drawing.Point(97, 79);
-            this.lastNameLbl.Name = "lastNameLbl";
-            this.lastNameLbl.Size = new System.Drawing.Size(89, 13);
-            this.lastNameLbl.TabIndex = 13;
-            this.lastNameLbl.Text = "0";
-            this.lastNameLbl.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.allTimeBestLastNameLbl.Location = new System.Drawing.Point(97, 158);
+            this.allTimeBestLastNameLbl.Name = "allTimeBestLastNameLbl";
+            this.allTimeBestLastNameLbl.Size = new System.Drawing.Size(89, 13);
+            this.allTimeBestLastNameLbl.TabIndex = 13;
+            this.allTimeBestLastNameLbl.Text = "0";
+            this.allTimeBestLastNameLbl.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(6, 79);
+            this.label7.Location = new System.Drawing.Point(6, 158);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(58, 13);
             this.label7.TabIndex = 12;
@@ -160,7 +176,7 @@
             // 
             // msPerGenLbl
             // 
-            this.msPerGenLbl.Location = new System.Drawing.Point(97, 119);
+            this.msPerGenLbl.Location = new System.Drawing.Point(97, 201);
             this.msPerGenLbl.Name = "msPerGenLbl";
             this.msPerGenLbl.Size = new System.Drawing.Size(89, 13);
             this.msPerGenLbl.TabIndex = 11;
@@ -170,7 +186,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(6, 119);
+            this.label6.Location = new System.Drawing.Point(6, 201);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(86, 13);
             this.label6.TabIndex = 10;
@@ -195,37 +211,37 @@
             this.label2.TabIndex = 8;
             this.label2.Text = "Run Number";
             // 
-            // firstNameLbl
+            // allTimeBestFirstNameLbl
             // 
-            this.firstNameLbl.Location = new System.Drawing.Point(97, 66);
-            this.firstNameLbl.Name = "firstNameLbl";
-            this.firstNameLbl.Size = new System.Drawing.Size(89, 13);
-            this.firstNameLbl.TabIndex = 7;
-            this.firstNameLbl.Text = "0";
-            this.firstNameLbl.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.allTimeBestFirstNameLbl.Location = new System.Drawing.Point(97, 145);
+            this.allTimeBestFirstNameLbl.Name = "allTimeBestFirstNameLbl";
+            this.allTimeBestFirstNameLbl.Size = new System.Drawing.Size(89, 13);
+            this.allTimeBestFirstNameLbl.TabIndex = 7;
+            this.allTimeBestFirstNameLbl.Text = "0";
+            this.allTimeBestFirstNameLbl.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(6, 66);
+            this.label5.Location = new System.Drawing.Point(6, 145);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(57, 13);
             this.label5.TabIndex = 6;
             this.label5.Text = "First Name";
             // 
-            // lowestScoreLbl
+            // allTimeBestLowestScoreLbl
             // 
-            this.lowestScoreLbl.Location = new System.Drawing.Point(97, 53);
-            this.lowestScoreLbl.Name = "lowestScoreLbl";
-            this.lowestScoreLbl.Size = new System.Drawing.Size(89, 13);
-            this.lowestScoreLbl.TabIndex = 5;
-            this.lowestScoreLbl.Text = "0";
-            this.lowestScoreLbl.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.allTimeBestLowestScoreLbl.Location = new System.Drawing.Point(97, 132);
+            this.allTimeBestLowestScoreLbl.Name = "allTimeBestLowestScoreLbl";
+            this.allTimeBestLowestScoreLbl.Size = new System.Drawing.Size(89, 13);
+            this.allTimeBestLowestScoreLbl.TabIndex = 5;
+            this.allTimeBestLowestScoreLbl.Text = "0";
+            this.allTimeBestLowestScoreLbl.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 53);
+            this.label3.Location = new System.Drawing.Point(6, 132);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(72, 13);
             this.label3.TabIndex = 4;
@@ -430,12 +446,84 @@
             this.lastName10ProgressBar.Size = new System.Drawing.Size(86, 10);
             this.lastName10ProgressBar.TabIndex = 41;
             // 
+            // currentBestLastNameLbl
+            // 
+            this.currentBestLastNameLbl.Location = new System.Drawing.Point(97, 94);
+            this.currentBestLastNameLbl.Name = "currentBestLastNameLbl";
+            this.currentBestLastNameLbl.Size = new System.Drawing.Size(89, 13);
+            this.currentBestLastNameLbl.TabIndex = 19;
+            this.currentBestLastNameLbl.Text = "0";
+            this.currentBestLastNameLbl.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(6, 94);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(58, 13);
+            this.label8.TabIndex = 18;
+            this.label8.Text = "Last Name";
+            // 
+            // currentBestFirstNameLbl
+            // 
+            this.currentBestFirstNameLbl.Location = new System.Drawing.Point(97, 81);
+            this.currentBestFirstNameLbl.Name = "currentBestFirstNameLbl";
+            this.currentBestFirstNameLbl.Size = new System.Drawing.Size(89, 13);
+            this.currentBestFirstNameLbl.TabIndex = 17;
+            this.currentBestFirstNameLbl.Text = "0";
+            this.currentBestFirstNameLbl.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(6, 81);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(57, 13);
+            this.label10.TabIndex = 16;
+            this.label10.Text = "First Name";
+            // 
+            // currentBestLowestScoreLbl
+            // 
+            this.currentBestLowestScoreLbl.Location = new System.Drawing.Point(97, 68);
+            this.currentBestLowestScoreLbl.Name = "currentBestLowestScoreLbl";
+            this.currentBestLowestScoreLbl.Size = new System.Drawing.Size(89, 13);
+            this.currentBestLowestScoreLbl.TabIndex = 15;
+            this.currentBestLowestScoreLbl.Text = "0";
+            this.currentBestLowestScoreLbl.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(6, 68);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(72, 13);
+            this.label12.TabIndex = 14;
+            this.label12.Text = "Lowest Score";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(6, 55);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(65, 13);
+            this.label13.TabIndex = 20;
+            this.label13.Text = "Current Best";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(6, 119);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(68, 13);
+            this.label14.TabIndex = 21;
+            this.label14.Text = "All-Time Best";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(429, 225);
+            this.ClientSize = new System.Drawing.Size(429, 261);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.versionLbl);
@@ -464,15 +552,15 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label generationLbl;
-        private System.Windows.Forms.Label firstNameLbl;
+        private System.Windows.Forms.Label allTimeBestFirstNameLbl;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label lowestScoreLbl;
+        private System.Windows.Forms.Label allTimeBestLowestScoreLbl;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label runsCompletedLbl;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label msPerGenLbl;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label lastNameLbl;
+        private System.Windows.Forms.Label allTimeBestLastNameLbl;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label family10Lbl;
@@ -495,6 +583,14 @@
         private System.Windows.Forms.ProgressBar lastName4ProgressBar;
         private System.Windows.Forms.ProgressBar lastName3ProgressBar;
         private System.Windows.Forms.ProgressBar lastName2ProgressBar;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label currentBestLastNameLbl;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label currentBestFirstNameLbl;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label currentBestLowestScoreLbl;
+        private System.Windows.Forms.Label label12;
     }
 }
 

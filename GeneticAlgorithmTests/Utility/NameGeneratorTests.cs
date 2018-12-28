@@ -1,4 +1,5 @@
 ﻿using System;
+using GeneticAlgorithms.Enums;
 using GeneticAlgorithms.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -22,17 +23,17 @@ namespace GeneticAlgorithmTests.Utility
         }
 
         [TestMethod]
-        public void ItWillReturnNullIfRandomIsNullForFirstName()
+        public void ItWillReturnAadhyaIfRandomIsNullForFirstName()
         {
             var firstName = NameGenerator.GetFirstName(null);
-            Assert.IsNull(firstName);
+            Assert.AreEqual(firstName, FirstName.Aadhya);
         }
 
         [TestMethod]
-        public void ItWillReturnNullIfRandomIsNullForLastName()
+        public void ItWillReturnAbbottIfRandomIsNullForLastName()
         {
             var lastName = NameGenerator.GetLastName(null);
-            Assert.IsNull(lastName);
+            Assert.AreEqual(lastName, LastName.Abbott);
         }
     }
 }

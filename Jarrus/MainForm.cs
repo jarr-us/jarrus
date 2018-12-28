@@ -1,4 +1,7 @@
-﻿using Jarrus.Models;
+﻿using Baseball.Models;
+using GeneticAlgorithms;
+using GeneticAlgorithms.Enums;
+using Jarrus.Models;
 using Kanan;
 using System;
 using System.Collections.Generic;
@@ -74,10 +77,21 @@ namespace Jarrus
             var elapsedMs = _sw.ElapsedMilliseconds;
             var msPerGeneration = elapsedMs / (1.0 * (_mlbIteration.GARun.CurrentGeneration - _lastGenSeen));
 
+            var allTimeBest = _mlbIteration.GARun.LowestChromosome;
+
+            var currentLowestScore = _mlbIteration.GARun.Population.Chromosomes.Min(o => o.FitnessScore);
+            var currentLowest = _mlbIteration.GARun.Population.Chromosomes.Where(o => o.FitnessScore == currentLowestScore).First();
+            
+            TextUpdater.SetText(this, currentBestLowestScoreLbl, currentLowest.FitnessScore + "");
+            TextUpdater.SetText(this, currentBestFirstNameLbl, currentLowest.FirstName + "");
+            TextUpdater.SetText(this, currentBestLastNameLbl, currentLowest.LastName + "");
+
             TextUpdater.SetText(this, generationLbl, _mlbIteration.GARun.CurrentGeneration + "");
-            TextUpdater.SetText(this, firstNameLbl, _mlbIteration.GARun.LowestChromosome.FirstName + "");
-            TextUpdater.SetText(this, lastNameLbl, _mlbIteration.GARun.LowestChromosome.LastName + "");
-            TextUpdater.SetText(this, lowestScoreLbl, _mlbIteration.GARun.LowestChromosome.FitnessScore + "");
+            TextUpdater.SetText(this, allTimeBestFirstNameLbl, allTimeBest.FirstName + "");
+            TextUpdater.SetText(this, allTimeBestLastNameLbl, allTimeBest.LastName + "");
+            TextUpdater.SetText(this, allTimeBestLowestScoreLbl, allTimeBest.FitnessScore + "");
+
+
             TextUpdater.SetText(this, runsCompletedLbl, RunNumber + "");
             TextUpdater.SetText(this, msPerGenLbl, msPerGeneration.ToString("#,##0.00"));
 
@@ -110,7 +124,7 @@ namespace Jarrus
             UpdateFamily(family10Lbl, lastName10ProgressBar, orderedTopTen, 9, divisor);
         }
 
-        private void UpdateFamily(Label familyLabel, ProgressBar progressBar, IEnumerable<KeyValuePair<string, int>> topTen, int familyRanking, double divisor)
+        private void UpdateFamily(Label familyLabel, ProgressBar progressBar, IEnumerable<KeyValuePair<LastName, int>> topTen, int familyRanking, double divisor)
         {
             var familyName = "";
             var percentage = 0.0;
@@ -118,7 +132,7 @@ namespace Jarrus
             if (topTen.Count() > familyRanking)
             {
                 var family = topTen.ElementAt(familyRanking);
-                familyName = family.Key;
+                familyName = family.Key.ToString();
                 percentage = family.Value / divisor;
             }
 
@@ -127,30 +141,21 @@ namespace Jarrus
             TextUpdater.SetProgressBar(this, progressBar, percentage);
         }
 
-        private Dictionary<string, int> GetFamilyDetails()
+        private Dictionary<LastName, int> GetFamilyDetails()
         {
             var totalLineages = _mlbIteration.GARun.Population.Chromosomes.Length * 2;
-            var dictionary = new Dictionary<string, int>();
+            var dictionary = new Dictionary<LastName, int>();
             var popToCheck = _mlbIteration.GARun.Population;
-
-            if (popToCheck.Chromosomes[0].ParentsLastNames[0] == null) { return null; }
-
+            
             foreach (var chromosome in popToCheck.Chromosomes)
             {
-                if (chromosome.ParentsLastNames[0] == null) { continue; }
+                if (chromosome.ParentsLastNames.Count() == 0) { continue; }
 
-                if (!dictionary.ContainsKey(chromosome.ParentsLastNames[0]))
+                foreach(var parent in chromosome.ParentsLastNames)
                 {
-                    dictionary.Add(chromosome.ParentsLastNames[0], 0);
+                    if (!dictionary.ContainsKey(parent)) { dictionary.Add(parent, 0); }
+                    dictionary[parent] = dictionary[parent] + 1;
                 }
-
-                if (!dictionary.ContainsKey(chromosome.ParentsLastNames[1]))
-                {
-                    dictionary.Add(chromosome.ParentsLastNames[1], 0);
-                }
-
-                dictionary[chromosome.ParentsLastNames[0]] = dictionary[chromosome.ParentsLastNames[0]] + 1;
-                dictionary[chromosome.ParentsLastNames[1]] = dictionary[chromosome.ParentsLastNames[1]] + 1;
             }
 
             return dictionary;
