@@ -58,7 +58,7 @@ namespace GeneticAlgorithmTests
             var run = ga.Run();
 
             Assert.AreEqual(_configuration.Iterations + 1, ga.Generation);
-            Assert.IsTrue(run.GetTotalMSToRun() > 0);
+            Assert.IsTrue(run.GetTotalMSToRun() >= 0);
         }
 
         [TestMethod]

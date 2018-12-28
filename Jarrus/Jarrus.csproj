@@ -27,7 +27,7 @@
     <MinimumRequiredVersion>1.0.0.2</MinimumRequiredVersion>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>install.htm</WebPage>
-    <ApplicationRevision>1</ApplicationRevision>
+    <ApplicationRevision>2</ApplicationRevision>
     <ApplicationVersion>1.0.1.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -60,10 +60,10 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>8DC63169A881A14C939FAE479DC3BA475CFA1303</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>A99C2DF90742254C795EB483FA4DF346C456F3D7</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>Jarrus_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>JarrusKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
@@ -74,15 +74,11 @@
   <ItemGroup>
     <Reference Include="Baseball, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>References\Baseball.dll</HintPath>
-    </Reference>
-    <Reference Include="GeneralHux, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>References\GeneralHux.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\jarrus\Baseball.dll</HintPath>
     </Reference>
     <Reference Include="Kanan, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>References\Kanan.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\jarrus\Kanan.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -115,7 +111,7 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="Jarrus_TemporaryKey.pfx" />
+    <None Include="JarrusKey.pfx" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -136,17 +132,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="jarrus.ico" />
-    <None Include="References\Baseball.dll" />
-    <None Include="References\GeneralHux.dll" />
-    <None Include="References\Kanan.dll" />
     <Content Include="Resources\jarrus.ico" />
     <Content Include="Resources\jarrus1.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\GeneticAlgorithms\GeneticAlgorithms.csproj">
-      <Project>{f804e8c6-c593-46bd-9b37-74d35d3c947b}</Project>
-      <Name>GeneticAlgorithms</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\" />
@@ -162,6 +149,12 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GeneticAlgorithms\GeneticAlgorithms.csproj">
+      <Project>{f804e8c6-c593-46bd-9b37-74d35d3c947b}</Project>
+      <Name>GeneticAlgorithms</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

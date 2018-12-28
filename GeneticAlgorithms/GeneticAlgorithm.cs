@@ -1,6 +1,7 @@
 ﻿using GeneticAlgorithms.Utility;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace GeneticAlgorithms
@@ -47,6 +48,7 @@ namespace GeneticAlgorithms
             for (GARun.CurrentGeneration = 0; GARun.CurrentGeneration < Configuration.Iterations; GARun.CurrentGeneration++)
             {
                 var nextGeneration = Genome.Advance();
+
                 Retired = Genome.Retired.OrderBy(o => o.FitnessScore).ToList();
 
                 DetermineBestChromosomeEver(Genome);

@@ -42,6 +42,8 @@
             this.lowestScoreLbl = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.generationLbl = new System.Windows.Forms.Label();
+            this.msPerGenLbl = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
             this.menuStrip.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -95,6 +97,8 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.msPerGenLbl);
+            this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.runsCompletedLbl);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.highestScoreLbl);
@@ -175,6 +179,24 @@
             this.generationLbl.Text = "0";
             this.generationLbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // msPerGenLbl
+            // 
+            this.msPerGenLbl.Location = new System.Drawing.Point(97, 80);
+            this.msPerGenLbl.Name = "msPerGenLbl";
+            this.msPerGenLbl.Size = new System.Drawing.Size(89, 13);
+            this.msPerGenLbl.TabIndex = 11;
+            this.msPerGenLbl.Text = "0";
+            this.msPerGenLbl.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(6, 80);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(86, 13);
+            this.label6.TabIndex = 10;
+            this.label6.Text = "MS / Generation";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -212,6 +234,8 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label runsCompletedLbl;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label msPerGenLbl;
+        private System.Windows.Forms.Label label6;
     }
 }
 
