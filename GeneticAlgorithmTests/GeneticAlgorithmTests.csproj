@@ -73,6 +73,7 @@
     <Compile Include="GeneticAlgorithmTests.cs" />
     <Compile Include="Utility\PopulationGeneratorTests.cs" />
     <Compile Include="Utility\ArrayExtensionTests.cs" />
+    <Compile Include="Utility\NameGeneratorTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -1,18 +1,16 @@
 ﻿using GeneticAlgorithms.Utility;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 
 namespace GeneticAlgorithms
 {
     public class GeneticAlgorithm<T>
-    {
-        public Population<T> Genome;
+    {       
         public GAConfiguration<T> Configuration { get; private set; }
         public int Generation { get; private set; }
         private T[] _possibleValues;
-        public GARun GARun;
+        public GARun<T> GARun;
 
         public List<Chromosome<T>> Retired = new List<Chromosome<T>>();
         public Chromosome<T> BestChromosomeEver { get; private set; }
@@ -23,10 +21,10 @@ namespace GeneticAlgorithms
             _possibleValues = possibleValues;
             ValidateSettings();
 
-            GARun = new GARun();
+            GARun = new GARun<T>();
             GARun.SetValues(Configuration);
 
-            GenerateInitialGenome();
+            GenerateInitialPopulation();
         }
 
         private void ValidateSettings()
@@ -37,23 +35,25 @@ namespace GeneticAlgorithms
             }
         }
 
-        private void GenerateInitialGenome()
+        private void GenerateInitialPopulation()
         {
             var randomPool = PopulationGenerator.Generate<T>(_possibleValues, Configuration);
-            Genome = new Population<T>(Configuration, randomPool, _possibleValues);
+            GARun.Population = new Population<T>(Configuration, randomPool, _possibleValues);
+            GARun.HighestChromosome = GARun.Population.Chromosomes[0];
+            GARun.LowestChromosome = GARun.Population.Chromosomes[0];
         }
 
-        public GARun Run()
+        public GARun<T> Run()
         {
             for (GARun.CurrentGeneration = 0; GARun.CurrentGeneration < Configuration.Iterations; GARun.CurrentGeneration++)
             {
-                var nextGeneration = Genome.Advance();
+                var nextGeneration = GARun.Population.Advance();
 
-                Retired = Genome.Retired.OrderBy(o => o.FitnessScore).ToList();
+                Retired = GARun.Population.Retired.OrderBy(o => o.FitnessScore).ToList();
 
-                DetermineBestChromosomeEver(Genome);
+                DetermineBestChromosomeEver(GARun.Population);
                 Generation = nextGeneration.GenerationNumber;
-                Genome = nextGeneration;
+                GARun.Population = nextGeneration;
             }
 
             GARun.End = DateTime.UtcNow;
@@ -62,19 +62,17 @@ namespace GeneticAlgorithms
 
         private void DetermineBestChromosomeEver(Population<T> genome)
         {
-            var highestScoringChromosome = Genome.Chromosomes.Where(o => o.FitnessScore == Genome.Chromosomes.Max(k => k.FitnessScore)).First();
-            var lowestScoringChromosome = Genome.Chromosomes.Where(o => o.FitnessScore == Genome.Chromosomes.Min(k => k.FitnessScore)).First();
+            var highestScoringChromosome = GARun.Population.Chromosomes.Where(o => o.FitnessScore == GARun.Population.Chromosomes.Max(k => k.FitnessScore)).First();
+            var lowestScoringChromosome = GARun.Population.Chromosomes.Where(o => o.FitnessScore == GARun.Population.Chromosomes.Min(k => k.FitnessScore)).First();
 
-            if (highestScoringChromosome.FitnessScore > GARun.HighestScore || GARun.HighestScore == -1)
+            if (highestScoringChromosome.FitnessScore > GARun.HighestChromosome.FitnessScore)
             {
-                GARun.HighestScore = highestScoringChromosome.FitnessScore;
-                GARun.HighestScoreGeneration = highestScoringChromosome.GenerationNumber;
+                GARun.HighestChromosome = highestScoringChromosome;
             }
 
-            if (lowestScoringChromosome.FitnessScore < GARun.LowestScore || GARun.LowestScore == -1)
+            if (lowestScoringChromosome.FitnessScore < GARun.LowestChromosome.FitnessScore)
             {
-                GARun.LowestScore = lowestScoringChromosome.FitnessScore;
-                GARun.LowestScoreGeneration = lowestScoringChromosome.GenerationNumber;
+                GARun.LowestChromosome = lowestScoringChromosome;
             }
         }
     }

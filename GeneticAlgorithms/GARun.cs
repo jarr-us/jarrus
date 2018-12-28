@@ -2,7 +2,7 @@
 
 namespace GeneticAlgorithms
 {
-    public class GARun
+    public class GARun<T>
     {
         public int Id { get; set; }
         public int CurrentGeneration { get; set; }
@@ -24,12 +24,11 @@ namespace GeneticAlgorithms
         public int ChildrenPerCouple { get; set; }
         public int RandomSeed { get; set; }
         public int RandomPoolGenerationSeed { get; set; }
-        public double HighestScore { get; set; }
-        public int HighestScoreGeneration { get; set; }
-        public double LowestScore { get; set; }
-        public int LowestScoreGeneration { get; set; }
-
-        public void SetValues<T>(GAConfiguration<T> config)
+        public Chromosome<T> LowestChromosome { get; set; }
+        public Chromosome<T> HighestChromosome { get; set; }
+        public Population<T> Population;
+        
+        public void SetValues(GAConfiguration<T> config)
         {
             Start = DateTime.UtcNow;
             SolutionType = config.FitnessCalculator.GetType().Name;
@@ -48,9 +47,6 @@ namespace GeneticAlgorithms
             ChildrenPerCouple = config.ChildrenPerCouple;
             RandomSeed = config.RandomSeed;
             RandomPoolGenerationSeed = config.RandomPoolGenerationSeed;
-
-            HighestScore = -1;
-            LowestScore = -1;
         }
 
         public double GetTotalMSToRun() { return (End - Start).TotalMilliseconds; }

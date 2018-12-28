@@ -1,6 +1,5 @@
 ﻿using System;
 using GeneticAlgorithms;
-using GeneticAlgorithms.ParentSelections;
 using GeneticAlgorithms.Utility;
 using GeneticAlgorithmTests.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -45,10 +44,8 @@ namespace GeneticAlgorithmTests
             var run = ga.Run();
 
             Assert.AreEqual(_configuration.Iterations + 1, ga.Generation);
-            Assert.AreNotEqual(-1, run.HighestScore);
-            Assert.AreNotEqual(-1, run.LowestScore);
-            Assert.AreNotEqual(-1, run.HighestScoreGeneration);
-            Assert.AreNotEqual(-1, run.LowestScoreGeneration);
+            Assert.AreNotEqual(-1, run.HighestChromosome.FitnessScore);
+            Assert.AreNotEqual(-1, run.LowestChromosome.FitnessScore);
         }
 
         [TestMethod]

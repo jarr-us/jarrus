@@ -5,6 +5,7 @@ namespace Jarrus.Models
     public class TextUpdater
     {
         delegate void SetTextCallback(Form f, Control ctrl, string text);
+        delegate void SetProgressCallback(Form f, ProgressBar ctrl, double progress);
         /// <summary>
         /// Set text property of various controls
         /// </summary>
@@ -24,6 +25,22 @@ namespace Jarrus.Models
             else
             {
                 ctrl.Text = text;
+            }
+        }
+
+        public static void SetProgressBar(Form form, ProgressBar ctrl, double progress)
+        {
+            // InvokeRequired required compares the thread ID of the 
+            // calling thread to the thread ID of the creating thread. 
+            // If these threads are different, it returns true. 
+            if (ctrl.InvokeRequired)
+            {
+                SetProgressCallback d = new SetProgressCallback(SetProgressBar);
+                form.Invoke(d, new object[] { form, ctrl, progress });
+            }
+            else
+            {
+                ctrl.Value = (int)progress;
             }
         }
     }

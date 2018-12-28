@@ -179,7 +179,11 @@ namespace GeneticAlgorithms
         private Chromosome<T> GetNewChromosome()
         {
             var newChromosome = new Chromosome<T>(_possibleValues);
+
             newChromosome.Genes.Shuffle(Configuration.RandomPool);
+            newChromosome.FirstName = NameGenerator.GetFirstName(Configuration.RandomPool);
+            newChromosome.LastName = NameGenerator.GetLastName(Configuration.RandomPool);
+
             return newChromosome;
         }
 

@@ -9,6 +9,9 @@ namespace GeneticAlgorithms
         public T[] Genes;
         public double FitnessScore;
         public int Children;
+        public string FirstName, LastName;
+
+        public string[] ParentsLastNames = new string[2];
 
         public Chromosome(int geneSize)
         {
