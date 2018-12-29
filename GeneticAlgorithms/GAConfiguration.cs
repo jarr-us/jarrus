@@ -10,6 +10,9 @@ namespace GeneticAlgorithms
 {
     public class GAConfiguration<T>
     {
+        private const int FIRST_NAME_SEED = 22;
+        private const int LAST_NAME_SEED = 35;
+
         public ParentSelection<T> ParentSelection;
         public FitnessFunction FitnessCalculator;
         public Crossover Crossover;
@@ -28,6 +31,8 @@ namespace GeneticAlgorithms
         public Random Random;
         public int RandomPoolGenerationSeed;
         public Random RandomPool;
+        public Random RandomFirstNameSeed = new Random(FIRST_NAME_SEED);
+        public Random RandomLastNameSeed = new Random(LAST_NAME_SEED);
 
         public GAConfiguration(ParentSelection<T> parentSelection, FitnessFunction calculator, Mutation mutation, Crossover crossover,
             bool lowestScoreIsBest = false, int poolSize = 100, int iterations = 50, double crossoverRate = 0.83,

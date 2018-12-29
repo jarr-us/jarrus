@@ -2,6 +2,7 @@
 {
     public enum LastName
     {
+        Jarrus = 0,
         Abbott = 1,
         Acevedo = 2,
         Acosta = 3,

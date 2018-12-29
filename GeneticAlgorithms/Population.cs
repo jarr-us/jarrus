@@ -3,6 +3,7 @@ using GeneticAlgorithms.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace GeneticAlgorithms
 {
@@ -77,10 +78,15 @@ namespace GeneticAlgorithms
 
         private void DetermineFitnessScores()
         {
-            foreach (var chromosome in Chromosomes)
+            //foreach (var chromosome in Chromosomes.Where(o => o.FitnessScore == 0).ToList())
+            //{
+            //    chromosome.FitnessScore = Configuration.FitnessCalculator.GetFitnessScoreFor(chromosome);
+            //}
+
+            Parallel.ForEach(Chromosomes.Where(o => o.FitnessScore == 0).ToList(), chromosome =>
             {
                 chromosome.FitnessScore = Configuration.FitnessCalculator.GetFitnessScoreFor(chromosome);
-            }
+            });
         }
 
         private void SetupNextGenerationObjects()
@@ -181,8 +187,8 @@ namespace GeneticAlgorithms
             var newChromosome = new Chromosome<T>(_possibleValues);
 
             newChromosome.Genes.Shuffle(Configuration.RandomPool);
-            newChromosome.FirstName = NameGenerator.GetFirstName(Configuration.RandomPool);
-            newChromosome.LastName = NameGenerator.GetLastName(Configuration.RandomPool);
+            newChromosome.FirstName = NameGenerator.GetFirstName(Configuration.RandomFirstNameSeed);
+            newChromosome.LastName = NameGenerator.GetLastName(Configuration.RandomLastNameSeed);
 
             return newChromosome;
         }

@@ -20,10 +20,9 @@ namespace GeneticAlgorithms.Crossovers
             var child = Perform<T>(father, mother, configuration);
 
             child.LastName = father.LastName;
-            child.FirstName = NameGenerator.GetFirstName(configuration.RandomPool);
+            child.FirstName = NameGenerator.GetFirstName(configuration.RandomFirstNameSeed);
 
-            child.ParentsLastNames.Add(father.LastName);
-            child.ParentsLastNames.Add(mother.LastName);
+            child.SetParents(father, mother);
 
             return child;
         }

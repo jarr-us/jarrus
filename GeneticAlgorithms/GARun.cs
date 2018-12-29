@@ -4,7 +4,8 @@ namespace GeneticAlgorithms
 {
     public class GARun<T>
     {
-        public int Id { get; set; }
+        public string UUID { get; set; }
+        public string Session { get; set; }
         public int CurrentGeneration { get; set; }
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
@@ -15,7 +16,7 @@ namespace GeneticAlgorithms
         public string CrossoverType { get; set; }
         public bool LowestScoreIsBest { get; set; }
         public int PoolSize { get; set; }
-        public int Iterations { get; set; }
+        public int MaxGenerations { get; set; }
         public double CrossoverRate { get; set; }
         public double MutationRate { get; set; }
         public double ElitismRate { get; set; }
@@ -38,7 +39,7 @@ namespace GeneticAlgorithms
             CrossoverType = config.Crossover.GetType().Name;
             LowestScoreIsBest = config.LowestScoreIsBest;
             PoolSize = config.PoolSize;
-            Iterations = config.Iterations;
+            MaxGenerations = config.Iterations;
             CrossoverRate = config.CrossoverRate;
             MutationRate = config.MutationRate;
             ElitismRate = config.ElitismRate;

@@ -18,8 +18,8 @@ namespace GeneticAlgorithms.Utility
                 possibleValues.Shuffle(configuration.RandomPool);
                 list[i] = new Chromosome<T>((T[])possibleValues.Clone());
 
-                list[i].FirstName = NameGenerator.GetFirstName(configuration.RandomPool);
-                list[i].LastName = NameGenerator.GetLastName(configuration.RandomPool);
+                list[i].FirstName = NameGenerator.GetFirstName(configuration.RandomFirstNameSeed);
+                list[i].LastName = NameGenerator.GetLastName(configuration.RandomLastNameSeed);
             }
 
             return list;

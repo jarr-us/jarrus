@@ -2,6 +2,7 @@
 {
     public enum FirstName
     {
+        Kanan = 0,
         Aadhya = 1,
         Aaliyah = 2,
         Aarav = 3,

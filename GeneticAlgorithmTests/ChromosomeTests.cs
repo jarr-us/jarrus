@@ -1,5 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using GeneticAlgorithms;
+using GeneticAlgorithms.Enums;
+using GeneticAlgorithms.Utility;
 using GeneticAlgorithmTests.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -8,6 +12,9 @@ namespace GeneticAlgorithmTests
     [TestClass]
     public class ChromosomeTests
     {
+        private Random _random = new Random();
+        private List<LastName> _lastNamesUsed = new List<LastName>();
+
         [TestMethod]
         public void ItsConstructorDeterminesItsType()
         {
@@ -83,6 +90,59 @@ namespace GeneticAlgorithmTests
         {
             var charChromo = new Chromosome<char>();
             Assert.AreEqual("", charChromo.ToString());
+        }
+
+        [TestMethod]
+        public void ItHasADefaultName()
+        {
+            var chromo = new Chromosome<char>();
+            Assert.AreEqual(FirstName.Kanan, chromo.FirstName);
+            Assert.AreEqual(LastName.Jarrus, chromo.LastName);
+        }
+
+        [TestMethod]
+        public void ItCanSetParents()
+        {
+            var father = GetRandomNamedChromosome();
+            var mother = GetRandomNamedChromosome();
+            var child = GetRandomNamedChromosome();
+
+            child.SetParents(father, mother);
+            Assert.AreEqual(2, child.Parents.Count);
+        }
+
+        [TestMethod]
+        public void ItCanSetLineage()
+        {
+            var father = GetPersonWithParents();
+            var mother = GetPersonWithParents();
+            var child = GetRandomNamedChromosome();
+
+            child.SetParents(father, mother);
+            Assert.AreEqual(6, child.Lineage.Count);
+        }
+
+        private Chromosome<char> GetPersonWithParents()
+        {
+            var father = GetRandomNamedChromosome();
+            var mother = GetRandomNamedChromosome();
+            var child = GetRandomNamedChromosome();
+
+            child.SetParents(father, mother);
+            return child;
+        }
+
+        private Chromosome<char> GetRandomNamedChromosome()
+        {
+            var chromo = new Chromosome<char>();
+
+            var lastName = NameGenerator.GetLastName(_random);
+            while(_lastNamesUsed.Contains(lastName)) { lastName = NameGenerator.GetLastName(_random); }
+
+            chromo.FirstName = NameGenerator.GetFirstName(_random);
+            chromo.LastName = lastName;
+
+            return chromo;
         }
     }
 }

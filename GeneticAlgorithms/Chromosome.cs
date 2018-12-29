@@ -13,7 +13,9 @@ namespace GeneticAlgorithms
         public int Children;
         public FirstName FirstName;
         public LastName LastName;
-        public List<LastName> ParentsLastNames = new List<LastName>();
+
+        public List<Chromosome<T>> Parents = new List<Chromosome<T>>();
+        public List<LastName> Lineage = new List<LastName>();
 
         public Chromosome(int geneSize)
         {
@@ -23,6 +25,44 @@ namespace GeneticAlgorithms
         public Chromosome(params T[] genes)
         {
             Genes = (T[])genes.Clone();
+        }
+
+        public void SetParents(params Chromosome<T>[] parents)
+        {
+            foreach(var parent in parents)
+            {
+                Parents.Add(parent);
+            }
+
+            SetLineage();
+        }
+
+        private void SetLineage()
+        {
+            foreach(var parent in Parents)
+            {
+                Lineage.Add(parent.LastName);
+
+                foreach(var grandparent in parent.Parents)
+                {
+                    Lineage.Add(grandparent.LastName);
+
+                    foreach(var gg in grandparent.Parents)
+                    {
+                        Lineage.Add(gg.LastName);
+
+                        foreach(var ggg in gg.Parents)
+                        {
+                            Lineage.Add(ggg.LastName);
+
+                            foreach(var gggg in ggg.Parents)
+                            {
+                                Lineage.Add(gggg.LastName);
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         public bool ShouldRetire(GAConfiguration<T> settings)

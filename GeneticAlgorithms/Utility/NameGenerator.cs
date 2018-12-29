@@ -11,14 +11,14 @@ namespace GeneticAlgorithms.Utility
         public static FirstName GetFirstName(Random random)
         {
             if (random == null) { return FirstName.Aadhya; }
-            var numberSelected = random.Next(2, _generator._firstNameEnumSize);
+            var numberSelected = random.Next(1, _generator._firstNameEnumSize);
             return ((FirstName)numberSelected);
         }
 
         public static LastName GetLastName(Random random)
         {
             if (random == null) { return LastName.Abbott; }
-            var numberSelected = random.Next(2, _generator._lastNameEnumSize);
+            var numberSelected = random.Next(1, _generator._lastNameEnumSize);
             return (LastName)numberSelected;
         }
 
