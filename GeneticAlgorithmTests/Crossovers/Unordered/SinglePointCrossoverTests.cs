@@ -1,6 +1,7 @@
 ﻿using System;
 using GeneticAlgorithms;
 using GeneticAlgorithms.Crossovers;
+using GeneticAlgorithms.Crossovers.Unordered;
 using GeneticAlgorithmTests.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 

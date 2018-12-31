@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 
-namespace GeneticAlgorithms.Crossovers
+namespace GeneticAlgorithms.Crossovers.Ordered
 {
-    public class OrderedCrossover : Crossover
+    /// <summary>
+    /// OX1
+    /// </summary>
+    public class OrderCrossover : Crossover
     {
-        public override int GetId() { return 1; }
-
         protected override Chromosome<T> Perform<T>(Chromosome<T> father, Chromosome<T> mother, GAConfiguration<T> settings)
         {
             var geneCount = father.Genes.Length;

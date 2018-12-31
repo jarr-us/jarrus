@@ -4,7 +4,7 @@ using System.Diagnostics;
 
 namespace GeneticAlgorithms
 {
-    [DebuggerDisplay("{FitnessScore}")]
+    [DebuggerDisplay("{FirstName} {LastName} {FitnessScore}")]
     public class Chromosome<T>
     {
         public int Age, GenerationNumber;

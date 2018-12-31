@@ -1,6 +1,7 @@
 ﻿using System;
 using GeneticAlgorithms;
 using GeneticAlgorithms.Crossovers;
+using GeneticAlgorithms.Crossovers.Ordered;
 using GeneticAlgorithmTests.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -20,7 +21,7 @@ namespace GeneticAlgorithmTests.Crossovers
         [TestMethod]
         public void ItCanPerformACrossover()
         {
-            var crossover = new OrderedCrossover();
+            var crossover = new OrderCrossover();
             var settings = GATestHelper.GetDefaultConfiguration<char>();
 
             for (int i = 0; i < GATestHelper.GetRandomInteger(16, 32); i++)

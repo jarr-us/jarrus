@@ -50,14 +50,15 @@
     <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Crossovers\SinglePointCrossoverTests.cs" />
+    <Compile Include="Crossovers\Unordered\SinglePointCrossoverTests.cs" />
     <Compile Include="Crossovers\CrossoverTests.cs" />
-    <Compile Include="Crossovers\OrderedCrossoverTests.cs" />
-    <Compile Include="Crossovers\TwoPointCrossoverTests.cs" />
-    <Compile Include="Crossovers\GAConfigurationTests.cs" />
+    <Compile Include="Crossovers\Ordered\OrderCrossoverTests.cs" />
+    <Compile Include="Crossovers\Unordered\TwoPointCrossoverTests.cs" />
+    <Compile Include="Crossovers\Unordered\GAConfigurationTests.cs" />
     <Compile Include="FitnessFunctions\FitnessFunctionTests.cs" />
     <Compile Include="Models\FitnessCalculators\TravelingSalesmanFitnessCalculator.cs" />
     <Compile Include="Models\GATestHelper.cs" />
+    <Compile Include="Models\ExampleClass.cs" />
     <Compile Include="Mutations\MutationTests.cs" />
     <Compile Include="Mutations\InversionMutationTests.cs" />
     <Compile Include="Mutations\ScrambleMutationTests.cs" />
@@ -71,6 +72,7 @@
     <Compile Include="ChromosomeTests.cs" />
     <Compile Include="PopulationTests.cs" />
     <Compile Include="GeneticAlgorithmTests.cs" />
+    <Compile Include="ChromosomeReferenceTests.cs" />
     <Compile Include="Utility\PopulationGeneratorTests.cs" />
     <Compile Include="Utility\ArrayExtensionTests.cs" />
     <Compile Include="Utility\NameGeneratorTests.cs" />

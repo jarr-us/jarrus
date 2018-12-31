@@ -78,11 +78,6 @@ namespace GeneticAlgorithms
 
         private void DetermineFitnessScores()
         {
-            //foreach (var chromosome in Chromosomes.Where(o => o.FitnessScore == 0).ToList())
-            //{
-            //    chromosome.FitnessScore = Configuration.FitnessCalculator.GetFitnessScoreFor(chromosome);
-            //}
-
             Parallel.ForEach(Chromosomes.Where(o => o.FitnessScore == 0).ToList(), chromosome =>
             {
                 chromosome.FitnessScore = Configuration.FitnessCalculator.GetFitnessScoreFor(chromosome);
@@ -121,6 +116,11 @@ namespace GeneticAlgorithms
         {
             var numberToGrab = (int)(Configuration.ElitismRate * Chromosomes.Length);
 
+            if (Configuration.ElitismRate > 0)
+            {
+                numberToGrab = Math.Max(1, numberToGrab);
+            }
+
             if (Configuration.LowestScoreIsBest)
             {
                 var ordered = Chromosomes.Where(k => !k.ShouldRetire(Configuration))
@@ -136,21 +136,21 @@ namespace GeneticAlgorithms
 
         private void GetNextGenerationChromosome()
         {
-            var parents = Configuration.ParentSelection.GetParents();
-
-            for (int i = 0; i < Configuration.ChildrenPerCouple; i++)
+            if (Configuration.GetNextDouble() <= Configuration.CrossoverRate)
             {
-                if (Configuration.GetNextDouble() <= Configuration.CrossoverRate)
+                var parents = Configuration.ParentSelection.GetParents();
+
+                for (int i = 0; i < Configuration.ChildrenPerCouple; i++)
                 {
                     var child = GetChild(parents);
                     Configuration.Mutation.Mutate(child, Configuration);
 
                     AddToNextGeneration(child);
                 }
-                else
-                {
-                    AddToNextGeneration(GetNewChromosome());
-                }
+            }
+            else
+            {
+                AddToNextGeneration(GetNewChromosome());
             }
         }
 

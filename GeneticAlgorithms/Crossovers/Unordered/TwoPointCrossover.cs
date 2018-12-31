@@ -1,9 +1,7 @@
-﻿namespace GeneticAlgorithms.Crossovers
+﻿namespace GeneticAlgorithms.Crossovers.Unordered
 {
     public class TwoPointCrossover : Crossover
     {
-        public override int GetId() { return 3; }
-
         protected override Chromosome<T> Perform<T>(Chromosome<T> father, Chromosome<T> mother, GAConfiguration<T> settings)
         {
             var geneCount = father.Genes.Length;

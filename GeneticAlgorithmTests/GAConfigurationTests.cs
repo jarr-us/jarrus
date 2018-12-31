@@ -1,6 +1,7 @@
 ﻿using System;
 using GeneticAlgorithms;
 using GeneticAlgorithms.Crossovers;
+using GeneticAlgorithms.Crossovers.Unordered;
 using GeneticAlgorithms.Mutations;
 using GeneticAlgorithms.ParentSelections;
 using GeneticAlgorithmTests.Models;

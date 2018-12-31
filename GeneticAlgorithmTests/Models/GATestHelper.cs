@@ -1,5 +1,6 @@
 ﻿using GeneticAlgorithms;
 using GeneticAlgorithms.Crossovers;
+using GeneticAlgorithms.Crossovers.Ordered;
 using GeneticAlgorithms.Mutations;
 using GeneticAlgorithms.ParentSelections;
 using GeneticAlgorithms.Utility;
@@ -45,7 +46,7 @@ namespace GeneticAlgorithmTests.Models
                 new RouletteWheelSelection<T>(),
                 new TravelingSalesmanFitnessCalculator(),
                 new SwapMutation(),
-                new OrderedCrossover(),
+                new OrderCrossover(),
                 maximumLifeSpan: 10,
                 poolSize: 100
             );

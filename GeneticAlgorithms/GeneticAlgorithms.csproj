@@ -41,12 +41,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BasicTypes\JarrusObject.cs" />
     <Compile Include="Chromosome.cs" />
     <Compile Include="Crossovers\Crossover.cs" />
-    <Compile Include="Crossovers\OrderedCrossover.cs" />
-    <Compile Include="Crossovers\SinglePointCrossover.cs" />
-    <Compile Include="Crossovers\TwoPointCrossover.cs" />
-    <Compile Include="Crossovers\UniformCrossover.cs" />
+    <Compile Include="Crossovers\Ordered\OrderCrossover.cs" />
+    <Compile Include="Crossovers\Unordered\SinglePointCrossover.cs" />
+    <Compile Include="Crossovers\Unordered\TwoPointCrossover.cs" />
+    <Compile Include="Crossovers\Unordered\UniformCrossover.cs" />
     <Compile Include="Enums\FirstName.cs" />
     <Compile Include="Enums\LastName.cs" />
     <Compile Include="FitnessFunctions\FitnessFunction.cs" />
@@ -69,5 +70,6 @@
     <Compile Include="Utility\PopulationGenerator.cs" />
     <Compile Include="Utility\NameGenerator.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

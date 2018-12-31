@@ -1,12 +1,14 @@
-﻿using GeneticAlgorithms;
+﻿using System;
+using GeneticAlgorithms;
 using GeneticAlgorithms.Crossovers;
+using GeneticAlgorithms.Crossovers.Unordered;
 using GeneticAlgorithmTests.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace GeneticAlgorithmTests.Crossovers
 {
     [TestClass]
-    public class TwoPointCrossoverTests
+    public class GAConfigurationTests
     {
         [TestMethod]
         public void ItCanPerformACrossover()
@@ -14,12 +16,12 @@ namespace GeneticAlgorithmTests.Crossovers
             var father = new Chromosome<char>('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M');
             var mother = new Chromosome<char>('Z', 'Y', 'X', 'W', 'V', 'U', 'T', 'S', 'R', 'Q', 'P', 'O', 'N');
 
-            var settings = GATestHelper.GetDefaultConfiguration<char>();
-            var twoPoint = new TwoPointCrossover();
+            var uniform = new UniformCrossover();
 
             for (int i = 0; i < GATestHelper.GetRandomInteger(16, 32); i++)
             {
-                var child = twoPoint.Execute(father, mother, settings);
+                var child = uniform.Execute(father, mother, GATestHelper.GetDefaultConfiguration<char>());
+                Console.Out.WriteLine(child.ToString());
 
                 Assert.AreNotEqual(father.ToString(), child.ToString());
                 Assert.AreNotEqual(mother.ToString(), child.ToString());
