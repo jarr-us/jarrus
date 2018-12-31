@@ -1,4 +1,6 @@
-﻿namespace GeneticAlgorithms.Mutations
+﻿using GeneticAlgorithms.BasicTypes;
+
+namespace GeneticAlgorithms.Mutations
 {
     public class ShiftMutation : Mutation
     {
@@ -10,7 +12,7 @@
             Shift(chromosome, firstMutationPoint, secondMutationPoint);
         }
 
-        public void Shift<T>(Chromosome<T> chromosome, int start, int end)
+        public void Shift<T>(Chromosome<T> chromosome, int start, int end) where T : Gene
         {
             for (int i = 0; i < end - start; i++)
             {

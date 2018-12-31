@@ -1,9 +1,10 @@
-﻿using System;
+﻿using GeneticAlgorithms.BasicTypes;
+using System;
 using System.Linq;
 
 namespace GeneticAlgorithms.ParentSelections
 {
-    public abstract class ParentSelection<T>
+    public abstract class ParentSelection<T> where T : Gene
     {
         protected GAConfiguration<T> Configuration;
         protected Chromosome<T>[] Genome;

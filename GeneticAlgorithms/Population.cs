@@ -1,19 +1,21 @@
-﻿using GeneticAlgorithms.ParentSelections;
+﻿using GeneticAlgorithms.BasicTypes;
+using GeneticAlgorithms.ParentSelections;
 using GeneticAlgorithms.Utility;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace GeneticAlgorithms
 {
-    public class Population<T>
+    public class Population<T> where T : Gene
     {
         public Chromosome<T>[] Chromosomes;
         public GAConfiguration<T> Configuration;
         public int GenerationNumber = 1;
         private List<Chromosome<T>> NextGeneration = new List<Chromosome<T>>();
-        public HashSet<string> OptionsInPool = new HashSet<string>();
+        public HashSet<Chromosome<T>> OptionsInPool = new HashSet<Chromosome<T>>();
         public List<Chromosome<T>> Retired = new List<Chromosome<T>>();
         private T[] _possibleValues;
 
@@ -63,7 +65,7 @@ namespace GeneticAlgorithms
             if (Retired == null) { return; }
             foreach (var chromosome in Retired)
             {
-                OptionsInPool.Add(chromosome.ToString());
+                OptionsInPool.Add(chromosome);
             }
         }
 
@@ -106,10 +108,17 @@ namespace GeneticAlgorithms
         {
             AddElitiesToNextGeneration();
 
+            var sw = new Stopwatch();
+            sw.Start();
+
             while (NextGeneration.Count < Chromosomes.Length)
             {
                 GetNextGenerationChromosome();
             }
+
+            var ms = sw.ElapsedMilliseconds;
+            var ticks = sw.ElapsedTicks;
+            Console.Out.WriteLine();
         }
 
         private void AddElitiesToNextGeneration()
@@ -163,9 +172,9 @@ namespace GeneticAlgorithms
         {
             if (Configuration.PreventDuplicationInPool)
             {
-                if (!OptionsInPool.Contains(chromosome.ToString()))
+                if (!OptionsInPool.Contains(chromosome))
                 {
-                    OptionsInPool.Add(chromosome.ToString());
+                    OptionsInPool.Add(chromosome);
 
                     if (NextGeneration.Count < Chromosomes.Length)
                     {

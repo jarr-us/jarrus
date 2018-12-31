@@ -11,8 +11,8 @@ namespace GeneticAlgorithmTests
     [TestClass]
     public class PopulationTests
     {
-        private Chromosome<char>[] _pool;
-        private char[] _possibleValues = new char[] { 'A', 'B', 'C', 'D' };
+        private Chromosome<ExampleGene>[] _pool;
+        private ExampleGene[] _possibleValues = GATestHelper.GetTravelingSalesmanChromosome().Genes;
 
         [TestInitialize]
         public void Setup()
@@ -23,7 +23,7 @@ namespace GeneticAlgorithmTests
         [TestMethod]
         public void ItHasAValidConstructor()
         {
-            var genome = new Population<char>(GATestHelper.GetDefaultConfiguration<char>(), _pool, _possibleValues);
+            var genome = new Population<ExampleGene>(GATestHelper.GetDefaultConfiguration<ExampleGene>(), _pool, _possibleValues);
             Assert.IsNotNull(genome.Configuration);
             Assert.IsNotNull(genome.Chromosomes);
         }
@@ -32,34 +32,34 @@ namespace GeneticAlgorithmTests
         [ExpectedException(typeof(ArgumentException))]
         public void ItThrowsAnExceptionIfConfigurationIsNull()
         {
-            new Population<char>(null, _pool, _possibleValues);
+            new Population<ExampleGene>(null, _pool, _possibleValues);
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void ItThrowsAnExceptionIfThePoolIsNull()
         {
-            new Population<char>(GATestHelper.GetDefaultConfiguration<char>(), null, _possibleValues);
+            new Population<ExampleGene>(GATestHelper.GetDefaultConfiguration<ExampleGene>(), null, _possibleValues);
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void ItThrowsAnExceptionIfThePoolIsNotLargeEnough()
         {
-            new Population<char>(GATestHelper.GetDefaultConfiguration<char>(), _pool.Subset(0, 2), _possibleValues);
+            new Population<ExampleGene>(GATestHelper.GetDefaultConfiguration<ExampleGene>(), _pool.Subset(0, 2), _possibleValues);
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void ItThrowsAnExceptionIfThePossibleValuesAreNotSet()
         {
-            new Population<char>(GATestHelper.GetDefaultConfiguration<char>(), _pool, null);
+            new Population<ExampleGene>(GATestHelper.GetDefaultConfiguration<ExampleGene>(), _pool, null);
         }
 
         [TestMethod]
         public void ItCanAdvanceToTheNextGeneration()
         {
-            var genome = new Population<char>(GATestHelper.GetDefaultConfiguration<char>(), _pool, _possibleValues);
+            var genome = new Population<ExampleGene>(GATestHelper.GetDefaultConfiguration<ExampleGene>(), _pool, _possibleValues);
             var nextGen = genome.Advance();
 
             Assert.AreEqual(1, genome.GenerationNumber);
@@ -69,11 +69,11 @@ namespace GeneticAlgorithmTests
         [TestMethod]
         public void ItCanAdvanceToTheNextGenerationViaImmigration()
         {
-            var config = GATestHelper.GetDefaultConfiguration<char>();
+            var config = GATestHelper.GetDefaultConfiguration<ExampleGene>();
             config.CrossoverRate = 0.0;
             config.ElitismRate = 0.0;
 
-            var genome = new Population<char>(config, _pool, _possibleValues);
+            var genome = new Population<ExampleGene>(config, _pool, _possibleValues);
             var nextGen = genome.Advance();
 
             Assert.AreEqual(1, genome.GenerationNumber);
@@ -89,10 +89,10 @@ namespace GeneticAlgorithmTests
         public void ItKeepsElities()
         {
             var toKeep = GATestHelper.GetRandomInteger(1, 99);
-            var config = GATestHelper.GetDefaultConfiguration<char>();
+            var config = GATestHelper.GetDefaultConfiguration<ExampleGene>();
             config.ElitismRate = 0.01 * toKeep;
 
-            var genome = new Population<char>(config, _pool, _possibleValues);
+            var genome = new Population<ExampleGene>(config, _pool, _possibleValues);
             var nextGen = genome.Advance();
 
             Assert.IsTrue(nextGen.Chromosomes.Where(o => o.GenerationNumber == 1).Count() > 0);
@@ -101,8 +101,8 @@ namespace GeneticAlgorithmTests
         [TestMethod]
         public void ItDeterminesFitnessScoreOnCreation()
         {
-            var config = GATestHelper.GetDefaultConfiguration<char>();
-            var genome = new Population<char>(config, _pool, _possibleValues);
+            var config = GATestHelper.GetDefaultConfiguration<ExampleGene>();
+            var genome = new Population<ExampleGene>(config, _pool, _possibleValues);
             
             foreach(var chromosome in genome.Chromosomes)
             {
@@ -113,10 +113,10 @@ namespace GeneticAlgorithmTests
         [TestMethod]
         public void ItCanRetireChromosomes()
         {
-            var config = GATestHelper.GetDefaultConfiguration<char>();
+            var config = GATestHelper.GetDefaultConfiguration<ExampleGene>();
             config.MaximumLifeSpan = 1;
 
-            var genome = new Population<char>(config, _pool, _possibleValues);
+            var genome = new Population<ExampleGene>(config, _pool, _possibleValues);
 
             var nextGen = genome.Advance();
             Assert.AreEqual(100, nextGen.Retired.Count());
@@ -125,13 +125,13 @@ namespace GeneticAlgorithmTests
         [TestMethod]
         public void ItDoesNotAllowDuplicates()
         {
-            var config = GATestHelper.GetDefaultConfiguration<char>();
+            var config = GATestHelper.GetDefaultConfiguration<ExampleGene>();
             config.PoolSize = 10;
 
             _pool = GATestHelper.GetTravelingSalesmanGenome(config);
 
             config.PreventDuplicationInPool = true;
-            var genome = new Population<char>(config, _pool, _possibleValues);
+            var genome = new Population<ExampleGene>(config, _pool, _possibleValues);
 
             var nextGen = genome.Advance();
             var hashset = new HashSet<string>();
@@ -147,8 +147,8 @@ namespace GeneticAlgorithmTests
         [TestMethod]
         public void ItAllowsDuplicates()
         {
-            var config = GATestHelper.GetDefaultConfiguration<char>();
-            var genome = new Population<char>(config, _pool, _possibleValues);
+            var config = GATestHelper.GetDefaultConfiguration<ExampleGene>();
+            var genome = new Population<ExampleGene>(config, _pool, _possibleValues);
 
             var nextGen = genome.Advance();
             var hashset = new HashSet<string>();

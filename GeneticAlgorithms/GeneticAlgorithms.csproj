@@ -41,7 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BasicTypes\JarrusObject.cs" />
+    <Compile Include="BasicTypes\Gene.cs" />
     <Compile Include="Chromosome.cs" />
     <Compile Include="Crossovers\Crossover.cs" />
     <Compile Include="Crossovers\Ordered\OrderCrossover.cs" />

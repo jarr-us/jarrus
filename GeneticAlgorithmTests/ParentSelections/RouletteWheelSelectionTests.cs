@@ -9,7 +9,7 @@ namespace GeneticAlgorithmTests.ParentSelections
     [TestClass]
     public class RouletteWheelSelectionTests
     {
-        private Chromosome<char>[] _pool;
+        private Chromosome<ExampleGene>[] _pool;
 
         [TestInitialize]
         public void Setup()
@@ -36,16 +36,16 @@ namespace GeneticAlgorithmTests.ParentSelections
         [TestMethod]
         public void ItHasAValidConstructor()
         {
-            var parentSelection = new RouletteWheelSelection<char>();
-            parentSelection.Setup(_pool, GATestHelper.GetDefaultConfiguration<char>());
+            var parentSelection = new RouletteWheelSelection<ExampleGene>();
+            parentSelection.Setup(_pool, GATestHelper.GetDefaultConfiguration<ExampleGene>());
             parentSelection.GetParents();
         }
 
         [TestMethod]
         public void ItCanGetAValidParent()
         {
-            var parentSelection = new RouletteWheelSelection<char>();
-            parentSelection.Setup(_pool, GATestHelper.GetDefaultConfiguration<char>());
+            var parentSelection = new RouletteWheelSelection<ExampleGene>();
+            parentSelection.Setup(_pool, GATestHelper.GetDefaultConfiguration<ExampleGene>());
 
             var parent = parentSelection.GetParent(0.22);
             Assert.IsNotNull(parent);
@@ -54,8 +54,8 @@ namespace GeneticAlgorithmTests.ParentSelections
         [TestMethod]
         public void ItCanReturnParents()
         {
-            var parentSelection = new RouletteWheelSelection<char>();
-            parentSelection.Setup(_pool, GATestHelper.GetDefaultConfiguration<char>());
+            var parentSelection = new RouletteWheelSelection<ExampleGene>();
+            parentSelection.Setup(_pool, GATestHelper.GetDefaultConfiguration<ExampleGene>());
 
             var parent = parentSelection.GetParents();
             Assert.IsNotNull(parent);
@@ -66,8 +66,8 @@ namespace GeneticAlgorithmTests.ParentSelections
         [TestMethod]
         public void ItCantReturnTheSameParentTwice()
         {
-            var parentSelection = new RouletteWheelSelection<char>();
-            parentSelection.Setup(_pool, GATestHelper.GetDefaultConfiguration<char>());
+            var parentSelection = new RouletteWheelSelection<ExampleGene>();
+            parentSelection.Setup(_pool, GATestHelper.GetDefaultConfiguration<ExampleGene>());
 
             for (int i = 0; i < 1000; i++)
             {

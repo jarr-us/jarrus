@@ -1,10 +1,11 @@
-﻿using System;
+﻿using GeneticAlgorithms.BasicTypes;
+using System;
 
 namespace GeneticAlgorithms.Utility
 {
     public class PopulationGenerator
     {
-        public static Chromosome<T>[] Generate<T>(T[] possibleValues, GAConfiguration<T> configuration)
+        public static Chromosome<T>[] Generate<T>(T[] possibleValues, GAConfiguration<T> configuration) where T : Gene
         {
             if (possibleValues == null || possibleValues.Length <= 1 || configuration == null)
             {

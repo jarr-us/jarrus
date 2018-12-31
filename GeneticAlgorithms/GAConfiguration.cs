@@ -1,14 +1,14 @@
-﻿using GeneticAlgorithms.Crossovers;
+﻿using GeneticAlgorithms.BasicTypes;
+using GeneticAlgorithms.Crossovers;
 using GeneticAlgorithms.FitnessFunctions;
 using GeneticAlgorithms.Mutations;
 using GeneticAlgorithms.ParentSelections;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace GeneticAlgorithms
 {
-    public class GAConfiguration<T>
+    public class GAConfiguration<T> where T : Gene
     {
         private const int FIRST_NAME_SEED = 22;
         private const int LAST_NAME_SEED = 35;
@@ -26,7 +26,6 @@ namespace GeneticAlgorithms
         public bool PreventDuplicationInPool;
         public int MaximumLifeSpan;
         public int ChildrenPerCouple;
-        public List<T> Chromosome = new List<T>();
         public int RandomSeed;
         public Random Random;
         public int RandomPoolGenerationSeed;

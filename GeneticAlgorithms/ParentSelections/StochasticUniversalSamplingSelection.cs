@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using GeneticAlgorithms.BasicTypes;
+using System;
 
 namespace GeneticAlgorithms.ParentSelections
 {
-    public class StochasticUniversalSamplingSelection<T> : RankingWheel<T>
+    public class StochasticUniversalSamplingSelection<T> : RankingWheel<T> where T : Gene
     {
         public StochasticUniversalSamplingSelection() { }
 

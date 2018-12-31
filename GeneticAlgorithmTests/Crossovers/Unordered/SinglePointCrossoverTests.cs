@@ -2,6 +2,7 @@
 using GeneticAlgorithms;
 using GeneticAlgorithms.Crossovers;
 using GeneticAlgorithms.Crossovers.Unordered;
+using GeneticAlgorithms.Utility;
 using GeneticAlgorithmTests.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -13,35 +14,32 @@ namespace GeneticAlgorithmTests.Crossovers
         [TestMethod]
         public void ItCanPerformACrossover()
         {
-            var father = new Chromosome<char>('A', 'B', 'C', 'D');
-            var mother = new Chromosome<char>('Z', 'Y', 'X', 'W');
+            var father = GATestHelper.GetAlphabetCharacterChromosome();
+            var mother = GATestHelper.GetAlphabetCharacterChromosome();
+            mother.Genes.Shuffle();
 
             var singlePoint = new SinglePointCrossover();
 
-            for (int i = 0; i < GATestHelper.GetRandomInteger(16, 32); i++)
-            {
-                var child = singlePoint.Execute(father, mother, GATestHelper.GetDefaultConfiguration<char>());
-                Console.Out.WriteLine("Child: " + child.ToString());
+            var child = singlePoint.Execute(father, mother, GATestHelper.GetDefaultConfiguration<ExampleGene>());
+            Console.Out.WriteLine("Child: " + child.ToString());
 
-                Assert.AreNotEqual(father.ToString(), child.ToString());
-                Assert.AreNotEqual(mother.ToString(), child.ToString());
-            }
+            Assert.AreNotEqual(father.ToString(), child.ToString());
+            Assert.AreNotEqual(mother.ToString(), child.ToString());
         }
 
         [TestMethod]
         public void ItCanEnsureTheMotherAndFatherPassAtLeastOneGene()
         {
-            var father = new Chromosome<char>('A', 'B', 'C', 'D');
-            var mother = new Chromosome<char>('Z', 'Y', 'X', 'W');
+            var father = GATestHelper.GetTravelingSalesmanChromosome();
+            var mother = GATestHelper.GetTravelingSalesmanChromosome();
+            mother.Genes.Shuffle();
 
             var singlePoint = new SinglePointCrossover();
 
-            for (int i = 0; i < GATestHelper.GetRandomInteger(16, 32); i++)
+            for (int i = 0; i < GATestHelper.GetRandomInteger(2, 8); i++)
             {
-                var child = singlePoint.Execute(father, mother, GATestHelper.GetDefaultConfiguration<char>());
-
-                Assert.AreEqual('A', child.Genes[0]);
-                Assert.AreEqual('W', child.Genes[3]);
+                var child = singlePoint.Execute(father, mother, GATestHelper.GetDefaultConfiguration<ExampleGene>());
+                Assert.AreNotEqual(child, father);
             }
         }
     }

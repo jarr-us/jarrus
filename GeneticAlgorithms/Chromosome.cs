@@ -1,11 +1,14 @@
-﻿using GeneticAlgorithms.Enums;
+﻿using GeneticAlgorithms.BasicTypes;
+using GeneticAlgorithms.Enums;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
+using System.Text;
 
 namespace GeneticAlgorithms
 {
     [DebuggerDisplay("{FirstName} {LastName} {FitnessScore}")]
-    public class Chromosome<T>
+    public class Chromosome<T> where T : Gene
     {
         public int Age, GenerationNumber;
         public T[] Genes;
@@ -70,6 +73,43 @@ namespace GeneticAlgorithms
             return Age >= settings.MaximumLifeSpan && settings.MaximumLifeSpan != 0;
         }
 
-        public override string ToString() { return string.Join(",", Genes); }
+        public override string ToString() { return string.Join(",", (IEnumerable<Gene>) Genes); }
+
+        public static bool operator ==(Chromosome<T> obj1, Chromosome<T> obj2)
+        {
+            if (ReferenceEquals(obj1, obj2)) { return true; }
+            if (ReferenceEquals(obj1, null)) { return false; }
+            if (ReferenceEquals(obj2, null)) { return false; }
+
+            return obj1.Equals(obj2);
+        }
+
+        public static bool operator !=(Chromosome<T> obj1, Chromosome<T> obj2) { return !(obj1 == obj2); }
+
+        public override bool Equals(object obj)
+        {
+            var castedObject = (Chromosome<T>)obj;
+
+            for(int i = 0; i < Genes.Length; i++)
+            {
+                if (Genes[i] != castedObject.Genes[i])
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        public override int GetHashCode() {
+            int sum = 0;
+
+            for(int i = 0; i < Genes.Length; i++)
+            {
+                sum += (i + 1) * Genes[i].GetHashCode();
+            }
+
+            return sum;
+        }
     }
 }

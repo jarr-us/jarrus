@@ -1,8 +1,9 @@
-﻿using System;
+﻿using GeneticAlgorithms.BasicTypes;
+using System;
 
 namespace GeneticAlgorithms
 {
-    public class GARun<T>
+    public class GARun<T> where T : Gene
     {
         public string UUID { get; set; }
         public string Session { get; set; }

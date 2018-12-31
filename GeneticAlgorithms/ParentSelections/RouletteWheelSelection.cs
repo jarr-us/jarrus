@@ -1,6 +1,8 @@
-﻿namespace GeneticAlgorithms.ParentSelections
+﻿using GeneticAlgorithms.BasicTypes;
+
+namespace GeneticAlgorithms.ParentSelections
 {
-    public class RouletteWheelSelection<T> : RankingWheel<T>
+    public class RouletteWheelSelection<T> : RankingWheel<T> where T : Gene
     {
         public override ChromosomeParents<T> GetParents()
         {

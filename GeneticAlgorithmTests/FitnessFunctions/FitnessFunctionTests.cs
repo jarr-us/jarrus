@@ -1,5 +1,6 @@
 ﻿using System;
 using GeneticAlgorithms;
+using GeneticAlgorithmTests.Models;
 using GeneticAlgorithmTests.Models.FitnessFunctions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -8,8 +9,6 @@ namespace GeneticAlgorithmTests.FitnessCalculators
     [TestClass]
     public class FitnessFunctionTests
     {
-        private char[] _validInputs = { 'A', 'B', 'C', 'D' };
-
         [TestMethod]
         public void ItHasAValidConstructor()
         {
@@ -20,20 +19,10 @@ namespace GeneticAlgorithmTests.FitnessCalculators
         public void ItCanDetermineAFitnessScore()
         {
             var fitnessGenerator = new TravelingSalesmanFitnessCalculator();
-            var chromosome = new Chromosome<char>('A', 'B', 'C', 'D');
+            var chromosome = GATestHelper.GetTravelingSalesmanChromosome();
 
             var value = fitnessGenerator.GetFitnessScoreFor(chromosome);
             Assert.AreEqual(10 + 35 + 30 + 20, value);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(InvalidCastException))]
-        public void ItFailsIfCharactersAreNotPassed()
-        {
-            var fitnessGenerator = new TravelingSalesmanFitnessCalculator();
-            var chromosome = new Chromosome<string>("A", "B", "C", "D");
-
-            fitnessGenerator.GetFitnessScoreFor(chromosome);
         }
     }
 }

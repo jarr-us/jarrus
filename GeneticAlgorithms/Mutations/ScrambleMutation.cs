@@ -1,9 +1,6 @@
-﻿using GeneticAlgorithms.Utility;
+﻿using GeneticAlgorithms.BasicTypes;
+using GeneticAlgorithms.Utility;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GeneticAlgorithms.Mutations
 {
@@ -24,7 +21,7 @@ namespace GeneticAlgorithms.Mutations
             Scramble(chromosome, firstMutationPoint, secondMutationPoint, settings);
         }
 
-        public void Scramble<T>(Chromosome<T> chromosome, int startingAtIndex, int endingAtIndex, GAConfiguration<T> settings)
+        public void Scramble<T>(Chromosome<T> chromosome, int startingAtIndex, int endingAtIndex, GAConfiguration<T> settings) where T : Gene
         {
             if (endingAtIndex <= startingAtIndex) { throw new ArgumentException("Scramble Mutation must have a swap length of at least 1."); }
             chromosome.Genes = chromosome.Genes.ShuffleSubset(startingAtIndex, endingAtIndex, settings.Random);

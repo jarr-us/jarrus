@@ -18,84 +18,74 @@ namespace GeneticAlgorithmTests
         [TestMethod]
         public void ItsConstructorDeterminesItsType()
         {
-            var doubleChromo = new Chromosome<double>(GATestHelper.GetRandomInteger(1, 255));
-            Assert.IsTrue(new double[1].GetType().ToString() == doubleChromo.Genes.GetType().ToString());
+            var doubleChromo = new Chromosome<ExampleGene>(GATestHelper.GetRandomInteger(1, 255));
+            Assert.IsTrue(new ExampleGene[1].GetType().ToString() == doubleChromo.Genes.GetType().ToString());
         }
 
         [TestMethod]
         public void ItsConstructorDeterminesTheGeneSize()
         {
             var random = GATestHelper.GetRandomInteger(1, 255);
-            var doubleChromo = new Chromosome<double>(random);
+            var doubleChromo = new Chromosome<ExampleGene>(random);
             Assert.AreEqual(random, doubleChromo.Genes.Length);
-        }
-
-        [TestMethod]
-        public void ItCanAcceptTheGenesAsAParameter()
-        {
-            var charChromo = new Chromosome<char>('A', 'B', 'C', 'D');
-            Assert.AreEqual('A', charChromo.Genes[0]);
-            Assert.AreEqual('B', charChromo.Genes[1]);
-            Assert.AreEqual('C', charChromo.Genes[2]);
-            Assert.AreEqual('D', charChromo.Genes[3]);
         }
 
         [TestMethod]
         public void ItsToStringMethodShowsAsCommaDelimited()
         {
-            var charChromo = new Chromosome<char>('A', 'B', 'C', 'D');
-            Assert.AreEqual("A,B,C,D", charChromo.ToString());
+            var ExampleGeneChromo = GATestHelper.GetTravelingSalesmanChromosome();
+            Assert.AreEqual("A,B,C,D", ExampleGeneChromo.ToString());
         }
 
         [TestMethod]
         public void ItCanDetermineIfTheChromosomeShouldRetireBasedOnAge_False()
         {
-            var charChromo = new Chromosome<char>('A', 'B', 'C', 'D');
-            charChromo.Age = 1;
+            var ExampleGeneChromo = GATestHelper.GetTravelingSalesmanChromosome();
+            ExampleGeneChromo.Age = 1;
 
-            Assert.IsFalse(charChromo.ShouldRetire(GATestHelper.GetDefaultConfiguration<char>()));
+            Assert.IsFalse(ExampleGeneChromo.ShouldRetire(GATestHelper.GetDefaultConfiguration<ExampleGene>()));
         }
 
         [TestMethod]
         public void ItCanDetermineIfTheChromosomeShouldRetireBasedOnAge()
         {
-            var charChromo = new Chromosome<char>('A', 'B', 'C', 'D');
-            charChromo.Age = 100;
+            var ExampleGeneChromo = GATestHelper.GetTravelingSalesmanChromosome();
+            ExampleGeneChromo.Age = 100;
 
-            Assert.IsTrue(charChromo.ShouldRetire(GATestHelper.GetDefaultConfiguration<char>()));
+            Assert.IsTrue(ExampleGeneChromo.ShouldRetire(GATestHelper.GetDefaultConfiguration<ExampleGene>()));
         }
 
         [TestMethod]
         public void ItWillNotRetireIfSettingDisabled()
         {
-            var charChromo = new Chromosome<char>('A', 'B', 'C', 'D');
-            charChromo.Age = 5000;
+            var ExampleGeneChromo = GATestHelper.GetTravelingSalesmanChromosome();
+            ExampleGeneChromo.Age = 5000;
 
-            var settings = GATestHelper.GetDefaultConfiguration<char>();
+            var settings = GATestHelper.GetDefaultConfiguration<ExampleGene>();
             settings.MaximumLifeSpan = 0;
 
-            Assert.IsFalse(charChromo.ShouldRetire(settings));
+            Assert.IsFalse(ExampleGeneChromo.ShouldRetire(settings));
         }
 
 
         [TestMethod]
         public void ItCanOutputGenesToCommaDelimitedString()
         {
-            var charChromo = new Chromosome<char>('A', 'B', 'C', 'D');
-            Assert.AreEqual("A,B,C,D", charChromo.ToString());
+            var ExampleGeneChromo = GATestHelper.GetTravelingSalesmanChromosome();
+            Assert.AreEqual("A,B,C,D", ExampleGeneChromo.ToString());
         }
 
         [TestMethod]
         public void ItCanOutputGenesToCommaDelimitedStringWhenEmpty()
         {
-            var charChromo = new Chromosome<char>();
-            Assert.AreEqual("", charChromo.ToString());
+            var ExampleGeneChromo = new Chromosome<ExampleGene>();
+            Assert.AreEqual("", ExampleGeneChromo.ToString());
         }
 
         [TestMethod]
         public void ItHasADefaultName()
         {
-            var chromo = new Chromosome<char>();
+            var chromo = new Chromosome<ExampleGene>();
             Assert.AreEqual(FirstName.Kanan, chromo.FirstName);
             Assert.AreEqual(LastName.Jarrus, chromo.LastName);
         }
@@ -122,7 +112,7 @@ namespace GeneticAlgorithmTests
             Assert.AreEqual(6, child.Lineage.Count);
         }
 
-        private Chromosome<char> GetPersonWithParents()
+        private Chromosome<ExampleGene> GetPersonWithParents()
         {
             var father = GetRandomNamedChromosome();
             var mother = GetRandomNamedChromosome();
@@ -132,9 +122,9 @@ namespace GeneticAlgorithmTests
             return child;
         }
 
-        private Chromosome<char> GetRandomNamedChromosome()
+        private Chromosome<ExampleGene> GetRandomNamedChromosome()
         {
-            var chromo = new Chromosome<char>();
+            var chromo = new Chromosome<ExampleGene>();
 
             var lastName = NameGenerator.GetLastName(_random);
             while(_lastNamesUsed.Contains(lastName)) { lastName = NameGenerator.GetLastName(_random); }

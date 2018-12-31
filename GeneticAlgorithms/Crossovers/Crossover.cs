@@ -1,4 +1,5 @@
-﻿using GeneticAlgorithms.Utility;
+﻿using GeneticAlgorithms.BasicTypes;
+using GeneticAlgorithms.Utility;
 using System;
 
 namespace GeneticAlgorithms.Crossovers
@@ -7,7 +8,7 @@ namespace GeneticAlgorithms.Crossovers
     {
         private const string INVALID_CHROMOSOME_SIZE = "The father and mother must be initialized, have at least two genes, and must be of the same size";
 
-        public Chromosome<T> Execute<T>(Chromosome<T> father, Chromosome<T> mother, GAConfiguration<T> configuration)
+        public Chromosome<T> Execute<T>(Chromosome<T> father, Chromosome<T> mother, GAConfiguration<T> configuration) where T : Gene
         {
             if (father == null || mother == null) { throw new ArgumentException(INVALID_CHROMOSOME_SIZE); }
             if (father.Genes == null || mother.Genes == null) { throw new ArgumentException(INVALID_CHROMOSOME_SIZE); }
@@ -27,6 +28,6 @@ namespace GeneticAlgorithms.Crossovers
             return child;
         }
 
-        protected abstract Chromosome<T> Perform<T>(Chromosome<T> father, Chromosome<T> mother, GAConfiguration<T> settings);
+        protected abstract Chromosome<T> Perform<T>(Chromosome<T> father, Chromosome<T> mother, GAConfiguration<T> settings) where T : Gene;
     }
 }

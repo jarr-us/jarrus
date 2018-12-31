@@ -9,13 +9,13 @@ namespace GeneticAlgorithmTests
     [TestClass]
     public class GeneticAlgorithmTests
     {
-        private char[] _exampleGenes;
-        private GAConfiguration<char> _configuration;
+        private ExampleGene[] _exampleGenes;
+        private GAConfiguration<ExampleGene> _configuration;
 
         [TestInitialize]
         public void Setup()
         {
-            _configuration = GATestHelper.GetDefaultConfiguration<char>();
+            _configuration = GATestHelper.GetDefaultConfiguration<ExampleGene>();
             _configuration.PreventDuplicationInPool = true;
             _configuration.PoolSize = 10;
             _configuration.Iterations = 5;
@@ -26,13 +26,13 @@ namespace GeneticAlgorithmTests
         [TestMethod]
         public void ItHasAValidConstructor()
         {
-            var ga = new GeneticAlgorithm<char>(_configuration, _exampleGenes);
+            var ga = new GeneticAlgorithm<ExampleGene>(_configuration, _exampleGenes);
         }
 
         [TestMethod]
         public void ItWillRunMultipleGenerations()
         {
-            var ga = new GeneticAlgorithm<char>(_configuration, _exampleGenes);
+            var ga = new GeneticAlgorithm<ExampleGene>(_configuration, _exampleGenes);
             ga.Run();
             Assert.AreEqual(_configuration.Iterations + 1, ga.Generation);
         }
@@ -40,7 +40,7 @@ namespace GeneticAlgorithmTests
         [TestMethod]
         public void ItReturnsAnObjectWithDetailsOfTheRun()
         {
-            var ga = new GeneticAlgorithm<char>(_configuration, _exampleGenes);
+            var ga = new GeneticAlgorithm<ExampleGene>(_configuration, _exampleGenes);
             var run = ga.Run();
 
             Assert.AreEqual(_configuration.Iterations + 1, ga.Generation);
@@ -51,7 +51,7 @@ namespace GeneticAlgorithmTests
         [TestMethod]
         public void ItSetsTheStartAndEndTimeOfARun()
         {
-            var ga = new GeneticAlgorithm<char>(_configuration, _exampleGenes);
+            var ga = new GeneticAlgorithm<ExampleGene>(_configuration, _exampleGenes);
             var run = ga.Run();
 
             Assert.AreEqual(_configuration.Iterations + 1, ga.Generation);
@@ -62,21 +62,21 @@ namespace GeneticAlgorithmTests
         [ExpectedException(typeof(ArgumentException))]
         public void ItThrowsAnExceptionIfTheConfigurationIsNotSet()
         {
-            var ga = new GeneticAlgorithm<char>(null, _exampleGenes);
+            var ga = new GeneticAlgorithm<ExampleGene>(null, _exampleGenes);
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void ItThrowsAnExceptionIfTheGenesAreNotSet()
         {
-            var ga = new GeneticAlgorithm<char>(_configuration, null);
+            var ga = new GeneticAlgorithm<ExampleGene>(_configuration, null);
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void ItThrowsAnExceptionIfTheGeneLengthIsInvalid()
         {
-            var ga = new GeneticAlgorithm<char>(_configuration, _exampleGenes.Subset(0, 1));
+            var ga = new GeneticAlgorithm<ExampleGene>(_configuration, _exampleGenes.Subset(0, 1));
         }
     }
 }

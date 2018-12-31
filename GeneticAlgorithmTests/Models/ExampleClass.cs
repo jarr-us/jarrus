@@ -1,12 +1,19 @@
-﻿namespace GeneticAlgorithmTests.Models
-{
-    public class ExampleClass
-    {
-        public string Gene;
+﻿using GeneticAlgorithms.BasicTypes;
 
-        public ExampleClass(string str)
+namespace GeneticAlgorithmTests.Models
+{
+    public class ExampleGene : Gene
+    {
+        public char Value;
+        public ExampleGene(char str) { Value = str; }
+
+        public override bool Equals(object obj)
         {
-            Gene = str;
+            var castedObject = (ExampleGene)obj;
+            return castedObject.Value == Value;
         }
+
+        public override string ToString() { return Value.ToString(); }
+        public override int GetHashCode() { return Value.GetHashCode(); }
     }
 }

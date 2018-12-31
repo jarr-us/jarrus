@@ -16,35 +16,35 @@ namespace GeneticAlgorithmTests
         [TestMethod]
         public void ItHasAValidConstructor()
         {
-            var settings = new GAConfiguration<char>(new RouletteWheelSelection<char>(), new TravelingSalesmanFitnessCalculator(), new SwapMutation(), new SinglePointCrossover());
+            var settings = new GAConfiguration<ExampleGene>(new RouletteWheelSelection<ExampleGene>(), new TravelingSalesmanFitnessCalculator(), new SwapMutation(), new SinglePointCrossover());
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void ItThrowsAnExceptionIfSelectionIsNull()
         {
-            new GAConfiguration<char>(null, new TravelingSalesmanFitnessCalculator(), new SwapMutation(), new SinglePointCrossover());
+            new GAConfiguration<ExampleGene>(null, new TravelingSalesmanFitnessCalculator(), new SwapMutation(), new SinglePointCrossover());
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void ItThrowsAnExceptionIfCalculatorIsNull()
         {
-            new GAConfiguration<char>(new RouletteWheelSelection<char>(), null, new SwapMutation(), new SinglePointCrossover());
+            new GAConfiguration<ExampleGene>(new RouletteWheelSelection<ExampleGene>(), null, new SwapMutation(), new SinglePointCrossover());
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void ItThrowsAnExceptionIfCrossoverIsNull()
         {
-            new GAConfiguration<char>(new RouletteWheelSelection<char>(), new TravelingSalesmanFitnessCalculator(), new SwapMutation(), null);
+            new GAConfiguration<ExampleGene>(new RouletteWheelSelection<ExampleGene>(), new TravelingSalesmanFitnessCalculator(), new SwapMutation(), null);
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void ItThrowsAnExceptionIfMutationIsNull()
         {
-            new GAConfiguration<char>(new RouletteWheelSelection<char>(), new TravelingSalesmanFitnessCalculator(), null, new SinglePointCrossover());
+            new GAConfiguration<ExampleGene>(new RouletteWheelSelection<ExampleGene>(), new TravelingSalesmanFitnessCalculator(), null, new SinglePointCrossover());
         }
 
         [TestMethod]
@@ -53,7 +53,7 @@ namespace GeneticAlgorithmTests
             var min = 1;
             var max = 10;
 
-            var config = GATestHelper.GetDefaultConfiguration<char>();
+            var config = GATestHelper.GetDefaultConfiguration<ExampleGene>();
 
             for(int i = 0; i < 100; i++)
             {
@@ -71,7 +71,7 @@ namespace GeneticAlgorithmTests
 
             var forbiddenNumberFour = 4;
 
-            var config = GATestHelper.GetDefaultConfiguration<char>();
+            var config = GATestHelper.GetDefaultConfiguration<ExampleGene>();
 
             for (int i = 0; i < 100; i++)
             {
@@ -88,7 +88,7 @@ namespace GeneticAlgorithmTests
             var min = 0;
             var max = 1;
             
-            var config = GATestHelper.GetDefaultConfiguration<char>();
+            var config = GATestHelper.GetDefaultConfiguration<ExampleGene>();
 
             for (int i = 0; i < 100; i++)
             {
@@ -102,7 +102,7 @@ namespace GeneticAlgorithmTests
         public void ItCanGetARandomBoolean()
         {
             var truesSeen = 0;
-            var config = GATestHelper.GetDefaultConfiguration<char>();
+            var config = GATestHelper.GetDefaultConfiguration<ExampleGene>();
 
             for (int i = 0; i < 100; i++)
             {
@@ -121,7 +121,7 @@ namespace GeneticAlgorithmTests
         {
             var chanceOfTrue = 1;
             var truesSeen = 0;
-            var config = GATestHelper.GetDefaultConfiguration<char>();
+            var config = GATestHelper.GetDefaultConfiguration<ExampleGene>();
 
             for (int i = 0; i < 100; i++)
             {
@@ -139,7 +139,7 @@ namespace GeneticAlgorithmTests
         [ExpectedException(typeof(ArgumentException))]
         public void ItThrowsAnExceptionIfMutationRateIsAboveOne()
         {
-            var config = GATestHelper.GetDefaultConfiguration<char>();
+            var config = GATestHelper.GetDefaultConfiguration<ExampleGene>();
             config.MutationRate = 1.01;
             config.ValidateProperties();
         }
@@ -148,7 +148,7 @@ namespace GeneticAlgorithmTests
         [ExpectedException(typeof(ArgumentException))]
         public void ItThrowsAnExceptionIfMutationRateIsBelowZero()
         {
-            var config = GATestHelper.GetDefaultConfiguration<char>();
+            var config = GATestHelper.GetDefaultConfiguration<ExampleGene>();
             config.MutationRate = -0.01;
             config.ValidateProperties();
         }
@@ -157,7 +157,7 @@ namespace GeneticAlgorithmTests
         [ExpectedException(typeof(ArgumentException))]
         public void ItThrowsAnExceptionIfCrossoverRateIsAboveOne()
         {
-            var config = GATestHelper.GetDefaultConfiguration<char>();
+            var config = GATestHelper.GetDefaultConfiguration<ExampleGene>();
             config.CrossoverRate = 1.01;
             config.ValidateProperties();
         }
@@ -166,7 +166,7 @@ namespace GeneticAlgorithmTests
         [ExpectedException(typeof(ArgumentException))]
         public void ItThrowsAnExceptionIfCrossoverRateIsBelowZero()
         {
-            var config = GATestHelper.GetDefaultConfiguration<char>();
+            var config = GATestHelper.GetDefaultConfiguration<ExampleGene>();
             config.CrossoverRate = -0.01;
             config.ValidateProperties();
         }
@@ -175,7 +175,7 @@ namespace GeneticAlgorithmTests
         [ExpectedException(typeof(ArgumentException))]
         public void ItThrowsAnExceptionIfElitismRateIsAboveOne()
         {
-            var config = GATestHelper.GetDefaultConfiguration<char>();
+            var config = GATestHelper.GetDefaultConfiguration<ExampleGene>();
             config.ElitismRate = 1.01;
             config.ValidateProperties();
         }
@@ -184,7 +184,7 @@ namespace GeneticAlgorithmTests
         [ExpectedException(typeof(ArgumentException))]
         public void ItThrowsAnExceptionIfElitismRateIsBelowZero()
         {
-            var config = GATestHelper.GetDefaultConfiguration<char>();
+            var config = GATestHelper.GetDefaultConfiguration<ExampleGene>();
             config.ElitismRate = -0.01;
             config.ValidateProperties();
         }

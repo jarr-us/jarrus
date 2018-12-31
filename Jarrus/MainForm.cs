@@ -13,7 +13,7 @@ namespace Jarrus
 {
     public partial class MainForm : Form
     {
-        private MLBCircleIteration _mlbIteration;
+        private MLBCircleIteration<Team> _mlbIteration;
         public static int RunNumber;
         private static Stopwatch _sw = new Stopwatch();
         private static int _lastGenSeen;
@@ -51,8 +51,8 @@ namespace Jarrus
 
         private void RunKanan()
         {
-            _mlbIteration = new MLBCircleIteration();
-            
+            _mlbIteration = new MLBCircleIteration<Team>();
+
             _minScoreSeen = _mlbIteration.GeneticAlgorithm.GARun.Population.Chromosomes[0].FitnessScore;
             _maxScoreSeen = _mlbIteration.GeneticAlgorithm.GARun.Population.Chromosomes[0].FitnessScore;
 
@@ -79,10 +79,9 @@ namespace Jarrus
             DrawCharts();
         }
 
-        
-
         private void DrawCharts()
         {
+            var chromosomes = _mlbIteration.GeneticAlgorithm.GARun.Population.Chromosomes;
             var min = _mlbIteration.GeneticAlgorithm.GARun.Population.Chromosomes.Select(o => o.FitnessScore).Min();
             var max = _mlbIteration.GeneticAlgorithm.GARun.Population.Chromosomes.Select(o => o.FitnessScore).Max();
 
@@ -98,7 +97,6 @@ namespace Jarrus
             }
 
             UIUpdater.SetChart(this, poolScoreChart, poolScoreGenerator.Points, _minScoreSeen, _maxScoreSeen, _poolScoreMaxYSeen);
-
         }
 
         private void DrawIterationDetails()
@@ -111,7 +109,7 @@ namespace Jarrus
 
             var currentLowestScore = population.Chromosomes.Min(o => o.FitnessScore);
             var currentLowest = population.Chromosomes.Where(o => o.FitnessScore == currentLowestScore).First();
-            
+
             UIUpdater.SetText(this, currentBestLowestScoreLbl, currentLowest.FitnessScore + "");
             UIUpdater.SetText(this, currentBestFirstNameLbl, currentLowest.FirstName + "");
             UIUpdater.SetText(this, currentBestLastNameLbl, currentLowest.LastName + "");

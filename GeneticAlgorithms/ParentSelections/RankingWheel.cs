@@ -1,10 +1,11 @@
-﻿using System;
+﻿using GeneticAlgorithms.BasicTypes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace GeneticAlgorithms.ParentSelections
 {
-    public abstract class RankingWheel<T> : ParentSelection<T>
+    public abstract class RankingWheel<T> : ParentSelection<T> where T : Gene
     {
         private List<double> rankings = new List<double>();
 

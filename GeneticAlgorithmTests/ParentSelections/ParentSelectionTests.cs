@@ -12,8 +12,8 @@ namespace GeneticAlgorithmTests.ParentSelections
         public void ItConstructsProperlyIfAllFitnessScoresAreAboveOrEqualToZero()
         {
             var genome = GATestHelper.GetTravelingSalesmanGenome();
-            var parentSelection = new RouletteWheelSelection<char>();
-            parentSelection.Setup(genome, GATestHelper.GetDefaultConfiguration<char>());
+            var parentSelection = new RouletteWheelSelection<ExampleGene>();
+            parentSelection.Setup(genome, GATestHelper.GetDefaultConfiguration<ExampleGene>());
         }
 
         [TestMethod]
@@ -22,9 +22,9 @@ namespace GeneticAlgorithmTests.ParentSelections
         {
             var genome = GATestHelper.GetTravelingSalesmanGenome();
             genome[0].FitnessScore = -1;
-            var parentSelection = new RouletteWheelSelection<char>();
+            var parentSelection = new RouletteWheelSelection<ExampleGene>();
 
-            parentSelection.Setup(genome, GATestHelper.GetDefaultConfiguration<char>());
+            parentSelection.Setup(genome, GATestHelper.GetDefaultConfiguration<ExampleGene>());
         }
     }
 }

@@ -1,11 +1,12 @@
 ﻿using GeneticAlgorithms;
+using GeneticAlgorithms.BasicTypes;
 using GeneticAlgorithms.Enums;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Jarrus.Metadata
 {
-    public class FamilyLineage<T>
+    public class FamilyLineage<T> where T : Gene
     {
         private Population<T> _population;
         private Dictionary<LastName, int> _lastNameUsage;

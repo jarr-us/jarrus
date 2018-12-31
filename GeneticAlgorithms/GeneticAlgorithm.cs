@@ -1,12 +1,13 @@
-﻿using GeneticAlgorithms.Utility;
+﻿using GeneticAlgorithms.BasicTypes;
+using GeneticAlgorithms.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace GeneticAlgorithms
 {
-    public class GeneticAlgorithm<T>
-    {       
+    public class GeneticAlgorithm<T> where T : Gene
+    {        
         public GAConfiguration<T> Configuration { get; private set; }
         public int Generation { get; private set; }
         private T[] _possibleValues;
@@ -60,7 +61,7 @@ namespace GeneticAlgorithms
             return GARun;
         }
 
-        private void DetermineBestChromosomeEver(Population<T> genome)
+        private void DetermineBestChromosomeEver(Population<T> genome) 
         {
             var highestScoringChromosome = GARun.Population.Chromosomes.Where(o => o.FitnessScore == GARun.Population.Chromosomes.Max(k => k.FitnessScore)).First();
             var lowestScoringChromosome = GARun.Population.Chromosomes.Where(o => o.FitnessScore == GARun.Population.Chromosomes.Min(k => k.FitnessScore)).First();

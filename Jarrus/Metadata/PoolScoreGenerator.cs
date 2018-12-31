@@ -1,11 +1,12 @@
 ﻿using GeneticAlgorithms;
+using GeneticAlgorithms.BasicTypes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Jarrus.Metadata
 {
-    public class PoolScoreGenerator<T>
+    public class PoolScoreGenerator<T> where T : Gene
     {
         private Population<T> _population;
         private List<double> _scores;

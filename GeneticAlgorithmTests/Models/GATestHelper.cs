@@ -1,4 +1,5 @@
 ﻿using GeneticAlgorithms;
+using GeneticAlgorithms.BasicTypes;
 using GeneticAlgorithms.Crossovers;
 using GeneticAlgorithms.Crossovers.Ordered;
 using GeneticAlgorithms.Mutations;
@@ -19,28 +20,44 @@ namespace GeneticAlgorithmTests.Models
             return _random.Next(min, max);
         }
 
-        public static Chromosome<char> GetTravelingSalesmanChromosome()
+        public static Chromosome<ExampleGene> GetTravelingSalesmanChromosome()
         {
-            return new Chromosome<char>('A', 'B', 'C', 'D');
+            return new Chromosome<ExampleGene>(
+                new ExampleGene('A'), 
+                new ExampleGene('B'), 
+                new ExampleGene('C'), 
+                new ExampleGene('D')
+            );
         }
 
-        public static Chromosome<char>[] GetTravelingSalesmanGenome()
+        public static Chromosome<ExampleGene>[] GetTravelingSalesmanGenome()
         {
-            return GetTravelingSalesmanGenome(GetDefaultConfiguration<char>());
+            return GetTravelingSalesmanGenome(GetDefaultConfiguration<ExampleGene>());
         }
 
-        public static Chromosome<char>[] GetTravelingSalesmanGenome(GAConfiguration<char> config)
+        public static Chromosome<ExampleGene>[] GetTravelingSalesmanGenome(GAConfiguration<ExampleGene> config)
         {
             var chromosome = GetTravelingSalesmanChromosome();
-            return PopulationGenerator.Generate<char>(chromosome.Genes, config);
+            return PopulationGenerator.Generate(chromosome.Genes, config);
         }
 
-        public static Chromosome<char> GetAlphabetCharacterChromosome()
+        public static Chromosome<ExampleGene> GetAlphabetCharacterChromosome()
         {
-            return new Chromosome<char>('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J');
+            return new Chromosome<ExampleGene>(
+                new ExampleGene('A'),
+                new ExampleGene('B'),
+                new ExampleGene('C'),
+                new ExampleGene('D'),
+                new ExampleGene('E'),
+                new ExampleGene('F'),
+                new ExampleGene('G'),
+                new ExampleGene('H'),
+                new ExampleGene('I'),
+                new ExampleGene('J')
+            );
         }
 
-        public static GAConfiguration<T> GetDefaultConfiguration<T>()
+        public static GAConfiguration<T> GetDefaultConfiguration<T>() where T : Gene
         {
             return new GAConfiguration<T>(
                 new RouletteWheelSelection<T>(),

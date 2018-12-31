@@ -36,13 +36,13 @@ namespace GeneticAlgorithmTests.Models.FitnessFunctions
 
         public override double GetFitnessScoreFor<T>(Chromosome<T> chromosome)
         {
-            var genes = (char[])(object)chromosome.Genes;
+            var genes = (ExampleGene[])(object)chromosome.Genes;
 
-            var val = GetDistanceBetween(genes[0], genes[1]);
+            var val = GetDistanceBetween(genes[0].Value, genes[1].Value);
 
-            val += GetDistanceBetween(genes[1], genes[2]);
-            val += GetDistanceBetween(genes[2], genes[3]);
-            val += GetDistanceBetween(genes[3], genes[0]);
+            val += GetDistanceBetween(genes[1].Value, genes[2].Value);
+            val += GetDistanceBetween(genes[2].Value, genes[3].Value);
+            val += GetDistanceBetween(genes[3].Value, genes[0].Value);
 
             return val;
         }
