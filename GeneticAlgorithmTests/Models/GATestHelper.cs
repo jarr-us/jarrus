@@ -30,6 +30,45 @@ namespace GeneticAlgorithmTests.Models
             );
         }
 
+        public static Chromosome<ExampleGene> GetNumericChromosomeOne()
+        {
+            return new Chromosome<ExampleGene>(
+                new ExampleGene('1'),
+                new ExampleGene('2'),
+                new ExampleGene('3'),
+                new ExampleGene('4'),
+                new ExampleGene('5'),
+                new ExampleGene('6'),
+                new ExampleGene('7')
+            );
+        }
+
+        public static Chromosome<ExampleGene> GetNumericChromosomeTwo()
+        {
+            return new Chromosome<ExampleGene>(
+                new ExampleGene('5'),
+                new ExampleGene('4'),
+                new ExampleGene('6'),
+                new ExampleGene('7'),
+                new ExampleGene('2'),
+                new ExampleGene('3'),
+                new ExampleGene('1')
+            );
+        }
+
+        public static Chromosome<ExampleGene> GetNumericChromosomeThree()
+        {
+            return new Chromosome<ExampleGene>(
+                new ExampleGene('5'),
+                new ExampleGene('4'),
+                new ExampleGene('6'),
+                new ExampleGene('7'),
+                new ExampleGene('2'),
+                new ExampleGene('1'),
+                new ExampleGene('3')
+            );
+        }
+
         public static Chromosome<ExampleGene>[] GetTravelingSalesmanGenome()
         {
             return GetTravelingSalesmanGenome(GetDefaultConfiguration<ExampleGene>());
@@ -65,7 +104,9 @@ namespace GeneticAlgorithmTests.Models
                 new SwapMutation(),
                 new OrderCrossover(),
                 maximumLifeSpan: 10,
-                poolSize: 100
+                poolSize: 100,
+                randomPoolGenerationSeed: 22,
+                randomSeed: 13
             );
         }
     }

@@ -44,7 +44,9 @@
     <Compile Include="BasicTypes\Gene.cs" />
     <Compile Include="Chromosome.cs" />
     <Compile Include="Crossovers\Crossover.cs" />
+    <Compile Include="Crossovers\Ordered\CycleCrossover.cs" />
     <Compile Include="Crossovers\Ordered\OrderCrossover.cs" />
+    <Compile Include="Crossovers\Ordered\PartialMappedCrossover.cs" />
     <Compile Include="Crossovers\Unordered\SinglePointCrossover.cs" />
     <Compile Include="Crossovers\Unordered\TwoPointCrossover.cs" />
     <Compile Include="Crossovers\Unordered\UniformCrossover.cs" />
@@ -67,6 +69,7 @@
     <Compile Include="ParentSelections\StochasticUniversalSamplingSelection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utility\ArrayExtensions.cs" />
+    <Compile Include="Utility\ListExtensions.cs" />
     <Compile Include="Utility\PopulationGenerator.cs" />
     <Compile Include="Utility\NameGenerator.cs" />
   </ItemGroup>

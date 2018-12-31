@@ -2,8 +2,6 @@
 using GeneticAlgorithms.Enums;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
 
 namespace GeneticAlgorithms
 {
@@ -99,6 +97,15 @@ namespace GeneticAlgorithms
             }
 
             return true;
+        }
+
+        public void ReplaceGenes(int startingPosition, params T[] genes)
+        {
+            var counter = 0;
+            for(int i = startingPosition; i < startingPosition + genes.Length; i++)
+            {
+                Genes[i] = genes[counter++];
+            }
         }
 
         public override int GetHashCode() {

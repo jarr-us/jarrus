@@ -1,6 +1,4 @@
 ﻿using System;
-using GeneticAlgorithms;
-using GeneticAlgorithms.Crossovers;
 using GeneticAlgorithms.Crossovers.Unordered;
 using GeneticAlgorithms.Utility;
 using GeneticAlgorithmTests.Models;
@@ -30,17 +28,13 @@ namespace GeneticAlgorithmTests.Crossovers
         [TestMethod]
         public void ItCanEnsureTheMotherAndFatherPassAtLeastOneGene()
         {
-            var father = GATestHelper.GetTravelingSalesmanChromosome();
-            var mother = GATestHelper.GetTravelingSalesmanChromosome();
+            var father = GATestHelper.GetAlphabetCharacterChromosome();
+            var mother = GATestHelper.GetAlphabetCharacterChromosome();
             mother.Genes.Shuffle();
 
             var singlePoint = new SinglePointCrossover();
-
-            for (int i = 0; i < GATestHelper.GetRandomInteger(2, 8); i++)
-            {
-                var child = singlePoint.Execute(father, mother, GATestHelper.GetDefaultConfiguration<ExampleGene>());
-                Assert.AreNotEqual(child, father);
-            }
+            var child = singlePoint.Execute(father, mother, GATestHelper.GetDefaultConfiguration<ExampleGene>());
+            Assert.AreNotEqual(child, father);
         }
     }
 }

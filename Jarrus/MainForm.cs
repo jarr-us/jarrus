@@ -1,4 +1,5 @@
 ﻿using Baseball.Models;
+using GeneticAlgorithms.Crossovers.Ordered;
 using Jarrus.Metadata;
 using Jarrus.Models;
 using Kanan;
@@ -52,7 +53,7 @@ namespace Jarrus
         private void RunKanan()
         {
             _mlbIteration = new MLBCircleIteration<Team>();
-
+            
             _minScoreSeen = _mlbIteration.GeneticAlgorithm.GARun.Population.Chromosomes[0].FitnessScore;
             _maxScoreSeen = _mlbIteration.GeneticAlgorithm.GARun.Population.Chromosomes[0].FitnessScore;
 

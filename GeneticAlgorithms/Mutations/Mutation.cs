@@ -1,5 +1,4 @@
-﻿
-using GeneticAlgorithms.BasicTypes;
+﻿using GeneticAlgorithms.BasicTypes;
 
 namespace GeneticAlgorithms.Mutations
 {
