@@ -51,7 +51,7 @@ namespace GeneticAlgorithmTests.Utility
                 allInts[i] = i;
             }
 
-            allInts = allInts.ShuffleSubset(1, 8);
+            allInts = allInts.ShuffleSubset(1, 8, new Random());
             Assert.AreEqual(0, allInts[0]);
             Assert.AreEqual(8, allInts[8]);
             Assert.AreEqual(9, allInts[9]);
@@ -72,7 +72,7 @@ namespace GeneticAlgorithmTests.Utility
                 allInts[i] = i;
             }
 
-            allInts = allInts.ShuffleSubset(-1, 8);
+            allInts = allInts.ShuffleSubset(-1, 8, new Random());
         }
 
         [TestMethod]
@@ -85,7 +85,7 @@ namespace GeneticAlgorithmTests.Utility
                 allInts[i] = i;
             }
 
-            allInts.Shuffle();
+            allInts.Shuffle(new Random());
 
             var isTheSame = 0;
             for (var i = 0; i < 100; i++)
@@ -103,7 +103,7 @@ namespace GeneticAlgorithmTests.Utility
         public void ItCanShuffleAnEmptyArray()
         {
             var allInts = new int[0];
-            allInts.Shuffle();
+            allInts.Shuffle(new Random());
         }
 
         private string GetString(int[] ints)

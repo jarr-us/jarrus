@@ -16,7 +16,7 @@ namespace GeneticAlgorithmTests.Crossovers
         {
             _father = GATestHelper.GetAlphabetCharacterChromosome();
             _mother = GATestHelper.GetAlphabetCharacterChromosome();
-            _mother.Genes.Shuffle();
+            _mother.Genes.Shuffle(new Random());
         }
 
         [TestMethod]

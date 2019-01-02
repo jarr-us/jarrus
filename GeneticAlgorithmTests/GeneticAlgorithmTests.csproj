@@ -64,7 +64,7 @@
     <Compile Include="Mutations\MutationTests.cs" />
     <Compile Include="Mutations\InversionMutationTests.cs" />
     <Compile Include="Mutations\ScrambleMutationTests.cs" />
-    <Compile Include="Mutations\ShiftMutationTests.cs" />
+    <Compile Include="Mutations\InsertMutationTests.cs" />
     <Compile Include="Mutations\SwapMutationTests.cs" />
     <Compile Include="ParentSelections\ParentSelectionTests.cs" />
     <Compile Include="ParentSelections\RouletteWheelSelectionTests.cs" />

@@ -60,7 +60,7 @@
     <Compile Include="Mutations\InversionMutation.cs" />
     <Compile Include="Mutations\Mutation.cs" />
     <Compile Include="Mutations\ScrambleMutation.cs" />
-    <Compile Include="Mutations\ShiftMutation.cs" />
+    <Compile Include="Mutations\InsertMutation.cs" />
     <Compile Include="Mutations\SwapMutation.cs" />
     <Compile Include="ParentSelections\ChromosomeParents.cs" />
     <Compile Include="ParentSelections\ParentSelection.cs" />

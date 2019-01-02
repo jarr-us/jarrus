@@ -14,7 +14,7 @@ namespace GeneticAlgorithmTests.Crossovers
         {
             var father = GATestHelper.GetAlphabetCharacterChromosome();
             var mother = GATestHelper.GetAlphabetCharacterChromosome();
-            mother.Genes.Shuffle();
+            mother.Genes.Shuffle(new Random());
 
             var singlePoint = new SinglePointCrossover();
 
@@ -30,7 +30,7 @@ namespace GeneticAlgorithmTests.Crossovers
         {
             var father = GATestHelper.GetAlphabetCharacterChromosome();
             var mother = GATestHelper.GetAlphabetCharacterChromosome();
-            mother.Genes.Shuffle();
+            mother.Genes.Shuffle(new Random());
 
             var singlePoint = new SinglePointCrossover();
             var child = singlePoint.Execute(father, mother, GATestHelper.GetDefaultConfiguration<ExampleGene>());

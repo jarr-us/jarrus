@@ -54,7 +54,7 @@ namespace GeneticAlgorithmTests
         {
             var one = GATestHelper.GetAlphabetCharacterChromosome();
             var two = GATestHelper.GetAlphabetCharacterChromosome();
-            two.Genes.Shuffle();
+            two.Genes.Shuffle(new Random());
 
             var hashsetOne = one.GetHashCode();
             var hashsetTwo = two.GetHashCode();

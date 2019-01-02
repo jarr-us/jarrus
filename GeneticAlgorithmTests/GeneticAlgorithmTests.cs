@@ -1,5 +1,6 @@
 ﻿using System;
 using GeneticAlgorithms;
+using GeneticAlgorithms.Enums;
 using GeneticAlgorithms.Utility;
 using GeneticAlgorithmTests.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -14,6 +15,11 @@ namespace GeneticAlgorithmTests
 
         [TestInitialize]
         public void Setup()
+        {
+            SetConfiguration();
+        }
+
+        private void SetConfiguration()
         {
             _configuration = GATestHelper.GetDefaultConfiguration<ExampleGene>();
             _configuration.PreventDuplicationInPool = true;
@@ -33,8 +39,19 @@ namespace GeneticAlgorithmTests
         public void ItWillRunMultipleGenerations()
         {
             var ga = new GeneticAlgorithm<ExampleGene>(_configuration, _exampleGenes);
-            ga.Run();
+            var runDetails = ga.Run();
             Assert.AreEqual(_configuration.Iterations + 1, ga.Generation);
+        }
+
+        [TestMethod]
+        public void ItIsRepeatable()
+        {
+            var ga = new GeneticAlgorithm<ExampleGene>(_configuration, _exampleGenes);
+            var runDetails = ga.Run();
+            Assert.AreEqual(_configuration.Iterations + 1, ga.Generation);
+
+            Assert.AreEqual(LastName.Alexander, runDetails.LowestChromosome.LastName);
+            Assert.AreEqual(80, runDetails.LowestChromosome.FitnessScore);
         }
 
         [TestMethod]

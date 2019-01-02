@@ -2,7 +2,7 @@
 
 namespace GeneticAlgorithms.Mutations
 {
-    public class ShiftMutation : Mutation
+    public class InsertMutation : Mutation
     {
         protected override void Perform<T>(Chromosome<T> chromosome, GAConfiguration<T> settings)
         {

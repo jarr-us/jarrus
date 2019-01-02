@@ -4,8 +4,6 @@ namespace GeneticAlgorithms.Utility
 {
     public static class ArrayExtensions
     {
-        private static Random Random = new Random();
-
         public static T[] Subset<T>(this T[] data, int index, int length)
         {
             T[] result = new T[length];
@@ -13,10 +11,8 @@ namespace GeneticAlgorithms.Utility
             return result;
         }
 
-        public static void Shuffle<T>(this T[] array, Random random = null)
+        public static void Shuffle<T>(this T[] array, Random random)
         {
-            if (random == null) { random = Random; }
-
             int n = array.Length;
             for (int i = 0; i < n; i++)
             {
@@ -27,7 +23,7 @@ namespace GeneticAlgorithms.Utility
             }
         }
 
-        public static T[] ShuffleSubset<T>(this T[] array, int start, int end, Random random = null)
+        public static T[] ShuffleSubset<T>(this T[] array, int start, int end, Random random)
         {
             var subset = array.Subset(start, end - start);
             subset.Shuffle(random);

@@ -14,7 +14,7 @@ namespace GeneticAlgorithmTests.Crossovers
         {
             var father = GATestHelper.GetAlphabetCharacterChromosome();
             var mother = GATestHelper.GetAlphabetCharacterChromosome();
-            mother.Genes.Shuffle();
+            mother.Genes.Shuffle(new Random());
 
             var uniform = new UniformCrossover();
 
