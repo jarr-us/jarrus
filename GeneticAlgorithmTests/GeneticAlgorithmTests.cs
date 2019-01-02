@@ -24,7 +24,7 @@ namespace GeneticAlgorithmTests
             _configuration = GATestHelper.GetDefaultConfiguration<ExampleGene>();
             _configuration.PreventDuplicationInPool = true;
             _configuration.PoolSize = 10;
-            _configuration.Iterations = 5;
+            _configuration.MaxGenerations = 5;
 
             _exampleGenes = GATestHelper.GetTravelingSalesmanChromosome().Genes;
         }
@@ -40,7 +40,7 @@ namespace GeneticAlgorithmTests
         {
             var ga = new GeneticAlgorithm<ExampleGene>(_configuration, _exampleGenes);
             var runDetails = ga.Run();
-            Assert.AreEqual(_configuration.Iterations + 1, ga.Generation);
+            Assert.AreEqual(_configuration.MaxGenerations + 1, ga.Generation);
         }
 
         [TestMethod]
@@ -48,10 +48,10 @@ namespace GeneticAlgorithmTests
         {
             var ga = new GeneticAlgorithm<ExampleGene>(_configuration, _exampleGenes);
             var runDetails = ga.Run();
-            Assert.AreEqual(_configuration.Iterations + 1, ga.Generation);
+            Assert.AreEqual(_configuration.MaxGenerations + 1, ga.Generation);
 
-            Assert.AreEqual(LastName.Alexander, runDetails.LowestChromosome.LastName);
-            Assert.AreEqual(80, runDetails.LowestChromosome.FitnessScore);
+            Assert.AreEqual(LastName.Miranda, runDetails.BestChromosome.LastName);
+            Assert.AreEqual(80, runDetails.BestChromosome.FitnessScore);
         }
 
         [TestMethod]
@@ -60,9 +60,8 @@ namespace GeneticAlgorithmTests
             var ga = new GeneticAlgorithm<ExampleGene>(_configuration, _exampleGenes);
             var run = ga.Run();
 
-            Assert.AreEqual(_configuration.Iterations + 1, ga.Generation);
-            Assert.AreNotEqual(-1, run.HighestChromosome.FitnessScore);
-            Assert.AreNotEqual(-1, run.LowestChromosome.FitnessScore);
+            Assert.AreEqual(_configuration.MaxGenerations + 1, ga.Generation);
+            Assert.AreNotEqual(-1, run.BestChromosome.FitnessScore);
         }
 
         [TestMethod]
@@ -71,7 +70,7 @@ namespace GeneticAlgorithmTests
             var ga = new GeneticAlgorithm<ExampleGene>(_configuration, _exampleGenes);
             var run = ga.Run();
 
-            Assert.AreEqual(_configuration.Iterations + 1, ga.Generation);
+            Assert.AreEqual(_configuration.MaxGenerations + 1, ga.Generation);
             Assert.IsTrue(run.GetTotalMSToRun() >= 0);
         }
 

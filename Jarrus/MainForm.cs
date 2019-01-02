@@ -104,7 +104,7 @@ namespace Jarrus
         {
             if (_mlbIteration.GeneticAlgorithm.GARun.Population.Chromosomes.Count() == 0) { return; }
 
-            var allTimeBest = _mlbIteration.GeneticAlgorithm.GARun.LowestChromosome;
+            var allTimeBest = _mlbIteration.GeneticAlgorithm.GARun.BestChromosome;
             var population = _mlbIteration.GeneticAlgorithm.GARun.Population;
             if (population.Chromosomes.Count() == 0) { return; }
 
@@ -144,7 +144,7 @@ namespace Jarrus
             var config = _mlbIteration.Configuration;
 
             UIUpdater.SetText(this, configPoolSizeLbl, config.PoolSize + "");
-            UIUpdater.SetText(this, configIterationsLbl, config.Iterations + "");
+            UIUpdater.SetText(this, configIterationsLbl, config.MaxGenerations + "");
             UIUpdater.SetText(this, configCrossoverRateLbl, config.CrossoverRate + "");
             UIUpdater.SetText(this, configMutationRateLbl, config.MutationRate + "");
             UIUpdater.SetText(this, configElitismRateLbl, config.ElitismRate + "");

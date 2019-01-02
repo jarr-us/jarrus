@@ -2,6 +2,7 @@
 using GeneticAlgorithms.BasicTypes;
 using GeneticAlgorithms.Crossovers;
 using GeneticAlgorithms.Crossovers.Ordered;
+using GeneticAlgorithms.Crossovers.Unordered;
 using GeneticAlgorithms.Mutations;
 using GeneticAlgorithms.ParentSelections;
 using GeneticAlgorithms.Utility;
@@ -18,6 +19,11 @@ namespace GeneticAlgorithmTests.Models
         {
             max++;
             return _random.Next(min, max);
+        }
+
+        public static double GetNextDouble()
+        {
+            return _random.NextDouble();
         }
 
         public static Chromosome<ExampleGene> GetTravelingSalesmanChromosome()
@@ -98,16 +104,25 @@ namespace GeneticAlgorithmTests.Models
 
         public static GAConfiguration<T> GetDefaultConfiguration<T>() where T : Gene
         {
-            return new GAConfiguration<T>(
-                new RouletteWheelSelection<T>(),
-                new TravelingSalesmanFitnessCalculator(),
-                new SwapMutation(),
-                new OrderCrossover(),
-                maximumLifeSpan: 10,
-                poolSize: 100,
-                randomPoolGenerationSeed: 22,
-                randomSeed: 13
-            );
+            return new GAConfiguration<T>( GetDummyTask<T>());
+        }
+
+        private static GATask<T> GetDummyTask<T>() where T : Gene
+        {
+            var task = new GATask<T>
+            {
+                ParentSelection = new RouletteWheelSelection<T>(),
+                FitnessFunction = new TravelingSalesmanFitnessCalculator(),
+                Mutation = new SwapMutation(),
+                Crossover = new OrderCrossover(),
+                MaximumLifeSpan = 10,
+                PoolSize = 100,
+                RandomPoolGenerationSeed = 22,
+                RandomSeed = 13,
+                ChildrenPerCouple = 2
+            };
+
+            return task;
         }
     }
 }

@@ -82,7 +82,7 @@ namespace GeneticAlgorithms
         {
             Parallel.ForEach(Chromosomes.Where(o => o.FitnessScore == 0).ToList(), chromosome =>
             {
-                chromosome.FitnessScore = Configuration.FitnessCalculator.GetFitnessScoreFor(chromosome);
+                chromosome.FitnessScore = Configuration.FitnessFunction.GetFitnessScoreFor(chromosome);
             });
         }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using GeneticAlgorithms;
+using GeneticAlgorithms.BasicTypes;
 using GeneticAlgorithms.Crossovers;
 using GeneticAlgorithms.Crossovers.Unordered;
 using GeneticAlgorithms.Mutations;
@@ -16,35 +17,57 @@ namespace GeneticAlgorithmTests
         [TestMethod]
         public void ItHasAValidConstructor()
         {
-            var settings = new GAConfiguration<ExampleGene>(new RouletteWheelSelection<ExampleGene>(), new TravelingSalesmanFitnessCalculator(), new SwapMutation(), new SinglePointCrossover());
+            var task = GetDummyTask();
+            var settings = new GAConfiguration<ExampleGene>(task);
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void ItThrowsAnExceptionIfSelectionIsNull()
         {
-            new GAConfiguration<ExampleGene>(null, new TravelingSalesmanFitnessCalculator(), new SwapMutation(), new SinglePointCrossover());
+            var task = GetDummyTask();
+            task.ParentSelection = null;
+            new GAConfiguration<ExampleGene>(task);
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void ItThrowsAnExceptionIfCalculatorIsNull()
         {
-            new GAConfiguration<ExampleGene>(new RouletteWheelSelection<ExampleGene>(), null, new SwapMutation(), new SinglePointCrossover());
+            var task = GetDummyTask();
+            task.FitnessFunction = null;
+            new GAConfiguration<ExampleGene>(task);
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void ItThrowsAnExceptionIfCrossoverIsNull()
         {
-            new GAConfiguration<ExampleGene>(new RouletteWheelSelection<ExampleGene>(), new TravelingSalesmanFitnessCalculator(), new SwapMutation(), null);
+            var task = GetDummyTask();
+            task.Crossover = null;
+            new GAConfiguration<ExampleGene>(task);
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void ItThrowsAnExceptionIfMutationIsNull()
         {
-            new GAConfiguration<ExampleGene>(new RouletteWheelSelection<ExampleGene>(), new TravelingSalesmanFitnessCalculator(), null, new SinglePointCrossover());
+            var task = GetDummyTask();
+            task.Mutation = null;
+            new GAConfiguration<ExampleGene>(task);
+        }
+
+        private GATask<ExampleGene> GetDummyTask()
+        {
+            var task = new GATask<ExampleGene>();
+
+            task.ParentSelection = new RouletteWheelSelection<ExampleGene>();
+            task.FitnessFunction = new TravelingSalesmanFitnessCalculator();
+            task.Mutation = new SwapMutation();
+            task.Crossover = new SinglePointCrossover();
+            task.ChildrenPerCouple = 4;
+
+            return task;
         }
 
         [TestMethod]

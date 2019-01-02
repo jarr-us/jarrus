@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="GeneralHux">
+      <HintPath>..\..\..\..\..\..\..\jarrus\GeneralHux.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -41,8 +44,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BasicTypes\GATask.cs" />
     <Compile Include="BasicTypes\Gene.cs" />
-    <Compile Include="Chromosome.cs" />
+    <Compile Include="BasicTypes\Chromosome.cs" />
     <Compile Include="Crossovers\Crossover.cs" />
     <Compile Include="Crossovers\Ordered\AlternatingPositionCrossover.cs" />
     <Compile Include="Crossovers\Ordered\CycleCrossover.cs" />
@@ -51,13 +55,15 @@
     <Compile Include="Crossovers\Unordered\SinglePointCrossover.cs" />
     <Compile Include="Crossovers\Unordered\TwoPointCrossover.cs" />
     <Compile Include="Crossovers\Unordered\UniformCrossover.cs" />
+    <Compile Include="Data\JarrusDAO.cs" />
+    <Compile Include="Data\JarrusIteration.cs" />
     <Compile Include="Enums\FirstName.cs" />
     <Compile Include="Enums\LastName.cs" />
     <Compile Include="FitnessFunctions\FitnessFunction.cs" />
-    <Compile Include="GAConfiguration.cs" />
-    <Compile Include="GARun.cs" />
+    <Compile Include="BasicTypes\GAConfiguration.cs" />
+    <Compile Include="BasicTypes\GARun.cs" />
     <Compile Include="GeneticAlgorithm.cs" />
-    <Compile Include="Population.cs" />
+    <Compile Include="BasicTypes\Population.cs" />
     <Compile Include="Mutations\InversionMutation.cs" />
     <Compile Include="Mutations\Mutation.cs" />
     <Compile Include="Mutations\ScrambleMutation.cs" />
@@ -73,6 +79,7 @@
     <Compile Include="Utility\ListExtensions.cs" />
     <Compile Include="Utility\PopulationGenerator.cs" />
     <Compile Include="Utility\NameGenerator.cs" />
+    <Compile Include="Utility\Reflection.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
