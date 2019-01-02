@@ -44,6 +44,7 @@
     <Compile Include="BasicTypes\Gene.cs" />
     <Compile Include="Chromosome.cs" />
     <Compile Include="Crossovers\Crossover.cs" />
+    <Compile Include="Crossovers\Ordered\AlternatingPositionCrossover.cs" />
     <Compile Include="Crossovers\Ordered\CycleCrossover.cs" />
     <Compile Include="Crossovers\Ordered\OrderCrossover.cs" />
     <Compile Include="Crossovers\Ordered\PartialMappedCrossover.cs" />

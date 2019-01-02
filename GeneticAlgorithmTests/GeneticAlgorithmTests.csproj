@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="Crossovers\Ordered\CycleCrossoverTests.cs" />
     <Compile Include="Crossovers\Ordered\PartialMappedCrossoverTests.cs" />
+    <Compile Include="Crossovers\Ordered\AlternatePositionCrossoverTests.cs" />
     <Compile Include="Crossovers\Unordered\SinglePointCrossoverTests.cs" />
     <Compile Include="Crossovers\CrossoverTests.cs" />
     <Compile Include="Crossovers\Ordered\OrderCrossoverTests.cs" />
