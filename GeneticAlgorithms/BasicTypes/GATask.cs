@@ -17,7 +17,7 @@ namespace GeneticAlgorithms.BasicTypes
         public Mutation Mutation;
 
         public bool LowestScoreIsBest { get; set; }
-        public int PoolSize { get; set; }
+        public int MaxPopulationSize { get; set; }
         public int MaxGenerations { get; set; }
         public double CrossoverRate { get; set; }
         public double MutationRate { get; set; }
@@ -27,6 +27,5 @@ namespace GeneticAlgorithms.BasicTypes
         public int ChildrenPerCouple { get; set; }
         public int RandomSeed { get; set; }
         public int RandomPoolGenerationSeed { get; set; }
-        public bool PreventDuplicationInPool;
     }
 }

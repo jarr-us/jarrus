@@ -107,7 +107,7 @@ namespace GeneticAlgorithmTests.Models
             return new GAConfiguration<T>( GetDummyTask<T>());
         }
 
-        private static GATask<T> GetDummyTask<T>() where T : Gene
+        public static GATask<T> GetDummyTask<T>() where T : Gene
         {
             var task = new GATask<T>
             {
@@ -116,10 +116,17 @@ namespace GeneticAlgorithmTests.Models
                 Mutation = new SwapMutation(),
                 Crossover = new OrderCrossover(),
                 MaximumLifeSpan = 10,
-                PoolSize = 100,
+                MaxPopulationSize = 100,
                 RandomPoolGenerationSeed = 22,
                 RandomSeed = 13,
-                ChildrenPerCouple = 2
+                ChildrenPerCouple = 2,
+                Session = "Test",
+                LowestScoreIsBest = true,
+                CrossoverRate = 0.4321,
+                MutationRate = 0.1234,
+                ElitismRate = 0.123,
+                PreventDuplications = false,
+                MaxGenerations = 2
             };
 
             return task;

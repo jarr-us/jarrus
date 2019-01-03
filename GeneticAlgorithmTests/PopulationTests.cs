@@ -126,11 +126,11 @@ namespace GeneticAlgorithmTests
         public void ItDoesNotAllowDuplicates()
         {
             var config = GATestHelper.GetDefaultConfiguration<ExampleGene>();
-            config.PoolSize = 10;
+            config.MaxPopulationSize = 10;
 
             _pool = GATestHelper.GetTravelingSalesmanGenome(config);
 
-            config.PreventDuplicationInPool = true;
+            config.PreventDuplications = true;
             var genome = new Population<ExampleGene>(config, _pool, _possibleValues);
 
             var nextGen = genome.Advance();
@@ -141,7 +141,7 @@ namespace GeneticAlgorithmTests
                 hashset.Add(chromosome.ToString());
             }
 
-            Assert.AreEqual(config.PoolSize, hashset.Count());
+            Assert.AreEqual(config.MaxPopulationSize, hashset.Count());
         }
 
         [TestMethod]
@@ -158,7 +158,7 @@ namespace GeneticAlgorithmTests
                 hashset.Add(chromosome.ToString());
             }
 
-            Assert.AreNotEqual(config.PoolSize, hashset.Count());
+            Assert.AreNotEqual(config.MaxPopulationSize, hashset.Count());
         }
     }
 }

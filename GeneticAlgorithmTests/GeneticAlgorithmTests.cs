@@ -22,8 +22,8 @@ namespace GeneticAlgorithmTests
         private void SetConfiguration()
         {
             _configuration = GATestHelper.GetDefaultConfiguration<ExampleGene>();
-            _configuration.PreventDuplicationInPool = true;
-            _configuration.PoolSize = 10;
+            _configuration.PreventDuplications = true;
+            _configuration.MaxPopulationSize = 10;
             _configuration.MaxGenerations = 5;
 
             _exampleGenes = GATestHelper.GetTravelingSalesmanChromosome().Genes;
@@ -50,7 +50,7 @@ namespace GeneticAlgorithmTests
             var runDetails = ga.Run();
             Assert.AreEqual(_configuration.MaxGenerations + 1, ga.Generation);
 
-            Assert.AreEqual(LastName.Miranda, runDetails.BestChromosome.LastName);
+            Assert.AreEqual(LastName.Alexander, runDetails.BestChromosome.LastName);
             Assert.AreEqual(80, runDetails.BestChromosome.FitnessScore);
         }
 

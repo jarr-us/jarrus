@@ -1,5 +1,4 @@
 ﻿using GeneticAlgorithms;
-using GeneticAlgorithms.BasicTypes;
 using GeneticAlgorithmTests.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -14,8 +13,9 @@ namespace GeneticAlgorithmTests.Utility
             var task = GATestHelper.GetDefaultConfiguration<ExampleGene>();
             var config = new GAConfiguration<ExampleGene>(task);
 
-            task.MutationRate = GATestHelper.GetRandomInteger(1, int.MaxValue - 1);
-            Assert.AreEqual(0, config.MutationRate);
+            var value = GATestHelper.GetRandomInteger(1, int.MaxValue - 1);
+            task.MutationRate = value;
+            Assert.AreNotEqual(value, config.MutationRate);
         }
 
         [TestMethod]

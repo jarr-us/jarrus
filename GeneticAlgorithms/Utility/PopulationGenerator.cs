@@ -12,9 +12,9 @@ namespace GeneticAlgorithms.Utility
                 throw new ArgumentException("Invalid parameters passed to the genome generator");
             }
 
-            var list = new Chromosome<T>[configuration.PoolSize];
+            var list = new Chromosome<T>[configuration.MaxPopulationSize];
 
-            for (int i = 0; i < configuration.PoolSize; i++)
+            for (int i = 0; i < configuration.MaxPopulationSize; i++)
             {
                 possibleValues.Shuffle(configuration.RandomPool);
                 list[i] = new Chromosome<T>((T[])possibleValues.Clone());

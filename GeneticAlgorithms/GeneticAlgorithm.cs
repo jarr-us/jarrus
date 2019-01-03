@@ -43,6 +43,8 @@ namespace GeneticAlgorithms
 
         public GARun<T> Run()
         {
+            GARun.Start = DateTime.UtcNow;
+
             for (GARun.CurrentGeneration = 0; GARun.CurrentGeneration < Configuration.MaxGenerations; GARun.CurrentGeneration++)
             {
                 var nextGeneration = GARun.Population.Advance();
@@ -63,12 +65,12 @@ namespace GeneticAlgorithms
             var highestScoringChromosome = GARun.Population.Chromosomes.Where(o => o.FitnessScore == GARun.Population.Chromosomes.Max(k => k.FitnessScore)).First();
             var lowestScoringChromosome = GARun.Population.Chromosomes.Where(o => o.FitnessScore == GARun.Population.Chromosomes.Min(k => k.FitnessScore)).First();
 
-            if (highestScoringChromosome.FitnessScore > GARun.BestChromosome.FitnessScore)
+            if (!Configuration.LowestScoreIsBest && highestScoringChromosome.FitnessScore > GARun.BestChromosome.FitnessScore)
             {
                 GARun.BestChromosome = highestScoringChromosome;
             }
 
-            if (lowestScoringChromosome.FitnessScore < GARun.BestChromosome.FitnessScore)
+            if (Configuration.LowestScoreIsBest && lowestScoringChromosome.FitnessScore < GARun.BestChromosome.FitnessScore)
             {
                 GARun.BestChromosome = lowestScoringChromosome;
             }

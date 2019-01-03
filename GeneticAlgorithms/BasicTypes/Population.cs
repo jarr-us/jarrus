@@ -170,7 +170,7 @@ namespace GeneticAlgorithms
 
         private void AddToNextGeneration(Chromosome<T> chromosome)
         {
-            if (Configuration.PreventDuplicationInPool)
+            if (Configuration.PreventDuplications)
             {
                 if (!OptionsInPool.Contains(chromosome))
                 {

@@ -14,7 +14,7 @@ namespace GeneticAlgorithmTests.Utility
             var configuration = GATestHelper.GetDefaultConfiguration<ExampleGene>();
             var chromosome = GATestHelper.GetTravelingSalesmanChromosome();
             var pool = PopulationGenerator.Generate<ExampleGene>(chromosome.Genes, configuration);
-            Assert.AreEqual(configuration.PoolSize, pool.Length);
+            Assert.AreEqual(configuration.MaxPopulationSize, pool.Length);
         }
 
         [TestMethod]

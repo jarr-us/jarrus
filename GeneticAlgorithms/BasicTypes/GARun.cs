@@ -4,9 +4,8 @@ using System;
 
 namespace GeneticAlgorithms
 {
-    public class GARun<T> : GATask<T> where T : Gene
+    public class GARun<T> where T : Gene
     {
-        //TODO: GARun should be agnostic of task.
         public GARun(GAConfiguration<T> config)
         {
             Reflection.CopyProperties(config, this);

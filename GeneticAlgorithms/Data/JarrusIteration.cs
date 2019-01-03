@@ -4,33 +4,33 @@ namespace GeneticAlgorithms.Data
 {
     public abstract class JarrusIteration<T> where T : Gene
     {
-        public GAConfiguration<T> Configuration;
-        protected T[] _data;
-        private JarrusDAO dao;
-        public GeneticAlgorithm<T> GeneticAlgorithm;
-        public string SessionName;
+        //public GAConfiguration<T> Configuration;
+        //protected T[] _data;
+        //private JarrusDAO dao;
+        //public GeneticAlgorithm<T> GeneticAlgorithm;
+        //public string SessionName;
 
-        public JarrusIteration(string session)
-        {
-            SessionName = session;
+        //public JarrusIteration(string session)
+        //{
+        //    SessionName = session;
 
-            SetSettings();
-            FetchData();
+        //    SetSettings();
+        //    FetchData();
 
-            dao = new JarrusDAO();
-            GeneticAlgorithm = new GeneticAlgorithm<T>(Configuration, _data);
-            GeneticAlgorithm.GARun.Session = SessionName;
-        }
+        //    dao = new JarrusDAO();
+        //    GeneticAlgorithm = new GeneticAlgorithm<T>(Configuration, _data);
+        //    GeneticAlgorithm.GARun.Session = SessionName;
+        //}
 
-        public GARun<T> Run()
-        {
-            var run = GeneticAlgorithm.Run();
-            dao.InsertCompletedRun(run);
+        //public GARun<T> Run()
+        //{
+        //    var run = GeneticAlgorithm.Run();
+        //    dao.InsertCompletedRun(run);
 
-            return run;
-        }
+        //    return run;
+        //}
 
-        protected abstract void FetchData();
-        protected abstract void SetSettings();
+        //protected abstract void FetchData();
+        //protected abstract void SetSettings();
     }
 }

@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Baseball">
+      <HintPath>..\..\..\..\..\..\..\jarrus\Baseball.dll</HintPath>
+    </Reference>
     <Reference Include="GeneralHux">
       <HintPath>..\..\..\..\..\..\..\jarrus\GeneralHux.dll</HintPath>
     </Reference>

@@ -1,5 +1,7 @@
 ﻿using Baseball.Models;
+using GeneticAlgorithms;
 using GeneticAlgorithms.Crossovers.Ordered;
+using GeneticAlgorithms.Data;
 using Jarrus.Metadata;
 using Jarrus.Models;
 using Kanan;
@@ -14,7 +16,8 @@ namespace Jarrus
 {
     public partial class MainForm : Form
     {
-        private MLBCircleIteration<Team> _mlbIteration;
+        private static GARun<Team> GARun;
+        private static GAConfiguration<Team> Config;
         public static int RunNumber;
         private static Stopwatch _sw = new Stopwatch();
         private static int _lastGenSeen;
@@ -43,8 +46,7 @@ namespace Jarrus
         private void KananLoop()
         {
             while (true)
-            {
-                RunNumber++;
+            {                
                 RunKanan();
                 UpdateChecker.Check();
             }
@@ -52,12 +54,26 @@ namespace Jarrus
 
         private void RunKanan()
         {
-            _mlbIteration = new MLBCircleIteration<Team>();
-            
-            _minScoreSeen = _mlbIteration.GeneticAlgorithm.GARun.Population.Chromosomes[0].FitnessScore;
-            _maxScoreSeen = _mlbIteration.GeneticAlgorithm.GARun.Population.Chromosomes[0].FitnessScore;
+            var dao = new JarrusDAO();
+            var task = dao.CheckoutATaskToRun<Team>();
+            if (task.ParentSelection == null) { Thread.Sleep(1000); return; }
 
-            _mlbIteration.Run();
+            var config = new GAConfiguration<Team>(task);
+            Config = config;
+
+            var teamdao = new TeamDAO();
+            var data = teamdao.FetchAllGenes().ToArray();
+
+            var ga = new GeneticAlgorithm<Team>(config, data);
+            GARun = ga.GARun;
+
+            _minScoreSeen = ga.GARun.Population.Chromosomes.Select(o => o.FitnessScore).Min();
+            _maxScoreSeen = ga.GARun.Population.Chromosomes.Select(o => o.FitnessScore).Max();
+
+            var runDetails = ga.Run();
+            dao.InsertCompletedRun(config, runDetails);
+            dao.DeleteTask(task.UUID);
+            RunNumber++;
         }
 
         private void ProcessLoop()
@@ -71,7 +87,7 @@ namespace Jarrus
 
         private void Process()
         {
-            if (_mlbIteration == null || _mlbIteration.GeneticAlgorithm.GARun == null) { return; }
+            if (GARun == null || GARun == null) { return; }
 
             DrawIterationDetails();
             DrawMetadataDetails();
@@ -82,14 +98,14 @@ namespace Jarrus
 
         private void DrawCharts()
         {
-            var chromosomes = _mlbIteration.GeneticAlgorithm.GARun.Population.Chromosomes;
-            var min = _mlbIteration.GeneticAlgorithm.GARun.Population.Chromosomes.Select(o => o.FitnessScore).Min();
-            var max = _mlbIteration.GeneticAlgorithm.GARun.Population.Chromosomes.Select(o => o.FitnessScore).Max();
+            var chromosomes = GARun.Population.Chromosomes;
+            var min = GARun.Population.Chromosomes.Select(o => o.FitnessScore).Min();
+            var max = GARun.Population.Chromosomes.Select(o => o.FitnessScore).Max();
 
             if (_minScoreSeen > min) { _minScoreSeen = min; }
             if (_maxScoreSeen < max) { _maxScoreSeen = max; }
 
-            var poolScoreGenerator = new PoolScoreGenerator<Team>(_mlbIteration.GeneticAlgorithm.GARun.Population, _minScoreSeen, _maxScoreSeen);
+            var poolScoreGenerator = new PoolScoreGenerator<Team>(GARun.Population, _minScoreSeen, _maxScoreSeen);
 
             var maxScore = poolScoreGenerator.Points.Max(o => o.Value);
             if (maxScore > _poolScoreMaxYSeen)
@@ -102,10 +118,10 @@ namespace Jarrus
 
         private void DrawIterationDetails()
         {
-            if (_mlbIteration.GeneticAlgorithm.GARun.Population.Chromosomes.Count() == 0) { return; }
+            if (GARun.Population.Chromosomes.Count() == 0) { return; }
 
-            var allTimeBest = _mlbIteration.GeneticAlgorithm.GARun.BestChromosome;
-            var population = _mlbIteration.GeneticAlgorithm.GARun.Population;
+            var allTimeBest = GARun.BestChromosome;
+            var population = GARun.Population;
             if (population.Chromosomes.Count() == 0) { return; }
 
             var currentLowestScore = population.Chromosomes.Min(o => o.FitnessScore);
@@ -116,7 +132,7 @@ namespace Jarrus
             UIUpdater.SetText(this, currentBestLastNameLbl, currentLowest.LastName + "");
             UIUpdater.SetText(this, currentBestDirectDescendentsLbl, currentLowest.Children + "");
 
-            UIUpdater.SetText(this, generationLbl, _mlbIteration.GeneticAlgorithm.GARun.CurrentGeneration + "");
+            UIUpdater.SetText(this, generationLbl, GARun.CurrentGeneration + "");
             UIUpdater.SetText(this, goatBestFirstNameLbl, allTimeBest.FirstName + "");
             UIUpdater.SetText(this, goatBestLastNameLbl, allTimeBest.LastName + "");
             UIUpdater.SetText(this, goatBestLowestScoreLbl, allTimeBest.FitnessScore + "");
@@ -129,37 +145,37 @@ namespace Jarrus
         {
             _sw.Stop();
             var elapsedMs = _sw.ElapsedMilliseconds;
-            var msPerGeneration = elapsedMs / (1.0 * (_mlbIteration.GeneticAlgorithm.GARun.CurrentGeneration - _lastGenSeen));
+            var msPerGeneration = elapsedMs / (1.0 * (GARun.CurrentGeneration - _lastGenSeen));
 
-            UIUpdater.SetText(this, retiredNumberLbl, _mlbIteration.GeneticAlgorithm.Retired.Count + "");
+            UIUpdater.SetText(this, retiredNumberLbl, GARun.Population.Retired.Count + "");
             UIUpdater.SetText(this, msPerGenLbl, msPerGeneration.ToString("#,##0.00"));
 
             _sw.Reset();
             _sw.Start();
-            _lastGenSeen = _mlbIteration.GeneticAlgorithm.GARun.CurrentGeneration;
+            _lastGenSeen = GARun.CurrentGeneration;
         }
 
         private void DrawConfigurationDetails()
         {
-            var config = _mlbIteration.Configuration;
+            if (Config == null) { return; }
 
-            UIUpdater.SetText(this, configPoolSizeLbl, config.PoolSize + "");
-            UIUpdater.SetText(this, configIterationsLbl, config.MaxGenerations + "");
-            UIUpdater.SetText(this, configCrossoverRateLbl, config.CrossoverRate + "");
-            UIUpdater.SetText(this, configMutationRateLbl, config.MutationRate + "");
-            UIUpdater.SetText(this, configElitismRateLbl, config.ElitismRate + "");
-            UIUpdater.SetText(this, configMaxLifeLbl, config.MaximumLifeSpan + "");
-            UIUpdater.SetText(this, configChildrenPerCoupleLbl, config.ChildrenPerCouple + "");
+            UIUpdater.SetText(this, configPoolSizeLbl, Config.MaxPopulationSize + "");
+            UIUpdater.SetText(this, configIterationsLbl, Config.MaxGenerations + "");
+            UIUpdater.SetText(this, configCrossoverRateLbl, Config.CrossoverRate + "");
+            UIUpdater.SetText(this, configMutationRateLbl, Config.MutationRate + "");
+            UIUpdater.SetText(this, configElitismRateLbl, Config.ElitismRate + "");
+            UIUpdater.SetText(this, configMaxLifeLbl, Config.MaximumLifeSpan + "");
+            UIUpdater.SetText(this, configChildrenPerCoupleLbl, Config.ChildrenPerCouple + "");
 
-            UIUpdater.SetText(this, configParentSelectionLbl, config.ParentSelection.GetType().Name.Replace("Selection", "").ToString());
-            UIUpdater.SetText(this, configCrossoverLbl, config.Crossover.GetType().Name.Replace("Crossover", "").ToString());
-            UIUpdater.SetText(this, configMutationLbl, config.Mutation.GetType().Name.Replace("Mutation", "").ToString());
+            UIUpdater.SetText(this, configParentSelectionLbl, Config.ParentSelection.GetType().Name.Replace("Selection", "").ToString());
+            UIUpdater.SetText(this, configCrossoverLbl, Config.Crossover.GetType().Name.Replace("Crossover", "").ToString());
+            UIUpdater.SetText(this, configMutationLbl, Config.Mutation.GetType().Name.Replace("Mutation", "").ToString());
             UIUpdater.SetText(this, configRetirementLbl, "true");
         }
 
         private void DrawFamilyDetails()
         {
-            var familyLineage = new FamilyLineage<Team>(_mlbIteration.GeneticAlgorithm.GARun.Population);
+            var familyLineage = new FamilyLineage<Team>(GARun.Population);
 
             UpdateFamily(family1Lbl, lastName1ProgressBar, 0, familyLineage);
             UpdateFamily(family2Lbl, lastName2ProgressBar, 1, familyLineage);
