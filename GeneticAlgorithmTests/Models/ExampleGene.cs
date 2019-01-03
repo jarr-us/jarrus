@@ -5,7 +5,7 @@ namespace GeneticAlgorithmTests.Models
     public class ExampleGene : Gene
     {
         public char Value;
-        public ExampleGene(char str) { Value = str; }
+        public ExampleGene(char c) { Value = c; }
 
         public override bool Equals(object obj)
         {

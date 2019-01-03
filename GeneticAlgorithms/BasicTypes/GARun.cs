@@ -6,11 +6,6 @@ namespace GeneticAlgorithms
 {
     public class GARun<T> where T : Gene
     {
-        public GARun(GAConfiguration<T> config)
-        {
-            Reflection.CopyProperties(config, this);
-        }
-
         public int CurrentGeneration { get; set; }
         public DateTime Start { get; set; }               
         public DateTime End { get; set; }

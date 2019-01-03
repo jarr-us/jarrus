@@ -16,7 +16,8 @@ namespace GeneticAlgorithms.Data
 
         public GATask<T> CheckoutATaskToRun<T>() where T : Gene
         {
-            var sql = "UPDATE TOP (1) [DB_9B8C9C_jarrus].[dbo].[GA_Tasks] SET [Checkout] = GETUTCDATE(), [ComputerName] = @ComputerName WHERE [Checkout] IS NULL";
+            var sql = "UPDATE TOP (1) [DB_9B8C9C_jarrus].[dbo].[GA_Tasks] SET [Checkout] = GETUTCDATE(), [ComputerName] = @ComputerName ";
+            sql += "WHERE [Checkout] IS NULL AND [Priority] = (SELECT MIN([Priority]) FROM [DB_9B8C9C_jarrus].[dbo].[GA_Tasks])";
             var dao = new DAO();
 
             try
@@ -41,7 +42,28 @@ namespace GeneticAlgorithms.Data
         private string GetComputerName()
         {
             if (threadId == 0) { threadId = random.Next(); }
-            return Environment.MachineName + threadId;
+            return Environment.MachineName + "::" + threadId;
+        }
+
+        public void ClearOutUnfinishedTasks()
+        {
+            var sql = "UPDATE [DB_9B8C9C_jarrus].[dbo].[GA_Tasks] SET Checkout = NULL, ComputerName = NULL WHERE Checkout < DATEADD(HOUR, -2, GETUTCDATE()) ";
+            var dao = new DAO();
+
+            try
+            {
+                dao.OpenConnection(Server.JARRUS, sql);
+                dao.Execute();
+            }
+            catch (Exception ex)
+            {
+                ErrorHandlingSystem.HandleError(ex, "Unable to clear out unfinished tasks");
+                throw ex;
+            }
+            finally
+            {
+                dao.CloseConnection();
+            }
         }
 
         public GATask<T> FetchMyFirstTask<T>() where T : Gene
@@ -83,14 +105,13 @@ namespace GeneticAlgorithms.Data
             }
             catch (Exception ex)
             {
-                ErrorHandlingSystem.HandleError(ex, "Unable to insert GA Task");               
+                ErrorHandlingSystem.HandleError(ex, "Unable to insert GA Task");
+                throw ex;
             }
             finally
             {
                 dao.CloseConnection();
             }
-
-            return null;
         }
 
         private void AttachFitnessFunctionToTask<T>(GATask<T> task, string className) where T : Gene
@@ -140,6 +161,7 @@ namespace GeneticAlgorithms.Data
             catch (Exception ex)
             {
                 ErrorHandlingSystem.HandleError(ex, "Unable to insert GA Task");
+                throw ex;
             }
             finally
             {
@@ -169,6 +191,7 @@ namespace GeneticAlgorithms.Data
             catch (Exception ex)
             {
                 ErrorHandlingSystem.HandleError(ex, "Unable to insert GA Run Result");
+                throw ex;
             }
             finally
             {
@@ -192,6 +215,7 @@ namespace GeneticAlgorithms.Data
             catch (Exception ex)
             {
                 ErrorHandlingSystem.HandleError(ex, "Unable to delete UUID");
+                throw ex;
             }
             finally
             {

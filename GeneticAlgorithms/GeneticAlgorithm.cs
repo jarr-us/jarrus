@@ -22,7 +22,7 @@ namespace GeneticAlgorithms
             _possibleValues = possibleValues;
             ValidateSettings();
 
-            GARun = new GARun<T>(Configuration);
+            GARun = new GARun<T>();
             GenerateInitialPopulation();
         }
 

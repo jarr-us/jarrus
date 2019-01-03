@@ -1,10 +1,8 @@
 ﻿using Baseball.Models;
 using GeneticAlgorithms;
-using GeneticAlgorithms.Crossovers.Ordered;
 using GeneticAlgorithms.Data;
 using Jarrus.Metadata;
 using Jarrus.Models;
-using Kanan;
 using System;
 using System.Deployment.Application;
 using System.Diagnostics;
@@ -66,6 +64,7 @@ namespace Jarrus
 
             var ga = new GeneticAlgorithm<Team>(config, data);
             GARun = ga.GARun;
+            UIUpdater.SetText(this, sessionNameLbl, config.Session);
 
             _minScoreSeen = ga.GARun.Population.Chromosomes.Select(o => o.FitnessScore).Min();
             _maxScoreSeen = ga.GARun.Population.Chromosomes.Select(o => o.FitnessScore).Max();

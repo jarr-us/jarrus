@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using GeneticAlgorithms;
 using GeneticAlgorithms.Enums;
 using GeneticAlgorithms.Utility;
@@ -24,6 +25,7 @@ namespace GeneticAlgorithmTests
             _configuration = GATestHelper.GetDefaultConfiguration<ExampleGene>();
             _configuration.PreventDuplications = true;
             _configuration.MaxPopulationSize = 10;
+            _configuration.MaximumLifeSpan = 2;
             _configuration.MaxGenerations = 5;
 
             _exampleGenes = GATestHelper.GetTravelingSalesmanChromosome().Genes;
@@ -52,6 +54,23 @@ namespace GeneticAlgorithmTests
 
             Assert.AreEqual(LastName.Alexander, runDetails.BestChromosome.LastName);
             Assert.AreEqual(80, runDetails.BestChromosome.FitnessScore);
+        }
+
+        [TestMethod]
+        public void ItKeepsTrackOfTheBestScore()
+        {
+            var ga = new GeneticAlgorithm<ExampleGene>(_configuration, _exampleGenes);
+            var runDetails = ga.Run();
+            Assert.AreEqual(_configuration.MaxGenerations + 1, ga.Generation);
+
+            Assert.AreEqual(LastName.Alexander, runDetails.BestChromosome.LastName);
+            Assert.AreEqual(FirstName.Bailey, runDetails.BestChromosome.FirstName);
+            Assert.AreEqual(80, runDetails.BestChromosome.FitnessScore);
+
+            var lowest = runDetails.Population.Chromosomes.Select(o => o.FitnessScore).Min();
+            var lastBestSeen = runDetails.Population.Chromosomes.Where(o => o.FitnessScore == lowest).First();
+            Assert.AreEqual(LastName.Duran, lastBestSeen.LastName);
+            Assert.AreEqual(FirstName.Brayson, lastBestSeen.FirstName);
         }
 
         [TestMethod]

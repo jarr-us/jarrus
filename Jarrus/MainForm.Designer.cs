@@ -100,6 +100,8 @@
             this.retiredNumberLbl = new System.Windows.Forms.Label();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.poolScoreChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.label16 = new System.Windows.Forms.Label();
+            this.sessionNameLbl = new System.Windows.Forms.Label();
             this.menuStrip.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -747,6 +749,8 @@
             // 
             // groupBox5
             // 
+            this.groupBox5.Controls.Add(this.label16);
+            this.groupBox5.Controls.Add(this.sessionNameLbl);
             this.groupBox5.Controls.Add(this.label4);
             this.groupBox5.Controls.Add(this.retiredNumberLbl);
             this.groupBox5.Controls.Add(this.label6);
@@ -811,6 +815,24 @@
             this.poolScoreChart.Size = new System.Drawing.Size(378, 106);
             this.poolScoreChart.TabIndex = 9;
             this.poolScoreChart.Text = "poolScore";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(6, 29);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(44, 13);
+            this.label16.TabIndex = 14;
+            this.label16.Text = "Session";
+            // 
+            // sessionNameLbl
+            // 
+            this.sessionNameLbl.Location = new System.Drawing.Point(97, 29);
+            this.sessionNameLbl.Name = "sessionNameLbl";
+            this.sessionNameLbl.Size = new System.Drawing.Size(89, 13);
+            this.sessionNameLbl.TabIndex = 15;
+            this.sessionNameLbl.Text = "0";
+            this.sessionNameLbl.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // MainForm
             // 
@@ -920,6 +942,8 @@
         private System.Windows.Forms.Label retiredNumberLbl;
         private System.Windows.Forms.GroupBox groupBox6;
         private System.Windows.Forms.DataVisualization.Charting.Chart poolScoreChart;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Label sessionNameLbl;
     }
 }
 

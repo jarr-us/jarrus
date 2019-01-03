@@ -59,7 +59,6 @@
     <Compile Include="Crossovers\Unordered\TwoPointCrossover.cs" />
     <Compile Include="Crossovers\Unordered\UniformCrossover.cs" />
     <Compile Include="Data\JarrusDAO.cs" />
-    <Compile Include="Data\JarrusIteration.cs" />
     <Compile Include="Enums\FirstName.cs" />
     <Compile Include="Enums\LastName.cs" />
     <Compile Include="FitnessFunctions\FitnessFunction.cs" />

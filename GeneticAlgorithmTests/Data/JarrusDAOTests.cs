@@ -45,47 +45,47 @@ namespace GeneticAlgorithmTests.Data
         //    }
         //}
 
-        [TestMethod]
-        public void ItCanInsertASession4Task()
-        {
-            //TODO: end when a viable fitness score is reached
-            //TODO: show the session on the app
-            //TODO: get priority working
-            //TODO: tons of tests. 
-            //TODO: blog data dumps
-            //TODO: more tests. seriously. what the fuck.
-            //TODO: remove all logic from the App, test the shit out of it.
-            //TODO: can <T> be made generically?
-            //TODO: Threading now available again
-            //TODO: API
+        //[TestMethod]
+        //public void ItCanInsertASession4Task()
+        //{
+        //TODO: end when a viable fitness score is reached
+        //TODO: show the session on the app
+        //TODO: get priority working
+        //TODO: tons of tests. 
+        //TODO: blog data dumps
+        //TODO: more tests. seriously. what the fuck.
+        //TODO: remove all logic from the App, test the shit out of it.
+        //TODO: can <T> be made generically?
+        //TODO: Threading now available again
+        //TODO: API
 
 
-            var dao = new JarrusDAO();
-            var task = GetExampleTask();
+        //    var dao = new JarrusDAO();
+        //    var task = GetExampleTask();
 
-            task.ParentSelection = new StochasticUniversalSamplingSelection<Team>();
-            task.Mutation = new InversionMutation();
-            task.Crossover = new OrderCrossover();
+        //    task.ParentSelection = new StochasticUniversalSamplingSelection<Team>();
+        //    task.Mutation = new InversionMutation();
+        //    task.Crossover = new OrderCrossover();
 
-            task.LowestScoreIsBest = true;
-            task.MaxGenerations = 10000;
-            task.CrossoverRate = 0.92;
-            task.MutationRate = 0.01;
-            task.ElitismRate = 0.25;
-            task.PreventDuplications = true;
-            task.MaximumLifeSpan = 767;
-            task.ChildrenPerCouple = 8;
-            task.RandomPoolGenerationSeed = 22;
-            task.RandomSeed = 556411793;
+        //    task.LowestScoreIsBest = true;
+        //    task.MaxGenerations = 10000;
+        //    task.CrossoverRate = 0.92;
+        //    task.MutationRate = 0.01;
+        //    task.ElitismRate = 0.25;
+        //    task.PreventDuplications = true;
+        //    task.MaximumLifeSpan = 767;
+        //    task.ChildrenPerCouple = 8;
+        //    task.RandomPoolGenerationSeed = 22;
+        //    task.RandomSeed = 556411793;
 
-            task.Session = "0004";
-            var random = new Random();
-            for (int i = 0; i < 10000; i++)
-            {
-                dao.InsertTask(task, 160.0);
-                task.RandomSeed = random.Next();
-            }
-        }
+        //    task.Session = "0004";
+        //    var random = new Random();
+        //    for (int i = 0; i < 10000; i++)
+        //    {
+        //        dao.InsertTask(task, 160.0);
+        //        task.RandomSeed = random.Next();
+        //    }
+        //}
 
         //[TestMethod]
         //public void ItCanInsertASession3Task()
@@ -116,6 +116,15 @@ namespace GeneticAlgorithmTests.Data
         //        task.RandomSeed = random.Next();
         //    }
         //}
+
+        [TestMethod]
+        public void ItCanClearOutUnfinishedTasks()
+        {
+            var dao = new JarrusDAO();
+            var task = dao.FetchMyFirstTask<ExampleGene>();
+
+            Assert.IsNotNull(task);
+        }
 
         [TestMethod]
         public void ItCanRetrieveATask()
