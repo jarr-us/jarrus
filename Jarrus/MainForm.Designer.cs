@@ -96,12 +96,12 @@
             this.label33 = new System.Windows.Forms.Label();
             this.configParentSelectionLbl = new System.Windows.Forms.Label();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.label16 = new System.Windows.Forms.Label();
+            this.sessionNameLbl = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.retiredNumberLbl = new System.Windows.Forms.Label();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.poolScoreChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.label16 = new System.Windows.Forms.Label();
-            this.sessionNameLbl = new System.Windows.Forms.Label();
             this.menuStrip.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -762,6 +762,24 @@
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Run Metadata";
             // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(6, 29);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(44, 13);
+            this.label16.TabIndex = 14;
+            this.label16.Text = "Session";
+            // 
+            // sessionNameLbl
+            // 
+            this.sessionNameLbl.Location = new System.Drawing.Point(97, 29);
+            this.sessionNameLbl.Name = "sessionNameLbl";
+            this.sessionNameLbl.Size = new System.Drawing.Size(89, 13);
+            this.sessionNameLbl.TabIndex = 15;
+            this.sessionNameLbl.Text = "0";
+            this.sessionNameLbl.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // label4
             // 
             this.label4.AutoSize = true;
@@ -816,24 +834,6 @@
             this.poolScoreChart.TabIndex = 9;
             this.poolScoreChart.Text = "poolScore";
             // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(6, 29);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(44, 13);
-            this.label16.TabIndex = 14;
-            this.label16.Text = "Session";
-            // 
-            // sessionNameLbl
-            // 
-            this.sessionNameLbl.Location = new System.Drawing.Point(97, 29);
-            this.sessionNameLbl.Name = "sessionNameLbl";
-            this.sessionNameLbl.Size = new System.Drawing.Size(89, 13);
-            this.sessionNameLbl.TabIndex = 15;
-            this.sessionNameLbl.Text = "0";
-            this.sessionNameLbl.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -852,6 +852,7 @@
             this.MainMenuStrip = this.menuStrip;
             this.Name = "MainForm";
             this.Text = "Jarrus";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
             this.groupBox1.ResumeLayout(false);

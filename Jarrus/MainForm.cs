@@ -1,12 +1,9 @@
 ﻿using Baseball.Models;
-using GeneticAlgorithms;
-using GeneticAlgorithms.Data;
-using Jarrus.Metadata;
+using GeneticAlgorithms.BasicTypes;
+using Jarrus.Display;
 using Jarrus.Models;
 using System;
 using System.Deployment.Application;
-using System.Diagnostics;
-using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -14,192 +11,75 @@ namespace Jarrus
 {
     public partial class MainForm : Form
     {
-        private static GARun<Team> GARun;
-        private static GAConfiguration<Team> Config;
-        public static int RunNumber;
-        private static Stopwatch _sw = new Stopwatch();
-        private static int _lastGenSeen;
-
-        private int _poolScoreMaxYSeen = 0;
-        private double _minScoreSeen, _maxScoreSeen;
+        public FormDisplay<Team> FormDisplay;
+        public FormControls FControls;
+        private bool _running = true;
+        private Thread _procThread, _gaThread;
 
         public MainForm()
         {
             UpdateChecker.Check();
             InitializeComponent();
 
+            SetupControls();
+
+            FormDisplay = new BaseballFormDisplay(this, FControls);
+
             UpdateVersionLabel();
             StartProcessing();
         }
 
+        private void SetupControls()
+        {
+            FControls = new FormControls();
+
+            FControls.SessionNameLbl = sessionNameLbl;
+            FControls.PoolScoreChart = poolScoreChart;
+            FControls.CurrentBestLowestScoreLbl = currentBestLowestScoreLbl;
+            FControls.CurrentBestFirstNameLbl = currentBestFirstNameLbl;
+            FControls.CurrentBestLastNameLbl = currentBestLastNameLbl;
+            FControls.CurrentBestDirectDescendentsLbl = currentBestDirectDescendentsLbl;
+
+            FControls.GenerationLbl = generationLbl;
+            FControls.GoatBestFirstNameLbl = goatBestFirstNameLbl;
+            FControls.GoatBestLastNameLbl = goatBestLastNameLbl;
+            FControls.GoatBestLowestScoreLbl = goatBestLowestScoreLbl;
+            FControls.GoatDirectDescendentsLbl = goatDirectDescendentsLbl;
+            FControls.RunsCompletedLbl = runsCompletedLbl;
+            FControls.RetiredNumberLbl = retiredNumberLbl;
+            FControls.MsPerGenLbl = msPerGenLbl;
+
+            FControls.ConfigPoolSizeLbl = configPoolSizeLbl;
+            FControls.ConfigIterationsLbl = configIterationsLbl;
+            FControls.ConfigCrossoverRateLbl = configCrossoverRateLbl;
+            FControls.ConfigMutationRateLbl = configMutationRateLbl;
+            FControls.ConfigElitismRateLbl = configElitismRateLbl;
+            FControls.ConfigMaxLifeLbl = configMaxLifeLbl;
+            FControls.ConfigChildrenPerCoupleLbl = configChildrenPerCoupleLbl;
+            FControls.ConfigParentSelectionLbl = configParentSelectionLbl;
+            FControls.ConfigCrossoverLbl = configCrossoverLbl;
+            FControls.ConfigMutationLbl = configMutationLbl;
+            FControls.ConfigRetirementLbl = configRetirementLbl;
+
+            FControls.Family1Lbl = family1Lbl;
+            FControls.Family2Lbl = family2Lbl;
+            FControls.Family3Lbl = family3Lbl;
+            FControls.Family4Lbl = family4Lbl;
+            FControls.Family5Lbl = family5Lbl;
+            FControls.Family1ProgressBar = lastName1ProgressBar;
+            FControls.Family2ProgressBar = lastName2ProgressBar;
+            FControls.Family3ProgressBar = lastName3ProgressBar;
+            FControls.Family4ProgressBar = lastName4ProgressBar;
+            FControls.Family5ProgressBar = lastName5ProgressBar;
+        }
+
         private void StartProcessing()
         {
-            var procThread = new Thread(ProcessLoop);
-            procThread.Start();
+            _procThread = new Thread(DisplayLoop);
+            _procThread.Start();
 
-            var kananThread = new Thread(KananLoop);
-            kananThread.Start();
-        }
-
-        private void KananLoop()
-        {
-            while (true)
-            {                
-                RunKanan();
-                UpdateChecker.Check();
-            }
-        }
-
-        private void RunKanan()
-        {
-            var dao = new JarrusDAO();
-            var task = dao.CheckoutATaskToRun<Team>();
-            if (task.ParentSelection == null) { Thread.Sleep(1000); return; }
-
-            var config = new GAConfiguration<Team>(task);
-            Config = config;
-
-            var teamdao = new TeamDAO();
-            var data = teamdao.FetchAllGenes().ToArray();
-
-            var ga = new GeneticAlgorithm<Team>(config, data);
-            GARun = ga.GARun;
-            UIUpdater.SetText(this, sessionNameLbl, config.Session);
-
-            _minScoreSeen = ga.GARun.Population.Chromosomes.Select(o => o.FitnessScore).Min();
-            _maxScoreSeen = ga.GARun.Population.Chromosomes.Select(o => o.FitnessScore).Max();
-
-            var runDetails = ga.Run();
-            dao.InsertCompletedRun(config, runDetails);
-            dao.DeleteTask(task.UUID);
-            RunNumber++;
-        }
-
-        private void ProcessLoop()
-        {
-            while (true)
-            {
-                Process();
-                Thread.Sleep(50);
-            }
-        }
-
-        private void Process()
-        {
-            if (GARun == null || GARun == null) { return; }
-
-            DrawIterationDetails();
-            DrawMetadataDetails();
-            DrawFamilyDetails();
-            DrawConfigurationDetails();
-            DrawCharts();
-        }
-
-        private void DrawCharts()
-        {
-            var chromosomes = GARun.Population.Chromosomes;
-            var min = GARun.Population.Chromosomes.Select(o => o.FitnessScore).Min();
-            var max = GARun.Population.Chromosomes.Select(o => o.FitnessScore).Max();
-
-            if (_minScoreSeen > min) { _minScoreSeen = min; }
-            if (_maxScoreSeen < max) { _maxScoreSeen = max; }
-
-            var poolScoreGenerator = new PoolScoreGenerator<Team>(GARun.Population, _minScoreSeen, _maxScoreSeen);
-
-            var maxScore = poolScoreGenerator.Points.Max(o => o.Value);
-            if (maxScore > _poolScoreMaxYSeen)
-            {
-                _poolScoreMaxYSeen = (int)maxScore + 1;
-            }
-
-            UIUpdater.SetChart(this, poolScoreChart, poolScoreGenerator.Points, _minScoreSeen, _maxScoreSeen, _poolScoreMaxYSeen);
-        }
-
-        private void DrawIterationDetails()
-        {
-            if (GARun.Population.Chromosomes.Count() == 0) { return; }
-
-            var allTimeBest = GARun.BestChromosome;
-            var population = GARun.Population;
-            if (population.Chromosomes.Count() == 0) { return; }
-
-            var currentLowestScore = population.Chromosomes.Min(o => o.FitnessScore);
-            var currentLowest = population.Chromosomes.Where(o => o.FitnessScore == currentLowestScore).First();
-
-            UIUpdater.SetText(this, currentBestLowestScoreLbl, currentLowest.FitnessScore + "");
-            UIUpdater.SetText(this, currentBestFirstNameLbl, currentLowest.FirstName + "");
-            UIUpdater.SetText(this, currentBestLastNameLbl, currentLowest.LastName + "");
-            UIUpdater.SetText(this, currentBestDirectDescendentsLbl, currentLowest.Children + "");
-
-            UIUpdater.SetText(this, generationLbl, GARun.CurrentGeneration + "");
-            UIUpdater.SetText(this, goatBestFirstNameLbl, allTimeBest.FirstName + "");
-            UIUpdater.SetText(this, goatBestLastNameLbl, allTimeBest.LastName + "");
-            UIUpdater.SetText(this, goatBestLowestScoreLbl, allTimeBest.FitnessScore + "");
-            UIUpdater.SetText(this, goatDirectDescendentsLbl, allTimeBest.Children + "");
-
-            UIUpdater.SetText(this, runsCompletedLbl, RunNumber + "");
-        }
-
-        private void DrawMetadataDetails()
-        {
-            _sw.Stop();
-            var elapsedMs = _sw.ElapsedMilliseconds;
-            var msPerGeneration = elapsedMs / (1.0 * (GARun.CurrentGeneration - _lastGenSeen));
-
-            UIUpdater.SetText(this, retiredNumberLbl, GARun.Population.Retired.Count + "");
-            UIUpdater.SetText(this, msPerGenLbl, msPerGeneration.ToString("#,##0.00"));
-
-            _sw.Reset();
-            _sw.Start();
-            _lastGenSeen = GARun.CurrentGeneration;
-        }
-
-        private void DrawConfigurationDetails()
-        {
-            if (Config == null) { return; }
-
-            UIUpdater.SetText(this, configPoolSizeLbl, Config.MaxPopulationSize + "");
-            UIUpdater.SetText(this, configIterationsLbl, Config.MaxGenerations + "");
-            UIUpdater.SetText(this, configCrossoverRateLbl, Config.CrossoverRate + "");
-            UIUpdater.SetText(this, configMutationRateLbl, Config.MutationRate + "");
-            UIUpdater.SetText(this, configElitismRateLbl, Config.ElitismRate + "");
-            UIUpdater.SetText(this, configMaxLifeLbl, Config.MaximumLifeSpan + "");
-            UIUpdater.SetText(this, configChildrenPerCoupleLbl, Config.ChildrenPerCouple + "");
-
-            UIUpdater.SetText(this, configParentSelectionLbl, Config.ParentSelection.GetType().Name.Replace("Selection", "").ToString());
-            UIUpdater.SetText(this, configCrossoverLbl, Config.Crossover.GetType().Name.Replace("Crossover", "").ToString());
-            UIUpdater.SetText(this, configMutationLbl, Config.Mutation.GetType().Name.Replace("Mutation", "").ToString());
-            UIUpdater.SetText(this, configRetirementLbl, "true");
-        }
-
-        private void DrawFamilyDetails()
-        {
-            var familyLineage = new FamilyLineage<Team>(GARun.Population);
-
-            UpdateFamily(family1Lbl, lastName1ProgressBar, 0, familyLineage);
-            UpdateFamily(family2Lbl, lastName2ProgressBar, 1, familyLineage);
-            UpdateFamily(family3Lbl, lastName3ProgressBar, 2, familyLineage);
-            UpdateFamily(family4Lbl, lastName4ProgressBar, 3, familyLineage);
-            UpdateFamily(family5Lbl, lastName5ProgressBar, 4, familyLineage);
-        }
-
-        private void UpdateFamily(Label familyLabel, ProgressBar progressBar, int familyRanking, FamilyLineage<Team> lineageDetails)
-        {
-            var familyName = "";
-            var percentage = 0.0;
-
-            if (lineageDetails.GetRankingCount() > familyRanking)
-            {
-
-                var family = lineageDetails.GetFamilyAtRanking(familyRanking);
-                familyName = family.ToString();
-
-                var count = lineageDetails.GetCountOfFamilyAtRanking(familyRanking);
-                percentage = (100.0 * count) / (lineageDetails.TotalLineages);
-            }
-
-            UIUpdater.SetText(this, familyLabel, familyName);
-            UIUpdater.SetProgressBar(this, progressBar, percentage);
+            _gaThread = new Thread(GALoop);
+            _gaThread.Start();
         }
 
         private void UpdateVersionLabel()
@@ -210,9 +90,14 @@ namespace Jarrus
             }
         }
 
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Application.Exit();
+        private void GALoop() { while (_running) { RunGAIteration(); UpdateChecker.Check(); } }
+        private void RunGAIteration() { FormDisplay.RunIteration(); }
+        private void DisplayLoop() { while (_running) { UpdateDisplay(); Thread.Sleep(50); } }
+        private void UpdateDisplay() { if (!FormDisplay.IsReadyToUpdateForm()) { return; } FormDisplay.Update(); }
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e) { Application.Exit(); }
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e) {
+            try { _procThread.Interrupt(); } catch (Exception) { }
+            try { _gaThread.Interrupt(); } catch (Exception) { }
         }
     }
 }

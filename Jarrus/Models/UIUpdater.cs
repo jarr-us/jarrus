@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 
@@ -10,58 +11,77 @@ namespace Jarrus.Models
         delegate void SetProgressCallback(Form f, ProgressBar ctrl, double progress);
         delegate void SetChartCallback(Form f, Chart chart, List<KeyValuePair<double, double>> values, double xMin, double xMax, double yMax);
 
+        public static bool ProblemFound;
+
         public static void SetText(Form form, Control ctrl, string text)
-        {            
-            if (ctrl.InvokeRequired)
+        {
+            if (ProblemFound) { return; }
+
+            try
             {
-                SetTextCallback d = new SetTextCallback(SetText);
-                if (form.IsDisposed) { return; }
-                form.Invoke(d, new object[] { form, ctrl, text });
+                if (ctrl.InvokeRequired)
+                {
+                    SetTextCallback d = new SetTextCallback(SetText);
+                    if (form.IsDisposed) { return; }
+                    form.Invoke(d, new object[] { form, ctrl, text });
+                }
+                else
+                {
+                    ctrl.Text = text;
+                }
             }
-            else
-            {
-                ctrl.Text = text;
-            }
+            catch (Exception) { ProblemFound = true; }
         }
 
         public static void SetProgressBar(Form form, ProgressBar ctrl, double progress)
         {
-            if (ctrl.InvokeRequired)
+            if (ProblemFound) { return; }
+
+            try
             {
-                SetProgressCallback d = new SetProgressCallback(SetProgressBar);
-                if (form.IsDisposed) { return; }
-                form.Invoke(d, new object[] { form, ctrl, progress });
+                if (ctrl.InvokeRequired)
+                {
+                    SetProgressCallback d = new SetProgressCallback(SetProgressBar);
+                    if (form.IsDisposed) { return; }
+                    form.Invoke(d, new object[] { form, ctrl, progress });
+                }
+                else
+                {
+                    ctrl.Value = (int)progress;
+                }
             }
-            else
-            {
-                ctrl.Value = (int)progress;
-            }
+            catch (Exception) { ProblemFound = true; }
         }
 
         public static void SetChart(Form form, Chart chart, List<KeyValuePair<double, double>> values, double xMin, double xMax, double yMax)
         {
             if (values == null) { return; }
+            if (ProblemFound) { return; }
 
-            if (chart.InvokeRequired)
+            try
             {
-                SetChartCallback d = new SetChartCallback(SetChart);
-                if (form.IsDisposed) { return; }
-                form.Invoke(d, new object[] { form, chart, values, xMin, xMax, yMax });
-            }
-            else
-            {
-                chart.ChartAreas[0].AxisX.Minimum = xMin;
-                chart.ChartAreas[0].AxisX.Maximum = xMax;
-                
-                chart.ChartAreas[0].AxisY.Maximum = yMax;
-
-                chart.Series["Score"].Points.Clear();
-
-                foreach (var value in values)
+                if (chart.InvokeRequired)
                 {
-                    chart.Series["Score"].Points.AddXY(value.Key, value.Value);
+                    SetChartCallback d = new SetChartCallback(SetChart);
+                    if (form.IsDisposed) { return; }
+                    form.Invoke(d, new object[] { form, chart, values, xMin, xMax, yMax });
+                }
+                else
+                {
+                    chart.ChartAreas[0].AxisX.Minimum = xMin;
+                    chart.ChartAreas[0].AxisX.Maximum = xMax;
+
+                    chart.ChartAreas[0].AxisY.Maximum = yMax;
+
+                    chart.Series["Score"].Points.Clear();
+
+                    foreach (var value in values)
+                    {
+                        chart.Series["Score"].Points.AddXY(value.Key, value.Value);
+                    }
                 }
             }
+            catch (Exception) { ProblemFound = true; }
         }
     }
 }

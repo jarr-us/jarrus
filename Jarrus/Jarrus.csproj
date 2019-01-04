@@ -76,9 +76,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\jarrus\Baseball.dll</HintPath>
     </Reference>
-    <Reference Include="Kanan, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Office, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\jarrus\Kanan.dll</HintPath>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+      <HintPath>..\..\..\..\..\..\..\jarrus\Office.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -94,6 +95,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Display\BaseballFormDisplay.cs" />
+    <Compile Include="Display\FormControls.cs" />
+    <Compile Include="Display\FormDisplay.cs" />
+    <Compile Include="Display\OfficeFormDisplay.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
