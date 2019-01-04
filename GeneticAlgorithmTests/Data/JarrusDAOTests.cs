@@ -118,15 +118,6 @@ namespace GeneticAlgorithmTests.Data
         //}
 
         [TestMethod]
-        public void ItCanClearOutUnfinishedTasks()
-        {
-            var dao = new JarrusDAO();
-            var task = dao.FetchMyFirstTask<ExampleGene>();
-
-            Assert.IsNotNull(task);
-        }
-
-        [TestMethod]
         public void ItCanRetrieveATask()
         {
             var dao = new JarrusDAO();

@@ -16,8 +16,8 @@ namespace GeneticAlgorithms.Data
 
         public GATask<T> CheckoutATaskToRun<T>() where T : Gene
         {
-            var sql = "UPDATE TOP (1) [DB_9B8C9C_jarrus].[dbo].[GA_Tasks] SET [Checkout] = GETUTCDATE(), [ComputerName] = @ComputerName ";
-            sql += "WHERE [Checkout] IS NULL AND [Priority] = (SELECT MIN([Priority]) FROM [DB_9B8C9C_jarrus].[dbo].[GA_Tasks])";
+            var sql = "UPDATE TOP (1) [DB_9B8C9C_jarrus].[dbo].[GA_Tasks] SET [Checkout] = GETUTCDATE(), [ComputerName] = @ComputerName WHERE [UUID] = ";
+            sql += "(select top 1 UUID FROM [DB_9B8C9C_jarrus].[dbo].[GA_Tasks] where ([Checkout] IS NULL OR Checkout < DATEADD(HOUR, -1, GETUTCDATE())) order by priority)";
             var dao = new DAO();
 
             try
@@ -43,27 +43,6 @@ namespace GeneticAlgorithms.Data
         {
             if (threadId == 0) { threadId = random.Next(); }
             return Environment.MachineName + "::" + threadId;
-        }
-
-        public void ClearOutUnfinishedTasks()
-        {
-            var sql = "UPDATE [DB_9B8C9C_jarrus].[dbo].[GA_Tasks] SET Checkout = NULL, ComputerName = NULL WHERE Checkout < DATEADD(HOUR, -2, GETUTCDATE()) ";
-            var dao = new DAO();
-
-            try
-            {
-                dao.OpenConnection(Server.JARRUS, sql);
-                dao.Execute();
-            }
-            catch (Exception ex)
-            {
-                ErrorHandlingSystem.HandleError(ex, "Unable to clear out unfinished tasks");
-                throw ex;
-            }
-            finally
-            {
-                dao.CloseConnection();
-            }
         }
 
         public GATask<T> FetchMyFirstTask<T>() where T : Gene

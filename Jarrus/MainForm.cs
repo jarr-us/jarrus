@@ -16,7 +16,7 @@ namespace Jarrus
     {
         private static GARun<Team> GARun;
         private static GAConfiguration<Team> Config;
-        public static int RunNumber;
+        public static int RunNumber = 1;
         private static Stopwatch _sw = new Stopwatch();
         private static int _lastGenSeen;
 
