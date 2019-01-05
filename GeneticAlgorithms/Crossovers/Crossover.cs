@@ -8,7 +8,7 @@ namespace GeneticAlgorithms.Crossovers
     {
         private const string INVALID_CHROMOSOME_SIZE = "The father and mother must be initialized, have at least two genes, and must be of the same size";
 
-        public Chromosome<T> Execute<T>(Chromosome<T> father, Chromosome<T> mother, GAConfiguration<T> configuration) where T : Gene
+        public Chromosome Execute(Chromosome father, Chromosome mother, GAConfiguration configuration)
         {
             if (father == null || mother == null) { throw new ArgumentException(INVALID_CHROMOSOME_SIZE); }
             if (father.Genes == null || mother.Genes == null) { throw new ArgumentException(INVALID_CHROMOSOME_SIZE); }
@@ -18,7 +18,7 @@ namespace GeneticAlgorithms.Crossovers
             father.Children++;
             mother.Children++;
 
-            var child = Perform<T>(father, mother, configuration);
+            var child = Perform(father, mother, configuration);
 
             child.LastName = father.LastName;
             child.FirstName = NameGenerator.GetFirstName(configuration.RandomFirstNameSeed);
@@ -28,6 +28,6 @@ namespace GeneticAlgorithms.Crossovers
             return child;
         }
 
-        protected abstract Chromosome<T> Perform<T>(Chromosome<T> father, Chromosome<T> mother, GAConfiguration<T> settings) where T : Gene;
+        protected abstract Chromosome Perform(Chromosome father, Chromosome mother, GAConfiguration settings);
     }
 }

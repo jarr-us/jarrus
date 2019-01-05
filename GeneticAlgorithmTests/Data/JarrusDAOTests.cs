@@ -2,11 +2,8 @@
 using Baseball.FitnessCalculators;
 using Baseball.Models;
 using GeneticAlgorithms.BasicTypes;
-using GeneticAlgorithms.Crossovers.Ordered;
 using GeneticAlgorithms.Data;
 using GeneticAlgorithms.FitnessFunctions;
-using GeneticAlgorithms.Mutations;
-using GeneticAlgorithms.ParentSelections;
 using GeneticAlgorithmTests.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -21,7 +18,7 @@ namespace GeneticAlgorithmTests.Data
         //    var dao = new JarrusDAO();
         //    var task = GetExampleTask();
 
-        //    task.ParentSelection = new StochasticUniversalSamplingSelection<Team>();
+        //    task.ParentSelection = new StochasticUniversalSamplingSelection();
         //    task.Mutation = new InversionMutation();
         //    task.Crossover = new OrderCrossover();
 
@@ -63,7 +60,7 @@ namespace GeneticAlgorithmTests.Data
         //    var dao = new JarrusDAO();
         //    var task = GetExampleTask();
 
-        //    task.ParentSelection = new StochasticUniversalSamplingSelection<Team>();
+        //    task.ParentSelection = new StochasticUniversalSamplingSelection();
         //    task.Mutation = new InversionMutation();
         //    task.Crossover = new OrderCrossover();
 
@@ -93,7 +90,7 @@ namespace GeneticAlgorithmTests.Data
         //    var dao = new JarrusDAO();
         //    var task = GetExampleTask();
 
-        //    task.ParentSelection = new StochasticUniversalSamplingSelection<Team>();
+        //    task.ParentSelection = new StochasticUniversalSamplingSelection();
         //    task.Mutation = new InversionMutation();
         //    task.Crossover = new OrderCrossover();
 
@@ -121,7 +118,7 @@ namespace GeneticAlgorithmTests.Data
         public void ItCanClearOutUnfinishedTasks()
         {
             var dao = new JarrusDAO();
-            var task = dao.FetchMyFirstTask<ExampleGene>();
+            var task = dao.FetchMyFirstTask();
 
             Assert.IsNotNull(task);
         }
@@ -130,7 +127,7 @@ namespace GeneticAlgorithmTests.Data
         public void ItCanRetrieveATask()
         {
             var dao = new JarrusDAO();
-            var task = dao.FetchMyFirstTask<ExampleGene>();
+            var task = dao.FetchMyFirstTask();
 
             Assert.IsNotNull(task);
         }
@@ -139,15 +136,15 @@ namespace GeneticAlgorithmTests.Data
         //public void ItCanDoTheWholeCycle()
         //{
         //    var dao = new JarrusDAO();
-        //    var task = dao.CheckoutATaskToRun<Team>();
+        //    var task = dao.CheckoutATaskToRun();
         //    if (task.ParentSelection == null) { return; }
 
-        //    var config = new GAConfiguration<Team>(task);
+        //    var config = new GAConfiguration(task);
 
         //    var teamdao = new TeamDAO();
         //    var data = teamdao.FetchAllGenes().ToArray();
 
-        //    var ga = new GeneticAlgorithm<Team>(config, data);
+        //    var ga = new GeneticAlgorithm(config, data);
         //    var runDetails = ga.Run();
 
         //    dao.InsertCompletedRun(config, runDetails);
@@ -164,9 +161,9 @@ namespace GeneticAlgorithmTests.Data
             Assert.IsNotNull(fitnessFunction);
         }
 
-        private GATask<Team> GetExampleTask()
+        private GATask GetExampleTask()
         {
-            var task = GATestHelper.GetDummyTask<Team>();
+            var task = GATestHelper.GetDummyTask();
             task.FitnessFunction = new TeamTimeDrivingFitnessFunction();
             return task;
         }

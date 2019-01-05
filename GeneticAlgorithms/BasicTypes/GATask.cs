@@ -5,13 +5,13 @@ using GeneticAlgorithms.ParentSelections;
 
 namespace GeneticAlgorithms.BasicTypes
 {
-    public class GATask<T> where T :Gene
+    public class GATask
     {
         public string UUID { get; set; }
         public string Session { get; set; }
         public string ComputerName { get; set; }        
 
-        public ParentSelection<T> ParentSelection;
+        public ParentSelection ParentSelection;
         public FitnessFunction FitnessFunction;
         public Crossover Crossover;
         public Mutation Mutation;

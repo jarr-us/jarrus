@@ -5,19 +5,19 @@ namespace GeneticAlgorithms.Utility
 {
     public class PopulationGenerator
     {
-        public static Chromosome<T>[] Generate<T>(T[] possibleValues, GAConfiguration<T> configuration) where T : Gene
+        public static Chromosome[] Generate(Gene[] possibleValues, GAConfiguration configuration)
         {
             if (possibleValues == null || possibleValues.Length <= 1 || configuration == null)
             {
                 throw new ArgumentException("Invalid parameters passed to the genome generator");
             }
 
-            var list = new Chromosome<T>[configuration.MaxPopulationSize];
+            var list = new Chromosome[configuration.MaxPopulationSize];
 
             for (int i = 0; i < configuration.MaxPopulationSize; i++)
             {
                 possibleValues.Shuffle(configuration.RandomPool);
-                list[i] = new Chromosome<T>((T[])possibleValues.Clone());
+                list[i] = new Chromosome((Gene[])possibleValues.Clone());
 
                 list[i].FirstName = NameGenerator.GetFirstName(configuration.RandomFirstNameSeed);
                 list[i].LastName = NameGenerator.GetLastName(configuration.RandomLastNameSeed);

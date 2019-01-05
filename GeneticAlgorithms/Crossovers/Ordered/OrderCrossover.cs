@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using GeneticAlgorithms.BasicTypes;
+using System.Collections.Generic;
 
 namespace GeneticAlgorithms.Crossovers.Ordered
 {
@@ -7,13 +8,13 @@ namespace GeneticAlgorithms.Crossovers.Ordered
     /// </summary>
     public class OrderCrossover : Crossover
     {
-        protected override Chromosome<T> Perform<T>(Chromosome<T> father, Chromosome<T> mother, GAConfiguration<T> settings)
+        protected override Chromosome Perform(Chromosome father, Chromosome mother, GAConfiguration settings)
         {
             var geneCount = father.Genes.Length;
-            var child = new Chromosome<T>(geneCount);
+            var child = new Chromosome(geneCount);
             var crossoverPoint = settings.GetRandomInteger(1, father.Genes.Length - 2);
 
-            var seen = new List<T>();
+            var seen = new List<Gene>();
 
             for (int i = 0; i < crossoverPoint; i++)
             {

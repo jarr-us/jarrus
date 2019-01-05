@@ -6,23 +6,23 @@ using System.Linq;
 
 namespace GeneticAlgorithms
 {
-    public class GeneticAlgorithm<T> where T : Gene
+    public class GeneticAlgorithm
     {        
-        public GAConfiguration<T> Configuration { get; private set; }
+        public GAConfiguration Configuration { get; private set; }
         public int Generation { get; private set; }
-        private T[] _possibleValues;
-        public GARun<T> GARun;
+        private Gene[] _possibleValues;
+        public GARun GARun;
 
-        public List<Chromosome<T>> Retired = new List<Chromosome<T>>();
-        public Chromosome<T> BestChromosomeEver { get; private set; }
+        public List<Chromosome> Retired = new List<Chromosome>();
+        public Chromosome BestChromosomeEver { get; private set; }
 
-        public GeneticAlgorithm(GAConfiguration<T> configuration, params T[] possibleValues)
+        public GeneticAlgorithm(GAConfiguration configuration, params Gene[] possibleValues)
         {            
             Configuration = configuration;
             _possibleValues = possibleValues;
             ValidateSettings();
 
-            GARun = new GARun<T>();
+            GARun = new GARun();
             GenerateInitialPopulation();
         }
 
@@ -36,12 +36,12 @@ namespace GeneticAlgorithms
 
         private void GenerateInitialPopulation()
         {
-            var randomPool = PopulationGenerator.Generate<T>(_possibleValues, Configuration);
-            GARun.Population = new Population<T>(Configuration, randomPool, _possibleValues);
+            var randomPool = PopulationGenerator.Generate(_possibleValues, Configuration);
+            GARun.Population = new Population(Configuration, randomPool, _possibleValues);
             GARun.BestChromosome = GARun.Population.Chromosomes[0];
         }
 
-        public GARun<T> Run()
+        public GARun Run()
         {
             GARun.Start = DateTime.UtcNow;
 
@@ -60,7 +60,7 @@ namespace GeneticAlgorithms
             return GARun;
         }
 
-        private void DetermineBestChromosomeEver(Population<T> genome) 
+        private void DetermineBestChromosomeEver(Population genome) 
         {
             var highestScoringChromosome = GARun.Population.Chromosomes.Where(o => o.FitnessScore == GARun.Population.Chromosomes.Max(k => k.FitnessScore)).First();
             var lowestScoringChromosome = GARun.Population.Chromosomes.Where(o => o.FitnessScore == GARun.Population.Chromosomes.Min(k => k.FitnessScore)).First();

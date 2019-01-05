@@ -11,7 +11,7 @@ namespace Jarrus
 {
     public partial class MainForm : Form
     {
-        public FormDisplay<Team> FormDisplay;
+        public FormDisplay FormDisplay;
         public FormControls FControls;
         private bool _running = true;
         private Thread _procThread, _gaThread;
@@ -23,7 +23,11 @@ namespace Jarrus
 
             SetupControls();
 
-            FormDisplay = new BaseballFormDisplay(this, FControls);
+            //factory
+            //updated task system
+            //
+
+            FormDisplay = new TaskRunnerDisplay(this, FControls);
 
             UpdateVersionLabel();
             StartProcessing();

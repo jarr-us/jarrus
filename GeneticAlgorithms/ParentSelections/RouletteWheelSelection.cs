@@ -1,17 +1,15 @@
-﻿using GeneticAlgorithms.BasicTypes;
-
-namespace GeneticAlgorithms.ParentSelections
+﻿namespace GeneticAlgorithms.ParentSelections
 {
-    public class RouletteWheelSelection<T> : RankingWheel<T> where T : Gene
+    public class RouletteWheelSelection : RankingWheel
     {
-        public override ChromosomeParents<T> GetParents()
+        public override ChromosomeParents GetParents()
         {
             var father = GetParent(Configuration.GetNextDouble());
             var mother = GetParent(Configuration.GetNextDouble());
 
             while (mother == father) { mother = GetParent(Configuration.GetNextDouble()); }
 
-            return new ChromosomeParents<T>
+            return new ChromosomeParents
             {
                 Father = father,
                 Mother = mother

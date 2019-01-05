@@ -2,11 +2,11 @@
 {
     public class UniformCrossover : Crossover
     {
-        protected override Chromosome<T> Perform<T>(Chromosome<T> father, Chromosome<T> mother, GAConfiguration<T> configuration)
+        protected override Chromosome Perform(Chromosome father, Chromosome mother, GAConfiguration configuration)
         {
             var geneCount = father.Genes.Length;
-            var childOne = new Chromosome<T>(geneCount);
-            var childTwo = new Chromosome<T>(geneCount);
+            var childOne = new Chromosome(geneCount);
+            var childTwo = new Chromosome(geneCount);
 
             for (int i = 0; i < geneCount; i++)
             {

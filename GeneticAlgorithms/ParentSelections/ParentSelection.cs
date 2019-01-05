@@ -4,12 +4,12 @@ using System.Linq;
 
 namespace GeneticAlgorithms.ParentSelections
 {
-    public abstract class ParentSelection<T> where T : Gene
+    public abstract class ParentSelection
     {
-        protected GAConfiguration<T> Configuration;
-        protected Chromosome<T>[] Genome;
+        protected GAConfiguration Configuration;
+        protected Chromosome[] Genome;
 
-        public void Setup(Chromosome<T>[] genome, GAConfiguration<T> settings)
+        public void Setup(Chromosome[] genome, GAConfiguration settings)
         {
             Configuration = settings;
             Genome = genome;
@@ -28,6 +28,6 @@ namespace GeneticAlgorithms.ParentSelections
         }
 
 
-        public abstract ChromosomeParents<T> GetParents();
+        public abstract ChromosomeParents GetParents();
     }
 }

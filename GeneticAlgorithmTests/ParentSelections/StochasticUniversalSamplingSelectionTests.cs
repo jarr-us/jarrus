@@ -9,7 +9,7 @@ namespace GeneticAlgorithmTests.ParentSelections
     [TestClass]
     public class StochasticUniversalSamplingSelectionTests
     {
-        private Chromosome<ExampleGene>[] _pool;
+        private Chromosome[] _pool;
 
         [TestInitialize]
         public void Setup()
@@ -20,16 +20,16 @@ namespace GeneticAlgorithmTests.ParentSelections
         [TestMethod]
         public void ItHasAValidConstructor()
         {
-            var parentSelection = new StochasticUniversalSamplingSelection<ExampleGene>();
-            parentSelection.Setup(_pool, GATestHelper.GetDefaultConfiguration<ExampleGene>());
+            var parentSelection = new StochasticUniversalSamplingSelection();
+            parentSelection.Setup(_pool, GATestHelper.GetDefaultConfiguration());
             parentSelection.GetParents();
         }
 
         [TestMethod]
         public void ItCanGetAValidParent()
         {
-            var parentSelection = new StochasticUniversalSamplingSelection<ExampleGene>();
-            parentSelection.Setup(_pool, GATestHelper.GetDefaultConfiguration<ExampleGene>());
+            var parentSelection = new StochasticUniversalSamplingSelection();
+            parentSelection.Setup(_pool, GATestHelper.GetDefaultConfiguration());
 
             var parent = parentSelection.GetParent(0.22);
             Assert.IsNotNull(parent);
@@ -38,8 +38,8 @@ namespace GeneticAlgorithmTests.ParentSelections
         [TestMethod]
         public void ItCanReturnParents()
         {
-            var parentSelection = new StochasticUniversalSamplingSelection<ExampleGene>();
-            parentSelection.Setup(_pool, GATestHelper.GetDefaultConfiguration<ExampleGene>());
+            var parentSelection = new StochasticUniversalSamplingSelection();
+            parentSelection.Setup(_pool, GATestHelper.GetDefaultConfiguration());
 
             var parent = parentSelection.GetParents();
             Assert.IsNotNull(parent);

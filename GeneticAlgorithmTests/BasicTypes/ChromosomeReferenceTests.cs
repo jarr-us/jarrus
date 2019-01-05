@@ -14,13 +14,13 @@ namespace GeneticAlgorithmTests
         {
             var data = GetSampleDataset();
 
-            var chromosomeOne = new Chromosome<ExampleGene>(data);
+            var chromosomeOne = new Chromosome(data);
 
             var tempdata = data[0];
             data[0] = data[1];
             data[1] = tempdata;
 
-            var chromosomeTwo = new Chromosome<ExampleGene>(data);
+            var chromosomeTwo = new Chromosome(data);
 
             var areEqual = chromosomeOne.Genes[0] == chromosomeTwo.Genes[1];
 

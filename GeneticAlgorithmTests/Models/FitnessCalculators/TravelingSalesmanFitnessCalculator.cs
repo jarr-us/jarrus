@@ -1,6 +1,7 @@
 ﻿using GeneticAlgorithms;
 using GeneticAlgorithms.FitnessFunctions;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace GeneticAlgorithmTests.Models.FitnessFunctions
 {
@@ -34,9 +35,9 @@ namespace GeneticAlgorithmTests.Models.FitnessFunctions
             _dictionary['D'].Add('C', 30);
         }
 
-        public override double GetFitnessScoreFor<T>(Chromosome<T> chromosome)
+        public override double GetFitnessScoreFor(Chromosome chromosome)
         {
-            var genes = (ExampleGene[])(object)chromosome.Genes;
+            var genes = chromosome.Genes.Cast<ExampleGene>().ToArray();
 
             var val = GetDistanceBetween(genes[0].Value, genes[1].Value);
 

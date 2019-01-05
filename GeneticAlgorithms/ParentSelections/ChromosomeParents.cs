@@ -2,9 +2,9 @@
 
 namespace GeneticAlgorithms.ParentSelections
 {
-    public class ChromosomeParents<T> where T : Gene
+    public class ChromosomeParents
     {
-        public Chromosome<T> Father;
-        public Chromosome<T> Mother;
+        public Chromosome Father;
+        public Chromosome Mother;
     }
 }

@@ -11,7 +11,7 @@ namespace GeneticAlgorithmTests.BasicTypes
         [TestMethod]
         public void ItHasAValidConstructor()
         {
-            var run = new GARun<ExampleGene>();
+            var run = new GARun();
         }
     }
 }

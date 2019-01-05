@@ -10,7 +10,7 @@ namespace GeneticAlgorithmTests.Crossovers
     [TestClass]
     public class OrderedCrossoverTests
     {
-        private Chromosome<ExampleGene> _father, _mother;
+        private Chromosome _father, _mother;
 
         public OrderedCrossoverTests()
         {
@@ -23,7 +23,7 @@ namespace GeneticAlgorithmTests.Crossovers
         public void ItCanPerformACrossover()
         {
             var crossover = new OrderCrossover();
-            var settings = GATestHelper.GetDefaultConfiguration<ExampleGene>();
+            var settings = GATestHelper.GetDefaultConfiguration();
 
             var child = crossover.Execute(_father, _mother, settings);
             Console.Out.WriteLine("Child: " + child.ToString());

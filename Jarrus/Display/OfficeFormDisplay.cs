@@ -1,16 +1,20 @@
-﻿using Office;
+﻿using GeneticAlgorithms.BasicTypes;
+using Office;
+using System;
 using System.Windows.Forms;
 
 namespace Jarrus.Display
 {
-    public class OfficeFormDisplay : FormDisplay<Survey>
+    public class OfficeFormDisplay : FormDisplay
     {
         public OfficeFormDisplay(Form form, FormControls controls) : base(form, controls) { }
 
-        public override Survey[] FetchOptions()
+        public override Gene[] FetchOptions()
         {
             var dao = new SurveyDAO();
-            return dao.FetchOptions();
+            var options = dao.FetchOptions();
+
+            return options;
         }
     }
 }

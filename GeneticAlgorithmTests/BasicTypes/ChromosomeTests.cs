@@ -14,19 +14,12 @@ namespace GeneticAlgorithmTests
     {
         private Random _random = new Random();
         private List<LastName> _lastNamesUsed = new List<LastName>();
-
-        [TestMethod]
-        public void ItsConstructorDeterminesItsType()
-        {
-            var doubleChromo = new Chromosome<ExampleGene>(GATestHelper.GetRandomInteger(1, 255));
-            Assert.IsTrue(new ExampleGene[1].GetType().ToString() == doubleChromo.Genes.GetType().ToString());
-        }
-
+        
         [TestMethod]
         public void ItsConstructorDeterminesTheGeneSize()
         {
             var random = GATestHelper.GetRandomInteger(1, 255);
-            var doubleChromo = new Chromosome<ExampleGene>(random);
+            var doubleChromo = new Chromosome(random);
             Assert.AreEqual(random, doubleChromo.Genes.Length);
         }
 
@@ -43,7 +36,7 @@ namespace GeneticAlgorithmTests
             var ExampleGeneChromo = GATestHelper.GetTravelingSalesmanChromosome();
             ExampleGeneChromo.Age = 1;
 
-            Assert.IsFalse(ExampleGeneChromo.ShouldRetire(GATestHelper.GetDefaultConfiguration<ExampleGene>()));
+            Assert.IsFalse(ExampleGeneChromo.ShouldRetire(GATestHelper.GetDefaultConfiguration()));
         }
 
         [TestMethod]
@@ -52,7 +45,7 @@ namespace GeneticAlgorithmTests
             var ExampleGeneChromo = GATestHelper.GetTravelingSalesmanChromosome();
             ExampleGeneChromo.Age = 100;
 
-            Assert.IsTrue(ExampleGeneChromo.ShouldRetire(GATestHelper.GetDefaultConfiguration<ExampleGene>()));
+            Assert.IsTrue(ExampleGeneChromo.ShouldRetire(GATestHelper.GetDefaultConfiguration()));
         }
 
         [TestMethod]
@@ -61,7 +54,7 @@ namespace GeneticAlgorithmTests
             var ExampleGeneChromo = GATestHelper.GetTravelingSalesmanChromosome();
             ExampleGeneChromo.Age = 5000;
 
-            var settings = GATestHelper.GetDefaultConfiguration<ExampleGene>();
+            var settings = GATestHelper.GetDefaultConfiguration();
             settings.MaximumLifeSpan = 0;
 
             Assert.IsFalse(ExampleGeneChromo.ShouldRetire(settings));
@@ -78,14 +71,14 @@ namespace GeneticAlgorithmTests
         [TestMethod]
         public void ItCanOutputGenesToCommaDelimitedStringWhenEmpty()
         {
-            var ExampleGeneChromo = new Chromosome<ExampleGene>();
+            var ExampleGeneChromo = new Chromosome();
             Assert.AreEqual("", ExampleGeneChromo.ToString());
         }
 
         [TestMethod]
         public void ItHasADefaultName()
         {
-            var chromo = new Chromosome<ExampleGene>();
+            var chromo = new Chromosome();
             Assert.AreEqual(FirstName.Kanan, chromo.FirstName);
             Assert.AreEqual(LastName.Jarrus, chromo.LastName);
         }
@@ -112,7 +105,7 @@ namespace GeneticAlgorithmTests
             Assert.AreEqual(6, child.Lineage.Count);
         }
 
-        private Chromosome<ExampleGene> GetPersonWithParents()
+        private Chromosome GetPersonWithParents()
         {
             var father = GetRandomNamedChromosome();
             var mother = GetRandomNamedChromosome();
@@ -122,9 +115,9 @@ namespace GeneticAlgorithmTests
             return child;
         }
 
-        private Chromosome<ExampleGene> GetRandomNamedChromosome()
+        private Chromosome GetRandomNamedChromosome()
         {
-            var chromo = new Chromosome<ExampleGene>();
+            var chromo = new Chromosome();
 
             var lastName = NameGenerator.GetLastName(_random);
             while(_lastNamesUsed.Contains(lastName)) { lastName = NameGenerator.GetLastName(_random); }

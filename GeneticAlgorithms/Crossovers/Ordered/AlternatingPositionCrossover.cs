@@ -1,15 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using GeneticAlgorithms.BasicTypes;
+using System.Collections.Generic;
 
 namespace GeneticAlgorithms.Crossovers.Ordered
 {
     public class AlternatingPositionCrossover : Crossover
     {
-        protected override Chromosome<T> Perform<T>(Chromosome<T> father, Chromosome<T> mother, GAConfiguration<T> settings)
+        protected override Chromosome Perform(Chromosome father, Chromosome mother, GAConfiguration settings)
         {
             var geneCount = father.Genes.Length;
-            var child = new Chromosome<T>(geneCount);
+            var child = new Chromosome(geneCount);
 
-            var seen = new List<T>();
+            var seen = new List<Gene>();
 
             for (int i = 0; i < geneCount; i++)
             {

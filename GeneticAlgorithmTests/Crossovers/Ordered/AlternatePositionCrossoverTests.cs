@@ -17,7 +17,7 @@ namespace GeneticAlgorithmTests.Crossovers.Ordered
             var two = GATestHelper.GetNumericChromosomeTwo();
 
             var cc = new AlternatingPositionCrossover();
-            var child = cc.Execute(one, two, GATestHelper.GetDefaultConfiguration<ExampleGene>());
+            var child = cc.Execute(one, two, GATestHelper.GetDefaultConfiguration());
             
             Assert.AreEqual("1,5,2,4,3,6,7", string.Join(",", (IEnumerable<Gene>)child.Genes));
         }

@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace GeneticAlgorithms.ParentSelections
 {
-    public abstract class RankingWheel<T> : ParentSelection<T> where T : Gene
+    public abstract class RankingWheel : ParentSelection
     {
         private List<double> rankings = new List<double>();
 
@@ -58,7 +58,7 @@ namespace GeneticAlgorithms.ParentSelections
             rankings[Genome.Length - 1] = 1;
         }
 
-        public Chromosome<T> GetParent(double value)
+        public Chromosome GetParent(double value)
         {
             for (int i = 1; i < Genome.Length; i++)
             {

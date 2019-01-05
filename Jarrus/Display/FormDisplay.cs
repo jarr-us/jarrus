@@ -11,14 +11,14 @@ using System.Windows.Forms;
 
 namespace Jarrus.Display
 {
-    public abstract class FormDisplay<T> where T : Gene
+    public abstract class FormDisplay 
     {
         public FormDisplay(Form form, FormControls controls) { Form = form;  Controls = controls; }
 
         protected Form Form;
         protected FormControls Controls;
-        public GARun<T> GARun;
-        public GAConfiguration<T> Config;
+        public GARun GARun;
+        public GAConfiguration Config;
         public int RunNumber;
         public Stopwatch Stopwatch = new Stopwatch();
         public int LastGenerationSeen;
@@ -26,7 +26,7 @@ namespace Jarrus.Display
         public int PoolScoreMaxYSeen;
         public double MinScoreSeen, MaxScoreSeen;
 
-        public abstract T[] FetchOptions();
+        public abstract Gene[] FetchOptions();
         public bool IsReadyToUpdateForm() { return GARun != null; }
         public bool HasAPopulation() { return !GARun.Population.Chromosomes.Any(); }
 
@@ -48,7 +48,7 @@ namespace Jarrus.Display
             if (MinScoreSeen > min) { MinScoreSeen = min; }
             if (MaxScoreSeen < max) { MaxScoreSeen = max; }
 
-            var poolScoreGenerator = new PoolScoreGenerator<T>(GARun.Population, MinScoreSeen, MaxScoreSeen);
+            var poolScoreGenerator = new PoolScoreGenerator(GARun.Population, MinScoreSeen, MaxScoreSeen);
 
             var maxScore = poolScoreGenerator.Points.Max(o => o.Value);
             if (maxScore > PoolScoreMaxYSeen)
@@ -118,7 +118,7 @@ namespace Jarrus.Display
 
         private void DrawFamilyDetails()
         {
-            var familyLineage = new FamilyLineage<T>(GARun.Population);
+            var familyLineage = new FamilyLineage(GARun.Population);
 
             UpdateFamily(Controls.Family1Lbl, Controls.Family1ProgressBar, 0, familyLineage);
             UpdateFamily(Controls.Family2Lbl, Controls.Family2ProgressBar, 1, familyLineage);
@@ -127,7 +127,7 @@ namespace Jarrus.Display
             UpdateFamily(Controls.Family5Lbl, Controls.Family5ProgressBar, 4, familyLineage);
         }
 
-        private void UpdateFamily(Label familyLabel, ProgressBar progressBar, int familyRanking, FamilyLineage<T> lineageDetails)
+        private void UpdateFamily(Label familyLabel, ProgressBar progressBar, int familyRanking, FamilyLineage lineageDetails)
         {
             var familyName = "";
             var percentage = 0.0;
@@ -149,15 +149,15 @@ namespace Jarrus.Display
         public void RunIteration()
         {
             var jarrusDAO = new JarrusDAO();
-            var task = jarrusDAO.CheckoutATaskToRun<T>();
+            var task = jarrusDAO.CheckoutATaskToRun();
             if (task.ParentSelection == null) { Thread.Sleep(1000); return; }
 
-            var config = new GAConfiguration<T>(task);
+            var config = new GAConfiguration(task);
             Config = config;
 
             var data = FetchOptions();
 
-            var ga = new GeneticAlgorithm<T>(config, data);
+            var ga = new GeneticAlgorithm(config, data);
             GARun = ga.GARun;
             UIUpdater.SetText(Form, Controls.SessionNameLbl, config.Session);
 

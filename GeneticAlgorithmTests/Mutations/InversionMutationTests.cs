@@ -36,7 +36,7 @@ namespace GeneticAlgorithmTests.Mutations
 
             for (int i = 0; i < 100; i++)
             {
-                mutation.Mutate(chromosome, GATestHelper.GetDefaultConfiguration<ExampleGene>());
+                mutation.Mutate(chromosome, GATestHelper.GetDefaultConfiguration());
             }
         }
     }

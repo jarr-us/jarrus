@@ -9,7 +9,7 @@ namespace GeneticAlgorithms.Mutations
 {
     public class InversionMutation : Mutation
     {
-        protected override void Perform<T>(Chromosome<T> chromosome, GAConfiguration<T> settings) 
+        protected override void Perform(Chromosome chromosome, GAConfiguration settings) 
         {
             var firstMutationPoint = settings.GetRandomInteger(0, chromosome.Genes.Length - 1);
             var secondMutationPoint = settings.GetRandomInteger(0, chromosome.Genes.Length - 1, firstMutationPoint);
@@ -17,7 +17,7 @@ namespace GeneticAlgorithms.Mutations
             Inverse(chromosome, firstMutationPoint, secondMutationPoint);
         }
           
-        public void Inverse<T>(Chromosome<T> chromosome, int startingAtIndex, int endingAtIndex) where T : Gene
+        public void Inverse(Chromosome chromosome, int startingAtIndex, int endingAtIndex)
         {
             var length = endingAtIndex - startingAtIndex;
             var count = 0;

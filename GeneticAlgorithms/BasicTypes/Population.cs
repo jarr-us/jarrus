@@ -9,17 +9,17 @@ using System.Threading.Tasks;
 
 namespace GeneticAlgorithms
 {
-    public class Population<T> where T : Gene
+    public class Population
     {
-        public Chromosome<T>[] Chromosomes;
-        public GAConfiguration<T> Configuration;
+        public Chromosome[] Chromosomes;
+        public GAConfiguration Configuration;
         public int GenerationNumber = 1;
-        private List<Chromosome<T>> NextGeneration = new List<Chromosome<T>>();
-        public HashSet<Chromosome<T>> OptionsInPool = new HashSet<Chromosome<T>>();
-        public List<Chromosome<T>> Retired = new List<Chromosome<T>>();
-        private T[] _possibleValues;
+        private List<Chromosome> NextGeneration = new List<Chromosome>();
+        public HashSet<Chromosome> OptionsInPool = new HashSet<Chromosome>();
+        public List<Chromosome> Retired = new List<Chromosome>();
+        private Gene[] _possibleValues;
 
-        public Population(GAConfiguration<T> configuration, Chromosome<T>[] chromosomes, T[] possibleValues)
+        public Population(GAConfiguration configuration, Chromosome[] chromosomes, Gene[] possibleValues)
         {
             if (configuration == null || chromosomes == null || chromosomes.Length <=2 || possibleValues == null || possibleValues.Length <= 2)
             {
@@ -34,7 +34,7 @@ namespace GeneticAlgorithms
             DetermineFitnessScores();
         }
 
-        private Population(GAConfiguration<T> configuration, Chromosome<T>[] chromosomes, int generationNumber, T[] possibleValues, List<Chromosome<T>> retired = null)
+        private Population(GAConfiguration configuration, Chromosome[] chromosomes, int generationNumber, Gene[] possibleValues, List<Chromosome> retired = null)
         {
             Chromosomes = chromosomes;
             Configuration = configuration;
@@ -69,13 +69,13 @@ namespace GeneticAlgorithms
             }
         }
 
-        public Population<T> Advance()
+        public Population Advance()
         {
             SetupNextGenerationObjects();
             DetermineNextGeneration();
             DetermineFitnessScores();
 
-            return new Population<T>(Configuration, NextGeneration.ToArray(), GenerationNumber, _possibleValues, Retired);
+            return new Population(Configuration, NextGeneration.ToArray(), GenerationNumber, _possibleValues, Retired);
         }
 
         private void DetermineFitnessScores()
@@ -163,12 +163,12 @@ namespace GeneticAlgorithms
             }
         }
 
-        private void AddToNextGeneration(List<Chromosome<T>> chromosomes)
+        private void AddToNextGeneration(List<Chromosome> chromosomes)
         {
             foreach (var chromosome in chromosomes) { AddToNextGeneration(chromosome); }
         }
 
-        private void AddToNextGeneration(Chromosome<T> chromosome)
+        private void AddToNextGeneration(Chromosome chromosome)
         {
             if (Configuration.PreventDuplications)
             {
@@ -191,9 +191,9 @@ namespace GeneticAlgorithms
             }
         }
 
-        private Chromosome<T> GetNewChromosome()
+        private Chromosome GetNewChromosome()
         {
-            var newChromosome = new Chromosome<T>(_possibleValues);
+            var newChromosome = new Chromosome(_possibleValues);
 
             newChromosome.Genes.Shuffle(Configuration.RandomPool);
             newChromosome.FirstName = NameGenerator.GetFirstName(Configuration.RandomFirstNameSeed);
@@ -202,7 +202,7 @@ namespace GeneticAlgorithms
             return newChromosome;
         }
 
-        private Chromosome<T> GetChild(ChromosomeParents<T> parents)
+        private Chromosome GetChild(ChromosomeParents parents)
         {
             var child = Configuration.Crossover.Execute(parents.Father, parents.Mother, Configuration);
             return child;

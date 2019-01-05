@@ -6,16 +6,16 @@ using System.Linq;
 
 namespace Jarrus.Metadata
 {
-    public class PoolScoreGenerator<T> where T : Gene
+    public class PoolScoreGenerator
     {
-        private Population<T> _population;
+        private Population _population;
         private List<double> _scores;
         public double MinScore, MaxScore;
         private double _bucketSize;
         public List<KeyValuePair<double, double>> Points = new List<KeyValuePair<double, double>>();
         public const int NUMBER_OF_BUCKETS = 35;
 
-        public PoolScoreGenerator(Population<T> pop, double minScore, double maxScore)
+        public PoolScoreGenerator(Population pop, double minScore, double maxScore)
         {
             _population = pop;
             MinScore = minScore;

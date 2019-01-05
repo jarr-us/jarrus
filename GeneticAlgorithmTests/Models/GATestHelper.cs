@@ -26,9 +26,9 @@ namespace GeneticAlgorithmTests.Models
             return _random.NextDouble();
         }
 
-        public static Chromosome<ExampleGene> GetTravelingSalesmanChromosome()
+        public static Chromosome GetTravelingSalesmanChromosome()
         {
-            return new Chromosome<ExampleGene>(
+            return new Chromosome(
                 new ExampleGene('A'), 
                 new ExampleGene('B'), 
                 new ExampleGene('C'), 
@@ -36,9 +36,9 @@ namespace GeneticAlgorithmTests.Models
             );
         }
 
-        public static Chromosome<ExampleGene> GetNumericChromosomeOne()
+        public static Chromosome GetNumericChromosomeOne()
         {
-            return new Chromosome<ExampleGene>(
+            return new Chromosome(
                 new ExampleGene('1'),
                 new ExampleGene('2'),
                 new ExampleGene('3'),
@@ -49,9 +49,9 @@ namespace GeneticAlgorithmTests.Models
             );
         }
 
-        public static Chromosome<ExampleGene> GetNumericChromosomeTwo()
+        public static Chromosome GetNumericChromosomeTwo()
         {
-            return new Chromosome<ExampleGene>(
+            return new Chromosome(
                 new ExampleGene('5'),
                 new ExampleGene('4'),
                 new ExampleGene('6'),
@@ -62,9 +62,9 @@ namespace GeneticAlgorithmTests.Models
             );
         }
 
-        public static Chromosome<ExampleGene> GetNumericChromosomeThree()
+        public static Chromosome GetNumericChromosomeThree()
         {
-            return new Chromosome<ExampleGene>(
+            return new Chromosome(
                 new ExampleGene('5'),
                 new ExampleGene('4'),
                 new ExampleGene('6'),
@@ -75,20 +75,20 @@ namespace GeneticAlgorithmTests.Models
             );
         }
 
-        public static Chromosome<ExampleGene>[] GetTravelingSalesmanGenome()
+        public static Chromosome[] GetTravelingSalesmanGenome()
         {
-            return GetTravelingSalesmanGenome(GetDefaultConfiguration<ExampleGene>());
+            return GetTravelingSalesmanGenome(GetDefaultConfiguration());
         }
 
-        public static Chromosome<ExampleGene>[] GetTravelingSalesmanGenome(GAConfiguration<ExampleGene> config)
+        public static Chromosome[] GetTravelingSalesmanGenome(GAConfiguration config)
         {
             var chromosome = GetTravelingSalesmanChromosome();
             return PopulationGenerator.Generate(chromosome.Genes, config);
         }
 
-        public static Chromosome<ExampleGene> GetAlphabetCharacterChromosome()
+        public static Chromosome GetAlphabetCharacterChromosome()
         {
-            return new Chromosome<ExampleGene>(
+            return new Chromosome(
                 new ExampleGene('A'),
                 new ExampleGene('B'),
                 new ExampleGene('C'),
@@ -102,16 +102,16 @@ namespace GeneticAlgorithmTests.Models
             );
         }
 
-        public static GAConfiguration<T> GetDefaultConfiguration<T>() where T : Gene
+        public static GAConfiguration GetDefaultConfiguration() 
         {
-            return new GAConfiguration<T>( GetDummyTask<T>());
+            return new GAConfiguration( GetDummyTask());
         }
 
-        public static GATask<T> GetDummyTask<T>() where T : Gene
+        public static GATask GetDummyTask() 
         {
-            var task = new GATask<T>
+            var task = new GATask
             {
-                ParentSelection = new RouletteWheelSelection<T>(),
+                ParentSelection = new RouletteWheelSelection(),
                 FitnessFunction = new TravelingSalesmanFitnessCalculator(),
                 Mutation = new SwapMutation(),
                 Crossover = new OrderCrossover(),

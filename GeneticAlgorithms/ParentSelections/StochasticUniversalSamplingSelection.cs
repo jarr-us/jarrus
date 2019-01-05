@@ -3,16 +3,16 @@ using System;
 
 namespace GeneticAlgorithms.ParentSelections
 {
-    public class StochasticUniversalSamplingSelection<T> : RankingWheel<T> where T : Gene
+    public class StochasticUniversalSamplingSelection : RankingWheel
     {
         public StochasticUniversalSamplingSelection() { }
 
-        public override ChromosomeParents<T> GetParents()
+        public override ChromosomeParents GetParents()
         {
             var spinValue = Configuration.GetNextDouble();
             var oppositeSideValue = Math.Abs(spinValue - 0.5);
 
-            return new ChromosomeParents<T>
+            return new ChromosomeParents
             {
                 Father = GetParent(spinValue),
                 Mother = GetParent(oppositeSideValue)

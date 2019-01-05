@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace GeneticAlgorithms
 {
-    public class GAConfiguration<T> : GATask<T> where T : Gene
+    public class GAConfiguration : GATask
     {
         private const int FIRST_NAME_SEED = 22;
         private const int LAST_NAME_SEED = 35;
@@ -15,7 +15,7 @@ namespace GeneticAlgorithms
         public Random RandomFirstNameSeed = new Random(FIRST_NAME_SEED);
         public Random RandomLastNameSeed = new Random(LAST_NAME_SEED);
 
-        public GAConfiguration(GATask<T> task)
+        public GAConfiguration(GATask task)
         {
             Reflection.CopyProperties(task, this);
             var tempRandom = new Random();

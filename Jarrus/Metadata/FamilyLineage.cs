@@ -6,14 +6,14 @@ using System.Linq;
 
 namespace Jarrus.Metadata
 {
-    public class FamilyLineage<T> where T : Gene
+    public class FamilyLineage
     {
-        private Population<T> _population;
+        private Population _population;
         private Dictionary<LastName, int> _lastNameUsage;
         private IOrderedEnumerable<KeyValuePair<LastName, int>> _ranking;
         public double TotalLineages;
 
-        public FamilyLineage(Population<T> pop)
+        public FamilyLineage(Population pop)
         {
             _population = pop;
             _lastNameUsage = new Dictionary<LastName, int>();

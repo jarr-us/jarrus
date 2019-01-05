@@ -12,7 +12,7 @@ namespace GeneticAlgorithmTests
     public class GeneticAlgorithmTests
     {
         private ExampleGene[] _exampleGenes;
-        private GAConfiguration<ExampleGene> _configuration;
+        private GAConfiguration _configuration;
 
         [TestInitialize]
         public void Setup()
@@ -22,25 +22,25 @@ namespace GeneticAlgorithmTests
 
         private void SetConfiguration()
         {
-            _configuration = GATestHelper.GetDefaultConfiguration<ExampleGene>();
+            _configuration = GATestHelper.GetDefaultConfiguration();
             _configuration.PreventDuplications = true;
             _configuration.MaxPopulationSize = 10;
             _configuration.MaximumLifeSpan = 2;
             _configuration.MaxGenerations = 5;
 
-            _exampleGenes = GATestHelper.GetTravelingSalesmanChromosome().Genes;
+            _exampleGenes = Array.ConvertAll(GATestHelper.GetTravelingSalesmanChromosome().Genes, option => (ExampleGene)option);
         }
 
         [TestMethod]
         public void ItHasAValidConstructor()
         {
-            var ga = new GeneticAlgorithm<ExampleGene>(_configuration, _exampleGenes);
+            var ga = new GeneticAlgorithm(_configuration, _exampleGenes);
         }
 
         [TestMethod]
         public void ItWillRunMultipleGenerations()
         {
-            var ga = new GeneticAlgorithm<ExampleGene>(_configuration, _exampleGenes);
+            var ga = new GeneticAlgorithm(_configuration, _exampleGenes);
             var runDetails = ga.Run();
             Assert.AreEqual(_configuration.MaxGenerations + 1, ga.Generation);
         }
@@ -48,7 +48,7 @@ namespace GeneticAlgorithmTests
         [TestMethod]
         public void ItIsRepeatable()
         {
-            var ga = new GeneticAlgorithm<ExampleGene>(_configuration, _exampleGenes);
+            var ga = new GeneticAlgorithm(_configuration, _exampleGenes);
             var runDetails = ga.Run();
             Assert.AreEqual(_configuration.MaxGenerations + 1, ga.Generation);
 
@@ -59,7 +59,7 @@ namespace GeneticAlgorithmTests
         [TestMethod]
         public void ItKeepsTrackOfTheBestScore()
         {
-            var ga = new GeneticAlgorithm<ExampleGene>(_configuration, _exampleGenes);
+            var ga = new GeneticAlgorithm(_configuration, _exampleGenes);
             var runDetails = ga.Run();
             Assert.AreEqual(_configuration.MaxGenerations + 1, ga.Generation);
 
@@ -76,7 +76,7 @@ namespace GeneticAlgorithmTests
         [TestMethod]
         public void ItReturnsAnObjectWithDetailsOfTheRun()
         {
-            var ga = new GeneticAlgorithm<ExampleGene>(_configuration, _exampleGenes);
+            var ga = new GeneticAlgorithm(_configuration, _exampleGenes);
             var run = ga.Run();
 
             Assert.AreEqual(_configuration.MaxGenerations + 1, ga.Generation);
@@ -86,7 +86,7 @@ namespace GeneticAlgorithmTests
         [TestMethod]
         public void ItSetsTheStartAndEndTimeOfARun()
         {
-            var ga = new GeneticAlgorithm<ExampleGene>(_configuration, _exampleGenes);
+            var ga = new GeneticAlgorithm(_configuration, _exampleGenes);
             var run = ga.Run();
 
             Assert.AreEqual(_configuration.MaxGenerations + 1, ga.Generation);
@@ -97,21 +97,21 @@ namespace GeneticAlgorithmTests
         [ExpectedException(typeof(ArgumentException))]
         public void ItThrowsAnExceptionIfTheConfigurationIsNotSet()
         {
-            var ga = new GeneticAlgorithm<ExampleGene>(null, _exampleGenes);
+            var ga = new GeneticAlgorithm(null, _exampleGenes);
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void ItThrowsAnExceptionIfTheGenesAreNotSet()
         {
-            var ga = new GeneticAlgorithm<ExampleGene>(_configuration, null);
+            var ga = new GeneticAlgorithm(_configuration, null);
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void ItThrowsAnExceptionIfTheGeneLengthIsInvalid()
         {
-            var ga = new GeneticAlgorithm<ExampleGene>(_configuration, _exampleGenes.Subset(0, 1));
+            var ga = new GeneticAlgorithm(_configuration, _exampleGenes.Subset(0, 1));
         }
     }
 }

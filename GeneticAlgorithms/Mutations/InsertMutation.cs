@@ -4,7 +4,7 @@ namespace GeneticAlgorithms.Mutations
 {
     public class InsertMutation : Mutation
     {
-        protected override void Perform<T>(Chromosome<T> chromosome, GAConfiguration<T> settings)
+        protected override void Perform(Chromosome chromosome, GAConfiguration settings)
         {
             var firstMutationPoint = settings.GetRandomInteger(0, chromosome.Genes.Length - 1);
             var secondMutationPoint = settings.GetRandomInteger(0, chromosome.Genes.Length - 1, firstMutationPoint);
@@ -12,7 +12,7 @@ namespace GeneticAlgorithms.Mutations
             Shift(chromosome, firstMutationPoint, secondMutationPoint);
         }
 
-        public void Shift<T>(Chromosome<T> chromosome, int start, int end) where T : Gene
+        public void Shift(Chromosome chromosome, int start, int end)
         {
             for (int i = 0; i < end - start; i++)
             {

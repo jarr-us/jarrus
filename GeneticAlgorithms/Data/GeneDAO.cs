@@ -2,7 +2,7 @@
 
 namespace GeneticAlgorithms.Data
 {
-    public abstract class GeneDAO<T> where T : Gene
+    public abstract class GeneDAO<T> 
     {
         public abstract T[] FetchOptions(); 
     }

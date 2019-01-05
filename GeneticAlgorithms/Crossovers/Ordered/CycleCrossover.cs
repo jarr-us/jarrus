@@ -8,18 +8,18 @@ namespace GeneticAlgorithms.Crossovers.Ordered
     {
         public List<int> Cycle = new List<int>();
 
-        protected override Chromosome<T> Perform<T>(Chromosome<T> father, Chromosome<T> mother, GAConfiguration<T> settings)
+        protected override Chromosome Perform(Chromosome father, Chromosome mother, GAConfiguration settings)
         {
             var geneCount = father.Genes.Length;
             
             DetermineCycle(father, mother);
-            var child = new Chromosome<T>(mother.Genes);
+            var child = new Chromosome(mother.Genes);
             PlaceCycleInsideOfChild(father, child);
 
             return child;
         }
 
-        private void DetermineCycle<T>(Chromosome<T> father, Chromosome<T> mother) where T : Gene
+        private void DetermineCycle(Chromosome father, Chromosome mother)
         {
             Cycle = new List<int>();
             var index = 0;
@@ -34,7 +34,7 @@ namespace GeneticAlgorithms.Crossovers.Ordered
             }
         }
 
-        private void PlaceCycleInsideOfChild<T>(Chromosome<T> father, Chromosome<T> child) where T : Gene
+        private void PlaceCycleInsideOfChild(Chromosome father, Chromosome child)
         {
             foreach(var index in Cycle)
             {

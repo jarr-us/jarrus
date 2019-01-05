@@ -14,7 +14,7 @@ namespace GeneticAlgorithms.Data
         private Random random = new Random();
         private int threadId; 
 
-        public GATask<T> CheckoutATaskToRun<T>() where T : Gene
+        public GATask CheckoutATaskToRun()
         {
             var sql = "UPDATE TOP (1) [DB_9B8C9C_jarrus].[dbo].[GA_Tasks] SET [Checkout] = GETUTCDATE(), [ComputerName] = @ComputerName ";
             sql += "WHERE [Checkout] IS NULL AND [Priority] = (SELECT MIN([Priority]) FROM [DB_9B8C9C_jarrus].[dbo].[GA_Tasks])";
@@ -36,7 +36,7 @@ namespace GeneticAlgorithms.Data
                 dao.CloseConnection();
             }
 
-            return FetchMyFirstTask<T>();
+            return FetchMyFirstTask();
         }
 
         private string GetComputerName()
@@ -66,10 +66,10 @@ namespace GeneticAlgorithms.Data
             }
         }
 
-        public GATask<T> FetchMyFirstTask<T>() where T : Gene
+        public GATask FetchMyFirstTask()
         {
             var sql = "SELECT TOP 1 * FROM [DB_9B8C9C_jarrus].[dbo].[GA_Tasks] WHERE [ComputerName] = @ComputerName order by [Priority]";
-            var task = new GATask<T>();
+            var task = new GATask();
             var dao = new DAO();
 
             try
@@ -105,7 +105,7 @@ namespace GeneticAlgorithms.Data
             }
             catch (Exception ex)
             {
-                ErrorHandlingSystem.HandleError(ex, "Unable to insert GA Task");
+                ErrorHandlingSystem.HandleError(ex, "Unable to fetch a GA Task");
                 throw ex;
             }
             finally
@@ -114,35 +114,35 @@ namespace GeneticAlgorithms.Data
             }
         }
 
-        private void AttachFitnessFunctionToTask<T>(GATask<T> task, string className) where T : Gene
+        private void AttachFitnessFunctionToTask(GATask task, string className)
         {
             var elementType = Type.GetType(className);
             if (elementType == null) return;
             task.FitnessFunction = (FitnessFunction)(Activator.CreateInstance(elementType));
         }
 
-        private void AttachParentSelectionToTask<T>(GATask<T> task, string className) where T : Gene
+        private void AttachParentSelectionToTask(GATask task, string className)
         {
             var elementType = Type.GetType(className);
             if (elementType == null) return;
-            task.ParentSelection = (ParentSelection<T>)(Activator.CreateInstance(elementType));
+            task.ParentSelection = (ParentSelection)(Activator.CreateInstance(elementType));
         }
 
-        private void AttachMutationToTask<T>(GATask<T> task, string className) where T : Gene
+        private void AttachMutationToTask(GATask task, string className)
         {
             var elementType = Type.GetType(className);
             if (elementType == null) return;
             task.Mutation = (Mutation)(Activator.CreateInstance(elementType));
         }
 
-        private void AttachCrossoverToTask<T>(GATask<T> task, string className) where T : Gene
+        private void AttachCrossoverToTask(GATask task, string className)
         {
             var elementType = Type.GetType(className);
             if (elementType == null) return;
             task.Crossover = (Crossover)(Activator.CreateInstance(elementType));
         }
 
-        public void InsertTask<T>(GATask<T> task, double priority) where T : Gene
+        public void InsertTask(GATask task, double priority)
         {
             var sql = "INSERT INTO [dbo].[GA_Tasks] ([Session],[Priority],[Checkout],[ComputerName],[SolutionType],[ParentSelectionType],[MutationType],[CrossoverType],[LowestScoreIsBest],[MaxPopulationSize],[MaxGenerations],[CrossoverRate],[MutationRate],[ElitismRate],[PreventDuplications],[MaximumLifeSpan],[ChildrenPerCouple],[RandomSeed],[RandomPoolGenerationSeed]) ";
             sql += "VALUES(@Session, @Priority, @Checkout, @ComputerName, @SolutionType, @ParentSelectionType, @MutationType, @CrossoverType, @LowestScoreIsBest, @MaxPopulationSize, @MaxGenerations, @CrossoverRate, @MutationRate, @ElitismRate, @PreventDuplications, @MaximumLifeSpan, @ChildrenPerCouple, @RandomSeed, @RandomPoolGenerationSeed)";
@@ -169,7 +169,7 @@ namespace GeneticAlgorithms.Data
             }
         }
 
-        public void InsertCompletedRun<T>(GAConfiguration<T> config, GARun<T> run) where T : Gene
+        public void InsertCompletedRun(GAConfiguration config, GARun run)
         {
             var dao = new DAO();
             var sql = "INSERT INTO [dbo].[GA_Results]([Session],[Start],[End],[ComputerName],[SolutionType],[ParentSelectionType],[MutationType],[CrossoverType],[LowestScoreIsBest],[MaxPopulationSize],[MaxGenerations],[CrossoverRate],[MutationRate],[ElitismRate],[PreventDuplications],[MaximumLifeSpan],[ChildrenPerCouple],[RandomSeed],[RandomPoolGenerationSeed],[BestScore],[BestScoreGeneration],[StringRepresentation]) ";
@@ -223,7 +223,7 @@ namespace GeneticAlgorithms.Data
             }
         }
 
-        private void AddGATaskParameters<T>(DAO dao, GATask<T> task) where T: Gene
+        private void AddGATaskParameters(DAO dao, GATask task)
         {
             dao.AddParameter("@Session", task.Session);
             dao.AddParameter("@ComputerName", task.ComputerName);

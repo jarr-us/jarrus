@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using GeneticAlgorithms.Mutations;
 using GeneticAlgorithmTests.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -13,15 +14,17 @@ namespace GeneticAlgorithmTests.Mutations
         {
             var chromosome = GATestHelper.GetAlphabetCharacterChromosome();
             var mutation = new ScrambleMutation();
-            mutation.Scramble(chromosome, 2, 6, GATestHelper.GetDefaultConfiguration<ExampleGene>());
+            mutation.Scramble(chromosome, 2, 6, GATestHelper.GetDefaultConfiguration());
 
             Assert.AreNotEqual("A,B,C,D,E,F,G,H,I,J", chromosome.ToString());
 
-            Assert.AreEqual('A', chromosome.Genes[0].Value);
-            Assert.AreEqual('B', chromosome.Genes[1].Value);
-            Assert.AreEqual('H', chromosome.Genes[7].Value);
-            Assert.AreEqual('I', chromosome.Genes[8].Value);
-            Assert.AreEqual('J', chromosome.Genes[9].Value);
+            var genes = chromosome.Genes.Cast<ExampleGene>().ToArray();
+
+            Assert.AreEqual('A', genes[0].Value);
+            Assert.AreEqual('B', genes[1].Value);
+            Assert.AreEqual('H', genes[7].Value);
+            Assert.AreEqual('I', genes[8].Value);
+            Assert.AreEqual('J', genes[9].Value);
         }
 
         [TestMethod]
@@ -31,7 +34,7 @@ namespace GeneticAlgorithmTests.Mutations
             var chromosome = GATestHelper.GetAlphabetCharacterChromosome();
             var mutation = new ScrambleMutation();
 
-            mutation.Scramble(chromosome, -1, 1, GATestHelper.GetDefaultConfiguration<ExampleGene>());
+            mutation.Scramble(chromosome, -1, 1, GATestHelper.GetDefaultConfiguration());
         }
 
         [TestMethod]
@@ -41,7 +44,7 @@ namespace GeneticAlgorithmTests.Mutations
             var chromosome = GATestHelper.GetAlphabetCharacterChromosome();
             var mutation = new ScrambleMutation();
 
-            mutation.Scramble(chromosome, 2, 1, GATestHelper.GetDefaultConfiguration<ExampleGene>());
+            mutation.Scramble(chromosome, 2, 1, GATestHelper.GetDefaultConfiguration());
         }
 
         [TestMethod]
@@ -51,7 +54,7 @@ namespace GeneticAlgorithmTests.Mutations
             var chromosome = GATestHelper.GetAlphabetCharacterChromosome();
             var mutation = new ScrambleMutation();
 
-            mutation.Scramble(chromosome, 2, 2, GATestHelper.GetDefaultConfiguration<ExampleGene>());
+            mutation.Scramble(chromosome, 2, 2, GATestHelper.GetDefaultConfiguration());
         }
 
         [TestMethod]
@@ -62,7 +65,7 @@ namespace GeneticAlgorithmTests.Mutations
 
             for (int i = 0; i < 100; i++)
             {
-                mutation.Mutate(chromosome, GATestHelper.GetDefaultConfiguration<ExampleGene>());
+                mutation.Mutate(chromosome, GATestHelper.GetDefaultConfiguration());
             }
         }
     }
