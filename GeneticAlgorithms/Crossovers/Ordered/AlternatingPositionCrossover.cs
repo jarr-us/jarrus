@@ -10,7 +10,7 @@ namespace GeneticAlgorithms.Crossovers.Ordered
             var geneCount = father.Genes.Length;
             var child = new Chromosome(geneCount);
 
-            var seen = new List<Gene>();
+            var seen = new HashSet<Gene>();
 
             for (int i = 0; i < geneCount; i++)
             {

@@ -9,15 +9,11 @@ namespace GeneticAlgorithms.Solution
 
         public GAConfiguration Configuration;
         public GeneticAlgorithm GeneticAlgorithm;
-        public GARun GARun;
         
         public GARun Run(GAConfiguration configuration)
         {
             Configuration = configuration;
-
-            var data = GetOptions();
-            GeneticAlgorithm = new GeneticAlgorithm(Configuration, data);
-            GARun = GeneticAlgorithm.GARun;           
+            GeneticAlgorithm = new GeneticAlgorithm(Configuration, GetOptions());     
             return GeneticAlgorithm.Run();
         }
     }

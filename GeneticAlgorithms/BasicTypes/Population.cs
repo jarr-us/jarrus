@@ -16,7 +16,7 @@ namespace GeneticAlgorithms
         public int GenerationNumber = 1;
         private List<Chromosome> NextGeneration = new List<Chromosome>();
         public HashSet<Chromosome> OptionsInPool = new HashSet<Chromosome>();
-        public List<Chromosome> Retired = new List<Chromosome>();
+        public HashSet<Chromosome> Retired = new HashSet<Chromosome>();
         private Gene[] _possibleValues;
 
         public Population(GAConfiguration configuration, Chromosome[] chromosomes, Gene[] possibleValues)
@@ -34,7 +34,7 @@ namespace GeneticAlgorithms
             DetermineFitnessScores();
         }
 
-        private Population(GAConfiguration configuration, Chromosome[] chromosomes, int generationNumber, Gene[] possibleValues, List<Chromosome> retired = null)
+        private Population(GAConfiguration configuration, Chromosome[] chromosomes, int generationNumber, Gene[] possibleValues, HashSet<Chromosome> retired = null)
         {
             Chromosomes = chromosomes;
             Configuration = configuration;
@@ -57,6 +57,11 @@ namespace GeneticAlgorithms
             foreach (var chromosome in Chromosomes.Where(o => o.GenerationNumber != 0))
             {
                 chromosome.Age++;
+
+                if (chromosome.ShouldRetire(Configuration))
+                {
+                    Retired.Add(chromosome);
+                }
             }
         }
 
@@ -88,8 +93,7 @@ namespace GeneticAlgorithms
 
         private void SetupNextGenerationObjects()
         {
-            Configuration.ParentSelection.Setup(Chromosomes, Configuration);
-            Retired.AddRange(Chromosomes.Where(o => o.ShouldRetire(Configuration)).ToList());
+            Configuration.ParentSelection.Setup(Chromosomes, Configuration);            
         }
 
         private double GetBestScore()
@@ -148,13 +152,24 @@ namespace GeneticAlgorithms
             if (Configuration.GetNextDouble() <= Configuration.CrossoverRate)
             {
                 var parents = Configuration.ParentSelection.GetParents();
-
+                
                 for (int i = 0; i < Configuration.ChildrenPerCouple; i++)
                 {
+                    var sw = new Stopwatch();
+                    sw.Start();
+
                     var child = GetChild(parents);
+                    var childCreated = sw.ElapsedTicks;
+                    sw.Restart();
+
                     Configuration.Mutation.Mutate(child, Configuration);
 
+                    var childMutated = sw.ElapsedTicks;
+                    sw.Restart();
+
                     AddToNextGeneration(child);
+                    var added = sw.ElapsedTicks;
+                    var one = 1;
                 }
             }
             else
@@ -172,14 +187,12 @@ namespace GeneticAlgorithms
         {
             if (Configuration.PreventDuplications)
             {
-                if (!OptionsInPool.Contains(chromosome))
-                {
-                    OptionsInPool.Add(chromosome);
+                var count = NextGeneration.Count;
+                OptionsInPool.Add(chromosome);
 
-                    if (NextGeneration.Count < Chromosomes.Length)
-                    {
-                        NextGeneration.Add(chromosome);
-                    }
+                if (OptionsInPool.Count > count && NextGeneration.Count < Chromosomes.Length)
+                {
+                    NextGeneration.Add(chromosome);
                 }
             }
             else

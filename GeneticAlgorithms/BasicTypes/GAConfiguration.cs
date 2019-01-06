@@ -87,9 +87,8 @@ namespace GeneticAlgorithms
         public int GetRandomInteger(int min, int max, params int[] excluding)
         {
             var randomValue = GetRandomInteger(min, max);
-            var excludingList = excluding.ToList();
 
-            while (excludingList.Contains(randomValue))
+            while (excluding.Contains(randomValue))
             {
                 randomValue = GetRandomInteger(min, max);
             }

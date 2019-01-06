@@ -14,7 +14,7 @@ namespace GeneticAlgorithms.Crossovers.Ordered
             var child = new Chromosome(geneCount);
             var crossoverPoint = settings.GetRandomInteger(1, father.Genes.Length - 2);
 
-            var seen = new List<Gene>();
+            var seen = new HashSet<Gene>();
 
             for (int i = 0; i < crossoverPoint; i++)
             {

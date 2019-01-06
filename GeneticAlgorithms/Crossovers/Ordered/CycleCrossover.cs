@@ -6,7 +6,7 @@ namespace GeneticAlgorithms.Crossovers.Ordered
 {
     public class CycleCrossover : Crossover
     {
-        public List<int> Cycle = new List<int>();
+        public HashSet<int> Cycle = new HashSet<int>();
 
         protected override Chromosome Perform(Chromosome father, Chromosome mother, GAConfiguration settings)
         {
@@ -21,7 +21,7 @@ namespace GeneticAlgorithms.Crossovers.Ordered
 
         private void DetermineCycle(Chromosome father, Chromosome mother)
         {
-            Cycle = new List<int>();
+            Cycle = new HashSet<int>();
             var index = 0;
             var fatherPoint = father.Genes[index];
 
