@@ -111,18 +111,11 @@ namespace GeneticAlgorithms
         private void DetermineNextGeneration()
         {
             AddElitiesToNextGeneration();
-
-            var sw = new Stopwatch();
-            sw.Start();
-
+            
             while (NextGeneration.Count < Chromosomes.Length)
             {
                 GetNextGenerationChromosome();
             }
-
-            var ms = sw.ElapsedMilliseconds;
-            var ticks = sw.ElapsedTicks;
-            Console.Out.WriteLine();
         }
 
         private void AddElitiesToNextGeneration()
@@ -155,21 +148,9 @@ namespace GeneticAlgorithms
                 
                 for (int i = 0; i < Configuration.ChildrenPerCouple; i++)
                 {
-                    var sw = new Stopwatch();
-                    sw.Start();
-
                     var child = GetChild(parents);
-                    var childCreated = sw.ElapsedTicks;
-                    sw.Restart();
-
                     Configuration.Mutation.Mutate(child, Configuration);
-
-                    var childMutated = sw.ElapsedTicks;
-                    sw.Restart();
-
                     AddToNextGeneration(child);
-                    var added = sw.ElapsedTicks;
-                    var one = 1;
                 }
             }
             else
