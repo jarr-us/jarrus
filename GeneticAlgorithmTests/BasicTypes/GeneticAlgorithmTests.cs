@@ -53,7 +53,7 @@ namespace GeneticAlgorithmTests
             var runDetails = ga.Run();
             Assert.AreEqual(_configuration.MaxGenerations + 1, ga.Generation);
 
-            Assert.AreEqual(LastName.Alexander, runDetails.BestChromosome.LastName);
+            Assert.AreEqual(LastName.Campos, runDetails.BestChromosome.LastName);
             Assert.AreEqual(80, runDetails.BestChromosome.FitnessScore);
         }
         
@@ -64,14 +64,14 @@ namespace GeneticAlgorithmTests
             var runDetails = ga.Run();
             Assert.AreEqual(_configuration.MaxGenerations + 1, ga.Generation);
 
-            Assert.AreEqual(LastName.Alexander, runDetails.BestChromosome.LastName);
-            Assert.AreEqual(FirstName.Bailey, runDetails.BestChromosome.FirstName);
+            Assert.AreEqual(LastName.Campos, runDetails.BestChromosome.LastName);
+            Assert.AreEqual(FirstName.Anakin, runDetails.BestChromosome.FirstName);
             Assert.AreEqual(80, runDetails.BestChromosome.FitnessScore);
 
             var lowest = runDetails.Population.Chromosomes.Select(o => o.FitnessScore).Min();
             var lastBestSeen = runDetails.Population.Chromosomes.Where(o => o.FitnessScore == lowest).First();
-            Assert.AreEqual(LastName.Duran, lastBestSeen.LastName);
-            Assert.AreEqual(FirstName.Brayson, lastBestSeen.FirstName);
+            Assert.AreEqual(LastName.Phelps, lastBestSeen.LastName);
+            Assert.AreEqual(FirstName.Clyde, lastBestSeen.FirstName);
         }
 
         [TestMethod]

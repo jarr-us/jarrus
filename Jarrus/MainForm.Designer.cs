@@ -58,7 +58,7 @@
             this.goatBestLowestScoreLbl = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.generationLbl = new System.Windows.Forms.Label();
-            this.msPerGenLbl = new System.Windows.Forms.Label();
+            this.ticksPerChromosomeLbl = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.lastName5ProgressBar = new System.Windows.Forms.ProgressBar();
@@ -96,12 +96,16 @@
             this.label33 = new System.Windows.Forms.Label();
             this.configParentSelectionLbl = new System.Windows.Forms.Label();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.label18 = new System.Windows.Forms.Label();
+            this.msPerGenerationLbl = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
             this.sessionNameLbl = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.retiredNumberLbl = new System.Windows.Forms.Label();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.poolScoreChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.label20 = new System.Windows.Forms.Label();
+            this.solutionNameLbl = new System.Windows.Forms.Label();
             this.menuStrip.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -381,23 +385,23 @@
             this.generationLbl.Text = "0";
             this.generationLbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // msPerGenLbl
+            // ticksPerChromosomeLbl
             // 
-            this.msPerGenLbl.Location = new System.Drawing.Point(97, 104);
-            this.msPerGenLbl.Name = "msPerGenLbl";
-            this.msPerGenLbl.Size = new System.Drawing.Size(89, 13);
-            this.msPerGenLbl.TabIndex = 11;
-            this.msPerGenLbl.Text = "0";
-            this.msPerGenLbl.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.ticksPerChromosomeLbl.Location = new System.Drawing.Point(97, 104);
+            this.ticksPerChromosomeLbl.Name = "ticksPerChromosomeLbl";
+            this.ticksPerChromosomeLbl.Size = new System.Drawing.Size(89, 13);
+            this.ticksPerChromosomeLbl.TabIndex = 11;
+            this.ticksPerChromosomeLbl.Text = "0";
+            this.ticksPerChromosomeLbl.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // label6
             // 
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(6, 104);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(86, 13);
+            this.label6.Size = new System.Drawing.Size(115, 13);
             this.label6.TabIndex = 10;
-            this.label6.Text = "MS / Generation";
+            this.label6.Text = "Ticks per Chromosome";
             // 
             // groupBox2
             // 
@@ -749,18 +753,40 @@
             // 
             // groupBox5
             // 
+            this.groupBox5.Controls.Add(this.label20);
+            this.groupBox5.Controls.Add(this.solutionNameLbl);
+            this.groupBox5.Controls.Add(this.label18);
+            this.groupBox5.Controls.Add(this.msPerGenerationLbl);
             this.groupBox5.Controls.Add(this.label16);
             this.groupBox5.Controls.Add(this.sessionNameLbl);
             this.groupBox5.Controls.Add(this.label4);
             this.groupBox5.Controls.Add(this.retiredNumberLbl);
             this.groupBox5.Controls.Add(this.label6);
-            this.groupBox5.Controls.Add(this.msPerGenLbl);
+            this.groupBox5.Controls.Add(this.ticksPerChromosomeLbl);
             this.groupBox5.Location = new System.Drawing.Point(213, 124);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(200, 129);
             this.groupBox5.TabIndex = 7;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Run Metadata";
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(6, 91);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(96, 13);
+            this.label18.TabIndex = 16;
+            this.label18.Text = "MS per Generation";
+            // 
+            // msPerGenerationLbl
+            // 
+            this.msPerGenerationLbl.Location = new System.Drawing.Point(97, 91);
+            this.msPerGenerationLbl.Name = "msPerGenerationLbl";
+            this.msPerGenerationLbl.Size = new System.Drawing.Size(89, 13);
+            this.msPerGenerationLbl.TabIndex = 17;
+            this.msPerGenerationLbl.Text = "0";
+            this.msPerGenerationLbl.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // label16
             // 
@@ -834,6 +860,24 @@
             this.poolScoreChart.TabIndex = 9;
             this.poolScoreChart.Text = "poolScore";
             // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(6, 42);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(45, 13);
+            this.label20.TabIndex = 18;
+            this.label20.Text = "Solution";
+            // 
+            // solutionNameLbl
+            // 
+            this.solutionNameLbl.Location = new System.Drawing.Point(97, 42);
+            this.solutionNameLbl.Name = "solutionNameLbl";
+            this.solutionNameLbl.Size = new System.Drawing.Size(89, 13);
+            this.solutionNameLbl.TabIndex = 19;
+            this.solutionNameLbl.Text = "0";
+            this.solutionNameLbl.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -887,7 +931,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label runsCompletedLbl;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label msPerGenLbl;
+        private System.Windows.Forms.Label ticksPerChromosomeLbl;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label goatBestLastNameLbl;
         private System.Windows.Forms.Label label7;
@@ -945,6 +989,10 @@
         private System.Windows.Forms.DataVisualization.Charting.Chart poolScoreChart;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Label sessionNameLbl;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.Label msPerGenerationLbl;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.Label solutionNameLbl;
     }
 }
 

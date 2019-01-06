@@ -48,7 +48,7 @@ namespace Jarrus
             FControls.GoatDirectDescendentsLbl = goatDirectDescendentsLbl;
             FControls.RunsCompletedLbl = runsCompletedLbl;
             FControls.RetiredNumberLbl = retiredNumberLbl;
-            FControls.MsPerGenLbl = msPerGenLbl;
+            FControls.TicksPerChromosome = ticksPerChromosomeLbl;
 
             FControls.ConfigPoolSizeLbl = configPoolSizeLbl;
             FControls.ConfigIterationsLbl = configIterationsLbl;
@@ -61,6 +61,8 @@ namespace Jarrus
             FControls.ConfigCrossoverLbl = configCrossoverLbl;
             FControls.ConfigMutationLbl = configMutationLbl;
             FControls.ConfigRetirementLbl = configRetirementLbl;
+            FControls.MillisecondsPerGeneration = msPerGenerationLbl;
+            FControls.SolutionNameLbl = solutionNameLbl;
 
             FControls.Family1Lbl = family1Lbl;
             FControls.Family2Lbl = family2Lbl;

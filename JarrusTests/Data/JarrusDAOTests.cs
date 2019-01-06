@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using GeneticAlgorithms;
 using GeneticAlgorithms.BasicTypes;
+using GeneticAlgorithms.Enums;
 using GeneticAlgorithms.Factory.Enums;
 using Jarrus.Data;
 using Kanan.MLBDriveTime.Jarrus;
@@ -43,7 +44,10 @@ namespace JarrusTests.Data
 
             var currentBest = runDetails.Population.Chromosomes.OrderBy(o => o.FitnessScore).First();
             Assert.AreEqual(579289.000000, runDetails.BestChromosome.FitnessScore);
-            Assert.AreNotEqual(579289.000000, currentBest);
+            Assert.AreNotEqual(runDetails.BestChromosome.FitnessScore, currentBest.FitnessScore);
+            Assert.AreEqual(584390, currentBest.FitnessScore);
+            Assert.AreEqual(LastName.Espinosa, currentBest.LastName);
+            Assert.AreEqual(LastName.Espinosa, runDetails.BestChromosome.LastName);
         }
 
 

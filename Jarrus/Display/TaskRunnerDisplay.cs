@@ -86,14 +86,14 @@ namespace Jarrus.Display
         private void DrawMetadataDetails()
         {
             Stopwatch.Stop();
-            var elapsedMs = Stopwatch.ElapsedMilliseconds;
-            var msPerGeneration = elapsedMs / (1.0 * (GARun.CurrentGeneration - LastGenerationSeen));
+            var ticksPerChromosome = Stopwatch.ElapsedTicks / (GARun.Population.Chromosomes.Length * 1.0 * (GARun.CurrentGeneration - LastGenerationSeen));
+            var msPerGeneration = Stopwatch.ElapsedMilliseconds / (1.0 * (GARun.CurrentGeneration - LastGenerationSeen));
 
             UIUpdater.SetText(Form, Controls.RetiredNumberLbl, GARun.Population.Retired.Count + "");
-            UIUpdater.SetText(Form, Controls.MsPerGenLbl, msPerGeneration.ToString("#,##0.00"));
+            UIUpdater.SetText(Form, Controls.TicksPerChromosome, ticksPerChromosome.ToString("#,##0"));
+            UIUpdater.SetText(Form, Controls.MillisecondsPerGeneration, msPerGeneration.ToString("#,##0.00"));
 
-            Stopwatch.Reset();
-            Stopwatch.Start();
+            Stopwatch.Restart();
             LastGenerationSeen = GARun.CurrentGeneration;
         }
 
@@ -159,6 +159,7 @@ namespace Jarrus.Display
             GARun = ga.GARun;
 
             UIUpdater.SetText(Form, Controls.SessionNameLbl, config.Session);
+            UIUpdater.SetText(Form, Controls.SolutionNameLbl, config.Solution.GetType().Name.Replace("Solution", "").ToString());
             MinScoreSeen = GARun.Population.Chromosomes.Select(o => o.FitnessScore).Min();
             MaxScoreSeen = GARun.Population.Chromosomes.Select(o => o.FitnessScore).Max();
 

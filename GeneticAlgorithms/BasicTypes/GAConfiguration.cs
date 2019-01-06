@@ -12,9 +12,6 @@ namespace GeneticAlgorithms
 {
     public class GAConfiguration : GAProperties
     {
-        private const int FIRST_NAME_SEED = 22;
-        private const int LAST_NAME_SEED = 35;
-
         internal Crossover Crossover;
         internal Mutation Mutation;
         internal ParentSelection ParentSelection;
@@ -22,8 +19,8 @@ namespace GeneticAlgorithms
 
         public Random Random;
         public Random RandomPool;
-        public Random RandomFirstNameSeed = new Random(FIRST_NAME_SEED);
-        public Random RandomLastNameSeed = new Random(LAST_NAME_SEED);
+        public Random RandomFirstNameSeed;
+        public Random RandomLastNameSeed;
 
         public GAConfiguration(GATask task)
         {
@@ -61,7 +58,10 @@ namespace GeneticAlgorithms
 
             Random = new Random(RandomSeed);
             RandomPool = new Random(RandomPoolGenerationSeed);
-        }
+
+            RandomFirstNameSeed = new Random(RandomSeed);
+            RandomLastNameSeed = new Random(RandomPoolGenerationSeed);
+    }
 
         public void ValidateProperties()
         {
