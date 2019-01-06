@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -31,12 +32,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Baseball">
-      <HintPath>..\..\..\..\..\..\..\jarrus\Baseball.dll</HintPath>
-    </Reference>
-    <Reference Include="GeneralHux">
-      <HintPath>..\..\..\..\..\..\..\jarrus\GeneralHux.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -59,7 +54,6 @@
     <Compile Include="Crossovers\Unordered\SinglePointCrossover.cs" />
     <Compile Include="Crossovers\Unordered\TwoPointCrossover.cs" />
     <Compile Include="Crossovers\Unordered\UniformCrossover.cs" />
-    <Compile Include="Data\JarrusDAO.cs" />
     <Compile Include="Enums\FirstName.cs" />
     <Compile Include="Enums\LastName.cs" />
     <Compile Include="Factory\Enums\CrossoverType.cs" />

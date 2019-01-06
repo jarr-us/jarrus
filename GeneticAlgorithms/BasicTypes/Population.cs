@@ -67,7 +67,6 @@ namespace GeneticAlgorithms
 
         private void Retire()
         {
-            if (Retired == null) { return; }
             foreach (var chromosome in Retired)
             {
                 OptionsInPool.Add(chromosome);

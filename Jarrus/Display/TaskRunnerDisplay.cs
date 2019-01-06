@@ -1,10 +1,7 @@
 ﻿using GeneticAlgorithms;
-using GeneticAlgorithms.BasicTypes;
-using GeneticAlgorithms.Data;
+using Jarrus.Data;
 using Jarrus.Metadata;
 using Jarrus.Models;
-using Kanan.MLBDriveTime.Jarrus;
-using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
@@ -67,13 +64,15 @@ namespace Jarrus.Display
             var population = GARun.Population;
             if (population.Chromosomes.Count() == 0) { return; }
 
-            var currentLowestScore = population.Chromosomes.Min(o => o.FitnessScore);
-            var currentLowest = population.Chromosomes.Where(o => o.FitnessScore == currentLowestScore).First();
+            var currentBestScore = population.Chromosomes.Min(o => o.FitnessScore);
+            if (!Config.LowestScoreIsBest) { currentBestScore = population.Chromosomes.Max(o => o.FitnessScore); }
 
-            UIUpdater.SetText(Form, Controls.CurrentBestLowestScoreLbl, currentLowest.FitnessScore + "");
-            UIUpdater.SetText(Form, Controls.CurrentBestFirstNameLbl, currentLowest.FirstName + "");
-            UIUpdater.SetText(Form, Controls.CurrentBestLastNameLbl, currentLowest.LastName + "");
-            UIUpdater.SetText(Form, Controls.CurrentBestDirectDescendentsLbl, currentLowest.Children + "");
+            var currentBest = population.Chromosomes.Where(o => o.FitnessScore == currentBestScore).First();
+
+            UIUpdater.SetText(Form, Controls.CurrentBestLowestScoreLbl, currentBest.FitnessScore + "");
+            UIUpdater.SetText(Form, Controls.CurrentBestFirstNameLbl, currentBest.FirstName + "");
+            UIUpdater.SetText(Form, Controls.CurrentBestLastNameLbl, currentBest.LastName + "");
+            UIUpdater.SetText(Form, Controls.CurrentBestDirectDescendentsLbl, currentBest.Children + "");
 
             UIUpdater.SetText(Form, Controls.GenerationLbl, GARun.CurrentGeneration + "");
             UIUpdater.SetText(Form, Controls.GoatBestFirstNameLbl, allTimeBest.FirstName + "");

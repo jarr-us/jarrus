@@ -1,17 +1,18 @@
 ﻿using GeneralHux.CRUD;
 using GeneralHux.ErrorHandling;
+using GeneticAlgorithms;
 using GeneticAlgorithms.BasicTypes;
 using GeneticAlgorithms.Factory.Enums;
 using GeneticAlgorithms.Solution;
 using GeneticAlgorithms.Utility;
 using System;
 
-namespace GeneticAlgorithms.Data
+namespace Jarrus.Data
 {
     public class JarrusDAO
     {
         private Random random = new Random();
-        private int threadId; 
+        private int threadId;
 
         public GATask CheckoutATaskToRun()
         {
@@ -46,7 +47,7 @@ namespace GeneticAlgorithms.Data
 
         public GATask FetchMyFirstTask()
         {
-            var sql = "SELECT TOP 1 * FROM [DB_9B8C9C_jarrus].[dbo].[GA_Task] WHERE [ComputerName] = @ComputerName order by [Priority]";            
+            var sql = "SELECT TOP 1 * FROM [DB_9B8C9C_jarrus].[dbo].[GA_Task] WHERE [ComputerName] = @ComputerName order by [Priority]";
             var dao = new DAO();
 
             try
@@ -55,11 +56,11 @@ namespace GeneticAlgorithms.Data
                 dao.AddParameter("@ComputerName", GetComputerName());
                 dao.Execute();
 
-                while(dao.HasNextRow())
+                while (dao.HasNextRow())
                 {
                     var solution = dao.GetString("SolutionType");
 
-                    var task = new GATask((JarrusSolution) Reflection.GetObjectFromType(solution));
+                    var task = new GATask((JarrusSolution)Reflection.GetObjectFromType(solution));
 
                     task.UUID = dao.GetGuid("UUID");
                     task.Session = dao.GetString("Session");
@@ -67,7 +68,7 @@ namespace GeneticAlgorithms.Data
                     task.LowestScoreIsBest = dao.GetBoolean("LowestScoreIsBest");
                     task.MaxPopulationSize = dao.GetInt("MaxPopulationSize");
                     task.MaxGenerations = dao.GetInt("MaxGenerations");
-                    task.CrossoverRate = (double) dao.GetDecimal("CrossoverRate");
+                    task.CrossoverRate = (double)dao.GetDecimal("CrossoverRate");
                     task.MutationRate = (double)dao.GetDecimal("MutationRate");
                     task.ElitismRate = (double)dao.GetDecimal("ElitismRate");
                     task.PreventDuplications = dao.GetBoolean("PreventDuplications");
@@ -132,9 +133,9 @@ namespace GeneticAlgorithms.Data
             try
             {
                 dao.OpenConnection(Server.JARRUS, sql);
-                
+
                 dao.AddParameter("@Start", run.Start);
-                dao.AddParameter("@End", run.End);                
+                dao.AddParameter("@End", run.End);
                 dao.AddParameter("@BestScore", run.BestChromosome.FitnessScore);
                 dao.AddParameter("@BestScoreGeneration", run.BestChromosome.GenerationNumber);
                 dao.AddParameter("@StringRepresentation", run.BestChromosome.ToString());
@@ -153,7 +154,7 @@ namespace GeneticAlgorithms.Data
             }
         }
 
-        public void DeleteTask(string uuid) 
+        public void DeleteTask(string uuid)
         {
             var dao = new DAO();
             var sql = "delete FROM [DB_9B8C9C_jarrus].[dbo].[GA_Task] where uuid = @UUID";
