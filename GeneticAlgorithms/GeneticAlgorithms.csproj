@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BasicTypes\GAProperties.cs" />
     <Compile Include="BasicTypes\GATask.cs" />
     <Compile Include="BasicTypes\Gene.cs" />
     <Compile Include="BasicTypes\Chromosome.cs" />
@@ -58,10 +59,13 @@
     <Compile Include="Crossovers\Unordered\SinglePointCrossover.cs" />
     <Compile Include="Crossovers\Unordered\TwoPointCrossover.cs" />
     <Compile Include="Crossovers\Unordered\UniformCrossover.cs" />
-    <Compile Include="Data\GeneDAO.cs" />
     <Compile Include="Data\JarrusDAO.cs" />
     <Compile Include="Enums\FirstName.cs" />
     <Compile Include="Enums\LastName.cs" />
+    <Compile Include="Factory\Enums\CrossoverType.cs" />
+    <Compile Include="Factory\Enums\MutationType.cs" />
+    <Compile Include="Factory\Enums\ParentSelectionType.cs" />
+    <Compile Include="Factory\JarrusObjectFactory.cs" />
     <Compile Include="FitnessFunctions\FitnessFunction.cs" />
     <Compile Include="BasicTypes\GAConfiguration.cs" />
     <Compile Include="BasicTypes\GARun.cs" />
@@ -78,6 +82,7 @@
     <Compile Include="ParentSelections\RouletteWheelSelection.cs" />
     <Compile Include="ParentSelections\StochasticUniversalSamplingSelection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Solution\JarrusSolution.cs" />
     <Compile Include="Utility\ArrayExtensions.cs" />
     <Compile Include="Utility\ListExtensions.cs" />
     <Compile Include="Utility\PopulationGenerator.cs" />

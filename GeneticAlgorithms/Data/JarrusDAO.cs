@@ -1,10 +1,9 @@
 ﻿using GeneralHux.CRUD;
 using GeneralHux.ErrorHandling;
 using GeneticAlgorithms.BasicTypes;
-using GeneticAlgorithms.Crossovers;
-using GeneticAlgorithms.FitnessFunctions;
-using GeneticAlgorithms.Mutations;
-using GeneticAlgorithms.ParentSelections;
+using GeneticAlgorithms.Factory.Enums;
+using GeneticAlgorithms.Solution;
+using GeneticAlgorithms.Utility;
 using System;
 
 namespace GeneticAlgorithms.Data
@@ -16,8 +15,8 @@ namespace GeneticAlgorithms.Data
 
         public GATask CheckoutATaskToRun()
         {
-            var sql = "UPDATE TOP (1) [DB_9B8C9C_jarrus].[dbo].[GA_Tasks] SET [Checkout] = GETUTCDATE(), [ComputerName] = @ComputerName ";
-            sql += "WHERE [Checkout] IS NULL AND [Priority] = (SELECT MIN([Priority]) FROM [DB_9B8C9C_jarrus].[dbo].[GA_Tasks])";
+            var sql = "UPDATE TOP (1) [DB_9B8C9C_jarrus].[dbo].[GA_Task] SET [Checkout] = GETUTCDATE(), [ComputerName] = @ComputerName ";
+            sql += "WHERE [Checkout] IS NULL AND [Priority] = (SELECT MIN([Priority]) FROM [DB_9B8C9C_jarrus].[dbo].[GA_Task])";
             var dao = new DAO();
 
             try
@@ -45,31 +44,9 @@ namespace GeneticAlgorithms.Data
             return Environment.MachineName + "::" + threadId;
         }
 
-        public void ClearOutUnfinishedTasks()
-        {
-            var sql = "UPDATE [DB_9B8C9C_jarrus].[dbo].[GA_Tasks] SET Checkout = NULL, ComputerName = NULL WHERE Checkout < DATEADD(HOUR, -2, GETUTCDATE()) ";
-            var dao = new DAO();
-
-            try
-            {
-                dao.OpenConnection(Server.JARRUS, sql);
-                dao.Execute();
-            }
-            catch (Exception ex)
-            {
-                ErrorHandlingSystem.HandleError(ex, "Unable to clear out unfinished tasks");
-                throw ex;
-            }
-            finally
-            {
-                dao.CloseConnection();
-            }
-        }
-
         public GATask FetchMyFirstTask()
         {
-            var sql = "SELECT TOP 1 * FROM [DB_9B8C9C_jarrus].[dbo].[GA_Tasks] WHERE [ComputerName] = @ComputerName order by [Priority]";
-            var task = new GATask();
+            var sql = "SELECT TOP 1 * FROM [DB_9B8C9C_jarrus].[dbo].[GA_Task] WHERE [ComputerName] = @ComputerName order by [Priority]";            
             var dao = new DAO();
 
             try
@@ -80,6 +57,10 @@ namespace GeneticAlgorithms.Data
 
                 while(dao.HasNextRow())
                 {
+                    var solution = dao.GetString("SolutionType");
+
+                    var task = new GATask((JarrusSolution) Reflection.GetObjectFromType(solution));
+
                     task.UUID = dao.GetGuid("UUID");
                     task.Session = dao.GetString("Session");
                     task.ComputerName = dao.GetString("ComputerName");
@@ -95,13 +76,12 @@ namespace GeneticAlgorithms.Data
                     task.RandomSeed = dao.GetInt("RandomSeed");
                     task.RandomPoolGenerationSeed = dao.GetInt("RandomPoolGenerationSeed");
 
-                    AttachFitnessFunctionToTask(task, dao.GetString("SolutionType"));
-                    AttachParentSelectionToTask(task, dao.GetString("ParentSelectionType"));
-                    AttachMutationToTask(task, dao.GetString("MutationType"));
-                    AttachCrossoverToTask(task, dao.GetString("CrossoverType"));
-                }
+                    task.CrossoverType = (CrossoverType)Enum.Parse(typeof(CrossoverType), dao.GetString("CrossoverType"));
+                    task.MutationType = (MutationType)Enum.Parse(typeof(MutationType), dao.GetString("MutationType"));
+                    task.ParentSelectionType = (ParentSelectionType)Enum.Parse(typeof(ParentSelectionType), dao.GetString("ParentSelectionType"));
 
-                return task;
+                    return task;
+                }
             }
             catch (Exception ex)
             {
@@ -112,39 +92,13 @@ namespace GeneticAlgorithms.Data
             {
                 dao.CloseConnection();
             }
-        }
 
-        private void AttachFitnessFunctionToTask(GATask task, string className)
-        {
-            var elementType = Type.GetType(className);
-            if (elementType == null) return;
-            task.FitnessFunction = (FitnessFunction)(Activator.CreateInstance(elementType));
-        }
-
-        private void AttachParentSelectionToTask(GATask task, string className)
-        {
-            var elementType = Type.GetType(className);
-            if (elementType == null) return;
-            task.ParentSelection = (ParentSelection)(Activator.CreateInstance(elementType));
-        }
-
-        private void AttachMutationToTask(GATask task, string className)
-        {
-            var elementType = Type.GetType(className);
-            if (elementType == null) return;
-            task.Mutation = (Mutation)(Activator.CreateInstance(elementType));
-        }
-
-        private void AttachCrossoverToTask(GATask task, string className)
-        {
-            var elementType = Type.GetType(className);
-            if (elementType == null) return;
-            task.Crossover = (Crossover)(Activator.CreateInstance(elementType));
+            return null;
         }
 
         public void InsertTask(GATask task, double priority)
         {
-            var sql = "INSERT INTO [dbo].[GA_Tasks] ([Session],[Priority],[Checkout],[ComputerName],[SolutionType],[ParentSelectionType],[MutationType],[CrossoverType],[LowestScoreIsBest],[MaxPopulationSize],[MaxGenerations],[CrossoverRate],[MutationRate],[ElitismRate],[PreventDuplications],[MaximumLifeSpan],[ChildrenPerCouple],[RandomSeed],[RandomPoolGenerationSeed]) ";
+            var sql = "INSERT INTO [dbo].[GA_Task] ([Session],[Priority],[Checkout],[ComputerName],[SolutionType],[ParentSelectionType],[MutationType],[CrossoverType],[LowestScoreIsBest],[MaxPopulationSize],[MaxGenerations],[CrossoverRate],[MutationRate],[ElitismRate],[PreventDuplications],[MaximumLifeSpan],[ChildrenPerCouple],[RandomSeed],[RandomPoolGenerationSeed]) ";
             sql += "VALUES(@Session, @Priority, @Checkout, @ComputerName, @SolutionType, @ParentSelectionType, @MutationType, @CrossoverType, @LowestScoreIsBest, @MaxPopulationSize, @MaxGenerations, @CrossoverRate, @MutationRate, @ElitismRate, @PreventDuplications, @MaximumLifeSpan, @ChildrenPerCouple, @RandomSeed, @RandomPoolGenerationSeed)";
 
             var dao = new DAO();
@@ -172,7 +126,7 @@ namespace GeneticAlgorithms.Data
         public void InsertCompletedRun(GAConfiguration config, GARun run)
         {
             var dao = new DAO();
-            var sql = "INSERT INTO [dbo].[GA_Results]([Session],[Start],[End],[ComputerName],[SolutionType],[ParentSelectionType],[MutationType],[CrossoverType],[LowestScoreIsBest],[MaxPopulationSize],[MaxGenerations],[CrossoverRate],[MutationRate],[ElitismRate],[PreventDuplications],[MaximumLifeSpan],[ChildrenPerCouple],[RandomSeed],[RandomPoolGenerationSeed],[BestScore],[BestScoreGeneration],[StringRepresentation]) ";
+            var sql = "INSERT INTO [dbo].[GA_Result]([Session],[Start],[End],[ComputerName],[SolutionType],[ParentSelectionType],[MutationType],[CrossoverType],[LowestScoreIsBest],[MaxPopulationSize],[MaxGenerations],[CrossoverRate],[MutationRate],[ElitismRate],[PreventDuplications],[MaximumLifeSpan],[ChildrenPerCouple],[RandomSeed],[RandomPoolGenerationSeed],[BestScore],[BestScoreGeneration],[StringRepresentation]) ";
             sql += "VALUES (@Session,@Start,@End,@ComputerName,@SolutionType,@ParentSelectionType,@MutationType,@CrossoverType,@LowestScoreIsBest,@MaxPopulationSize,@MaxGenerations,@CrossoverRate,@MutationRate,@ElitismRate,@PreventDuplications,@MaximumLifeSpan,@ChildrenPerCouple,@RandomSeed,@RandomPoolGenerationSeed,@BestScore,@BestScoreGeneration,@StringRepresentation)";
 
             try
@@ -202,7 +156,7 @@ namespace GeneticAlgorithms.Data
         public void DeleteTask(string uuid) 
         {
             var dao = new DAO();
-            var sql = "delete FROM [DB_9B8C9C_jarrus].[dbo].[GA_Tasks] where uuid = @UUID";
+            var sql = "delete FROM [DB_9B8C9C_jarrus].[dbo].[GA_Task] where uuid = @UUID";
 
             try
             {
@@ -223,25 +177,25 @@ namespace GeneticAlgorithms.Data
             }
         }
 
-        private void AddGATaskParameters(DAO dao, GATask task)
+        private void AddGATaskParameters(DAO dao, GAProperties properties)
         {
-            dao.AddParameter("@Session", task.Session);
-            dao.AddParameter("@ComputerName", task.ComputerName);
-            dao.AddParameter("@SolutionType", task.FitnessFunction.GetType().FullName + ", " + task.FitnessFunction.GetType().Assembly);
-            dao.AddParameter("@ParentSelectionType", task.ParentSelection.GetType().FullName + ", " + task.ParentSelection.GetType().Assembly);
-            dao.AddParameter("@MutationType", task.Mutation.GetType().FullName + ", " + task.Mutation.GetType().Assembly);
-            dao.AddParameter("@CrossoverType", task.Crossover.GetType().FullName + ", " + task.Crossover.GetType().Assembly);
-            dao.AddParameter("@LowestScoreIsBest", task.LowestScoreIsBest);
-            dao.AddParameter("@MaxPopulationSize", task.MaxPopulationSize);
-            dao.AddParameter("@MaxGenerations", task.MaxGenerations);
-            dao.AddParameter("@CrossoverRate", task.CrossoverRate);
-            dao.AddParameter("@MutationRate", task.MutationRate);
-            dao.AddParameter("@ElitismRate", task.ElitismRate);
-            dao.AddParameter("@PreventDuplications", task.PreventDuplications);
-            dao.AddParameter("@MaximumLifeSpan", task.MaximumLifeSpan);
-            dao.AddParameter("@ChildrenPerCouple", task.ChildrenPerCouple);
-            dao.AddParameter("@RandomSeed", task.RandomSeed);
-            dao.AddParameter("@RandomPoolGenerationSeed", task.RandomPoolGenerationSeed);
+            dao.AddParameter("@Session", properties.Session);
+            dao.AddParameter("@ComputerName", properties.ComputerName);
+            dao.AddParameter("@SolutionType", properties.Solution.GetType().AssemblyQualifiedName);
+            dao.AddParameter("@ParentSelectionType", properties.ParentSelectionType.ToString());
+            dao.AddParameter("@MutationType", properties.MutationType.ToString());
+            dao.AddParameter("@CrossoverType", properties.CrossoverType.ToString());
+            dao.AddParameter("@LowestScoreIsBest", properties.LowestScoreIsBest);
+            dao.AddParameter("@MaxPopulationSize", properties.MaxPopulationSize);
+            dao.AddParameter("@MaxGenerations", properties.MaxGenerations);
+            dao.AddParameter("@CrossoverRate", properties.CrossoverRate);
+            dao.AddParameter("@MutationRate", properties.MutationRate);
+            dao.AddParameter("@ElitismRate", properties.ElitismRate);
+            dao.AddParameter("@PreventDuplications", properties.PreventDuplications);
+            dao.AddParameter("@MaximumLifeSpan", properties.MaximumLifeSpan);
+            dao.AddParameter("@ChildrenPerCouple", properties.ChildrenPerCouple);
+            dao.AddParameter("@RandomSeed", properties.RandomSeed);
+            dao.AddParameter("@RandomPoolGenerationSeed", properties.RandomPoolGenerationSeed);
         }
     }
 }

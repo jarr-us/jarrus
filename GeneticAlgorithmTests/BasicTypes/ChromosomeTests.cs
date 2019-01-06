@@ -5,6 +5,7 @@ using GeneticAlgorithms;
 using GeneticAlgorithms.Enums;
 using GeneticAlgorithms.Utility;
 using GeneticAlgorithmTests.Models;
+using GeneticAlgorithmTests.Models.FitnessCalculators;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace GeneticAlgorithmTests
@@ -14,7 +15,7 @@ namespace GeneticAlgorithmTests
     {
         private Random _random = new Random();
         private List<LastName> _lastNamesUsed = new List<LastName>();
-        
+
         [TestMethod]
         public void ItsConstructorDeterminesTheGeneSize()
         {
@@ -24,48 +25,41 @@ namespace GeneticAlgorithmTests
         }
 
         [TestMethod]
-        public void ItsToStringMethodShowsAsCommaDelimited()
-        {
-            var ExampleGeneChromo = GATestHelper.GetTravelingSalesmanChromosome();
-            Assert.AreEqual("A,B,C,D", ExampleGeneChromo.ToString());
-        }
-
-        [TestMethod]
         public void ItCanDetermineIfTheChromosomeShouldRetireBasedOnAge_False()
         {
-            var ExampleGeneChromo = GATestHelper.GetTravelingSalesmanChromosome();
-            ExampleGeneChromo.Age = 1;
+            var chromosome = GATestHelper.GetTravelingSalesmanChromosome();
+            chromosome.Age = 1;
 
-            Assert.IsFalse(ExampleGeneChromo.ShouldRetire(GATestHelper.GetDefaultConfiguration()));
+            Assert.IsFalse(chromosome.ShouldRetire(GATestHelper.GetTravelingSalesmanDefaultConfiguration()));
         }
 
         [TestMethod]
         public void ItCanDetermineIfTheChromosomeShouldRetireBasedOnAge()
         {
-            var ExampleGeneChromo = GATestHelper.GetTravelingSalesmanChromosome();
-            ExampleGeneChromo.Age = 100;
+            var chromosome = GATestHelper.GetTravelingSalesmanChromosome();
+            chromosome.Age = 100;
 
-            Assert.IsTrue(ExampleGeneChromo.ShouldRetire(GATestHelper.GetDefaultConfiguration()));
+            Assert.IsTrue(chromosome.ShouldRetire(GATestHelper.GetTravelingSalesmanDefaultConfiguration()));
         }
 
         [TestMethod]
         public void ItWillNotRetireIfSettingDisabled()
         {
-            var ExampleGeneChromo = GATestHelper.GetTravelingSalesmanChromosome();
-            ExampleGeneChromo.Age = 5000;
+            var chromosome = GATestHelper.GetTravelingSalesmanChromosome();
+            chromosome.Age = 5000;
 
-            var settings = GATestHelper.GetDefaultConfiguration();
+            var settings = GATestHelper.GetTravelingSalesmanDefaultConfiguration();
             settings.MaximumLifeSpan = 0;
 
-            Assert.IsFalse(ExampleGeneChromo.ShouldRetire(settings));
+            Assert.IsFalse(chromosome.ShouldRetire(settings));
         }
 
 
         [TestMethod]
         public void ItCanOutputGenesToCommaDelimitedString()
         {
-            var ExampleGeneChromo = GATestHelper.GetTravelingSalesmanChromosome();
-            Assert.AreEqual("A,B,C,D", ExampleGeneChromo.ToString());
+            var chromosome = GATestHelper.GetTravelingSalesmanChromosome();
+            Assert.AreEqual("A,B,C,D", chromosome.ToString());
         }
 
         [TestMethod]

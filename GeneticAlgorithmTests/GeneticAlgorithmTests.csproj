@@ -42,6 +42,9 @@
     <Reference Include="Baseball">
       <HintPath>..\..\..\..\..\..\..\jarrus\Baseball.dll</HintPath>
     </Reference>
+    <Reference Include="Kanan">
+      <HintPath>..\..\..\..\..\..\..\jarrus\Kanan.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.VisualStudio.TestPlatform.TestFramework, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\MSTest.TestFramework.1.3.2\lib\net45\Microsoft.VisualStudio.TestPlatform.TestFramework.dll</HintPath>
     </Reference>
@@ -55,6 +58,7 @@
   <ItemGroup>
     <Compile Include="BasicTypes\GARunTests.cs" />
     <Compile Include="BasicTypes\GeneTests.cs" />
+    <Compile Include="BasicTypes\GATaskTests.cs" />
     <Compile Include="Crossovers\Ordered\CycleCrossoverTests.cs" />
     <Compile Include="Crossovers\Ordered\PartialMappedCrossoverTests.cs" />
     <Compile Include="Crossovers\Ordered\AlternatePositionCrossoverTests.cs" />
@@ -64,8 +68,11 @@
     <Compile Include="Crossovers\Unordered\TwoPointCrossoverTests.cs" />
     <Compile Include="Crossovers\Unordered\GAConfigurationTests.cs" />
     <Compile Include="Data\JarrusDAOTests.cs" />
+    <Compile Include="Factory\Enums\FactoryEnumTests.cs" />
+    <Compile Include="Factory\JarrusObjectFactoryTests.cs" />
     <Compile Include="FitnessFunctions\FitnessFunctionTests.cs" />
-    <Compile Include="Models\FitnessCalculators\TravelingSalesmanFitnessCalculator.cs" />
+    <Compile Include="Models\FitnessCalculators\SimpleTravelingSalesmanSolution.cs" />
+    <Compile Include="Models\FitnessCalculators\TravelingSalesmanFitnessFunction.cs" />
     <Compile Include="Models\GATestHelper.cs" />
     <Compile Include="Models\ExampleGene.cs" />
     <Compile Include="Mutations\MutationTests.cs" />

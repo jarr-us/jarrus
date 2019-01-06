@@ -3,9 +3,12 @@ using GeneticAlgorithms.BasicTypes;
 using GeneticAlgorithms.Crossovers;
 using GeneticAlgorithms.Crossovers.Ordered;
 using GeneticAlgorithms.Crossovers.Unordered;
+using GeneticAlgorithms.Factory.Enums;
 using GeneticAlgorithms.Mutations;
 using GeneticAlgorithms.ParentSelections;
+using GeneticAlgorithms.Solution;
 using GeneticAlgorithms.Utility;
+using GeneticAlgorithmTests.Models.FitnessCalculators;
 using GeneticAlgorithmTests.Models.FitnessFunctions;
 using System;
 
@@ -24,16 +27,6 @@ namespace GeneticAlgorithmTests.Models
         public static double GetNextDouble()
         {
             return _random.NextDouble();
-        }
-
-        public static Chromosome GetTravelingSalesmanChromosome()
-        {
-            return new Chromosome(
-                new ExampleGene('A'), 
-                new ExampleGene('B'), 
-                new ExampleGene('C'), 
-                new ExampleGene('D')
-            );
         }
 
         public static Chromosome GetNumericChromosomeOne()
@@ -75,9 +68,15 @@ namespace GeneticAlgorithmTests.Models
             );
         }
 
+        public static Chromosome GetTravelingSalesmanChromosome()
+        {
+            var _solution = new SimpleTravelingSalesmanSolution();
+            return new Chromosome(_solution.GetOptions());
+    }
+
         public static Chromosome[] GetTravelingSalesmanGenome()
         {
-            return GetTravelingSalesmanGenome(GetDefaultConfiguration());
+            return GetTravelingSalesmanGenome(GetTravelingSalesmanDefaultConfiguration());
         }
 
         public static Chromosome[] GetTravelingSalesmanGenome(GAConfiguration config)
@@ -102,19 +101,28 @@ namespace GeneticAlgorithmTests.Models
             );
         }
 
-        public static GAConfiguration GetDefaultConfiguration() 
+        public static GAConfiguration GetDefaultConfiguration(JarrusSolution solution) 
         {
-            return new GAConfiguration( GetDummyTask());
+            return new GAConfiguration( GetDummyTask(solution));
         }
 
-        public static GATask GetDummyTask() 
+        public static GAConfiguration GetTravelingSalesmanDefaultConfiguration()
         {
-            var task = new GATask
+            return new GAConfiguration(GetDummyTask(new SimpleTravelingSalesmanSolution()));
+        }
+
+        public static GATask GetDummyTravelingSalesmanTask()
+        {
+            return GetDummyTask(new SimpleTravelingSalesmanSolution());
+        }
+
+        public static GATask GetDummyTask(JarrusSolution solution) 
+        {
+            var task = new GATask(solution)
             {
-                ParentSelection = new RouletteWheelSelection(),
-                FitnessFunction = new TravelingSalesmanFitnessCalculator(),
-                Mutation = new SwapMutation(),
-                Crossover = new OrderCrossover(),
+                ParentSelectionType = ParentSelectionType.RouletteWheel,
+                MutationType = MutationType.Swap,
+                CrossoverType = CrossoverType.Order,
                 MaximumLifeSpan = 10,
                 MaxPopulationSize = 100,
                 RandomPoolGenerationSeed = 22,

@@ -15,7 +15,7 @@ namespace GeneticAlgorithmTests.ParentSelections
         public void Setup()
         {
             _pool = GATestHelper.GetTravelingSalesmanGenome();
-            var calc = new TravelingSalesmanFitnessCalculator();
+            var calc = new TravelingSalesmanFitnessFunction();
             foreach (var chromosome in _pool)
             {
                 chromosome.FitnessScore = calc.GetFitnessScoreFor(chromosome);
@@ -37,7 +37,7 @@ namespace GeneticAlgorithmTests.ParentSelections
         public void ItHasAValidConstructor()
         {
             var parentSelection = new RouletteWheelSelection();
-            parentSelection.Setup(_pool, GATestHelper.GetDefaultConfiguration());
+            parentSelection.Setup(_pool, GATestHelper.GetTravelingSalesmanDefaultConfiguration());
             parentSelection.GetParents();
         }
 
@@ -45,7 +45,7 @@ namespace GeneticAlgorithmTests.ParentSelections
         public void ItCanGetAValidParent()
         {
             var parentSelection = new RouletteWheelSelection();
-            parentSelection.Setup(_pool, GATestHelper.GetDefaultConfiguration());
+            parentSelection.Setup(_pool, GATestHelper.GetTravelingSalesmanDefaultConfiguration());
 
             var parent = parentSelection.GetParent(0.22);
             Assert.IsNotNull(parent);
@@ -55,7 +55,7 @@ namespace GeneticAlgorithmTests.ParentSelections
         public void ItCanReturnParents()
         {
             var parentSelection = new RouletteWheelSelection();
-            parentSelection.Setup(_pool, GATestHelper.GetDefaultConfiguration());
+            parentSelection.Setup(_pool, GATestHelper.GetTravelingSalesmanDefaultConfiguration());
 
             var parent = parentSelection.GetParents();
             Assert.IsNotNull(parent);
@@ -67,7 +67,7 @@ namespace GeneticAlgorithmTests.ParentSelections
         public void ItCantReturnTheSameParentTwice()
         {
             var parentSelection = new RouletteWheelSelection();
-            parentSelection.Setup(_pool, GATestHelper.GetDefaultConfiguration());
+            parentSelection.Setup(_pool, GATestHelper.GetTravelingSalesmanDefaultConfiguration());
 
             for (int i = 0; i < 1000; i++)
             {

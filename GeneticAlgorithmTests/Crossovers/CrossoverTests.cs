@@ -18,7 +18,7 @@ namespace GeneticAlgorithmTests.Crossovers
             var mother = new Chromosome(size);
 
             var singlePointCrossover = new SinglePointCrossover();
-            singlePointCrossover.Execute(father, mother, GATestHelper.GetDefaultConfiguration());
+            singlePointCrossover.Execute(father, mother, GATestHelper.GetTravelingSalesmanDefaultConfiguration());
         }
 
         [TestMethod]
@@ -30,7 +30,7 @@ namespace GeneticAlgorithmTests.Crossovers
 
             var singlePointCrossover = new SinglePointCrossover();
 
-            singlePointCrossover.Execute(father, mother, GATestHelper.GetDefaultConfiguration());
+            singlePointCrossover.Execute(father, mother, GATestHelper.GetTravelingSalesmanDefaultConfiguration());
         }
 
         [TestMethod]
@@ -41,7 +41,7 @@ namespace GeneticAlgorithmTests.Crossovers
             var mother = new Chromosome(GATestHelper.GetRandomInteger(1, 8));
 
             var singlePointCrossover = new SinglePointCrossover();
-            singlePointCrossover.Execute(null, mother, GATestHelper.GetDefaultConfiguration());
+            singlePointCrossover.Execute(null, mother, GATestHelper.GetTravelingSalesmanDefaultConfiguration());
         }
 
         [TestMethod]
@@ -52,7 +52,7 @@ namespace GeneticAlgorithmTests.Crossovers
             var mother = new Chromosome(GATestHelper.GetRandomInteger(1, 8));
 
             var singlePointCrossover = new SinglePointCrossover();
-            singlePointCrossover.Execute(father, null, GATestHelper.GetDefaultConfiguration());
+            singlePointCrossover.Execute(father, null, GATestHelper.GetTravelingSalesmanDefaultConfiguration());
         }
 
         [TestMethod]
@@ -63,7 +63,7 @@ namespace GeneticAlgorithmTests.Crossovers
             var mother = new Chromosome(1);
 
             var singlePointCrossover = new SinglePointCrossover();
-            singlePointCrossover.Execute(father, mother, GATestHelper.GetDefaultConfiguration());
+            singlePointCrossover.Execute(father, mother, GATestHelper.GetTravelingSalesmanDefaultConfiguration());
         }
     }
 }

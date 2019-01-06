@@ -6,6 +6,13 @@ namespace GeneticAlgorithms.Utility
 {
     public static class Reflection
     {
+        public static object GetObjectFromType(string fullyQualifiedName)
+        {
+            var elementType = Type.GetType(fullyQualifiedName);
+            if (elementType == null) return null;
+            return (Activator.CreateInstance(elementType));
+        }
+
         public static void CopyProperties(this object source, object destination)
         {
             if (source == null || destination == null) { throw new Exception("Source and destination objects can not be be null"); }

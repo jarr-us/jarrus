@@ -22,7 +22,7 @@ namespace GeneticAlgorithmTests
 
         private void SetConfiguration()
         {
-            _configuration = GATestHelper.GetDefaultConfiguration();
+            _configuration = GATestHelper.GetTravelingSalesmanDefaultConfiguration();
             _configuration.PreventDuplications = true;
             _configuration.MaxPopulationSize = 10;
             _configuration.MaximumLifeSpan = 2;

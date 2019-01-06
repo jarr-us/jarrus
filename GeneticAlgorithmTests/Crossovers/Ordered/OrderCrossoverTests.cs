@@ -23,7 +23,7 @@ namespace GeneticAlgorithmTests.Crossovers
         public void ItCanPerformACrossover()
         {
             var crossover = new OrderCrossover();
-            var settings = GATestHelper.GetDefaultConfiguration();
+            var settings = GATestHelper.GetTravelingSalesmanDefaultConfiguration();
 
             var child = crossover.Execute(_father, _mother, settings);
             Console.Out.WriteLine("Child: " + child.ToString());

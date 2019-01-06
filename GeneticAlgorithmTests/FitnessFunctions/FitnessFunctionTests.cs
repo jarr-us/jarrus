@@ -12,13 +12,13 @@ namespace GeneticAlgorithmTests.FitnessCalculators
         [TestMethod]
         public void ItHasAValidConstructor()
         {
-            var fitnessGenerator = new TravelingSalesmanFitnessCalculator();
+            var fitnessGenerator = new TravelingSalesmanFitnessFunction();
         }
 
         [TestMethod]
         public void ItCanDetermineAFitnessScore()
         {
-            var fitnessGenerator = new TravelingSalesmanFitnessCalculator();
+            var fitnessGenerator = new TravelingSalesmanFitnessFunction();
             var chromosome = GATestHelper.GetTravelingSalesmanChromosome();
 
             var value = fitnessGenerator.GetFitnessScoreFor(chromosome);

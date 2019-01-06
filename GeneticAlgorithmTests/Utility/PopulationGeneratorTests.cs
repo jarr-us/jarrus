@@ -11,7 +11,7 @@ namespace GeneticAlgorithmTests.Utility
         [TestMethod]
         public void ItCanGenerateAGenome()
         {
-            var configuration = GATestHelper.GetDefaultConfiguration();
+            var configuration = GATestHelper.GetTravelingSalesmanDefaultConfiguration();
             var chromosome = GATestHelper.GetTravelingSalesmanChromosome();
             var pool = PopulationGenerator.Generate(chromosome.Genes, configuration);
             Assert.AreEqual(configuration.MaxPopulationSize, pool.Length);
@@ -21,7 +21,7 @@ namespace GeneticAlgorithmTests.Utility
         [ExpectedException(typeof(ArgumentException))]
         public void ItThrowsAnExceptionWhenNullValuesArePassed()
         {
-            var configuration = GATestHelper.GetDefaultConfiguration();
+            var configuration = GATestHelper.GetTravelingSalesmanDefaultConfiguration();
             var pool = PopulationGenerator.Generate(null, configuration);
         }
 
@@ -29,7 +29,7 @@ namespace GeneticAlgorithmTests.Utility
         [ExpectedException(typeof(ArgumentException))]
         public void ItThrowsAnExceptionWhenNoValuesArePassed()
         {
-            var configuration = GATestHelper.GetDefaultConfiguration();
+            var configuration = GATestHelper.GetTravelingSalesmanDefaultConfiguration();
             var pool = PopulationGenerator.Generate(new ExampleGene[1], configuration);
         }
 
@@ -37,7 +37,7 @@ namespace GeneticAlgorithmTests.Utility
         [ExpectedException(typeof(ArgumentException))]
         public void ItThrowsAnExceptionWhenConfigurationIsNotPassed()
         {
-            var configuration = GATestHelper.GetDefaultConfiguration();
+            var configuration = GATestHelper.GetTravelingSalesmanDefaultConfiguration();
             var chromosome = GATestHelper.GetTravelingSalesmanChromosome();
             var pool = PopulationGenerator.Generate(chromosome.Genes, null);
         }

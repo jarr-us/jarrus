@@ -18,7 +18,7 @@ namespace GeneticAlgorithmTests.Crossovers
 
             var singlePoint = new SinglePointCrossover();
 
-            var child = singlePoint.Execute(father, mother, GATestHelper.GetDefaultConfiguration());
+            var child = singlePoint.Execute(father, mother, GATestHelper.GetTravelingSalesmanDefaultConfiguration());
             Console.Out.WriteLine("Child: " + child.ToString());
 
             Assert.AreNotEqual(father.ToString(), child.ToString());
@@ -33,7 +33,7 @@ namespace GeneticAlgorithmTests.Crossovers
             mother.Genes.Shuffle(new Random());
 
             var singlePoint = new SinglePointCrossover();
-            var child = singlePoint.Execute(father, mother, GATestHelper.GetDefaultConfiguration());
+            var child = singlePoint.Execute(father, mother, GATestHelper.GetTravelingSalesmanDefaultConfiguration());
             Assert.AreNotEqual(child, father);
         }
     }

@@ -1,6 +1,4 @@
-﻿using Baseball.Models;
-using GeneticAlgorithms.BasicTypes;
-using Jarrus.Display;
+﻿using Jarrus.Display;
 using Jarrus.Models;
 using System;
 using System.Deployment.Application;
@@ -11,22 +9,21 @@ namespace Jarrus
 {
     public partial class MainForm : Form
     {
-        public FormDisplay FormDisplay;
+        public TaskRunnerDisplay FormDisplay;
         public FormControls FControls;
         private bool _running = true;
         private Thread _procThread, _gaThread;
+
+        // TODO: end when a viable fitness score is reached
+        // TODO: Threading now available again
+        // TODO: API
 
         public MainForm()
         {
             UpdateChecker.Check();
             InitializeComponent();
 
-            SetupControls();
-
-            //factory
-            //updated task system
-            //
-
+            SetupControls();            
             FormDisplay = new TaskRunnerDisplay(this, FControls);
 
             UpdateVersionLabel();

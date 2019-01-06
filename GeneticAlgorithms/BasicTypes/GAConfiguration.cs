@@ -1,15 +1,25 @@
 ﻿using GeneticAlgorithms.BasicTypes;
+using GeneticAlgorithms.Crossovers;
+using GeneticAlgorithms.Factory;
+using GeneticAlgorithms.FitnessFunctions;
+using GeneticAlgorithms.Mutations;
+using GeneticAlgorithms.ParentSelections;
 using GeneticAlgorithms.Utility;
 using System;
 using System.Linq;
 
 namespace GeneticAlgorithms
 {
-    public class GAConfiguration : GATask
+    public class GAConfiguration : GAProperties
     {
         private const int FIRST_NAME_SEED = 22;
         private const int LAST_NAME_SEED = 35;
-                
+
+        internal Crossover Crossover;
+        internal Mutation Mutation;
+        internal ParentSelection ParentSelection;
+        internal FitnessFunction FitnessFunction;
+
         public Random Random;
         public Random RandomPool;
         public Random RandomFirstNameSeed = new Random(FIRST_NAME_SEED);
@@ -17,7 +27,24 @@ namespace GeneticAlgorithms
 
         public GAConfiguration(GATask task)
         {
+            if (task == null) { throw new ArgumentException("Task can not be null"); }
+
             Reflection.CopyProperties(task, this);
+            SetupStrategies(task);
+            SetupRandomVariables();
+            ValidateProperties();
+        }
+
+        private void SetupStrategies(GATask task)
+        {
+            Crossover = JarrusObjectFactory.Instance.GetCrossover(CrossoverType);
+            Mutation = JarrusObjectFactory.Instance.GetMutation(MutationType);
+            ParentSelection = JarrusObjectFactory.Instance.GetParentSelection(ParentSelectionType);
+            FitnessFunction = task.Solution.GetFitnessFunction();
+        }
+
+        private void SetupRandomVariables()
+        {
             var tempRandom = new Random();
 
             if (RandomSeed == 0)
@@ -34,13 +61,11 @@ namespace GeneticAlgorithms
 
             Random = new Random(RandomSeed);
             RandomPool = new Random(RandomPoolGenerationSeed);
-
-            ValidateProperties();
         }
 
         public void ValidateProperties()
         {
-            if (ParentSelection == null || Crossover == null || FitnessFunction == null || Mutation == null || ChildrenPerCouple == 0)
+            if (!IsValid() || ChildrenPerCouple == 0)
             {
                 throw new ArgumentException("Invalid settings passed to GAConfiguration");
             }
@@ -50,6 +75,8 @@ namespace GeneticAlgorithms
                 throw new ArgumentException("GAConfiguration rates must be between 0 and 1");
             }
         }
+
+        public GARun Run() { return Solution.Run(this); }
 
         public int GetRandomInteger(int min, int max)
         {
@@ -76,5 +103,10 @@ namespace GeneticAlgorithms
         }
 
         public double GetNextDouble() { return Random.NextDouble(); }
+        public bool IsValid() {
+            var solutionsValid = Solution != null && Mutation != null && Crossover != null && ParentSelection != null;
+
+            return solutionsValid && MaxPopulationSize > 0;
+        }
     }
 }

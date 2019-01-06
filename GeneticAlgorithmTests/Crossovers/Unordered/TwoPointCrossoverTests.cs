@@ -11,7 +11,7 @@ namespace GeneticAlgorithmTests.Crossovers
         [TestMethod]
         public void ItCanPerformACrossover()
         {
-            var config = GATestHelper.GetDefaultConfiguration();
+            var config = GATestHelper.GetTravelingSalesmanDefaultConfiguration();
             var father = GATestHelper.GetAlphabetCharacterChromosome();
             var mother = GATestHelper.GetAlphabetCharacterChromosome();
             mother.Genes.Shuffle(config.Random);

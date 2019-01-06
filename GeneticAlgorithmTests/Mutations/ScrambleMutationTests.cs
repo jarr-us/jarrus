@@ -14,7 +14,7 @@ namespace GeneticAlgorithmTests.Mutations
         {
             var chromosome = GATestHelper.GetAlphabetCharacterChromosome();
             var mutation = new ScrambleMutation();
-            mutation.Scramble(chromosome, 2, 6, GATestHelper.GetDefaultConfiguration());
+            mutation.Scramble(chromosome, 2, 6, GATestHelper.GetTravelingSalesmanDefaultConfiguration());
 
             Assert.AreNotEqual("A,B,C,D,E,F,G,H,I,J", chromosome.ToString());
 
@@ -34,7 +34,7 @@ namespace GeneticAlgorithmTests.Mutations
             var chromosome = GATestHelper.GetAlphabetCharacterChromosome();
             var mutation = new ScrambleMutation();
 
-            mutation.Scramble(chromosome, -1, 1, GATestHelper.GetDefaultConfiguration());
+            mutation.Scramble(chromosome, -1, 1, GATestHelper.GetTravelingSalesmanDefaultConfiguration());
         }
 
         [TestMethod]
@@ -44,7 +44,7 @@ namespace GeneticAlgorithmTests.Mutations
             var chromosome = GATestHelper.GetAlphabetCharacterChromosome();
             var mutation = new ScrambleMutation();
 
-            mutation.Scramble(chromosome, 2, 1, GATestHelper.GetDefaultConfiguration());
+            mutation.Scramble(chromosome, 2, 1, GATestHelper.GetTravelingSalesmanDefaultConfiguration());
         }
 
         [TestMethod]
@@ -54,7 +54,7 @@ namespace GeneticAlgorithmTests.Mutations
             var chromosome = GATestHelper.GetAlphabetCharacterChromosome();
             var mutation = new ScrambleMutation();
 
-            mutation.Scramble(chromosome, 2, 2, GATestHelper.GetDefaultConfiguration());
+            mutation.Scramble(chromosome, 2, 2, GATestHelper.GetTravelingSalesmanDefaultConfiguration());
         }
 
         [TestMethod]
@@ -65,7 +65,7 @@ namespace GeneticAlgorithmTests.Mutations
 
             for (int i = 0; i < 100; i++)
             {
-                mutation.Mutate(chromosome, GATestHelper.GetDefaultConfiguration());
+                mutation.Mutate(chromosome, GATestHelper.GetTravelingSalesmanDefaultConfiguration());
             }
         }
     }

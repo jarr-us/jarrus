@@ -3,6 +3,7 @@ using GeneticAlgorithms.BasicTypes;
 using GeneticAlgorithms.Data;
 using Jarrus.Metadata;
 using Jarrus.Models;
+using Kanan.MLBDriveTime.Jarrus;
 using System;
 using System.Diagnostics;
 using System.Linq;
@@ -11,9 +12,9 @@ using System.Windows.Forms;
 
 namespace Jarrus.Display
 {
-    public abstract class FormDisplay 
+    public class TaskRunnerDisplay 
     {
-        public FormDisplay(Form form, FormControls controls) { Form = form;  Controls = controls; }
+        public TaskRunnerDisplay(Form form, FormControls controls) { Form = form;  Controls = controls; }
 
         protected Form Form;
         protected FormControls Controls;
@@ -26,7 +27,6 @@ namespace Jarrus.Display
         public int PoolScoreMaxYSeen;
         public double MinScoreSeen, MaxScoreSeen;
 
-        public abstract Gene[] FetchOptions();
         public bool IsReadyToUpdateForm() { return GARun != null; }
         public bool HasAPopulation() { return !GARun.Population.Chromosomes.Any(); }
 
@@ -110,9 +110,9 @@ namespace Jarrus.Display
             UIUpdater.SetText(Form, Controls.ConfigMaxLifeLbl, Config.MaximumLifeSpan + "");
             UIUpdater.SetText(Form, Controls.ConfigChildrenPerCoupleLbl, Config.ChildrenPerCouple + "");
 
-            UIUpdater.SetText(Form, Controls.ConfigParentSelectionLbl, Config.ParentSelection.GetType().Name.Replace("Selection", "").ToString());
-            UIUpdater.SetText(Form, Controls.ConfigCrossoverLbl, Config.Crossover.GetType().Name.Replace("Crossover", "").ToString());
-            UIUpdater.SetText(Form, Controls.ConfigMutationLbl, Config.Mutation.GetType().Name.Replace("Mutation", "").ToString());
+            UIUpdater.SetText(Form, Controls.ConfigParentSelectionLbl, Config.ParentSelectionType.ToString());
+            UIUpdater.SetText(Form, Controls.ConfigCrossoverLbl, Config.CrossoverType.ToString());
+            UIUpdater.SetText(Form, Controls.ConfigMutationLbl, Config.MutationType.ToString());
             UIUpdater.SetText(Form, Controls.ConfigRetirementLbl, "true");
         }
 
@@ -150,23 +150,23 @@ namespace Jarrus.Display
         {
             var jarrusDAO = new JarrusDAO();
             var task = jarrusDAO.CheckoutATaskToRun();
-            if (task.ParentSelection == null) { Thread.Sleep(1000); return; }
+            if (task == null || !task.IsValid()) { Thread.Sleep(1000); return; }
 
-            var config = new GAConfiguration(task);
-            Config = config;
-
-            var data = FetchOptions();
-
+            var config = new GAConfiguration(task);            
+            var data = config.Solution.GetOptions();
             var ga = new GeneticAlgorithm(config, data);
+
+            Config = config;
             GARun = ga.GARun;
+
             UIUpdater.SetText(Form, Controls.SessionNameLbl, config.Session);
+            MinScoreSeen = GARun.Population.Chromosomes.Select(o => o.FitnessScore).Min();
+            MaxScoreSeen = GARun.Population.Chromosomes.Select(o => o.FitnessScore).Max();
 
-            MinScoreSeen = ga.GARun.Population.Chromosomes.Select(o => o.FitnessScore).Min();
-            MaxScoreSeen = ga.GARun.Population.Chromosomes.Select(o => o.FitnessScore).Max();
-
-            var runDetails = ga.Run();
-            jarrusDAO.InsertCompletedRun(config, runDetails);
+            ga.Run();
+            jarrusDAO.InsertCompletedRun(Config, GARun);
             jarrusDAO.DeleteTask(task.UUID);
+
             RunNumber++;
         }
     }

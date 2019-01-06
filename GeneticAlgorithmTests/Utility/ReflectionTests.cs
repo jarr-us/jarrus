@@ -10,7 +10,7 @@ namespace GeneticAlgorithmTests.Utility
         [TestMethod]
         public void ItCopiesByValue()
         {
-            var task = GATestHelper.GetDefaultConfiguration();
+            var task = GATestHelper.GetDummyTravelingSalesmanTask();
             var config = new GAConfiguration(task);
 
             var value = GATestHelper.GetRandomInteger(1, int.MaxValue - 1);
@@ -23,7 +23,7 @@ namespace GeneticAlgorithmTests.Utility
         {
             var randomValue = GATestHelper.GetNextDouble();
 
-            var task = GATestHelper.GetDefaultConfiguration();
+            var task = GATestHelper.GetDummyTravelingSalesmanTask();
             task.MutationRate = randomValue;
             var config = new GAConfiguration(task);
                         
@@ -33,13 +33,12 @@ namespace GeneticAlgorithmTests.Utility
         [TestMethod]
         public void ItCanCopyObjects()
         {
-            var task = GATestHelper.GetDefaultConfiguration();
+            var task = GATestHelper.GetDummyTravelingSalesmanTask();
             var config = new GAConfiguration(task);
 
-            Assert.AreEqual(task.Mutation, config.Mutation);
-            Assert.AreEqual(task.Crossover, config.Crossover);
-            Assert.AreEqual(task.FitnessFunction, config.FitnessFunction);
-            Assert.AreEqual(task.ParentSelection, config.ParentSelection);
+            Assert.AreEqual(task.MutationType, config.MutationType);
+            Assert.AreEqual(task.CrossoverType, config.CrossoverType);
+            Assert.AreEqual(task.ParentSelectionType, config.ParentSelectionType);
         }
     }
 }

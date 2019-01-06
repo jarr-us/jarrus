@@ -8,11 +8,11 @@ namespace GeneticAlgorithmTests.Models.FitnessFunctions
     /// <summary>
     /// https://www.geeksforgeeks.org/travelling-salesman-problem-set-1/
     /// </summary>
-    public class TravelingSalesmanFitnessCalculator : FitnessFunction
+    public class TravelingSalesmanFitnessFunction : FitnessFunction
     {
         private Dictionary<char, Dictionary<char, int>> _dictionary = new Dictionary<char, Dictionary<char, int>>();
 
-        public TravelingSalesmanFitnessCalculator()
+        public TravelingSalesmanFitnessFunction()
         {
             _dictionary.Add('A', new Dictionary<char, int>());
             _dictionary['A'].Add('B', 10);

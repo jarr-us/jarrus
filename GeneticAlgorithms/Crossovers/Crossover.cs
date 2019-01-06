@@ -1,5 +1,4 @@
-﻿using GeneticAlgorithms.BasicTypes;
-using GeneticAlgorithms.Utility;
+﻿using GeneticAlgorithms.Utility;
 using System;
 
 namespace GeneticAlgorithms.Crossovers

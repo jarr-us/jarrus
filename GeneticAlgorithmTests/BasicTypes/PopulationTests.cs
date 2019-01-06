@@ -24,7 +24,7 @@ namespace GeneticAlgorithmTests
         [TestMethod]
         public void ItHasAValidConstructor()
         {
-            var genome = new Population(GATestHelper.GetDefaultConfiguration(), _pool, _possibleValues);
+            var genome = new Population(GATestHelper.GetTravelingSalesmanDefaultConfiguration(), _pool, _possibleValues);
             Assert.IsNotNull(genome.Configuration);
             Assert.IsNotNull(genome.Chromosomes);
         }
@@ -40,27 +40,27 @@ namespace GeneticAlgorithmTests
         [ExpectedException(typeof(ArgumentException))]
         public void ItThrowsAnExceptionIfThePoolIsNull()
         {
-            new Population(GATestHelper.GetDefaultConfiguration(), null, _possibleValues);
+            new Population(GATestHelper.GetTravelingSalesmanDefaultConfiguration(), null, _possibleValues);
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void ItThrowsAnExceptionIfThePoolIsNotLargeEnough()
         {
-            new Population(GATestHelper.GetDefaultConfiguration(), _pool.Subset(0, 2), _possibleValues);
+            new Population(GATestHelper.GetTravelingSalesmanDefaultConfiguration(), _pool.Subset(0, 2), _possibleValues);
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void ItThrowsAnExceptionIfThePossibleValuesAreNotSet()
         {
-            new Population(GATestHelper.GetDefaultConfiguration(), _pool, null);
+            new Population(GATestHelper.GetTravelingSalesmanDefaultConfiguration(), _pool, null);
         }
 
         [TestMethod]
         public void ItCanAdvanceToTheNextGeneration()
         {
-            var genome = new Population(GATestHelper.GetDefaultConfiguration(), _pool, _possibleValues);
+            var genome = new Population(GATestHelper.GetTravelingSalesmanDefaultConfiguration(), _pool, _possibleValues);
             var nextGen = genome.Advance();
 
             Assert.AreEqual(1, genome.GenerationNumber);
@@ -70,7 +70,7 @@ namespace GeneticAlgorithmTests
         [TestMethod]
         public void ItCanAdvanceToTheNextGenerationViaImmigration()
         {
-            var config = GATestHelper.GetDefaultConfiguration();
+            var config = GATestHelper.GetTravelingSalesmanDefaultConfiguration();
             config.CrossoverRate = 0.0;
             config.ElitismRate = 0.0;
 
@@ -90,7 +90,7 @@ namespace GeneticAlgorithmTests
         public void ItKeepsElities()
         {
             var toKeep = GATestHelper.GetRandomInteger(1, 99);
-            var config = GATestHelper.GetDefaultConfiguration();
+            var config = GATestHelper.GetTravelingSalesmanDefaultConfiguration();
             config.ElitismRate = 0.01 * toKeep;
 
             var genome = new Population(config, _pool, _possibleValues);
@@ -102,7 +102,7 @@ namespace GeneticAlgorithmTests
         [TestMethod]
         public void ItDeterminesFitnessScoreOnCreation()
         {
-            var config = GATestHelper.GetDefaultConfiguration();
+            var config = GATestHelper.GetTravelingSalesmanDefaultConfiguration();
             var genome = new Population(config, _pool, _possibleValues);
             
             foreach(var chromosome in genome.Chromosomes)
@@ -114,7 +114,7 @@ namespace GeneticAlgorithmTests
         [TestMethod]
         public void ItCanRetireChromosomes()
         {
-            var config = GATestHelper.GetDefaultConfiguration();
+            var config = GATestHelper.GetTravelingSalesmanDefaultConfiguration();
             config.MaximumLifeSpan = 1;
 
             var genome = new Population(config, _pool, _possibleValues);
@@ -126,7 +126,7 @@ namespace GeneticAlgorithmTests
         [TestMethod]
         public void ItDoesNotAllowDuplicates()
         {
-            var config = GATestHelper.GetDefaultConfiguration();
+            var config = GATestHelper.GetTravelingSalesmanDefaultConfiguration();
             config.MaxPopulationSize = 10;
 
             _pool = GATestHelper.GetTravelingSalesmanGenome(config);
@@ -148,7 +148,7 @@ namespace GeneticAlgorithmTests
         [TestMethod]
         public void ItAllowsDuplicates()
         {
-            var config = GATestHelper.GetDefaultConfiguration();
+            var config = GATestHelper.GetTravelingSalesmanDefaultConfiguration();
             var genome = new Population(config, _pool, _possibleValues);
 
             var nextGen = genome.Advance();
