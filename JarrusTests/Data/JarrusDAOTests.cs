@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using GeneticAlgorithms;
 using GeneticAlgorithms.BasicTypes;
 using GeneticAlgorithms.Factory.Enums;
 using Jarrus.Data;
@@ -13,11 +15,43 @@ namespace JarrusTests.Data
     [TestClass]
     public class JarrusDAOTests
     {
+        [TestMethod]
+        public void ItIsRepeatable()
+        {
+            var solution = new MLBDriveTimeSolution();
+            var task = new GATask(solution);
+            task.ParentSelectionType = ParentSelectionType.StochasticUniversalSamplingSelection;
+            task.MutationType = MutationType.Inversion;
+            task.CrossoverType = CrossoverType.Order;
+            task.LowestScoreIsBest = true;
+            task.MaxPopulationSize = 50;
+            task.MaxGenerations = 509 + 417;
+            task.CrossoverRate = 0.93;
+            task.MutationRate = 0.08;
+            task.ElitismRate = 0.30;
+            task.PreventDuplications = true;
+            task.MaximumLifeSpan = 416;
+            task.ChildrenPerCouple = 4;
+            task.RandomSeed = 808816214;
+            task.RandomPoolGenerationSeed = 22;
+
+            var config = new GAConfiguration(task);
+            
+            var ga = new GeneticAlgorithm(config, solution.GetOptions());
+            var runDetails = ga.Run();
+            Assert.AreEqual(config.MaxGenerations + 1, ga.Generation);
+
+            var currentBest = runDetails.Population.Chromosomes.OrderBy(o => o.FitnessScore).First();
+            Assert.AreEqual(579289.000000, runDetails.BestChromosome.FitnessScore);
+            Assert.AreNotEqual(579289.000000, currentBest);
+        }
+
+
         //[TestMethod]
         //public void ItCanInsertAnOfficeSession5Task()
         //{
         //    var tasks = new List<GATask>();
-            
+
         //    var random = new Random();
         //    for (int i = 0; i < 15000; i++)
         //    {

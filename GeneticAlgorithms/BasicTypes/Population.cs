@@ -16,12 +16,12 @@ namespace GeneticAlgorithms
         public int GenerationNumber = 1;
         private List<Chromosome> NextGeneration = new List<Chromosome>();
         public HashSet<Chromosome> OptionsInPool = new HashSet<Chromosome>();
-        public HashSet<Chromosome> Retired = new HashSet<Chromosome>();
+        public List<Chromosome> Retired = new List<Chromosome>();
         private Gene[] _possibleValues;
 
         public Population(GAConfiguration configuration, Chromosome[] chromosomes, Gene[] possibleValues)
         {
-            if (configuration == null || chromosomes == null || chromosomes.Length <=2 || possibleValues == null || possibleValues.Length <= 2)
+            if (configuration == null || chromosomes == null || chromosomes.Length <= 2 || possibleValues == null || possibleValues.Length <= 2)
             {
                 throw new ArgumentException("Invalid parameters passed to the Genome");
             }
@@ -34,7 +34,7 @@ namespace GeneticAlgorithms
             DetermineFitnessScores();
         }
 
-        private Population(GAConfiguration configuration, Chromosome[] chromosomes, int generationNumber, Gene[] possibleValues, HashSet<Chromosome> retired = null)
+        private Population(GAConfiguration configuration, Chromosome[] chromosomes, int generationNumber, Gene[] possibleValues, List<Chromosome> retired = null)
         {
             Chromosomes = chromosomes;
             Configuration = configuration;
@@ -57,16 +57,12 @@ namespace GeneticAlgorithms
             foreach (var chromosome in Chromosomes.Where(o => o.GenerationNumber != 0))
             {
                 chromosome.Age++;
-
-                if (chromosome.ShouldRetire(Configuration))
-                {
-                    Retired.Add(chromosome);
-                }
             }
         }
 
         private void Retire()
         {
+            if (Retired == null) { return; }
             foreach (var chromosome in Retired)
             {
                 OptionsInPool.Add(chromosome);
@@ -92,7 +88,8 @@ namespace GeneticAlgorithms
 
         private void SetupNextGenerationObjects()
         {
-            Configuration.ParentSelection.Setup(Chromosomes, Configuration);            
+            Configuration.ParentSelection.Setup(Chromosomes, Configuration);
+            Retired.AddRange(Chromosomes.Where(o => o.ShouldRetire(Configuration)).ToList());
         }
 
         private double GetBestScore()
@@ -110,11 +107,18 @@ namespace GeneticAlgorithms
         private void DetermineNextGeneration()
         {
             AddElitiesToNextGeneration();
-            
+
+            var sw = new Stopwatch();
+            sw.Start();
+
             while (NextGeneration.Count < Chromosomes.Length)
             {
                 GetNextGenerationChromosome();
             }
+
+            var ms = sw.ElapsedMilliseconds;
+            var ticks = sw.ElapsedTicks;
+            Console.Out.WriteLine();
         }
 
         private void AddElitiesToNextGeneration()
@@ -144,11 +148,12 @@ namespace GeneticAlgorithms
             if (Configuration.GetNextDouble() <= Configuration.CrossoverRate)
             {
                 var parents = Configuration.ParentSelection.GetParents();
-                
+
                 for (int i = 0; i < Configuration.ChildrenPerCouple; i++)
                 {
                     var child = GetChild(parents);
                     Configuration.Mutation.Mutate(child, Configuration);
+
                     AddToNextGeneration(child);
                 }
             }
@@ -167,12 +172,14 @@ namespace GeneticAlgorithms
         {
             if (Configuration.PreventDuplications)
             {
-                var count = NextGeneration.Count;
-                OptionsInPool.Add(chromosome);
-
-                if (OptionsInPool.Count > count && NextGeneration.Count < Chromosomes.Length)
+                if (!OptionsInPool.Contains(chromosome))
                 {
-                    NextGeneration.Add(chromosome);
+                    OptionsInPool.Add(chromosome);
+
+                    if (NextGeneration.Count < Chromosomes.Length)
+                    {
+                        NextGeneration.Add(chromosome);
+                    }
                 }
             }
             else

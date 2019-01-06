@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using GeneticAlgorithms;
+using GeneticAlgorithms.BasicTypes;
 using GeneticAlgorithms.Enums;
 using GeneticAlgorithms.Utility;
 using GeneticAlgorithmTests.Models;
@@ -55,7 +56,7 @@ namespace GeneticAlgorithmTests
             Assert.AreEqual(LastName.Alexander, runDetails.BestChromosome.LastName);
             Assert.AreEqual(80, runDetails.BestChromosome.FitnessScore);
         }
-
+        
         [TestMethod]
         public void ItKeepsTrackOfTheBestScore()
         {
