@@ -52,7 +52,7 @@ namespace JarrusTests.Data
 
 
         //[TestMethod]
-        //public void ItCanInsertAnOfficeSession5Task()
+        //public void ItCanInsertFullRandoms()
         //{
         //    var tasks = new List<GATask>();
 
@@ -116,6 +116,42 @@ namespace JarrusTests.Data
         //    }
 
         //   // InsertTasksToDatabase(tasks, 5);
+        //}
+
+        //[TestMethod]
+        //public void ItCanInsertSessionSixes()
+        //{
+        //    var tasks = new List<GATask>();
+
+        //    var random = new Random();
+        //    for (int i = 0; i < 5000; i++)
+        //    {
+        //        var task = new GATask(new MLBDriveTimeSolution())
+        //        {
+        //            ParentSelectionType = ParentSelectionType.StochasticUniversalSamplingSelection,
+        //            MutationType = MutationType.Swap,
+        //            CrossoverType = CrossoverType.AlternatingPosition,
+
+        //            MaxPopulationSize = 50,
+        //            CrossoverRate = 0.68,
+        //            MutationRate = 0.13,
+        //            ElitismRate = 0.35,
+        //            MaximumLifeSpan = 961,
+        //            ChildrenPerCouple = 2,
+
+        //            MaxGenerations = 10000,
+        //            LowestScoreIsBest = true,
+        //            PreventDuplications = true,
+        //            RandomPoolGenerationSeed = 22,
+
+        //            Session = "0006"
+        //        };
+
+        //        task.RandomSeed = random.Next();
+        //        tasks.Add(task);
+        //    }
+
+        //    InsertTasksToDatabase(tasks, 4.5);
         //}
 
         private void InsertTasksToDatabase(List<GATask> tasks, double priority)

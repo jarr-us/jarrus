@@ -2,6 +2,7 @@
 using Jarrus.Data;
 using Jarrus.Metadata;
 using Jarrus.Models;
+using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
@@ -88,6 +89,8 @@ namespace Jarrus.Display
             Stopwatch.Stop();
             var ticksPerChromosome = Stopwatch.ElapsedTicks / (GARun.Population.Chromosomes.Length * 1.0 * (GARun.CurrentGeneration - LastGenerationSeen));
             var msPerGeneration = Stopwatch.ElapsedMilliseconds / (1.0 * (GARun.CurrentGeneration - LastGenerationSeen));
+
+            if (double.IsInfinity(msPerGeneration)) { Stopwatch.Restart(); return; }
 
             UIUpdater.SetText(Form, Controls.RetiredNumberLbl, GARun.Population.Retired.Count + "");
             UIUpdater.SetText(Form, Controls.TicksPerChromosome, ticksPerChromosome.ToString("#,##0"));

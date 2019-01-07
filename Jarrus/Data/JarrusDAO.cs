@@ -17,7 +17,7 @@ namespace Jarrus.Data
         public GATask CheckoutATaskToRun()
         {
             var sql = "UPDATE TOP (1) [DB_9B8C9C_jarrus].[dbo].[GA_Task] SET [Checkout] = GETUTCDATE(), [ComputerName] = @ComputerName ";
-            sql += "WHERE [Checkout] IS NULL AND [Priority] = (SELECT MIN([Priority]) FROM [DB_9B8C9C_jarrus].[dbo].[GA_Task])";
+            sql += "WHERE [uuid] = (select top 1 uuid FROM [DB_9B8C9C_jarrus].[dbo].[GA_Task] where checkout is null or [checkout] < DATEADD(HOUR, -1, GETUTCDATE()) order by priority)";
             var dao = new DAO();
 
             try
