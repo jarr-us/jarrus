@@ -12,7 +12,7 @@ namespace GeneticAlgorithmTests
     [TestClass]
     public class GeneticAlgorithmTests
     {
-        private ExampleGene[] _exampleGenes;
+        private TravelingSalesmanGene[] _exampleGenes;
         private GAConfiguration _configuration;
 
         [TestInitialize]
@@ -29,7 +29,7 @@ namespace GeneticAlgorithmTests
             _configuration.MaximumLifeSpan = 2;
             _configuration.MaxGenerations = 5;
 
-            _exampleGenes = Array.ConvertAll(GATestHelper.GetTravelingSalesmanChromosome().Genes, option => (ExampleGene)option);
+            _exampleGenes = Array.ConvertAll(GATestHelper.GetTravelingSalesmanChromosome().Genes, option => (TravelingSalesmanGene)option);
         }
 
         [TestMethod]

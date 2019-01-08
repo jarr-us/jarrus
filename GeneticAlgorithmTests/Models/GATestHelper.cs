@@ -32,39 +32,39 @@ namespace GeneticAlgorithmTests.Models
         public static Chromosome GetNumericChromosomeOne()
         {
             return new Chromosome(
-                new ExampleGene('1'),
-                new ExampleGene('2'),
-                new ExampleGene('3'),
-                new ExampleGene('4'),
-                new ExampleGene('5'),
-                new ExampleGene('6'),
-                new ExampleGene('7')
+                new TravelingSalesmanGene('1'),
+                new TravelingSalesmanGene('2'),
+                new TravelingSalesmanGene('3'),
+                new TravelingSalesmanGene('4'),
+                new TravelingSalesmanGene('5'),
+                new TravelingSalesmanGene('6'),
+                new TravelingSalesmanGene('7')
             );
         }
 
         public static Chromosome GetNumericChromosomeTwo()
         {
             return new Chromosome(
-                new ExampleGene('5'),
-                new ExampleGene('4'),
-                new ExampleGene('6'),
-                new ExampleGene('7'),
-                new ExampleGene('2'),
-                new ExampleGene('3'),
-                new ExampleGene('1')
+                new TravelingSalesmanGene('5'),
+                new TravelingSalesmanGene('4'),
+                new TravelingSalesmanGene('6'),
+                new TravelingSalesmanGene('7'),
+                new TravelingSalesmanGene('2'),
+                new TravelingSalesmanGene('3'),
+                new TravelingSalesmanGene('1')
             );
         }
 
         public static Chromosome GetNumericChromosomeThree()
         {
             return new Chromosome(
-                new ExampleGene('5'),
-                new ExampleGene('4'),
-                new ExampleGene('6'),
-                new ExampleGene('7'),
-                new ExampleGene('2'),
-                new ExampleGene('1'),
-                new ExampleGene('3')
+                new TravelingSalesmanGene('5'),
+                new TravelingSalesmanGene('4'),
+                new TravelingSalesmanGene('6'),
+                new TravelingSalesmanGene('7'),
+                new TravelingSalesmanGene('2'),
+                new TravelingSalesmanGene('1'),
+                new TravelingSalesmanGene('3')
             );
         }
 
@@ -88,16 +88,16 @@ namespace GeneticAlgorithmTests.Models
         public static Chromosome GetAlphabetCharacterChromosome()
         {
             return new Chromosome(
-                new ExampleGene('A'),
-                new ExampleGene('B'),
-                new ExampleGene('C'),
-                new ExampleGene('D'),
-                new ExampleGene('E'),
-                new ExampleGene('F'),
-                new ExampleGene('G'),
-                new ExampleGene('H'),
-                new ExampleGene('I'),
-                new ExampleGene('J')
+                new TravelingSalesmanGene('A'),
+                new TravelingSalesmanGene('B'),
+                new TravelingSalesmanGene('C'),
+                new TravelingSalesmanGene('D'),
+                new TravelingSalesmanGene('E'),
+                new TravelingSalesmanGene('F'),
+                new TravelingSalesmanGene('G'),
+                new TravelingSalesmanGene('H'),
+                new TravelingSalesmanGene('I'),
+                new TravelingSalesmanGene('J')
             );
         }
 

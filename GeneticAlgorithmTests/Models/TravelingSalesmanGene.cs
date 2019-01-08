@@ -2,14 +2,14 @@
 
 namespace GeneticAlgorithmTests.Models
 {
-    public class ExampleGene : Gene
+    public class TravelingSalesmanGene : Gene
     {
         public char Value;
-        public ExampleGene(char c) { Value = c; }
+        public TravelingSalesmanGene(char c) { Value = c; }
 
         public override bool Equals(object obj)
         {
-            var castedObject = (ExampleGene)obj;
+            var castedObject = (TravelingSalesmanGene)obj;
             return castedObject.Value == Value;
         }
 

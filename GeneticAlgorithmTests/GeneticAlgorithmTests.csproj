@@ -71,7 +71,8 @@
     <Compile Include="Models\FitnessCalculators\SimpleTravelingSalesmanSolution.cs" />
     <Compile Include="Models\FitnessCalculators\TravelingSalesmanFitnessFunction.cs" />
     <Compile Include="Models\GATestHelper.cs" />
-    <Compile Include="Models\ExampleGene.cs" />
+    <Compile Include="Models\TravelingSalesmanGene.cs" />
+    <Compile Include="Models\Shakespeare\CharacterGene.cs" />
     <Compile Include="Mutations\MutationTests.cs" />
     <Compile Include="Mutations\InversionMutationTests.cs" />
     <Compile Include="Mutations\ScrambleMutationTests.cs" />

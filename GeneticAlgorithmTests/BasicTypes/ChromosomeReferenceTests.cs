@@ -62,12 +62,12 @@ namespace GeneticAlgorithmTests
             Assert.AreNotEqual(hashsetOne, hashsetTwo);
         }
 
-        private ExampleGene[] GetSampleDataset()
+        private TravelingSalesmanGene[] GetSampleDataset()
         {
-            var array = new ExampleGene[2];
+            var array = new TravelingSalesmanGene[2];
 
-            array[0] = new ExampleGene('A');
-            array[1] = new ExampleGene('B');
+            array[0] = new TravelingSalesmanGene('A');
+            array[1] = new TravelingSalesmanGene('B');
 
             return array;
         }

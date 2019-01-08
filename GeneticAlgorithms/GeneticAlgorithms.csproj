@@ -46,6 +46,7 @@
     <Compile Include="BasicTypes\GATask.cs" />
     <Compile Include="BasicTypes\Gene.cs" />
     <Compile Include="BasicTypes\Chromosome.cs" />
+    <Compile Include="BasicTypes\GeneAttribute.cs" />
     <Compile Include="Crossovers\Crossover.cs" />
     <Compile Include="Crossovers\Ordered\AlternatingPositionCrossover.cs" />
     <Compile Include="Crossovers\Ordered\CycleCrossover.cs" />

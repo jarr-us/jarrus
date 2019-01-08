@@ -9,8 +9,8 @@ namespace GeneticAlgorithmTests.BasicTypes
         [TestMethod]
         public void ItCanDetermineIfGenesAreEqualBasedOnTheirValues()
         {
-            var one = new ExampleGene('t');
-            var two = new ExampleGene('t');
+            var one = new TravelingSalesmanGene('t');
+            var two = new TravelingSalesmanGene('t');
 
             Assert.AreEqual(one, two);
         }
@@ -18,8 +18,8 @@ namespace GeneticAlgorithmTests.BasicTypes
         [TestMethod]
         public void ItCanDetermineIfGenesAreNotEqualBasedOnTheirValues()
         {
-            var one = new ExampleGene('t');
-            var two = new ExampleGene('T');
+            var one = new TravelingSalesmanGene('t');
+            var two = new TravelingSalesmanGene('T');
 
             Assert.AreNotEqual(one, two);
         }

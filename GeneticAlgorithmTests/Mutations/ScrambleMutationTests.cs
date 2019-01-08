@@ -18,7 +18,7 @@ namespace GeneticAlgorithmTests.Mutations
 
             Assert.AreNotEqual("A,B,C,D,E,F,G,H,I,J", chromosome.ToString());
 
-            var genes = chromosome.Genes.Cast<ExampleGene>().ToArray();
+            var genes = chromosome.Genes.Cast<TravelingSalesmanGene>().ToArray();
 
             Assert.AreEqual('A', genes[0].Value);
             Assert.AreEqual('B', genes[1].Value);

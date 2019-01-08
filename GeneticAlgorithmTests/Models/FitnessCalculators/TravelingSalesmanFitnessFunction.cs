@@ -37,7 +37,7 @@ namespace GeneticAlgorithmTests.Models.FitnessFunctions
 
         public override double GetFitnessScoreFor(Chromosome chromosome)
         {
-            var genes = chromosome.Genes.Cast<ExampleGene>().ToArray();
+            var genes = chromosome.Genes.Cast<TravelingSalesmanGene>().ToArray();
 
             var val = GetDistanceBetween(genes[0].Value, genes[1].Value);
 

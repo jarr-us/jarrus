@@ -12,12 +12,12 @@ namespace GeneticAlgorithmTests
     public class PopulationTests
     {
         private Chromosome[] _pool;
-        private ExampleGene[] _possibleValues;
+        private TravelingSalesmanGene[] _possibleValues;
 
         [TestInitialize]
         public void Setup()
         {
-            _possibleValues = GATestHelper.GetTravelingSalesmanChromosome().Genes.Cast<ExampleGene>().ToArray();
+            _possibleValues = GATestHelper.GetTravelingSalesmanChromosome().Genes.Cast<TravelingSalesmanGene>().ToArray();
             _pool = GATestHelper.GetTravelingSalesmanGenome();
         }
 

@@ -30,7 +30,7 @@ namespace GeneticAlgorithmTests.Utility
         public void ItThrowsAnExceptionWhenNoValuesArePassed()
         {
             var configuration = GATestHelper.GetTravelingSalesmanDefaultConfiguration();
-            var pool = PopulationGenerator.Generate(new ExampleGene[1], configuration);
+            var pool = PopulationGenerator.Generate(new TravelingSalesmanGene[1], configuration);
         }
 
         [TestMethod]

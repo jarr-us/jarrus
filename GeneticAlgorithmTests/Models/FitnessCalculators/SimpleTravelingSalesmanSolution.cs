@@ -13,10 +13,10 @@ namespace GeneticAlgorithmTests.Models.FitnessCalculators
         public override Gene[] GetOptions()
         {
             return new Chromosome(
-                new ExampleGene('A'),
-                new ExampleGene('B'),
-                new ExampleGene('C'),
-                new ExampleGene('D')
+                new TravelingSalesmanGene('A'),
+                new TravelingSalesmanGene('B'),
+                new TravelingSalesmanGene('C'),
+                new TravelingSalesmanGene('D')
             ).Genes;
         }
     }
