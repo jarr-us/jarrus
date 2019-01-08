@@ -1,4 +1,4 @@
-﻿using GeneticAlgorithms.BasicTypes;
+﻿using GeneticAlgorithms.BasicTypes.Genes;
 using System;
 
 namespace GeneticAlgorithms.Utility

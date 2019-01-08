@@ -1,4 +1,5 @@
 ﻿using GeneticAlgorithms.BasicTypes;
+using GeneticAlgorithms.BasicTypes.Genes;
 using GeneticAlgorithms.ParentSelections;
 using GeneticAlgorithms.Utility;
 using System;

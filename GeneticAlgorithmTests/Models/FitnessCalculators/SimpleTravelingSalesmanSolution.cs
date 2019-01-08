@@ -1,5 +1,5 @@
 ﻿using GeneticAlgorithms;
-using GeneticAlgorithms.BasicTypes;
+using GeneticAlgorithms.BasicTypes.Genes;
 using GeneticAlgorithms.FitnessFunctions;
 using GeneticAlgorithms.Solution;
 using GeneticAlgorithmTests.Models.FitnessFunctions;

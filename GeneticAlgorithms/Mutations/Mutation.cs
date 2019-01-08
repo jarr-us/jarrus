@@ -1,16 +1,18 @@
-﻿using GeneticAlgorithms.BasicTypes;
+﻿using GeneticAlgorithms.Factory.Enums;
 
 namespace GeneticAlgorithms.Mutations
 {
     public abstract class Mutation
     {
+        public MutationType MutationType;
+
         public void Mutate(Chromosome chromosome, GAConfiguration settings)
         {
-            foreach (var gene in chromosome.Genes)
+            for(int i = 0; i < chromosome.Genes.Length; i++)
             {
                 if (settings.GetNextDouble() < settings.MutationRate)
                 {
-                    Perform(chromosome, settings);
+                    Perform(settings, chromosome, i);
                 }
             }
         }
@@ -22,6 +24,6 @@ namespace GeneticAlgorithms.Mutations
             chromosome.Genes[spotTwo] = temp;
         }
 
-        protected abstract void Perform(Chromosome chromosome, GAConfiguration settings);
+        protected abstract void Perform(GAConfiguration settings, Chromosome chromosome, int geneIndex);
     }
 }

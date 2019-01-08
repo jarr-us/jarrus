@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using GeneticAlgorithms;
-using GeneticAlgorithms.BasicTypes;
 using GeneticAlgorithms.Enums;
 using GeneticAlgorithms.Utility;
 using GeneticAlgorithmTests.Models;
@@ -71,7 +70,7 @@ namespace GeneticAlgorithmTests
             var lowest = runDetails.Population.Chromosomes.Select(o => o.FitnessScore).Min();
             var lastBestSeen = runDetails.Population.Chromosomes.Where(o => o.FitnessScore == lowest).First();
             Assert.AreEqual(LastName.Phelps, lastBestSeen.LastName);
-            Assert.AreEqual(FirstName.Clyde, lastBestSeen.FirstName);
+            Assert.AreEqual(FirstName.Trace, lastBestSeen.FirstName);
         }
 
         [TestMethod]

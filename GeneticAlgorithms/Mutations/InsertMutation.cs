@@ -1,15 +1,13 @@
-﻿using GeneticAlgorithms.BasicTypes;
+﻿using GeneticAlgorithms.BasicTypes.Genes;
 
 namespace GeneticAlgorithms.Mutations
 {
     public class InsertMutation : Mutation
     {
-        protected override void Perform(Chromosome chromosome, GAConfiguration settings)
+        protected override void Perform(GAConfiguration settings, Chromosome chromosome, int geneIndex)
         {
-            var firstMutationPoint = settings.GetRandomInteger(0, chromosome.Genes.Length - 1);
-            var secondMutationPoint = settings.GetRandomInteger(0, chromosome.Genes.Length - 1, firstMutationPoint);
-
-            Shift(chromosome, firstMutationPoint, secondMutationPoint);
+            var secondMutationPoint = settings.GetRandomInteger(0, chromosome.Genes.Length - 1, geneIndex);
+            Shift(chromosome, geneIndex, secondMutationPoint);
         }
 
         public void Shift(Chromosome chromosome, int start, int end)

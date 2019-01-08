@@ -1,8 +1,8 @@
-﻿using GeneticAlgorithms.BasicTypes;
+﻿using GeneticAlgorithms.BasicTypes.Genes;
 
 namespace GeneticAlgorithmTests.Models
 {
-    public class TravelingSalesmanGene : Gene
+    public class TravelingSalesmanGene : OrderedGene
     {
         public char Value;
         public TravelingSalesmanGene(char c) { Value = c; }

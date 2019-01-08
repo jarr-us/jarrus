@@ -43,6 +43,10 @@ namespace GeneticAlgorithms.Factory
             _mutations.Add(MutationType.Inversion, new InversionMutation().GetType().AssemblyQualifiedName);
             _mutations.Add(MutationType.Scramble, new ScrambleMutation().GetType().AssemblyQualifiedName);
             _mutations.Add(MutationType.Swap, new SwapMutation().GetType().AssemblyQualifiedName);
+
+            _mutations.Add(MutationType.Flip, new InternalMutation().GetType().AssemblyQualifiedName);
+            _mutations.Add(MutationType.Boundary, new InternalMutation().GetType().AssemblyQualifiedName);
+            _mutations.Add(MutationType.Random, new InternalMutation().GetType().AssemblyQualifiedName);
         }
 
         private void SetupParentSelections()
@@ -51,8 +55,13 @@ namespace GeneticAlgorithms.Factory
             _parentSelection.Add(ParentSelectionType.StochasticUniversalSamplingSelection, new StochasticUniversalSamplingSelection().GetType().AssemblyQualifiedName);
         }
 
-        public Crossover GetCrossover(CrossoverType type) { return (Crossover)Reflection.GetObjectFromType(_crossovers[type]); }
-        public Mutation GetMutation(MutationType type) { return (Mutation)Reflection.GetObjectFromType(_mutations[type]); }
+        public Mutation GetMutation(MutationType type) {
+            var mutation = (Mutation)Reflection.GetObjectFromType(_mutations[type]);
+            mutation.MutationType = type;
+            return mutation;
+        }
+
+        public Crossover GetCrossover(CrossoverType type) { return (Crossover)Reflection.GetObjectFromType(_crossovers[type]); }        
         public ParentSelection GetParentSelection(ParentSelectionType type) { return (ParentSelection)Reflection.GetObjectFromType(_parentSelection[type]); }
     }
 }

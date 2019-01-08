@@ -1,4 +1,5 @@
 ﻿using GeneticAlgorithms.BasicTypes;
+using GeneticAlgorithms.BasicTypes.Genes;
 using GeneticAlgorithms.Utility;
 using System;
 using System.Collections.Generic;

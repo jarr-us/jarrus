@@ -1,4 +1,4 @@
-﻿using GeneticAlgorithms.BasicTypes;
+﻿using GeneticAlgorithms.BasicTypes.Genes;
 using System.Collections.Generic;
 
 namespace GeneticAlgorithms.Crossovers.Ordered

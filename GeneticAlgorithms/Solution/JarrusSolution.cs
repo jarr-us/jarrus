@@ -1,4 +1,4 @@
-﻿using GeneticAlgorithms.BasicTypes;
+﻿using GeneticAlgorithms.BasicTypes.Genes;
 using GeneticAlgorithms.FitnessFunctions;
 namespace GeneticAlgorithms.Solution
 {

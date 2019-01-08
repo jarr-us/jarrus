@@ -3,6 +3,7 @@ using GeneticAlgorithms;
 using GeneticAlgorithms.BasicTypes;
 using GeneticAlgorithms.Crossovers;
 using GeneticAlgorithms.Crossovers.Unordered;
+using GeneticAlgorithms.Factory.Enums;
 using GeneticAlgorithms.Mutations;
 using GeneticAlgorithms.ParentSelections;
 using GeneticAlgorithmTests.Models;
@@ -32,6 +33,17 @@ namespace GeneticAlgorithmTests
         public void ItsConstructorsCanSetTheStrategies()
         {
             var task = GATestHelper.GetDummyTravelingSalesmanTask();
+            var settings = new GAConfiguration(task);
+
+            Assert.IsTrue(settings.IsValid());
+        }
+
+        [TestMethod]
+        public void ItsConstructorsCanSetTheStrategiesWhenUnordered()
+        {
+            var task = GATestHelper.GetDummyTravelingSalesmanTask();
+            task.MutationType = MutationType.Random;
+
             var settings = new GAConfiguration(task);
 
             Assert.IsTrue(settings.IsValid());

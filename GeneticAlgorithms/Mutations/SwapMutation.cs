@@ -1,13 +1,13 @@
-﻿namespace GeneticAlgorithms.Mutations
+﻿using GeneticAlgorithms.BasicTypes.Genes;
+
+namespace GeneticAlgorithms.Mutations
 {
     public class SwapMutation : Mutation
     {
-        protected override void Perform(Chromosome chromosome, GAConfiguration settings)
+        protected override void Perform(GAConfiguration settings, Chromosome chromosome, int geneIndex)
         {
-            var firstMutationPoint = settings.GetRandomInteger(0, chromosome.Genes.Length - 1);
-            var secondMutationPoint = settings.GetRandomInteger(0, chromosome.Genes.Length - 1, firstMutationPoint);
-
-            FlipGenes(chromosome, firstMutationPoint, secondMutationPoint);
+            var secondMutationPoint = settings.GetRandomInteger(0, chromosome.Genes.Length - 1, geneIndex);
+            FlipGenes(chromosome, geneIndex, secondMutationPoint);
         }
     }
 }

@@ -1,5 +1,8 @@
-﻿using GeneticAlgorithmTests.Models;
+﻿using GeneticAlgorithms.BasicTypes;
+using GeneticAlgorithmTests.Models;
+using GeneticAlgorithmTests.Models.MutationGenes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 
 namespace GeneticAlgorithmTests.BasicTypes
 {

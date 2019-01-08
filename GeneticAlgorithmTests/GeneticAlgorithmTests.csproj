@@ -57,6 +57,7 @@
     <Compile Include="BasicTypes\GARunTests.cs" />
     <Compile Include="BasicTypes\GeneTests.cs" />
     <Compile Include="BasicTypes\GATaskTests.cs" />
+    <Compile Include="BasicTypes\UnorderedGeneTests.cs" />
     <Compile Include="Crossovers\Ordered\CycleCrossoverTests.cs" />
     <Compile Include="Crossovers\Ordered\PartialMappedCrossoverTests.cs" />
     <Compile Include="Crossovers\Ordered\AlternatePositionCrossoverTests.cs" />
@@ -71,8 +72,11 @@
     <Compile Include="Models\FitnessCalculators\SimpleTravelingSalesmanSolution.cs" />
     <Compile Include="Models\FitnessCalculators\TravelingSalesmanFitnessFunction.cs" />
     <Compile Include="Models\GATestHelper.cs" />
+    <Compile Include="Models\MutationGenes\BooleanGene.cs" />
+    <Compile Include="Models\MutationGenes\CharacterGene.cs" />
+    <Compile Include="Models\MutationGenes\IntegerGene.cs" />
+    <Compile Include="Models\MutationGenes\StringGene.cs" />
     <Compile Include="Models\TravelingSalesmanGene.cs" />
-    <Compile Include="Models\Shakespeare\CharacterGene.cs" />
     <Compile Include="Mutations\MutationTests.cs" />
     <Compile Include="Mutations\InversionMutationTests.cs" />
     <Compile Include="Mutations\ScrambleMutationTests.cs" />

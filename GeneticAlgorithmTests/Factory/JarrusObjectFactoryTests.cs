@@ -49,7 +49,16 @@ namespace GeneticAlgorithmTests.Factory
         }
 
         [TestMethod]
-        public void ItCanGetAllMutations()
+        public void ItSetsTheMutationTypeWhenGettingAMutation()
+        {
+            var obj = JarrusObjectFactory.Instance.GetMutation(MutationType.Swap);
+            Assert.IsNotNull(obj);
+
+            Assert.AreEqual(MutationType.Swap, obj.MutationType);
+        }
+
+        [TestMethod]
+        public void ItCanGetAllMutationsForOrderedTypes()
         {
             foreach (MutationType type in Enum.GetValues(typeof(MutationType)))
             {
@@ -69,8 +78,6 @@ namespace GeneticAlgorithmTests.Factory
                 Assert.IsNotNull(obj);
                 hashset.Add(obj.GetType().AssemblyQualifiedName);
             }
-
-            Assert.AreEqual(hashset.Count, Enum.GetValues(typeof(MutationType)).Length);
         }
 
         [TestMethod]

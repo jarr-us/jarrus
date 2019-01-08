@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using GeneticAlgorithms;
 using GeneticAlgorithms.BasicTypes;
-using GeneticAlgorithms.Enums;
 using GeneticAlgorithms.Factory.Enums;
 using Jarrus.Data;
 using Kanan.MLBDriveTime.Jarrus;
-using Kanan.OfficeSurveys;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace JarrusTests.Data
@@ -19,14 +15,22 @@ namespace JarrusTests.Data
         [TestMethod]
         public void ItIsRepeatable()
         {
+            var firstRunScore = GetFitnessScoreForExample();
+            var secondRunScore = GetFitnessScoreForExample();
+
+            Assert.AreEqual(firstRunScore, secondRunScore);
+        }
+
+        private double GetFitnessScoreForExample()
+        {
             var solution = new MLBDriveTimeSolution();
             var task = new GATask(solution);
             task.ParentSelectionType = ParentSelectionType.StochasticUniversalSamplingSelection;
             task.MutationType = MutationType.Inversion;
             task.CrossoverType = CrossoverType.Order;
             task.LowestScoreIsBest = true;
-            task.MaxPopulationSize = 50;
-            task.MaxGenerations = 509 + 417;
+            task.MaxPopulationSize = 10;
+            task.MaxGenerations = 25;
             task.CrossoverRate = 0.93;
             task.MutationRate = 0.08;
             task.ElitismRate = 0.30;
@@ -37,17 +41,11 @@ namespace JarrusTests.Data
             task.RandomPoolGenerationSeed = 22;
 
             var config = new GAConfiguration(task);
-            
+
             var ga = new GeneticAlgorithm(config, solution.GetOptions());
             var runDetails = ga.Run();
-            Assert.AreEqual(config.MaxGenerations + 1, ga.Generation);
 
-            var currentBest = runDetails.Population.Chromosomes.OrderBy(o => o.FitnessScore).First();
-            Assert.AreEqual(579289.000000, runDetails.BestChromosome.FitnessScore);
-            Assert.AreNotEqual(runDetails.BestChromosome.FitnessScore, currentBest.FitnessScore);
-            Assert.AreEqual(584390, currentBest.FitnessScore);
-            Assert.AreEqual(LastName.Espinosa, currentBest.LastName);
-            Assert.AreEqual(LastName.Espinosa, runDetails.BestChromosome.LastName);
+            return runDetails.BestChromosome.FitnessScore;
         }
 
         //[TestMethod]
@@ -117,46 +115,46 @@ namespace JarrusTests.Data
         //    InsertTasksToDatabase(tasks, 5);
         //}
 
-        [TestMethod]
-        public void ItCanInsertSession12s()
-        {
-            var tasks = new List<GATask>();
+        //[TestMethod]
+        //public void ItCanInsertSession12s()
+        //{
+        //    var tasks = new List<GATask>();
 
 
-            var mutationRate = 0.010000;
-            while(mutationRate < 0.03)
-            {
-                var task = new GATask(new OfficeSurveySolution())
-                {
-                    ParentSelectionType = ParentSelectionType.StochasticUniversalSamplingSelection,
-                    MutationType = MutationType.Swap,
-                    CrossoverType = CrossoverType.PartialMapped,
+        //    var mutationRate = 0.010000;
+        //    while(mutationRate < 0.03)
+        //    {
+        //        var task = new GATask(new OfficeSurveySolution())
+        //        {
+        //            ParentSelectionType = ParentSelectionType.StochasticUniversalSamplingSelection,
+        //            MutationType = MutationType.Swap,
+        //            CrossoverType = CrossoverType.PartialMapped,
 
-                    MaxPopulationSize = 141,
-                    CrossoverRate = 0.956050,
-                    MutationRate = mutationRate,
-                    ElitismRate = 0.155190,
-                    MaximumLifeSpan = 1059,
-                    ChildrenPerCouple = 7,
+        //            MaxPopulationSize = 141,
+        //            CrossoverRate = 0.956050,
+        //            MutationRate = mutationRate,
+        //            ElitismRate = 0.155190,
+        //            MaximumLifeSpan = 1059,
+        //            ChildrenPerCouple = 7,
 
-                    MaxGenerations = 2000,
-                    LowestScoreIsBest = false,
-                    PreventDuplications = true,
-                    RandomPoolGenerationSeed = 22,
-                    RandomSeed = 233754038,
+        //            MaxGenerations = 2000,
+        //            LowestScoreIsBest = false,
+        //            PreventDuplications = true,
+        //            RandomPoolGenerationSeed = 22,
+        //            RandomSeed = 233754038,
 
-                    //sessions 6-11: EA88A653-85C9-497E-BB2E-E5787150CC02
-                    //session 12: 1BED407A-B54B-42E5-AA52-9E28779F4FB0
+        //            //sessions 6-11: EA88A653-85C9-497E-BB2E-E5787150CC02
+        //            //session 12: 1BED407A-B54B-42E5-AA52-9E28779F4FB0
 
-                    Session = "0014"
-                };
+        //            Session = "0014"
+        //        };
                 
-                tasks.Add(task);
-                mutationRate += 0.00001;
-            }
+        //        tasks.Add(task);
+        //        mutationRate += 0.00001;
+        //    }
 
-            InsertTasksToDatabase(tasks, 14);
-        }
+        //    InsertTasksToDatabase(tasks, 14);
+        //}
 
         private void InsertTasksToDatabase(List<GATask> tasks, double priority)
         {

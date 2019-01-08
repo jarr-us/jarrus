@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using GeneticAlgorithms.BasicTypes;
+using GeneticAlgorithms.BasicTypes.Genes;
 using GeneticAlgorithms.Crossovers.Ordered;
 using GeneticAlgorithmTests.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

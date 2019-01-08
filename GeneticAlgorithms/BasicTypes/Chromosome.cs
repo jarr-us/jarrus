@@ -1,4 +1,4 @@
-﻿using GeneticAlgorithms.BasicTypes;
+﻿using GeneticAlgorithms.BasicTypes.Genes;
 using GeneticAlgorithms.Enums;
 using System.Collections.Generic;
 using System.Diagnostics;
