@@ -1,10 +1,10 @@
 ﻿using System;
-using GeneticAlgorithms;
-using GeneticAlgorithms.ParentSelections;
-using GeneticAlgorithmTests.Models;
+using Jarrus.GA;
+using Jarrus.GA.ParentSelections;
+using Jarrus.GATests.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace GeneticAlgorithmTests.ParentSelections
+namespace Jarrus.GATests.ParentSelections
 {
     [TestClass]
     public class StochasticUniversalSamplingSelectionTests

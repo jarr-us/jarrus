@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using GeneticAlgorithms.Factory;
-using GeneticAlgorithms.Factory.Enums;
+using Jarrus.GA.Factory;
+using Jarrus.GA.Factory.Enums;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace GeneticAlgorithmTests.Factory
+namespace Jarrus.GATests.Factory
 {
     [TestClass]
     public class JarrusObjectFactoryTests

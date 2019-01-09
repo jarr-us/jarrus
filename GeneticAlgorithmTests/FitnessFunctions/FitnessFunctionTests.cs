@@ -1,10 +1,10 @@
 ﻿using System;
-using GeneticAlgorithms;
-using GeneticAlgorithmTests.Models;
-using GeneticAlgorithmTests.Models.FitnessFunctions;
+using Jarrus.GA;
+using Jarrus.GATests.Models;
+using Jarrus.GATests.Models.FitnessFunctions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace GeneticAlgorithmTests.FitnessCalculators
+namespace Jarrus.GATests.FitnessCalculators
 {
     [TestClass]
     public class FitnessFunctionTests

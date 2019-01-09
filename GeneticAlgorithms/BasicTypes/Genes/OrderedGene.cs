@@ -1,4 +1,4 @@
-﻿namespace GeneticAlgorithms.BasicTypes.Genes
+﻿namespace Jarrus.GA.BasicTypes.Genes
 {
     public abstract class OrderedGene : Gene
     {

@@ -1,10 +1,10 @@
-﻿using GeneticAlgorithms;
-using GeneticAlgorithms.ParentSelections;
-using GeneticAlgorithmTests.Models;
-using GeneticAlgorithmTests.Models.FitnessFunctions;
+﻿using Jarrus.GA;
+using Jarrus.GA.ParentSelections;
+using Jarrus.GATests.Models;
+using Jarrus.GATests.Models.FitnessFunctions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace GeneticAlgorithmTests.ParentSelections
+namespace Jarrus.GATests.ParentSelections
 {
     [TestClass]
     public class RouletteWheelSelectionTests

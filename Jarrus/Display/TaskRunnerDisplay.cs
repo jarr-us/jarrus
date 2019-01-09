@@ -1,4 +1,4 @@
-﻿using GeneticAlgorithms;
+﻿using Jarrus.GA;
 using Jarrus.Data;
 using Jarrus.Metadata;
 using Jarrus.Models;

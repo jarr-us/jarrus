@@ -1,4 +1,4 @@
-﻿namespace GeneticAlgorithms.Crossovers.Unordered
+﻿namespace Jarrus.GA.Crossovers.Unordered
 {
     public class UniformCrossover : Crossover
     {

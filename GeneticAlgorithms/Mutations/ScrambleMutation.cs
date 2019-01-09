@@ -1,7 +1,7 @@
-﻿using GeneticAlgorithms.Utility;
+﻿using Jarrus.GA.Utility;
 using System;
 
-namespace GeneticAlgorithms.Mutations
+namespace Jarrus.GA.Mutations
 {
     public class ScrambleMutation : Mutation
     {

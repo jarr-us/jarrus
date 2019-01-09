@@ -1,7 +1,7 @@
-﻿using GeneticAlgorithms.BasicTypes.Genes;
+﻿using Jarrus.GA.BasicTypes.Genes;
 using System.Collections.Generic;
 
-namespace GeneticAlgorithms.Crossovers.Ordered
+namespace Jarrus.GA.Crossovers.Ordered
 {
     public class AlternatingPositionCrossover : Crossover
     {

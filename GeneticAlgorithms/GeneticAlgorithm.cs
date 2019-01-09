@@ -1,11 +1,10 @@
-﻿using GeneticAlgorithms.BasicTypes;
-using GeneticAlgorithms.BasicTypes.Genes;
-using GeneticAlgorithms.Utility;
+﻿using Jarrus.GA.BasicTypes.Genes;
+using Jarrus.GA.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace GeneticAlgorithms
+namespace Jarrus.GA
 {
     public class GeneticAlgorithm
     {        

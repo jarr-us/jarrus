@@ -1,8 +1,8 @@
-﻿using GeneticAlgorithms.BasicTypes.Genes;
+﻿using Jarrus.GA.BasicTypes.Genes;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace GeneticAlgorithms.Crossovers.Ordered
+namespace Jarrus.GA.Crossovers.Ordered
 {
     public class PartialMappedCrossover : Crossover
     {

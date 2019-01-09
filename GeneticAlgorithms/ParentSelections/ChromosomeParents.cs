@@ -1,6 +1,6 @@
-﻿using GeneticAlgorithms.BasicTypes;
+﻿using Jarrus.GA.BasicTypes;
 
-namespace GeneticAlgorithms.ParentSelections
+namespace Jarrus.GA.ParentSelections
 {
     public class ChromosomeParents
     {

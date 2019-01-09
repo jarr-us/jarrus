@@ -1,8 +1,8 @@
-﻿using GeneticAlgorithms;
-using GeneticAlgorithmTests.Models;
+﻿using Jarrus.GA;
+using Jarrus.GATests.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace GeneticAlgorithmTests.Utility
+namespace Jarrus.GATests.Utility
 {
     [TestClass]
     public class ReflectionTests

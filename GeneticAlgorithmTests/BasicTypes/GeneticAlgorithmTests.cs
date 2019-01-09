@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Linq;
-using GeneticAlgorithms;
-using GeneticAlgorithms.Enums;
-using GeneticAlgorithms.Utility;
-using GeneticAlgorithmTests.Models;
+using Jarrus.GA;
+using Jarrus.GA.Enums;
+using Jarrus.GA.Utility;
+using Jarrus.GATests.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace GeneticAlgorithmTests
+namespace Jarrus.GATests
 {
     [TestClass]
     public class GeneticAlgorithmTests

@@ -1,11 +1,11 @@
-﻿using GeneticAlgorithms;
-using GeneticAlgorithms.Crossovers;
-using GeneticAlgorithms.Crossovers.Unordered;
-using GeneticAlgorithmTests.Models;
+﻿using Jarrus.GA;
+using Jarrus.GA.Crossovers;
+using Jarrus.GA.Crossovers.Unordered;
+using Jarrus.GATests.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
-namespace GeneticAlgorithmTests.Crossovers
+namespace Jarrus.GATests.Crossovers
 {
     [TestClass]
     public class CrossoverTests

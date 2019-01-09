@@ -1,9 +1,9 @@
-﻿using GeneticAlgorithms;
-using GeneticAlgorithms.FitnessFunctions;
+﻿using Jarrus.GA;
+using Jarrus.GA.FitnessFunctions;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace GeneticAlgorithmTests.Models.FitnessFunctions
+namespace Jarrus.GATests.Models.FitnessFunctions
 {
     /// <summary>
     /// https://www.geeksforgeeks.org/travelling-salesman-problem-set-1/

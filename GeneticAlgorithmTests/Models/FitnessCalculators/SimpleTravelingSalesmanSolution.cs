@@ -1,10 +1,10 @@
-﻿using GeneticAlgorithms;
-using GeneticAlgorithms.BasicTypes.Genes;
-using GeneticAlgorithms.FitnessFunctions;
-using GeneticAlgorithms.Solution;
-using GeneticAlgorithmTests.Models.FitnessFunctions;
+﻿using Jarrus.GA;
+using Jarrus.GA.BasicTypes.Genes;
+using Jarrus.GA.FitnessFunctions;
+using Jarrus.GA.Solution;
+using Jarrus.GATests.Models.FitnessFunctions;
 
-namespace GeneticAlgorithmTests.Models.FitnessCalculators
+namespace Jarrus.GATests.Models.FitnessCalculators
 {
     public class SimpleTravelingSalesmanSolution : JarrusSolution
     {

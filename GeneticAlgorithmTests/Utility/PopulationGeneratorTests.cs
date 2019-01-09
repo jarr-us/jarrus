@@ -1,9 +1,9 @@
 ﻿using System;
-using GeneticAlgorithms.Utility;
-using GeneticAlgorithmTests.Models;
+using Jarrus.GA.Utility;
+using Jarrus.GATests.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace GeneticAlgorithmTests.Utility
+namespace Jarrus.GATests.Utility
 {
     [TestClass]
     public class PopulationGeneratorTests

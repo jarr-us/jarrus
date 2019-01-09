@@ -1,10 +1,10 @@
 ﻿using System;
-using GeneticAlgorithms;
-using GeneticAlgorithms.Utility;
-using GeneticAlgorithmTests.Models;
+using Jarrus.GA;
+using Jarrus.GA.Utility;
+using Jarrus.GATests.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace GeneticAlgorithmTests
+namespace Jarrus.GATests
 {
     [TestClass]
     public class ChromosomeReferenceTests

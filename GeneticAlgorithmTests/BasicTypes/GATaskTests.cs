@@ -1,9 +1,9 @@
 ﻿using System;
-using GeneticAlgorithms.BasicTypes;
-using GeneticAlgorithmTests.Models.FitnessCalculators;
+using Jarrus.GA.BasicTypes;
+using Jarrus.GATests.Models.FitnessCalculators;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace GeneticAlgorithmTests.BasicTypes
+namespace Jarrus.GATests.BasicTypes
 {
     [TestClass]
     public class GATaskTests

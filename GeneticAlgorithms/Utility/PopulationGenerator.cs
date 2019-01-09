@@ -1,7 +1,7 @@
-﻿using GeneticAlgorithms.BasicTypes.Genes;
+﻿using Jarrus.GA.BasicTypes.Genes;
 using System;
 
-namespace GeneticAlgorithms.Utility
+namespace Jarrus.GA.Utility
 {
     public class PopulationGenerator
     {

@@ -1,4 +1,4 @@
-﻿namespace GeneticAlgorithms.Enums
+﻿namespace Jarrus.GA.Enums
 {
     public enum FirstName
     {

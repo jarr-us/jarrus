@@ -1,8 +1,8 @@
 ﻿using System;
-using GeneticAlgorithms.BasicTypes;
-using GeneticAlgorithms.BasicTypes.Attributes;
+using Jarrus.GA.BasicTypes;
+using Jarrus.GA.BasicTypes.Attributes;
 
-namespace GeneticAlgorithmTests.Models
+namespace Jarrus.GATests.Models
 {
     public class IntegerGene : UnorderedGene
     {

@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using GeneticAlgorithms.BasicTypes;
-using GeneticAlgorithms.BasicTypes.Genes;
-using GeneticAlgorithms.Crossovers.Ordered;
-using GeneticAlgorithmTests.Models;
+using Jarrus.GA.BasicTypes;
+using Jarrus.GA.BasicTypes.Genes;
+using Jarrus.GA.Crossovers.Ordered;
+using Jarrus.GATests.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace GeneticAlgorithmTests.Crossovers.Ordered
+namespace Jarrus.GATests.Crossovers.Ordered
 {
     [TestClass]
     public class CycleCrossoverTests

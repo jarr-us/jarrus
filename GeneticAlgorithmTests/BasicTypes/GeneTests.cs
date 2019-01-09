@@ -1,10 +1,10 @@
-﻿using GeneticAlgorithms.BasicTypes;
-using GeneticAlgorithmTests.Models;
-using GeneticAlgorithmTests.Models.MutationGenes;
+﻿using Jarrus.GA.BasicTypes;
+using Jarrus.GATests.Models;
+using Jarrus.GATests.Models.MutationGenes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
-namespace GeneticAlgorithmTests.BasicTypes
+namespace Jarrus.GATests.BasicTypes
 {
     [TestClass]
     public class GeneTests

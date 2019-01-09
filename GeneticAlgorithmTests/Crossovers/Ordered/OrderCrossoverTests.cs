@@ -1,11 +1,11 @@
 ﻿using System;
-using GeneticAlgorithms;
-using GeneticAlgorithms.Crossovers.Ordered;
-using GeneticAlgorithms.Utility;
-using GeneticAlgorithmTests.Models;
+using Jarrus.GA;
+using Jarrus.GA.Crossovers.Ordered;
+using Jarrus.GA.Utility;
+using Jarrus.GATests.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace GeneticAlgorithmTests.Crossovers
+namespace Jarrus.GATests.Crossovers
 {
     [TestClass]
     public class OrderedCrossoverTests

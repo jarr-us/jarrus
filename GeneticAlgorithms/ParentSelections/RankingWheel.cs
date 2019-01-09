@@ -1,9 +1,9 @@
-﻿using GeneticAlgorithms.BasicTypes;
+﻿using Jarrus.GA.BasicTypes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace GeneticAlgorithms.ParentSelections
+namespace Jarrus.GA.ParentSelections
 {
     public abstract class RankingWheel : ParentSelection
     {

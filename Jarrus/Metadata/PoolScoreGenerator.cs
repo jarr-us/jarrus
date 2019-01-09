@@ -1,5 +1,5 @@
-﻿using GeneticAlgorithms;
-using GeneticAlgorithms.BasicTypes;
+﻿using Jarrus.GA;
+using Jarrus.GA.BasicTypes;
 using System;
 using System.Collections.Generic;
 using System.Linq;

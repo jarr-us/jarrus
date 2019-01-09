@@ -1,8 +1,8 @@
 ﻿using System;
-using GeneticAlgorithms.Utility;
+using Jarrus.GA.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace GeneticAlgorithmTests.Utility
+namespace Jarrus.GATests.Utility
 {
     [TestClass]
     public class ArrayExtensionTests

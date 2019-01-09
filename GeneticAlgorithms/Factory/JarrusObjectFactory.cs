@@ -1,14 +1,14 @@
-﻿using GeneticAlgorithms.Crossovers;
-using GeneticAlgorithms.Crossovers.Ordered;
-using GeneticAlgorithms.Crossovers.Unordered;
-using GeneticAlgorithms.Factory.Enums;
-using GeneticAlgorithms.Mutations;
-using GeneticAlgorithms.ParentSelections;
-using GeneticAlgorithms.Utility;
+﻿using Jarrus.GA.Crossovers;
+using Jarrus.GA.Crossovers.Ordered;
+using Jarrus.GA.Crossovers.Unordered;
+using Jarrus.GA.Factory.Enums;
+using Jarrus.GA.Mutations;
+using Jarrus.GA.ParentSelections;
+using Jarrus.GA.Utility;
 using System;
 using System.Collections.Generic;
 
-namespace GeneticAlgorithms.Factory
+namespace Jarrus.GA.Factory
 {
     public class JarrusObjectFactory
     {

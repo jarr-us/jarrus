@@ -1,6 +1,6 @@
-﻿using GeneticAlgorithms.BasicTypes.Genes;
-using GeneticAlgorithms.FitnessFunctions;
-namespace GeneticAlgorithms.Solution
+﻿using Jarrus.GA.BasicTypes.Genes;
+using Jarrus.GA.FitnessFunctions;
+namespace Jarrus.GA.Solution
 {
     public abstract class JarrusSolution
     {

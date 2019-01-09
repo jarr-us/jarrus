@@ -1,14 +1,14 @@
-﻿using GeneticAlgorithms.BasicTypes;
-using GeneticAlgorithms.Crossovers;
-using GeneticAlgorithms.Factory;
-using GeneticAlgorithms.FitnessFunctions;
-using GeneticAlgorithms.Mutations;
-using GeneticAlgorithms.ParentSelections;
-using GeneticAlgorithms.Utility;
+﻿using Jarrus.GA.BasicTypes;
+using Jarrus.GA.Crossovers;
+using Jarrus.GA.Factory;
+using Jarrus.GA.FitnessFunctions;
+using Jarrus.GA.Mutations;
+using Jarrus.GA.ParentSelections;
+using Jarrus.GA.Utility;
 using System;
 using System.Linq;
 
-namespace GeneticAlgorithms
+namespace Jarrus.GA
 {
     public class GAConfiguration : GAProperties
     {

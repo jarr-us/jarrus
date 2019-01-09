@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 
-namespace GeneticAlgorithms.Utility
+namespace Jarrus.GA.Utility
 {
     public static class Reflection
     {

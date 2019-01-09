@@ -1,16 +1,16 @@
 ﻿using System;
-using GeneticAlgorithms;
-using GeneticAlgorithms.BasicTypes;
-using GeneticAlgorithms.Crossovers;
-using GeneticAlgorithms.Crossovers.Unordered;
-using GeneticAlgorithms.Factory.Enums;
-using GeneticAlgorithms.Mutations;
-using GeneticAlgorithms.ParentSelections;
-using GeneticAlgorithmTests.Models;
-using GeneticAlgorithmTests.Models.FitnessFunctions;
+using Jarrus.GA;
+using Jarrus.GA.BasicTypes;
+using Jarrus.GA.Crossovers;
+using Jarrus.GA.Crossovers.Unordered;
+using Jarrus.GA.Factory.Enums;
+using Jarrus.GA.Mutations;
+using Jarrus.GA.ParentSelections;
+using Jarrus.GATests.Models;
+using Jarrus.GATests.Models.FitnessFunctions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace GeneticAlgorithmTests
+namespace Jarrus.GATests
 {
     [TestClass]
     public class GAConfigurationTests

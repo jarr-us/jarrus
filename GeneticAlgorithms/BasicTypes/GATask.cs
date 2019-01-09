@@ -1,7 +1,7 @@
-﻿using GeneticAlgorithms.Solution;
+﻿using Jarrus.GA.Solution;
 using System;
 
-namespace GeneticAlgorithms.BasicTypes
+namespace Jarrus.GA.BasicTypes
 {
     public class GATask : GAProperties
     {

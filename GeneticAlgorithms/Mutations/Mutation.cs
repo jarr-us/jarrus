@@ -1,6 +1,6 @@
-﻿using GeneticAlgorithms.Factory.Enums;
+﻿using Jarrus.GA.Factory.Enums;
 
-namespace GeneticAlgorithms.Mutations
+namespace Jarrus.GA.Mutations
 {
     public abstract class Mutation
     {

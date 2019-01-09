@@ -1,10 +1,10 @@
 ﻿using System;
-using GeneticAlgorithms.Factory.Enums;
-using GeneticAlgorithmTests.Models;
-using GeneticAlgorithmTests.Models.MutationGenes;
+using Jarrus.GA.Factory.Enums;
+using Jarrus.GATests.Models;
+using Jarrus.GATests.Models.MutationGenes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace GeneticAlgorithmTests.BasicTypes
+namespace Jarrus.GATests.BasicTypes
 {
     [TestClass]
     public class UnorderedGeneTests

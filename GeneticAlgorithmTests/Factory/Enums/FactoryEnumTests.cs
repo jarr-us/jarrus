@@ -1,8 +1,8 @@
 ﻿using System;
-using GeneticAlgorithms.Factory.Enums;
+using Jarrus.GA.Factory.Enums;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace GeneticAlgorithmTests.Factory.Enums
+namespace Jarrus.GATests.Factory.Enums
 {
     [TestClass]
     public class FactoryEnumTests

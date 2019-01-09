@@ -1,8 +1,6 @@
-﻿using GeneticAlgorithms.BasicTypes;
-using GeneticAlgorithms.Utility;
-using System;
+﻿using System;
 
-namespace GeneticAlgorithms
+namespace Jarrus.GA
 {
     public class GARun
     {

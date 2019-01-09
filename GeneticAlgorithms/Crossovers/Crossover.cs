@@ -1,7 +1,7 @@
-﻿using GeneticAlgorithms.Utility;
+﻿using Jarrus.GA.Utility;
 using System;
 
-namespace GeneticAlgorithms.Crossovers
+namespace Jarrus.GA.Crossovers
 {
     public abstract class Crossover
     {

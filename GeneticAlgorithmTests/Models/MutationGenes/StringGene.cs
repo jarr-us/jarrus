@@ -1,8 +1,8 @@
-﻿using GeneticAlgorithms.BasicTypes;
-using GeneticAlgorithms.BasicTypes.Attributes;
+﻿using Jarrus.GA.BasicTypes;
+using Jarrus.GA.BasicTypes.Attributes;
 using System;
 
-namespace GeneticAlgorithmTests.Models.MutationGenes
+namespace Jarrus.GATests.Models.MutationGenes
 {    
     public class StringGene : UnorderedGene
     {

@@ -1,9 +1,9 @@
 ﻿using System;
-using GeneticAlgorithms.Enums;
-using GeneticAlgorithms.Utility;
+using Jarrus.GA.Enums;
+using Jarrus.GA.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace GeneticAlgorithmTests.Utility
+namespace Jarrus.GATests.Utility
 {
     [TestClass]
     public class NameGeneratorTests

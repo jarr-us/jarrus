@@ -1,11 +1,11 @@
-﻿using GeneticAlgorithms.BasicTypes.Attributes;
-using GeneticAlgorithms.Factory.Enums;
+﻿using Jarrus.GA.BasicTypes.Attributes;
+using Jarrus.GA.Factory.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace GeneticAlgorithms.BasicTypes.Genes
+namespace Jarrus.GA.BasicTypes.Genes
 {
     public abstract class Gene
     {

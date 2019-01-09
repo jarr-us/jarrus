@@ -1,7 +1,7 @@
-﻿using GeneticAlgorithms.BasicTypes.Genes;
+﻿using Jarrus.GA.BasicTypes.Genes;
 using System;
 
-namespace GeneticAlgorithms.BasicTypes
+namespace Jarrus.GA.BasicTypes
 {
     public abstract class UnorderedGene : Gene
     {

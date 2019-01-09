@@ -1,8 +1,8 @@
-﻿using GeneticAlgorithms.BasicTypes;
-using GeneticAlgorithms.Utility;
+﻿using Jarrus.GA.BasicTypes;
+using Jarrus.GA.Utility;
 using System.Collections.Generic;
 
-namespace GeneticAlgorithms.Crossovers.Ordered
+namespace Jarrus.GA.Crossovers.Ordered
 {
     public class CycleCrossover : Crossover
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace GeneticAlgorithms.BasicTypes.Attributes
+namespace Jarrus.GA.BasicTypes.Attributes
 {
     public class GeneMutationAttribute : Attribute
     {

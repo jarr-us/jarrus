@@ -1,7 +1,7 @@
-﻿using GeneticAlgorithms.BasicTypes;
+﻿using Jarrus.GA.BasicTypes;
 using System;
 
-namespace GeneticAlgorithms.ParentSelections
+namespace Jarrus.GA.ParentSelections
 {
     public class StochasticUniversalSamplingSelection : RankingWheel
     {

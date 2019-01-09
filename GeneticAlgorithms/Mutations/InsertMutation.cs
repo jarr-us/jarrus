@@ -1,6 +1,6 @@
-﻿using GeneticAlgorithms.BasicTypes.Genes;
+﻿using Jarrus.GA.BasicTypes.Genes;
 
-namespace GeneticAlgorithms.Mutations
+namespace Jarrus.GA.Mutations
 {
     public class InsertMutation : Mutation
     {

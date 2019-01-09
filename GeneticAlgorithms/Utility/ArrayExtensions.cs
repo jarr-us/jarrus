@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace GeneticAlgorithms.Utility
+namespace Jarrus.GA.Utility
 {
     public static class ArrayExtensions
     {

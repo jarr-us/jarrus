@@ -1,14 +1,14 @@
-﻿using GeneticAlgorithms.BasicTypes;
-using GeneticAlgorithms.BasicTypes.Genes;
-using GeneticAlgorithms.ParentSelections;
-using GeneticAlgorithms.Utility;
+﻿using Jarrus.GA.BasicTypes;
+using Jarrus.GA.BasicTypes.Genes;
+using Jarrus.GA.ParentSelections;
+using Jarrus.GA.Utility;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace GeneticAlgorithms
+namespace Jarrus.GA
 {
     public class Population
     {

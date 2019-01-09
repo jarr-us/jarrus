@@ -1,6 +1,6 @@
-﻿using GeneticAlgorithms;
-using GeneticAlgorithms.BasicTypes;
-using GeneticAlgorithms.Enums;
+﻿using Jarrus.GA;
+using Jarrus.GA.BasicTypes;
+using Jarrus.GA.Enums;
 using System.Collections.Generic;
 using System.Linq;
 

@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using GeneticAlgorithms;
-using GeneticAlgorithms.BasicTypes;
-using GeneticAlgorithms.Factory.Enums;
+using Jarrus.GA;
+using Jarrus.GA.BasicTypes;
+using Jarrus.GA.Factory.Enums;
 using Jarrus.Data;
 using Kanan.MLBDriveTime.Jarrus;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -148,7 +148,7 @@ namespace JarrusTests.Data
 
         //            Session = "0014"
         //        };
-                
+
         //        tasks.Add(task);
         //        mutationRate += 0.00001;
         //    }

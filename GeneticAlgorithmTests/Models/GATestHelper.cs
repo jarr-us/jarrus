@@ -1,18 +1,18 @@
-﻿using GeneticAlgorithms;
-using GeneticAlgorithms.BasicTypes;
-using GeneticAlgorithms.Crossovers;
-using GeneticAlgorithms.Crossovers.Ordered;
-using GeneticAlgorithms.Crossovers.Unordered;
-using GeneticAlgorithms.Factory.Enums;
-using GeneticAlgorithms.Mutations;
-using GeneticAlgorithms.ParentSelections;
-using GeneticAlgorithms.Solution;
-using GeneticAlgorithms.Utility;
-using GeneticAlgorithmTests.Models.FitnessCalculators;
-using GeneticAlgorithmTests.Models.FitnessFunctions;
+﻿using Jarrus.GA;
+using Jarrus.GA.BasicTypes;
+using Jarrus.GA.Crossovers;
+using Jarrus.GA.Crossovers.Ordered;
+using Jarrus.GA.Crossovers.Unordered;
+using Jarrus.GA.Factory.Enums;
+using Jarrus.GA.Mutations;
+using Jarrus.GA.ParentSelections;
+using Jarrus.GA.Solution;
+using Jarrus.GA.Utility;
+using Jarrus.GATests.Models.FitnessCalculators;
+using Jarrus.GATests.Models.FitnessFunctions;
 using System;
 
-namespace GeneticAlgorithmTests.Models
+namespace Jarrus.GATests.Models
 {
     public class GATestHelper
     {

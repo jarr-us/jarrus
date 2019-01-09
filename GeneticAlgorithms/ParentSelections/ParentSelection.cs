@@ -1,8 +1,8 @@
-﻿using GeneticAlgorithms.BasicTypes;
+﻿using Jarrus.GA.BasicTypes;
 using System;
 using System.Linq;
 
-namespace GeneticAlgorithms.ParentSelections
+namespace Jarrus.GA.ParentSelections
 {
     public abstract class ParentSelection
     {

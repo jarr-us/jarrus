@@ -1,7 +1,7 @@
-﻿using GeneticAlgorithms.Factory.Enums;
-using GeneticAlgorithms.Solution;
+﻿using Jarrus.GA.Factory.Enums;
+using Jarrus.GA.Solution;
 
-namespace GeneticAlgorithms.BasicTypes
+namespace Jarrus.GA.BasicTypes
 {
     public abstract class GAProperties
     {

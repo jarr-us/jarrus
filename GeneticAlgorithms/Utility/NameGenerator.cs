@@ -1,8 +1,8 @@
-﻿using GeneticAlgorithms.Enums;
+﻿using Jarrus.GA.Enums;
 using System;
 using System.Linq;
 
-namespace GeneticAlgorithms.Utility
+namespace Jarrus.GA.Utility
 {
     public class NameGenerator
     {

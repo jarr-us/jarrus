@@ -1,9 +1,9 @@
 ﻿using System;
-using GeneticAlgorithms.Mutations;
-using GeneticAlgorithmTests.Models;
+using Jarrus.GA.Mutations;
+using Jarrus.GATests.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace GeneticAlgorithmTests.Mutations
+namespace Jarrus.GATests.Mutations
 {
     [TestClass]
     public class InsertMutationTests

@@ -1,6 +1,6 @@
-﻿using GeneticAlgorithms.BasicTypes.Genes;
+﻿using Jarrus.GA.BasicTypes.Genes;
 
-namespace GeneticAlgorithmTests.Models
+namespace Jarrus.GATests.Models
 {
     public class TravelingSalesmanGene : OrderedGene
     {

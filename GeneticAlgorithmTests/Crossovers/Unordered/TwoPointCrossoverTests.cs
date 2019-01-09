@@ -1,9 +1,9 @@
-﻿using GeneticAlgorithms.Crossovers.Unordered;
-using GeneticAlgorithms.Utility;
-using GeneticAlgorithmTests.Models;
+﻿using Jarrus.GA.Crossovers.Unordered;
+using Jarrus.GA.Utility;
+using Jarrus.GATests.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace GeneticAlgorithmTests.Crossovers
+namespace Jarrus.GATests.Crossovers
 {
     [TestClass]
     public class TwoPointCrossoverTests

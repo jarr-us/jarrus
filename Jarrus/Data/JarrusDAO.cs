@@ -1,10 +1,10 @@
 ﻿using GeneralHux.CRUD;
 using GeneralHux.ErrorHandling;
-using GeneticAlgorithms;
-using GeneticAlgorithms.BasicTypes;
-using GeneticAlgorithms.Factory.Enums;
-using GeneticAlgorithms.Solution;
-using GeneticAlgorithms.Utility;
+using Jarrus.GA;
+using Jarrus.GA.BasicTypes;
+using Jarrus.GA.Factory.Enums;
+using Jarrus.GA.Solution;
+using Jarrus.GA.Utility;
 using System;
 
 namespace Jarrus.Data

@@ -1,4 +1,4 @@
-﻿namespace GeneticAlgorithms.Mutations
+﻿namespace Jarrus.GA.Mutations
 {
     public class InternalMutation : Mutation
     {

@@ -1,4 +1,4 @@
-﻿namespace GeneticAlgorithms.ParentSelections
+﻿namespace Jarrus.GA.ParentSelections
 {
     public class RouletteWheelSelection : RankingWheel
     {

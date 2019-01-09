@@ -1,9 +1,9 @@
-﻿using GeneticAlgorithms.BasicTypes.Genes;
-using GeneticAlgorithms.Enums;
+﻿using Jarrus.GA.BasicTypes.Genes;
+using Jarrus.GA.Enums;
 using System.Collections.Generic;
 using System.Diagnostics;
 
-namespace GeneticAlgorithms
+namespace Jarrus.GA
 {
     [DebuggerDisplay("{FirstName} {LastName} {FitnessScore}")]
     public class Chromosome
