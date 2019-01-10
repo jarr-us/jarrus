@@ -2,7 +2,7 @@
 
 namespace Jarrus.GA.BasicTypes.Attributes
 {
-    public class GeneMutationAttribute : Attribute
+    public class GeneRangeAttribute : Attribute
     {
         public bool[] BoolValues { get; set; }
         public int[] IntValues { get; set; }
@@ -10,3 +10,4 @@ namespace Jarrus.GA.BasicTypes.Attributes
         public string[] StringValues { get; set; }
     }
 }
+

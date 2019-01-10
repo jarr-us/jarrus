@@ -1,7 +1,6 @@
 ﻿using System;
 using Jarrus.GA.Factory.Enums;
-using Jarrus.GATests.Models;
-using Jarrus.GATests.Models.MutationGenes;
+using Jarrus.GATests.Models.TestGenes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Jarrus.GATests.BasicTypes

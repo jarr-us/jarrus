@@ -2,11 +2,11 @@
 using Jarrus.GA.BasicTypes.Attributes;
 using System;
 
-namespace Jarrus.GATests.Models.MutationGenes
+namespace Jarrus.GATests.Models.TestGenes
 {
     public class CharacterGene : UnorderedGene
     {
-        [GeneMutation(CharValues = new char[9] { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I' })]
+        [GeneOption(CharValues = new char[9] { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I' })]
         public char Value;
 
         public CharacterGene(Random random) : base(random) { }

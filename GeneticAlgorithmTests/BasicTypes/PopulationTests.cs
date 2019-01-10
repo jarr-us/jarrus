@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Jarrus.GA;
+using Jarrus.GA.Factory.Enums;
 using Jarrus.GA.Utility;
 using Jarrus.GATests.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -18,15 +19,27 @@ namespace Jarrus.GATests
         public void Setup()
         {
             _possibleValues = GATestHelper.GetTravelingSalesmanChromosome().Genes.Cast<TravelingSalesmanGene>().ToArray();
-            _pool = GATestHelper.GetTravelingSalesmanGenome();
+            _pool = GATestHelper.GetTravelingSalesmanPopulation();
         }
 
         [TestMethod]
         public void ItHasAValidConstructor()
         {
-            var genome = new Population(GATestHelper.GetTravelingSalesmanDefaultConfiguration(), _pool, _possibleValues);
-            Assert.IsNotNull(genome.Configuration);
-            Assert.IsNotNull(genome.Chromosomes);
+            var population = new Population(GATestHelper.GetTravelingSalesmanDefaultConfiguration(), _pool, _possibleValues);
+            Assert.IsNotNull(population.Configuration);
+            Assert.IsNotNull(population.Chromosomes);
+        }
+
+        [TestMethod]
+        public void ItCanUseUnorderedGenes()
+        {
+            var configuration = GATestHelper.GetTravelingSalesmanDefaultConfiguration();
+            configuration.GeneSize = 11;
+            var pool = PopulationGenerator.GenerateUnorderedPopulation(configuration, typeof(PhraseGene));
+
+            var population = new Population(GATestHelper.GetTravelingSalesmanDefaultConfiguration(), _pool, typeof(PhraseGene));
+            Assert.IsNotNull(population.Configuration);
+            Assert.IsNotNull(population.Chromosomes);
         }
 
         [TestMethod]
@@ -54,16 +67,16 @@ namespace Jarrus.GATests
         [ExpectedException(typeof(ArgumentException))]
         public void ItThrowsAnExceptionIfThePossibleValuesAreNotSet()
         {
-            new Population(GATestHelper.GetTravelingSalesmanDefaultConfiguration(), _pool, null);
+            new Population(GATestHelper.GetTravelingSalesmanDefaultConfiguration(), _pool);
         }
 
         [TestMethod]
         public void ItCanAdvanceToTheNextGeneration()
         {
-            var genome = new Population(GATestHelper.GetTravelingSalesmanDefaultConfiguration(), _pool, _possibleValues);
-            var nextGen = genome.Advance();
+            var population = new Population(GATestHelper.GetTravelingSalesmanDefaultConfiguration(), _pool, _possibleValues);
+            var nextGen = population.Advance();
 
-            Assert.AreEqual(1, genome.GenerationNumber);
+            Assert.AreEqual(1, population.GenerationNumber);
             Assert.AreEqual(2, nextGen.GenerationNumber);
         }
 
@@ -74,10 +87,10 @@ namespace Jarrus.GATests
             config.CrossoverRate = 0.0;
             config.ElitismRate = 0.0;
 
-            var genome = new Population(config, _pool, _possibleValues);
-            var nextGen = genome.Advance();
+            var population = new Population(config, _pool, _possibleValues);
+            var nextGen = population.Advance();
 
-            Assert.AreEqual(1, genome.GenerationNumber);
+            Assert.AreEqual(1, population.GenerationNumber);
             Assert.AreEqual(2, nextGen.GenerationNumber);
 
             foreach(var chromosome in nextGen.Chromosomes)
@@ -93,8 +106,8 @@ namespace Jarrus.GATests
             var config = GATestHelper.GetTravelingSalesmanDefaultConfiguration();
             config.ElitismRate = 0.01 * toKeep;
 
-            var genome = new Population(config, _pool, _possibleValues);
-            var nextGen = genome.Advance();
+            var population = new Population(config, _pool, _possibleValues);
+            var nextGen = population.Advance();
 
             Assert.IsTrue(nextGen.Chromosomes.Where(o => o.GenerationNumber == 1).Count() > 0);
         }
@@ -103,9 +116,9 @@ namespace Jarrus.GATests
         public void ItDeterminesFitnessScoreOnCreation()
         {
             var config = GATestHelper.GetTravelingSalesmanDefaultConfiguration();
-            var genome = new Population(config, _pool, _possibleValues);
+            var population = new Population(config, _pool, _possibleValues);
             
-            foreach(var chromosome in genome.Chromosomes)
+            foreach(var chromosome in population.Chromosomes)
             {
                 Assert.AreNotEqual(0, chromosome.FitnessScore);
             }
@@ -115,13 +128,13 @@ namespace Jarrus.GATests
         public void ItCanRetireChromosomes()
         {
             var config = GATestHelper.GetTravelingSalesmanDefaultConfiguration();
-            config.MaximumLifeSpan = 1;
+            config.MaxRetirement = 1;
             config.MaxGenerations = 1;
-            config.MaxPopulationSize = 10;
+            config.PopulationSize = 10;
 
-            var genome = new Population(config, _pool, _possibleValues);
+            var population = new Population(config, _pool, _possibleValues);
 
-            var nextGen = genome.Advance();
+            var nextGen = population.Advance();
             Assert.IsTrue(nextGen.Retired.Count() > 0);
         }
 
@@ -129,14 +142,14 @@ namespace Jarrus.GATests
         public void ItDoesNotAllowDuplicates()
         {
             var config = GATestHelper.GetTravelingSalesmanDefaultConfiguration();
-            config.MaxPopulationSize = 10;
+            config.PopulationSize = 10;
 
             _pool = GATestHelper.GetTravelingSalesmanGenome(config);
 
-            config.PreventDuplications = true;
-            var genome = new Population(config, _pool, _possibleValues);
+            config.DuplicationType = DuplicationType.Prevent;
+            var population = new Population(config, _pool, _possibleValues);
 
-            var nextGen = genome.Advance();
+            var nextGen = population.Advance();
             var hashset = new HashSet<string>();
 
             foreach (var chromosome in nextGen.Chromosomes)
@@ -144,16 +157,16 @@ namespace Jarrus.GATests
                 hashset.Add(chromosome.ToString());
             }
 
-            Assert.AreEqual(config.MaxPopulationSize, hashset.Count());
+            Assert.AreEqual(config.PopulationSize, hashset.Count());
         }
 
         [TestMethod]
         public void ItAllowsDuplicates()
         {
             var config = GATestHelper.GetTravelingSalesmanDefaultConfiguration();
-            var genome = new Population(config, _pool, _possibleValues);
+            var population = new Population(config, _pool, _possibleValues);
 
-            var nextGen = genome.Advance();
+            var nextGen = population.Advance();
             var hashset = new HashSet<string>();
 
             foreach (var chromosome in nextGen.Chromosomes)
@@ -161,7 +174,7 @@ namespace Jarrus.GATests
                 hashset.Add(chromosome.ToString());
             }
 
-            Assert.AreNotEqual(config.MaxPopulationSize, hashset.Count());
+            Assert.AreNotEqual(config.PopulationSize, hashset.Count());
         }
     }
 }

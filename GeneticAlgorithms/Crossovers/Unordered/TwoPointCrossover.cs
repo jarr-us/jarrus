@@ -1,4 +1,6 @@
-﻿namespace Jarrus.GA.Crossovers.Unordered
+﻿using Jarrus.GA.BasicTypes.Chromosomes;
+
+namespace Jarrus.GA.Crossovers.Unordered
 {
     public class TwoPointCrossover : Crossover
     {
@@ -6,8 +8,8 @@
         {
             var geneCount = father.Genes.Length;
 
-            var childOne = new Chromosome(geneCount);
-            var childTwo = new Chromosome(geneCount);
+            var childOne = new UnorderedChromosome(geneCount);
+            var childTwo = new UnorderedChromosome(geneCount);
 
             var firstCrossoverPoint = configuration.GetRandomInteger(1, father.Genes.Length - 1);
             var secondCrossoverPoint = configuration.GetRandomInteger(1, father.Genes.Length - 1, firstCrossoverPoint);

@@ -1,8 +1,5 @@
-﻿using Jarrus.GA.BasicTypes;
-using Jarrus.GATests.Models;
-using Jarrus.GATests.Models.MutationGenes;
+﻿using Jarrus.GATests.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 
 namespace Jarrus.GATests.BasicTypes
 {

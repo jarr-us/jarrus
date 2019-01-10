@@ -14,7 +14,7 @@ namespace Jarrus.GATests.ParentSelections
         [TestInitialize]
         public void Setup()
         {
-            _pool = GATestHelper.GetTravelingSalesmanGenome();
+            _pool = GATestHelper.GetTravelingSalesmanPopulation();
             var calc = new TravelingSalesmanFitnessFunction();
             foreach (var chromosome in _pool)
             {

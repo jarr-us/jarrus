@@ -2,6 +2,7 @@
 using System.Linq;
 using Jarrus.GA;
 using Jarrus.GA.Enums;
+using Jarrus.GA.Factory.Enums;
 using Jarrus.GA.Utility;
 using Jarrus.GATests.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -9,7 +10,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Jarrus.GATests
 {
     [TestClass]
-    public class GeneticAlgorithmTests
+    public class GAlgorithmTests
     {
         private TravelingSalesmanGene[] _exampleGenes;
         private GAConfiguration _configuration;
@@ -23,9 +24,9 @@ namespace Jarrus.GATests
         private void SetConfiguration()
         {
             _configuration = GATestHelper.GetTravelingSalesmanDefaultConfiguration();
-            _configuration.PreventDuplications = true;
-            _configuration.MaxPopulationSize = 10;
-            _configuration.MaximumLifeSpan = 2;
+            _configuration.DuplicationType = DuplicationType.Prevent;
+            _configuration.PopulationSize = 10;
+            _configuration.MaxRetirement = 2;
             _configuration.MaxGenerations = 5;
 
             _exampleGenes = Array.ConvertAll(GATestHelper.GetTravelingSalesmanChromosome().Genes, option => (TravelingSalesmanGene)option);
@@ -34,13 +35,13 @@ namespace Jarrus.GATests
         [TestMethod]
         public void ItHasAValidConstructor()
         {
-            var ga = new GeneticAlgorithm(_configuration, _exampleGenes);
+            var ga = new OrderedGeneticAlgorithm(_configuration, _exampleGenes);
         }
 
         [TestMethod]
         public void ItWillRunMultipleGenerations()
         {
-            var ga = new GeneticAlgorithm(_configuration, _exampleGenes);
+            var ga = new OrderedGeneticAlgorithm(_configuration, _exampleGenes);
             var runDetails = ga.Run();
             Assert.AreEqual(_configuration.MaxGenerations + 1, ga.Generation);
         }
@@ -48,7 +49,7 @@ namespace Jarrus.GATests
         [TestMethod]
         public void ItIsRepeatable()
         {
-            var ga = new GeneticAlgorithm(_configuration, _exampleGenes);
+            var ga = new OrderedGeneticAlgorithm(_configuration, _exampleGenes);
             var runDetails = ga.Run();
             Assert.AreEqual(_configuration.MaxGenerations + 1, ga.Generation);
 
@@ -59,7 +60,7 @@ namespace Jarrus.GATests
         [TestMethod]
         public void ItKeepsTrackOfTheBestScore()
         {
-            var ga = new GeneticAlgorithm(_configuration, _exampleGenes);
+            var ga = new OrderedGeneticAlgorithm(_configuration, _exampleGenes);
             var runDetails = ga.Run();
             Assert.AreEqual(_configuration.MaxGenerations + 1, ga.Generation);
 
@@ -76,7 +77,7 @@ namespace Jarrus.GATests
         [TestMethod]
         public void ItReturnsAnObjectWithDetailsOfTheRun()
         {
-            var ga = new GeneticAlgorithm(_configuration, _exampleGenes);
+            var ga = new OrderedGeneticAlgorithm(_configuration, _exampleGenes);
             var run = ga.Run();
 
             Assert.AreEqual(_configuration.MaxGenerations + 1, ga.Generation);
@@ -86,7 +87,7 @@ namespace Jarrus.GATests
         [TestMethod]
         public void ItSetsTheStartAndEndTimeOfARun()
         {
-            var ga = new GeneticAlgorithm(_configuration, _exampleGenes);
+            var ga = new OrderedGeneticAlgorithm(_configuration, _exampleGenes);
             var run = ga.Run();
 
             Assert.AreEqual(_configuration.MaxGenerations + 1, ga.Generation);
@@ -97,21 +98,21 @@ namespace Jarrus.GATests
         [ExpectedException(typeof(ArgumentException))]
         public void ItThrowsAnExceptionIfTheConfigurationIsNotSet()
         {
-            var ga = new GeneticAlgorithm(null, _exampleGenes);
+            var ga = new OrderedGeneticAlgorithm(null, _exampleGenes);
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void ItThrowsAnExceptionIfTheGenesAreNotSet()
         {
-            var ga = new GeneticAlgorithm(_configuration, null);
+            var ga = new OrderedGeneticAlgorithm(_configuration);
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void ItThrowsAnExceptionIfTheGeneLengthIsInvalid()
         {
-            var ga = new GeneticAlgorithm(_configuration, _exampleGenes.Subset(0, 1));
+            var ga = new OrderedGeneticAlgorithm(_configuration, _exampleGenes.Subset(0, 1));
         }
     }
 }

@@ -2,11 +2,11 @@
 using Jarrus.GA.BasicTypes.Attributes;
 using System;
 
-namespace Jarrus.GATests.Models.MutationGenes
+namespace Jarrus.GATests.Models.TestGenes
 {
     public class BooleanGene : UnorderedGene
     {
-        [GeneMutation(BoolValues = new bool[2] { true, false })]
+        [GeneOption(BoolValues = new bool[2] { true, false })]
         public bool Value;
 
         public BooleanGene(Random random) : base(random) { }

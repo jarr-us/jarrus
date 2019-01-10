@@ -1,46 +1,40 @@
 ﻿using Jarrus.GA.BasicTypes.Genes;
-using Jarrus.GA.Utility;
+using Jarrus.GA.Factory.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Jarrus.GA
 {
-    public class GeneticAlgorithm
-    {        
-        public GAConfiguration Configuration { get; private set; }
-        public int Generation { get; private set; }
-        private Gene[] _possibleValues;
+    public abstract class GeneticAlgorithm
+    {
+        public GAConfiguration Configuration;
+        public int Generation;
+        public Gene[] PossibleValues;
         public GARun GARun;
 
+        public Type GeneType;
         public List<Chromosome> Retired = new List<Chromosome>();
-        public Chromosome BestChromosomeEver { get; private set; }
+        public Chromosome BestChromosomeEver;
 
-        public GeneticAlgorithm(GAConfiguration configuration, params Gene[] possibleValues)
-        {            
-            Configuration = configuration;
-            _possibleValues = possibleValues;
-            ValidateSettings();
+        protected void StandardConstructorLogic()
+        {
+            ValidateConfiguration();
+            ValidateGeneSize();
+            Configuration.Validate();
 
             GARun = new GARun();
             GenerateInitialPopulation();
         }
 
-        private void ValidateSettings()
+        private void ValidateGeneSize()
         {
-            if (Configuration == null || _possibleValues == null || _possibleValues.Length <= 1)
-            {
-                throw new ArgumentException("Invalid parameters passed to the GeneticAlgorithm");
-            }
+            if (Configuration.GeneSize <= 1) { throw new ArgumentException("Gene size must be set or larger that 2"); }
         }
-
-        private void GenerateInitialPopulation()
-        {
-            var randomPool = PopulationGenerator.Generate(_possibleValues, Configuration);
-            GARun.Population = new Population(Configuration, randomPool, _possibleValues);
-            GARun.BestChromosome = GARun.Population.Chromosomes[0];
-        }
-
+        
+        protected abstract void ValidateConfiguration();
+        protected abstract void GenerateInitialPopulation();
+        
         public GARun Run()
         {
             GARun.Start = DateTime.UtcNow;
@@ -65,12 +59,12 @@ namespace Jarrus.GA
             var highestScoringChromosome = GARun.Population.Chromosomes.Where(o => o.FitnessScore == GARun.Population.Chromosomes.Max(k => k.FitnessScore)).First();
             var lowestScoringChromosome = GARun.Population.Chromosomes.Where(o => o.FitnessScore == GARun.Population.Chromosomes.Min(k => k.FitnessScore)).First();
 
-            if (!Configuration.LowestScoreIsBest && highestScoringChromosome.FitnessScore > GARun.BestChromosome.FitnessScore)
+            if (Configuration.ScoringType == ScoringType.Highest && highestScoringChromosome.FitnessScore > GARun.BestChromosome.FitnessScore)
             {
                 GARun.BestChromosome = highestScoringChromosome;
             }
 
-            if (Configuration.LowestScoreIsBest && lowestScoringChromosome.FitnessScore < GARun.BestChromosome.FitnessScore)
+            if (Configuration.ScoringType == ScoringType.Lowest && lowestScoringChromosome.FitnessScore < GARun.BestChromosome.FitnessScore)
             {
                 GARun.BestChromosome = lowestScoringChromosome;
             }

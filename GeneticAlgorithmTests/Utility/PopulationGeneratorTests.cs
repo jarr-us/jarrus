@@ -13,8 +13,46 @@ namespace Jarrus.GATests.Utility
         {
             var configuration = GATestHelper.GetTravelingSalesmanDefaultConfiguration();
             var chromosome = GATestHelper.GetTravelingSalesmanChromosome();
-            var pool = PopulationGenerator.Generate(chromosome.Genes, configuration);
-            Assert.AreEqual(configuration.MaxPopulationSize, pool.Length);
+            var pool = PopulationGenerator.GenerateOrderedPopulation(configuration, chromosome.Genes);
+            Assert.AreEqual(configuration.PopulationSize, pool.Length);
+        }
+
+        [TestMethod]
+        public void ItCanGenerateAnUnorderedPopulation()
+        {
+            var configuration = GATestHelper.GetTravelingSalesmanDefaultConfiguration();
+            configuration.GeneSize = 11;
+            var pool = PopulationGenerator.GenerateUnorderedPopulation(configuration, typeof(PhraseGene));
+            Assert.AreEqual(configuration.PopulationSize, pool.Length);
+        }
+
+        [TestMethod]
+        public void ItCanGenerateAnUnorderedPopulationAndRandomizesTheirValues()
+        {
+            var configuration = GATestHelper.GetTravelingSalesmanDefaultConfiguration();
+            configuration.GeneSize = 24;
+
+            var pool = PopulationGenerator.GenerateUnorderedPopulation(configuration, typeof(PhraseGene));
+            Assert.AreEqual(configuration.PopulationSize, pool.Length);
+
+            foreach(var chromosome in pool)
+            {
+                Assert.IsNotNull(chromosome);
+
+                foreach(var gene in chromosome.Genes)
+                {
+                    var phraseGene = (PhraseGene)gene;
+                    Assert.IsNotNull(phraseGene);
+                }
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void ItThrowsAnExceptionIfAnOrderedGeneIsUsedToPopulateAnUnorderedPopulation()
+        {
+            var configuration = GATestHelper.GetTravelingSalesmanDefaultConfiguration();
+            var pool = PopulationGenerator.GenerateUnorderedPopulation(configuration, typeof(TravelingSalesmanGene));
         }
 
         [TestMethod]
@@ -22,7 +60,7 @@ namespace Jarrus.GATests.Utility
         public void ItThrowsAnExceptionWhenNullValuesArePassed()
         {
             var configuration = GATestHelper.GetTravelingSalesmanDefaultConfiguration();
-            var pool = PopulationGenerator.Generate(null, configuration);
+            var pool = PopulationGenerator.GenerateOrderedPopulation(configuration, null);
         }
 
         [TestMethod]
@@ -30,7 +68,7 @@ namespace Jarrus.GATests.Utility
         public void ItThrowsAnExceptionWhenNoValuesArePassed()
         {
             var configuration = GATestHelper.GetTravelingSalesmanDefaultConfiguration();
-            var pool = PopulationGenerator.Generate(new TravelingSalesmanGene[1], configuration);
+            var pool = PopulationGenerator.GenerateOrderedPopulation(configuration, new TravelingSalesmanGene[1]);
         }
 
         [TestMethod]
@@ -39,7 +77,7 @@ namespace Jarrus.GATests.Utility
         {
             var configuration = GATestHelper.GetTravelingSalesmanDefaultConfiguration();
             var chromosome = GATestHelper.GetTravelingSalesmanChromosome();
-            var pool = PopulationGenerator.Generate(chromosome.Genes, null);
+            var pool = PopulationGenerator.GenerateOrderedPopulation(null, chromosome.Genes);
         }
     }
 }

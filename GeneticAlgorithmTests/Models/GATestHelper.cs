@@ -1,15 +1,10 @@
 ﻿using Jarrus.GA;
 using Jarrus.GA.BasicTypes;
-using Jarrus.GA.Crossovers;
-using Jarrus.GA.Crossovers.Ordered;
-using Jarrus.GA.Crossovers.Unordered;
+using Jarrus.GA.BasicTypes.Chromosomes;
 using Jarrus.GA.Factory.Enums;
-using Jarrus.GA.Mutations;
-using Jarrus.GA.ParentSelections;
 using Jarrus.GA.Solution;
 using Jarrus.GA.Utility;
 using Jarrus.GATests.Models.FitnessCalculators;
-using Jarrus.GATests.Models.FitnessFunctions;
 using System;
 
 namespace Jarrus.GATests.Models
@@ -31,7 +26,7 @@ namespace Jarrus.GATests.Models
 
         public static Chromosome GetNumericChromosomeOne()
         {
-            return new Chromosome(
+            return new OrderedChromosome(
                 new TravelingSalesmanGene('1'),
                 new TravelingSalesmanGene('2'),
                 new TravelingSalesmanGene('3'),
@@ -44,7 +39,7 @@ namespace Jarrus.GATests.Models
 
         public static Chromosome GetNumericChromosomeTwo()
         {
-            return new Chromosome(
+            return new OrderedChromosome(
                 new TravelingSalesmanGene('5'),
                 new TravelingSalesmanGene('4'),
                 new TravelingSalesmanGene('6'),
@@ -57,7 +52,7 @@ namespace Jarrus.GATests.Models
 
         public static Chromosome GetNumericChromosomeThree()
         {
-            return new Chromosome(
+            return new OrderedChromosome(
                 new TravelingSalesmanGene('5'),
                 new TravelingSalesmanGene('4'),
                 new TravelingSalesmanGene('6'),
@@ -71,10 +66,10 @@ namespace Jarrus.GATests.Models
         public static Chromosome GetTravelingSalesmanChromosome()
         {
             var _solution = new SimpleTravelingSalesmanSolution();
-            return new Chromosome(_solution.GetOptions());
+            return new OrderedChromosome(_solution.GetOptions());
     }
 
-        public static Chromosome[] GetTravelingSalesmanGenome()
+        public static Chromosome[] GetTravelingSalesmanPopulation()
         {
             return GetTravelingSalesmanGenome(GetTravelingSalesmanDefaultConfiguration());
         }
@@ -82,12 +77,12 @@ namespace Jarrus.GATests.Models
         public static Chromosome[] GetTravelingSalesmanGenome(GAConfiguration config)
         {
             var chromosome = GetTravelingSalesmanChromosome();
-            return PopulationGenerator.Generate(chromosome.Genes, config);
+            return PopulationGenerator.GenerateOrderedPopulation(config, chromosome.Genes);
         }
 
         public static Chromosome GetAlphabetCharacterChromosome()
         {
-            return new Chromosome(
+            return new OrderedChromosome(
                 new TravelingSalesmanGene('A'),
                 new TravelingSalesmanGene('B'),
                 new TravelingSalesmanGene('C'),
@@ -101,7 +96,7 @@ namespace Jarrus.GATests.Models
             );
         }
 
-        public static GAConfiguration GetDefaultConfiguration(JarrusSolution solution) 
+        public static GAConfiguration GetDefaultConfiguration(JarrusOrderedSolution solution) 
         {
             return new GAConfiguration( GetDummyTask(solution));
         }
@@ -116,24 +111,59 @@ namespace Jarrus.GATests.Models
             return GetDummyTask(new SimpleTravelingSalesmanSolution());
         }
 
-        public static GATask GetDummyTask(JarrusSolution solution) 
+        public static GATask GetDummyTask(JarrusOrderedSolution solution) 
         {
             var task = new GATask(solution)
             {
                 ParentSelectionType = ParentSelectionType.RouletteWheel,
                 MutationType = MutationType.Swap,
                 CrossoverType = CrossoverType.Order,
-                MaximumLifeSpan = 10,
-                MaxPopulationSize = 100,
+                RetirementType = RetirementType.MaxAge,
+                ImmigrationType = ImmigrationType.Dynamic,
+                DuplicationType = DuplicationType.Allow,
+
+                MaxRetirement = 10,
+                PopulationSize = 100,
                 RandomPoolGenerationSeed = 22,
                 RandomSeed = 13,
-                ChildrenPerCouple = 2,
+                ChildrenPerParents = 2,
                 Session = "Test",
-                LowestScoreIsBest = true,
+                ScoringType = ScoringType.Lowest,
                 CrossoverRate = 0.4321,
                 MutationRate = 0.1234,
                 ElitismRate = 0.123,
-                PreventDuplications = false,
+                MaxGenerations = 2
+            };
+
+            return task;
+        }
+
+        public static GAConfiguration GetPhraseConfiguration()
+        {
+            return new GAConfiguration(GetDummyUnorderedTask(new PhraseSolution()));
+        }
+
+        public static GATask GetDummyUnorderedTask(JarrusUnorderedSolution solution)
+        {
+            var task = new GATask(solution)
+            {
+                ParentSelectionType = ParentSelectionType.RouletteWheel,
+                MutationType = MutationType.Random,
+                CrossoverType = CrossoverType.TwoPoint,
+                RetirementType = RetirementType.MaxAge,
+                ImmigrationType = ImmigrationType.Dynamic,
+                DuplicationType = DuplicationType.Allow,                
+
+                MaxRetirement = 10,
+                PopulationSize = 100,
+                RandomPoolGenerationSeed = 22,
+                RandomSeed = 13,
+                ChildrenPerParents = 2,
+                Session = "Test",
+                ScoringType = ScoringType.Lowest,
+                CrossoverRate = 0.4321,
+                MutationRate = 0.1234,
+                ElitismRate = 0.123,
                 MaxGenerations = 2
             };
 

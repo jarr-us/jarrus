@@ -19,13 +19,7 @@ namespace Jarrus.GA.BasicTypes.Genes
         public Gene(Random random)
         {
             _random = random ?? throw new ArgumentException("When instantiating a Gene, the random object may not be null.");
-            SetRanges();
             Mutate(MutationType.Random);
-        }
-
-        private void SetRanges()
-        {
-
         }
 
         public void Mutate(MutationType type) {
@@ -42,11 +36,11 @@ namespace Jarrus.GA.BasicTypes.Genes
 
             foreach (var field in GetMyFields())
             {
-                var attributeObjects = field.GetCustomAttributes(typeof(GeneMutationAttribute), false);
+                var attributeObjects = field.GetCustomAttributes(typeof(GeneOptionAttribute), false);
 
                 if (attributeObjects.Length > 0)
                 {
-                    var geneAttributes = attributeObjects.Cast<GeneMutationAttribute>().ToArray();
+                    var geneAttributes = attributeObjects.Cast<GeneOptionAttribute>().ToArray();
                     var attribute = geneAttributes[0];
 
                     SetFieldWithRandomValue(field, attribute.IntValues);
@@ -64,11 +58,11 @@ namespace Jarrus.GA.BasicTypes.Genes
 
             foreach (var field in GetMyFields())
             {
-                var attributeObjects = field.GetCustomAttributes(typeof(GeneMutationAttribute), false);
+                var attributeObjects = field.GetCustomAttributes(typeof(GeneOptionAttribute), false);
 
                 if (attributeObjects.Length > 0)
                 {
-                    var geneAttributes = attributeObjects.Cast<GeneMutationAttribute>().ToArray();
+                    var geneAttributes = attributeObjects.Cast<GeneOptionAttribute>().ToArray();
                     var attribute = geneAttributes[0];
                     var shouldSetToTopValue = _random.Next(0, 2) == 1;
 
@@ -87,11 +81,11 @@ namespace Jarrus.GA.BasicTypes.Genes
 
             foreach (var field in GetMyFields())
             {
-                var attributeObjects = field.GetCustomAttributes(typeof(GeneMutationAttribute), false);
+                var attributeObjects = field.GetCustomAttributes(typeof(GeneOptionAttribute), false);
 
                 if (attributeObjects.Length > 0)
                 {
-                    var geneAttributes = attributeObjects.Cast<GeneMutationAttribute>().ToArray();
+                    var geneAttributes = attributeObjects.Cast<GeneOptionAttribute>().ToArray();
                     var attribute = geneAttributes[0];
 
                     SetFieldWithFlippedValue(field);
@@ -136,7 +130,7 @@ namespace Jarrus.GA.BasicTypes.Genes
 
             foreach(var field in fields)
             {
-                attributes.AddRange(field.GetCustomAttributes(typeof(GeneMutationAttribute), false));
+                attributes.AddRange(field.GetCustomAttributes(typeof(GeneOptionAttribute), false));
             }
 
             return attributes.Count;

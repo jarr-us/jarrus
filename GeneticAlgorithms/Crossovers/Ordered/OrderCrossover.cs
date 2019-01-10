@@ -1,4 +1,5 @@
-﻿using Jarrus.GA.BasicTypes.Genes;
+﻿using Jarrus.GA.BasicTypes.Chromosomes;
+using Jarrus.GA.BasicTypes.Genes;
 using System.Collections.Generic;
 
 namespace Jarrus.GA.Crossovers.Ordered
@@ -11,7 +12,7 @@ namespace Jarrus.GA.Crossovers.Ordered
         protected override Chromosome Perform(Chromosome father, Chromosome mother, GAConfiguration settings)
         {
             var geneCount = father.Genes.Length;
-            var child = new Chromosome(geneCount);
+            var child = new OrderedChromosome(geneCount);
             var crossoverPoint = settings.GetRandomInteger(1, father.Genes.Length - 2);
 
             var seen = new HashSet<Gene>();

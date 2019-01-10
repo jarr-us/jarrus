@@ -1,5 +1,6 @@
 ﻿using System;
 using Jarrus.GA;
+using Jarrus.GA.BasicTypes.Chromosomes;
 using Jarrus.GA.Utility;
 using Jarrus.GATests.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -14,13 +15,13 @@ namespace Jarrus.GATests
         {
             var data = GetSampleDataset();
 
-            var chromosomeOne = new Chromosome(data);
+            var chromosomeOne = new OrderedChromosome(data);
 
             var tempdata = data[0];
             data[0] = data[1];
             data[1] = tempdata;
 
-            var chromosomeTwo = new Chromosome(data);
+            var chromosomeTwo = new OrderedChromosome(data);
 
             var areEqual = chromosomeOne.Genes[0] == chromosomeTwo.Genes[1];
 

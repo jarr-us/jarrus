@@ -1,4 +1,5 @@
 ﻿using Jarrus.GA.BasicTypes;
+using Jarrus.GA.BasicTypes.Chromosomes;
 using Jarrus.GA.Utility;
 using System.Collections.Generic;
 
@@ -13,7 +14,7 @@ namespace Jarrus.GA.Crossovers.Ordered
             var geneCount = father.Genes.Length;
             
             DetermineCycle(father, mother);
-            var child = new Chromosome(mother.Genes);
+            var child = new OrderedChromosome(mother.Genes);
             PlaceCycleInsideOfChild(father, child);
 
             return child;

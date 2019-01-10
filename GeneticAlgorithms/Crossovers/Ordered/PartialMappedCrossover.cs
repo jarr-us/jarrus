@@ -1,4 +1,5 @@
-﻿using Jarrus.GA.BasicTypes.Genes;
+﻿using Jarrus.GA.BasicTypes.Chromosomes;
+using Jarrus.GA.BasicTypes.Genes;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -48,8 +49,8 @@ namespace Jarrus.GA.Crossovers.Ordered
             var parent2Genes = mother.Genes;
             var parent2MappingSection = parent2Genes.Skip(_firstCrossoverPoint).Take((_secondCrossoverPoint - _firstCrossoverPoint) + 1).ToArray();
 
-            var offspring1 = new Chromosome(father.Genes);
-            var offspring2 = new Chromosome(mother.Genes);
+            var offspring1 = new OrderedChromosome(father.Genes);
+            var offspring2 = new OrderedChromosome(mother.Genes);
 
             offspring2.ReplaceGenes(_firstCrossoverPoint, parent1MappingSection);
             offspring1.ReplaceGenes(_firstCrossoverPoint, parent2MappingSection);

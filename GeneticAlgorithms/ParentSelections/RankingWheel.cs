@@ -1,4 +1,5 @@
 ﻿using Jarrus.GA.BasicTypes;
+using Jarrus.GA.Factory.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,7 @@ namespace Jarrus.GA.ParentSelections
         protected void GenerateRouletteWheel()
         {
             rankings = new List<double>();
-            if (Configuration.LowestScoreIsBest)
+            if (Configuration.ScoringType == ScoringType.Lowest)
             {
                 GenerateLowestScoreIsBestWheel();
             }

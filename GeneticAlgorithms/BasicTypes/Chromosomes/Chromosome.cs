@@ -1,12 +1,14 @@
 ﻿using Jarrus.GA.BasicTypes.Genes;
 using Jarrus.GA.Enums;
+using Jarrus.GA.Factory.Enums;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace Jarrus.GA
 {
     [DebuggerDisplay("{FirstName} {LastName} {FitnessScore}")]
-    public class Chromosome
+    public abstract class Chromosome
     {
         public int Age, GenerationNumber;
         public Gene[] Genes;
@@ -17,16 +19,6 @@ namespace Jarrus.GA
 
         public List<Chromosome> Parents = new List<Chromosome>();
         public List<LastName> Lineage = new List<LastName>();
-
-        public Chromosome(int geneSize)
-        {
-            Genes = new Gene[geneSize];
-        }
-
-        public Chromosome(params Gene[] genes)
-        {
-            Genes = (Gene[])genes.Clone();
-        }
 
         public void SetParents(params Chromosome[] parents)
         {
@@ -66,9 +58,21 @@ namespace Jarrus.GA
             }
         }
 
-        public bool ShouldRetire(GAConfiguration settings)
+        public bool ShouldRetire(GAConfiguration config)
         {
-            return Age >= settings.MaximumLifeSpan && settings.MaximumLifeSpan != 0;
+            switch(config.RetirementType)
+            {
+                case RetirementType.None:
+                    return false;
+
+                case RetirementType.MaxAge:
+                    return Age >= config.MaxRetirement && config.MaxRetirement != 0;
+
+                case RetirementType.MaxChildren:
+                    return Children >= config.MaxRetirement && config.MaxRetirement != 0;
+            }
+
+            return false;
         }
 
         public override string ToString() { return string.Join(",", (IEnumerable<Gene>) Genes); }

@@ -42,11 +42,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BasicTypes\Attributes\GeneRangeAttribute.cs" />
+    <Compile Include="BasicTypes\Chromosomes\OrderedChromosome.cs" />
+    <Compile Include="BasicTypes\Chromosomes\UnorderedChromosome.cs" />
     <Compile Include="BasicTypes\GAProperties.cs" />
     <Compile Include="BasicTypes\GATask.cs" />
     <Compile Include="BasicTypes\Genes\Gene.cs" />
-    <Compile Include="BasicTypes\Chromosome.cs" />
-    <Compile Include="BasicTypes\Attributes\GeneMutationAttribute.cs" />
+    <Compile Include="BasicTypes\Chromosomes\Chromosome.cs" />
+    <Compile Include="BasicTypes\Attributes\GeneOptionAttribute.cs" />
     <Compile Include="BasicTypes\Genes\OrderedGene.cs" />
     <Compile Include="BasicTypes\Genes\UnorderedGene.cs" />
     <Compile Include="Crossovers\Crossover.cs" />
@@ -60,14 +63,20 @@
     <Compile Include="Enums\FirstName.cs" />
     <Compile Include="Enums\LastName.cs" />
     <Compile Include="Factory\Enums\CrossoverType.cs" />
+    <Compile Include="Factory\Enums\DuplicationType.cs" />
+    <Compile Include="Factory\Enums\ImmigrationType.cs" />
     <Compile Include="Factory\Enums\MutationType.cs" />
     <Compile Include="Factory\Enums\ParentSelectionType.cs" />
+    <Compile Include="Factory\Enums\RetirementType.cs" />
+    <Compile Include="Factory\Enums\ScoringType.cs" />
     <Compile Include="Factory\JarrusObjectFactory.cs" />
     <Compile Include="FitnessFunctions\FitnessFunction.cs" />
-    <Compile Include="BasicTypes\GAConfiguration.cs" />
+    <Compile Include="BasicTypes\Configurations\GAConfiguration.cs" />
     <Compile Include="BasicTypes\GARun.cs" />
-    <Compile Include="GeneticAlgorithm.cs" />
+    <Compile Include="GAs\GeneticAlgorithm.cs" />
     <Compile Include="BasicTypes\Population.cs" />
+    <Compile Include="GAs\OrderedGeneticAlgorithm.cs" />
+    <Compile Include="GAs\UnorderedGeneticAlgorithm.cs" />
     <Compile Include="Mutations\InternalMutation.cs" />
     <Compile Include="Mutations\InversionMutation.cs" />
     <Compile Include="Mutations\Mutation.cs" />
@@ -80,7 +89,9 @@
     <Compile Include="ParentSelections\RouletteWheelSelection.cs" />
     <Compile Include="ParentSelections\StochasticUniversalSamplingSelection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Solution\JarrusOrderedSolution.cs" />
     <Compile Include="Solution\JarrusSolution.cs" />
+    <Compile Include="Solution\JarrusUnorderedSolution.cs" />
     <Compile Include="Utility\ArrayExtensions.cs" />
     <Compile Include="Utility\ListExtensions.cs" />
     <Compile Include="Utility\PopulationGenerator.cs" />

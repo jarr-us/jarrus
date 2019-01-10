@@ -16,7 +16,7 @@ namespace Jarrus.GATests.Crossovers
             var mother = GATestHelper.GetAlphabetCharacterChromosome();
             mother.Genes.Shuffle(new Random());
 
-            var uniform = new UniformCrossover();
+            var uniform = new UniformOrderedCrossover();
 
             for (int i = 0; i < GATestHelper.GetRandomInteger(16, 32); i++)
             {

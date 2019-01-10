@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using Jarrus.GA;
+using Jarrus.GA.BasicTypes.Chromosomes;
 using Jarrus.GA.Enums;
 using Jarrus.GA.Utility;
 using Jarrus.GATests.Models;
-using Jarrus.GATests.Models.FitnessCalculators;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Jarrus.GATests
@@ -20,7 +20,7 @@ namespace Jarrus.GATests
         public void ItsConstructorDeterminesTheGeneSize()
         {
             var random = GATestHelper.GetRandomInteger(1, 255);
-            var doubleChromo = new Chromosome(random);
+            var doubleChromo = new OrderedChromosome(random);
             Assert.AreEqual(random, doubleChromo.Genes.Length);
         }
 
@@ -49,11 +49,20 @@ namespace Jarrus.GATests
             chromosome.Age = 5000;
 
             var settings = GATestHelper.GetTravelingSalesmanDefaultConfiguration();
-            settings.MaximumLifeSpan = 0;
+            settings.MaxRetirement = 0;
 
             Assert.IsFalse(chromosome.ShouldRetire(settings));
         }
 
+        [TestMethod]
+        public void ItCanMakeAnUnorderedChromosome()
+        {
+            var random = new Random();
+            var phraseType = typeof(PhraseGene);
+            var c = new UnorderedChromosome(8, phraseType, random);
+
+            Assert.AreEqual(8, c.Genes.Length);
+        }
 
         [TestMethod]
         public void ItCanOutputGenesToCommaDelimitedString()
@@ -65,14 +74,14 @@ namespace Jarrus.GATests
         [TestMethod]
         public void ItCanOutputGenesToCommaDelimitedStringWhenEmpty()
         {
-            var ExampleGeneChromo = new Chromosome();
+            var ExampleGeneChromo = new OrderedChromosome();
             Assert.AreEqual("", ExampleGeneChromo.ToString());
         }
 
         [TestMethod]
         public void ItHasADefaultName()
         {
-            var chromo = new Chromosome();
+            var chromo = new OrderedChromosome();
             Assert.AreEqual(FirstName.Kanan, chromo.FirstName);
             Assert.AreEqual(LastName.Jarrus, chromo.LastName);
         }
@@ -111,7 +120,7 @@ namespace Jarrus.GATests
 
         private Chromosome GetRandomNamedChromosome()
         {
-            var chromo = new Chromosome();
+            var chromo = new OrderedChromosome();
 
             var lastName = NameGenerator.GetLastName(_random);
             while(_lastNamesUsed.Contains(lastName)) { lastName = NameGenerator.GetLastName(_random); }

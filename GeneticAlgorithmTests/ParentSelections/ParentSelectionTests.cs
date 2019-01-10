@@ -11,7 +11,7 @@ namespace Jarrus.GATests.ParentSelections
         [TestMethod]
         public void ItConstructsProperlyIfAllFitnessScoresAreAboveOrEqualToZero()
         {
-            var genome = GATestHelper.GetTravelingSalesmanGenome();
+            var genome = GATestHelper.GetTravelingSalesmanPopulation();
             var parentSelection = new RouletteWheelSelection();
             parentSelection.Setup(genome, GATestHelper.GetTravelingSalesmanDefaultConfiguration());
         }
@@ -20,7 +20,7 @@ namespace Jarrus.GATests.ParentSelections
         [ExpectedException(typeof(ArgumentException))]
         public void ItFailsIfANegativeFitnessScoreIsPassed()
         {
-            var genome = GATestHelper.GetTravelingSalesmanGenome();
+            var genome = GATestHelper.GetTravelingSalesmanPopulation();
             genome[0].FitnessScore = -1;
             var parentSelection = new RouletteWheelSelection();
 

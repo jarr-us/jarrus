@@ -9,8 +9,8 @@
         Swap = 4,
 
         //Unordered
-        Flip = 101,
-        Boundary = 102,
-        Random = 103
+        Flip = 5,
+        Boundary = 6,
+        Random = 7
     }
 }

@@ -34,7 +34,7 @@ namespace Jarrus.GA.Factory
 
             _crossovers.Add(CrossoverType.SinglePoint, new SinglePointCrossover().GetType().AssemblyQualifiedName);
             _crossovers.Add(CrossoverType.TwoPoint, new TwoPointCrossover().GetType().AssemblyQualifiedName);
-            _crossovers.Add(CrossoverType.Uniform, new UniformCrossover().GetType().AssemblyQualifiedName);
+            _crossovers.Add(CrossoverType.Uniform, new UniformOrderedCrossover().GetType().AssemblyQualifiedName);
         }
 
         private void SetupMutations()

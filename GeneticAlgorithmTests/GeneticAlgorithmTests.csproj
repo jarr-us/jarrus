@@ -52,9 +52,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BasicTypes\GARunTests.cs" />
-    <Compile Include="BasicTypes\GeneTests.cs" />
+    <Compile Include="BasicTypes\Genes\GeneTests.cs" />
     <Compile Include="BasicTypes\GATaskTests.cs" />
-    <Compile Include="BasicTypes\UnorderedGeneTests.cs" />
+    <Compile Include="BasicTypes\Genes\UnorderedGeneSelfMutationTests.cs" />
     <Compile Include="Crossovers\Ordered\CycleCrossoverTests.cs" />
     <Compile Include="Crossovers\Ordered\PartialMappedCrossoverTests.cs" />
     <Compile Include="Crossovers\Ordered\AlternatePositionCrossoverTests.cs" />
@@ -64,15 +64,25 @@
     <Compile Include="Crossovers\Unordered\TwoPointCrossoverTests.cs" />
     <Compile Include="Crossovers\Unordered\GAConfigurationTests.cs" />
     <Compile Include="Factory\Enums\FactoryEnumTests.cs" />
+    <Compile Include="Factory\Enums\CrossoverTypeTests.cs" />
+    <Compile Include="Factory\Enums\MutationTypeTests.cs" />
+    <Compile Include="Factory\Enums\ParentSelectionTypeTests.cs" />
+    <Compile Include="Factory\Enums\RetirementTypeTests.cs" />
+    <Compile Include="Factory\Enums\ImmigrationTypeTests.cs" />
+    <Compile Include="Factory\Enums\ScoringTypeTests.cs" />
+    <Compile Include="Factory\Enums\DuplicationTypeTests.cs" />
     <Compile Include="Factory\JarrusObjectFactoryTests.cs" />
     <Compile Include="FitnessFunctions\FitnessFunctionTests.cs" />
     <Compile Include="Models\FitnessCalculators\SimpleTravelingSalesmanSolution.cs" />
     <Compile Include="Models\FitnessCalculators\TravelingSalesmanFitnessFunction.cs" />
     <Compile Include="Models\GATestHelper.cs" />
-    <Compile Include="Models\MutationGenes\BooleanGene.cs" />
-    <Compile Include="Models\MutationGenes\CharacterGene.cs" />
-    <Compile Include="Models\MutationGenes\IntegerGene.cs" />
-    <Compile Include="Models\MutationGenes\StringGene.cs" />
+    <Compile Include="Models\PhraseSolution\PhraseFitnessFunction.cs" />
+    <Compile Include="Models\PhraseSolution\PhraseGene.cs" />
+    <Compile Include="Models\PhraseSolution\PhraseSolution.cs" />
+    <Compile Include="Models\TestGenes\BooleanGene.cs" />
+    <Compile Include="Models\TestGenes\CharacterGene.cs" />
+    <Compile Include="Models\TestGenes\IntegerGene.cs" />
+    <Compile Include="Models\TestGenes\StringGene.cs" />
     <Compile Include="Models\TravelingSalesmanGene.cs" />
     <Compile Include="Mutations\MutationTests.cs" />
     <Compile Include="Mutations\InversionMutationTests.cs" />
@@ -86,8 +96,9 @@
     <Compile Include="BasicTypes\GAConfigurationTests.cs" />
     <Compile Include="BasicTypes\ChromosomeTests.cs" />
     <Compile Include="BasicTypes\PopulationTests.cs" />
-    <Compile Include="BasicTypes\GeneticAlgorithmTests.cs" />
+    <Compile Include="GAs\GeneticAlgorithmOrderedTests.cs" />
     <Compile Include="BasicTypes\ChromosomeReferenceTests.cs" />
+    <Compile Include="GAs\GeneticAlgorithmUnorderedTests.cs" />
     <Compile Include="Utility\PopulationGeneratorTests.cs" />
     <Compile Include="Utility\ArrayExtensionTests.cs" />
     <Compile Include="Utility\NameGeneratorTests.cs" />
