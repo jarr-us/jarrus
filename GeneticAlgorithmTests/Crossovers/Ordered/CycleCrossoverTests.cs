@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using Jarrus.GA.BasicTypes;
-using Jarrus.GA.BasicTypes.Genes;
+﻿using System.Collections.Generic;
+using Jarrus.GA.Models;
 using Jarrus.GA.Crossovers.Ordered;
 using Jarrus.GATests.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

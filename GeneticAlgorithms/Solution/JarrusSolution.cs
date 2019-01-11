@@ -1,4 +1,4 @@
-﻿using Jarrus.GA.FitnessFunctions;
+﻿using Jarrus.GA.Models;
 
 namespace Jarrus.GA.Solution
 {
@@ -7,7 +7,8 @@ namespace Jarrus.GA.Solution
         public GAConfiguration Configuration;
         public GeneticAlgorithm GeneticAlgorithm;
 
-        public abstract FitnessFunction GetFitnessFunction();
+        public abstract bool ShouldTerminate(Population population);
+        public abstract double GetFitnessScoreFor(Chromosome chromosome);
         public abstract GARun Run(GAConfiguration configuration);
     }
 }

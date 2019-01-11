@@ -1,4 +1,4 @@
-﻿using Jarrus.GA.BasicTypes;
+﻿using Jarrus.GA.Models;
 using Jarrus.GA.Factory.Enums;
 using System;
 using System.Collections.Generic;
@@ -8,70 +8,75 @@ namespace Jarrus.GA.ParentSelections
 {
     public abstract class RankingWheel : ParentSelection
     {
-        private List<double> rankings = new List<double>();
+        public List<double> Rankings = new List<double>();
 
         protected override void SetupSelection() { GenerateRouletteWheel(); }
 
         protected void GenerateRouletteWheel()
         {
-            rankings = new List<double>();
-            if (Configuration.ScoringType == ScoringType.Lowest)
+            Rankings = new List<double>();            
+            DetermineAdjustedFitnessScores();
+            GenerateWheel();
+        }
+
+        private void DetermineAdjustedFitnessScores()
+        {
+            foreach(var ch in Population) { ch.AdjustedFitnessScore = ch.FitnessScore; }
+            AdjustFitnessScoresToAllBeAboveOne();
+            AdjustFitnessScoresToBeInversed();
+        }
+
+        private void AdjustFitnessScoresToAllBeAboveOne()
+        {
+            var minValue = Population.Min(o => o.AdjustedFitnessScore);
+            if (minValue == 0) { minValue = -1; }
+            if (minValue > 0) { return; }
+            
+            foreach(var ch in Population)
             {
-                GenerateLowestScoreIsBestWheel();
-            }
-            else
-            {
-                GenerateHighestScoreIsBestWheel();
+                ch.AdjustedFitnessScore += Math.Abs(minValue);
             }
         }
 
-        private void GenerateHighestScoreIsBestWheel()
+        private void AdjustFitnessScoresToBeInversed()
         {
-            var sum = Genome.Sum(o => o.FitnessScore);
-            var totalWheel = 0.0;
+            if (Configuration.ScoringType != ScoringType.Lowest) { return; }
 
-            foreach (var chromosome in Genome)
+            var maxValue = Population.Max(o => o.AdjustedFitnessScore) + 1;
+
+            foreach (var ch in Population)
             {
-                var pieceOfWheel = chromosome.FitnessScore / sum;
-                totalWheel += pieceOfWheel;
-
-                rankings.Add(totalWheel);
+                ch.AdjustedFitnessScore = Math.Abs(maxValue - ch.AdjustedFitnessScore);
             }
-
-            rankings[Genome.Length - 1] = 1;
         }
 
-        private void GenerateLowestScoreIsBestWheel()
+        private void GenerateWheel()
         {
-            var maxFitness = Genome.Max(o => o.FitnessScore);
+            var sum = Population.Sum(o => o.AdjustedFitnessScore);
             var totalWheel = 0.0;
+            var nextValue = 0.0;
 
-            var inversedTotalWheelSum = Genome.Sum(o => Math.Abs(o.FitnessScore - maxFitness));
-
-            foreach (var chromosome in Genome)
+            foreach (var chromosome in Population)
             {
-                var pieceOfWheel = Math.Abs(chromosome.FitnessScore - maxFitness) / inversedTotalWheelSum;
-                totalWheel += pieceOfWheel;
-
-                rankings.Add(totalWheel);
+                Rankings.Add(totalWheel);
+                nextValue = chromosome.AdjustedFitnessScore / sum;
+                totalWheel += nextValue;
             }
-
-            rankings[Genome.Length - 1] = 1;
         }
 
         public Chromosome GetParent(double value)
         {
-            for (int i = 1; i < Genome.Length; i++)
+            for (int i = 1; i < Population.Length; i++)
             {
-                var rankingValue = rankings[i];
+                var rankingValue = Rankings[i];
 
                 if (value <= rankingValue)
                 {
-                    return Genome[i - 1];
+                    return Population[i - 1];
                 }
             }
 
-            return Genome.Last();
+            return Population.Last();
         }
     }
 }

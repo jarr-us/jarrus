@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Jarrus.GA.BasicTypes.Attributes
+namespace Jarrus.GA.Models.Attributes
 {
     public class GeneRangeAttribute : Attribute
     {

@@ -29,6 +29,10 @@ namespace Jarrus.Display
         public Label ConfigCrossoverLbl;
         public Label ConfigMutationLbl;
         public Label ConfigRetirementLbl;
+        public Label ConfigImmigrationLbl;
+        public Label ConfigImmigrationRateLbl;
+        public Label ConfigScoringLbl;
+        public Label ConfigDuplicationLbl;
         public Label MillisecondsPerGeneration;
         public Label SolutionNameLbl;
 

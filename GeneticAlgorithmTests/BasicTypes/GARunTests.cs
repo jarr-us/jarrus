@@ -1,6 +1,4 @@
-﻿using System;
-using Jarrus.GA;
-using Jarrus.GATests.Models;
+﻿using Jarrus.GA.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Jarrus.GATests.BasicTypes

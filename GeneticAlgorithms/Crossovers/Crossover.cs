@@ -1,4 +1,5 @@
-﻿using Jarrus.GA.Utility;
+﻿using Jarrus.GA.Models;
+using Jarrus.GA.Utility;
 using System;
 
 namespace Jarrus.GA.Crossovers

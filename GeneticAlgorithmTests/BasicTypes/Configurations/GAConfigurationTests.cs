@@ -1,13 +1,12 @@
 ﻿using System;
 using Jarrus.GA;
-using Jarrus.GA.BasicTypes;
+using Jarrus.GA.Models;
 using Jarrus.GA.Crossovers;
 using Jarrus.GA.Crossovers.Unordered;
 using Jarrus.GA.Factory.Enums;
 using Jarrus.GA.Mutations;
 using Jarrus.GA.ParentSelections;
 using Jarrus.GATests.Models;
-using Jarrus.GATests.Models.FitnessFunctions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Jarrus.GATests

@@ -1,4 +1,4 @@
-﻿using Jarrus.GA.BasicTypes;
+﻿using Jarrus.GA.Models;
 using System;
 using System.Linq;
 
@@ -7,12 +7,12 @@ namespace Jarrus.GA.ParentSelections
     public abstract class ParentSelection
     {
         protected GAConfiguration Configuration;
-        protected Chromosome[] Genome;
+        protected Chromosome[] Population;
 
-        public void Setup(Chromosome[] genome, GAConfiguration settings)
+        public void Setup(Chromosome[] pop, GAConfiguration settings)
         {
             Configuration = settings;
-            Genome = genome;
+            Population = pop;
             SetupSelection();
             Validate();
         }
@@ -21,7 +21,7 @@ namespace Jarrus.GA.ParentSelections
 
         private void Validate()
         {
-            if (Genome.Min(o => o.FitnessScore) < 0)
+            if (Population.Min(o => o.FitnessScore) < 0)
             {
                 throw new ArgumentException("Unable to work with Genomes with negative fitness scores.");
             }

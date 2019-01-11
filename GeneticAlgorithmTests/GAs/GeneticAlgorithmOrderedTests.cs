@@ -3,6 +3,7 @@ using System.Linq;
 using Jarrus.GA;
 using Jarrus.GA.Enums;
 using Jarrus.GA.Factory.Enums;
+using Jarrus.GA.Models;
 using Jarrus.GA.Utility;
 using Jarrus.GATests.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -53,7 +54,7 @@ namespace Jarrus.GATests
             var runDetails = ga.Run();
             Assert.AreEqual(_configuration.MaxGenerations + 1, ga.Generation);
 
-            Assert.AreEqual(LastName.Campos, runDetails.BestChromosome.LastName);
+            Assert.AreEqual(LastName.Bernard, runDetails.BestChromosome.LastName);
             Assert.AreEqual(80, runDetails.BestChromosome.FitnessScore);
         }
         
@@ -64,14 +65,14 @@ namespace Jarrus.GATests
             var runDetails = ga.Run();
             Assert.AreEqual(_configuration.MaxGenerations + 1, ga.Generation);
 
-            Assert.AreEqual(LastName.Campos, runDetails.BestChromosome.LastName);
+            Assert.AreEqual(LastName.Bernard, runDetails.BestChromosome.LastName);
             Assert.AreEqual(FirstName.Anakin, runDetails.BestChromosome.FirstName);
             Assert.AreEqual(80, runDetails.BestChromosome.FitnessScore);
 
             var lowest = runDetails.Population.Chromosomes.Select(o => o.FitnessScore).Min();
             var lastBestSeen = runDetails.Population.Chromosomes.Where(o => o.FitnessScore == lowest).First();
-            Assert.AreEqual(LastName.Phelps, lastBestSeen.LastName);
-            Assert.AreEqual(FirstName.Trace, lastBestSeen.FirstName);
+            Assert.AreEqual(LastName.Fry, lastBestSeen.LastName);
+            Assert.AreEqual(FirstName.Ira, lastBestSeen.FirstName);
         }
 
         [TestMethod]

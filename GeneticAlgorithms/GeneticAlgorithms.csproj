@@ -52,6 +52,8 @@
     <Compile Include="BasicTypes\Attributes\GeneOptionAttribute.cs" />
     <Compile Include="BasicTypes\Genes\OrderedGene.cs" />
     <Compile Include="BasicTypes\Genes\UnorderedGene.cs" />
+    <Compile Include="BasicTypes\Populations\OrderedPopulation.cs" />
+    <Compile Include="BasicTypes\Populations\UnorderedPopulation.cs" />
     <Compile Include="Crossovers\Crossover.cs" />
     <Compile Include="Crossovers\Ordered\AlternatingPositionCrossover.cs" />
     <Compile Include="Crossovers\Ordered\CycleCrossover.cs" />
@@ -70,11 +72,10 @@
     <Compile Include="Factory\Enums\RetirementType.cs" />
     <Compile Include="Factory\Enums\ScoringType.cs" />
     <Compile Include="Factory\JarrusObjectFactory.cs" />
-    <Compile Include="FitnessFunctions\FitnessFunction.cs" />
     <Compile Include="BasicTypes\Configurations\GAConfiguration.cs" />
     <Compile Include="BasicTypes\GARun.cs" />
     <Compile Include="GAs\GeneticAlgorithm.cs" />
-    <Compile Include="BasicTypes\Population.cs" />
+    <Compile Include="BasicTypes\Populations\Population.cs" />
     <Compile Include="GAs\OrderedGeneticAlgorithm.cs" />
     <Compile Include="GAs\UnorderedGeneticAlgorithm.cs" />
     <Compile Include="Mutations\InternalMutation.cs" />

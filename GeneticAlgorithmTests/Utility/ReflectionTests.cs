@@ -1,4 +1,4 @@
-﻿using Jarrus.GA;
+﻿using Jarrus.GA.Models;
 using Jarrus.GATests.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 

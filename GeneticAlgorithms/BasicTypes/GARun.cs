@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Jarrus.GA
+namespace Jarrus.GA.Models
 {
     public class GARun
     {

@@ -1,5 +1,5 @@
 ﻿using System;
-using Jarrus.GA.BasicTypes;
+using Jarrus.GA.Models;
 using Jarrus.GATests.Models.FitnessCalculators;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 

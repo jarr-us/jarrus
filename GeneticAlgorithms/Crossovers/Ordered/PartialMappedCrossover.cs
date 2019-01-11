@@ -1,5 +1,4 @@
-﻿using Jarrus.GA.BasicTypes.Chromosomes;
-using Jarrus.GA.BasicTypes.Genes;
+﻿using Jarrus.GA.Models;
 using System.Collections.Generic;
 using System.Linq;
 

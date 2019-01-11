@@ -87,6 +87,12 @@
             this.configIterationsLbl = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.configDuplicationLbl = new System.Windows.Forms.Label();
+            this.label30 = new System.Windows.Forms.Label();
+            this.configScoringLbl = new System.Windows.Forms.Label();
+            this.label26 = new System.Windows.Forms.Label();
+            this.configImmigrationLbl = new System.Windows.Forms.Label();
+            this.label24 = new System.Windows.Forms.Label();
             this.configMutationLbl = new System.Windows.Forms.Label();
             this.label25 = new System.Windows.Forms.Label();
             this.label35 = new System.Windows.Forms.Label();
@@ -96,6 +102,8 @@
             this.label33 = new System.Windows.Forms.Label();
             this.configParentSelectionLbl = new System.Windows.Forms.Label();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.label20 = new System.Windows.Forms.Label();
+            this.solutionNameLbl = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
             this.msPerGenerationLbl = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
@@ -104,8 +112,8 @@
             this.retiredNumberLbl = new System.Windows.Forms.Label();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.poolScoreChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.label20 = new System.Windows.Forms.Label();
-            this.solutionNameLbl = new System.Windows.Forms.Label();
+            this.configImmigrationRateLbl = new System.Windows.Forms.Label();
+            this.label28 = new System.Windows.Forms.Label();
             this.menuStrip.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -298,9 +306,9 @@
             this.label12.AutoSize = true;
             this.label12.Location = new System.Drawing.Point(6, 65);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(72, 13);
+            this.label12.Size = new System.Drawing.Size(35, 13);
             this.label12.TabIndex = 14;
-            this.label12.Text = "Lowest Score";
+            this.label12.Text = "Score";
             // 
             // goatBestLastNameLbl
             // 
@@ -371,9 +379,9 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(6, 139);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(72, 13);
+            this.label3.Size = new System.Drawing.Size(35, 13);
             this.label3.TabIndex = 4;
-            this.label3.Text = "Lowest Score";
+            this.label3.Text = "Score";
             // 
             // generationLbl
             // 
@@ -504,6 +512,8 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.configImmigrationRateLbl);
+            this.groupBox3.Controls.Add(this.label28);
             this.groupBox3.Controls.Add(this.configChildrenPerCoupleLbl);
             this.groupBox3.Controls.Add(this.label23);
             this.groupBox3.Controls.Add(this.configMutationRateLbl);
@@ -520,14 +530,14 @@
             this.groupBox3.Controls.Add(this.label17);
             this.groupBox3.Location = new System.Drawing.Point(419, 27);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(191, 120);
+            this.groupBox3.Size = new System.Drawing.Size(191, 159);
             this.groupBox3.TabIndex = 5;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Configuration";
             // 
             // configChildrenPerCoupleLbl
             // 
-            this.configChildrenPerCoupleLbl.Location = new System.Drawing.Point(97, 97);
+            this.configChildrenPerCoupleLbl.Location = new System.Drawing.Point(97, 110);
             this.configChildrenPerCoupleLbl.Name = "configChildrenPerCoupleLbl";
             this.configChildrenPerCoupleLbl.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.configChildrenPerCoupleLbl.Size = new System.Drawing.Size(89, 13);
@@ -538,7 +548,7 @@
             // label23
             // 
             this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(6, 97);
+            this.label23.Location = new System.Drawing.Point(6, 110);
             this.label23.Name = "label23";
             this.label23.Size = new System.Drawing.Size(89, 13);
             this.label23.TabIndex = 24;
@@ -565,7 +575,7 @@
             // 
             // configMaxLifeLbl
             // 
-            this.configMaxLifeLbl.Location = new System.Drawing.Point(97, 84);
+            this.configMaxLifeLbl.Location = new System.Drawing.Point(97, 97);
             this.configMaxLifeLbl.Name = "configMaxLifeLbl";
             this.configMaxLifeLbl.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.configMaxLifeLbl.Size = new System.Drawing.Size(89, 13);
@@ -576,11 +586,11 @@
             // label29
             // 
             this.label29.AutoSize = true;
-            this.label29.Location = new System.Drawing.Point(6, 84);
+            this.label29.Location = new System.Drawing.Point(6, 97);
             this.label29.Name = "label29";
-            this.label29.Size = new System.Drawing.Size(71, 13);
+            this.label29.Size = new System.Drawing.Size(81, 13);
             this.label29.TabIndex = 18;
-            this.label29.Text = "Maximum Life";
+            this.label29.Text = "Max Retirement";
             // 
             // configCrossoverRateLbl
             // 
@@ -660,6 +670,12 @@
             // 
             // groupBox4
             // 
+            this.groupBox4.Controls.Add(this.configDuplicationLbl);
+            this.groupBox4.Controls.Add(this.label30);
+            this.groupBox4.Controls.Add(this.configScoringLbl);
+            this.groupBox4.Controls.Add(this.label26);
+            this.groupBox4.Controls.Add(this.configImmigrationLbl);
+            this.groupBox4.Controls.Add(this.label24);
             this.groupBox4.Controls.Add(this.configMutationLbl);
             this.groupBox4.Controls.Add(this.label25);
             this.groupBox4.Controls.Add(this.label35);
@@ -668,12 +684,69 @@
             this.groupBox4.Controls.Add(this.label31);
             this.groupBox4.Controls.Add(this.label33);
             this.groupBox4.Controls.Add(this.configParentSelectionLbl);
-            this.groupBox4.Location = new System.Drawing.Point(419, 153);
+            this.groupBox4.Location = new System.Drawing.Point(419, 192);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(191, 100);
+            this.groupBox4.Size = new System.Drawing.Size(191, 162);
             this.groupBox4.TabIndex = 6;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Configuration Strategies";
+            // 
+            // configDuplicationLbl
+            // 
+            this.configDuplicationLbl.Location = new System.Drawing.Point(97, 102);
+            this.configDuplicationLbl.Name = "configDuplicationLbl";
+            this.configDuplicationLbl.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.configDuplicationLbl.Size = new System.Drawing.Size(89, 13);
+            this.configDuplicationLbl.TabIndex = 39;
+            this.configDuplicationLbl.Text = "0";
+            this.configDuplicationLbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label30
+            // 
+            this.label30.AutoSize = true;
+            this.label30.Location = new System.Drawing.Point(6, 102);
+            this.label30.Name = "label30";
+            this.label30.Size = new System.Drawing.Size(87, 13);
+            this.label30.TabIndex = 38;
+            this.label30.Text = "Duplication Type";
+            // 
+            // configScoringLbl
+            // 
+            this.configScoringLbl.Location = new System.Drawing.Point(97, 89);
+            this.configScoringLbl.Name = "configScoringLbl";
+            this.configScoringLbl.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.configScoringLbl.Size = new System.Drawing.Size(89, 13);
+            this.configScoringLbl.TabIndex = 37;
+            this.configScoringLbl.Text = "0";
+            this.configScoringLbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Location = new System.Drawing.Point(6, 89);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(70, 13);
+            this.label26.TabIndex = 36;
+            this.label26.Text = "Scoring Type";
+            // 
+            // configImmigrationLbl
+            // 
+            this.configImmigrationLbl.Location = new System.Drawing.Point(97, 63);
+            this.configImmigrationLbl.Name = "configImmigrationLbl";
+            this.configImmigrationLbl.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.configImmigrationLbl.Size = new System.Drawing.Size(89, 13);
+            this.configImmigrationLbl.TabIndex = 35;
+            this.configImmigrationLbl.Text = "0";
+            this.configImmigrationLbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Location = new System.Drawing.Point(6, 63);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(60, 13);
+            this.label24.TabIndex = 34;
+            this.label24.Text = "Immigration";
             // 
             // configMutationLbl
             // 
@@ -705,7 +778,7 @@
             // 
             // configRetirementLbl
             // 
-            this.configRetirementLbl.Location = new System.Drawing.Point(97, 63);
+            this.configRetirementLbl.Location = new System.Drawing.Point(97, 76);
             this.configRetirementLbl.Name = "configRetirementLbl";
             this.configRetirementLbl.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.configRetirementLbl.Size = new System.Drawing.Size(89, 13);
@@ -726,7 +799,7 @@
             // label31
             // 
             this.label31.AutoSize = true;
-            this.label31.Location = new System.Drawing.Point(6, 63);
+            this.label31.Location = new System.Drawing.Point(6, 76);
             this.label31.Name = "label31";
             this.label31.Size = new System.Drawing.Size(58, 13);
             this.label31.TabIndex = 30;
@@ -769,6 +842,24 @@
             this.groupBox5.TabIndex = 7;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Run Metadata";
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(6, 42);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(45, 13);
+            this.label20.TabIndex = 18;
+            this.label20.Text = "Solution";
+            // 
+            // solutionNameLbl
+            // 
+            this.solutionNameLbl.Location = new System.Drawing.Point(97, 42);
+            this.solutionNameLbl.Name = "solutionNameLbl";
+            this.solutionNameLbl.Size = new System.Drawing.Size(89, 13);
+            this.solutionNameLbl.TabIndex = 19;
+            this.solutionNameLbl.Text = "0";
+            this.solutionNameLbl.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // label18
             // 
@@ -860,23 +951,24 @@
             this.poolScoreChart.TabIndex = 9;
             this.poolScoreChart.Text = "poolScore";
             // 
-            // label20
+            // configImmigrationRateLbl
             // 
-            this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(6, 42);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(45, 13);
-            this.label20.TabIndex = 18;
-            this.label20.Text = "Solution";
+            this.configImmigrationRateLbl.Location = new System.Drawing.Point(97, 84);
+            this.configImmigrationRateLbl.Name = "configImmigrationRateLbl";
+            this.configImmigrationRateLbl.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.configImmigrationRateLbl.Size = new System.Drawing.Size(89, 13);
+            this.configImmigrationRateLbl.TabIndex = 27;
+            this.configImmigrationRateLbl.Text = "0";
+            this.configImmigrationRateLbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // solutionNameLbl
+            // label28
             // 
-            this.solutionNameLbl.Location = new System.Drawing.Point(97, 42);
-            this.solutionNameLbl.Name = "solutionNameLbl";
-            this.solutionNameLbl.Size = new System.Drawing.Size(89, 13);
-            this.solutionNameLbl.TabIndex = 19;
-            this.solutionNameLbl.Text = "0";
-            this.solutionNameLbl.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.label28.AutoSize = true;
+            this.label28.Location = new System.Drawing.Point(6, 84);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(86, 13);
+            this.label28.TabIndex = 26;
+            this.label28.Text = "Immigration Rate";
             // 
             // MainForm
             // 
@@ -993,6 +1085,14 @@
         private System.Windows.Forms.Label msPerGenerationLbl;
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.Label solutionNameLbl;
+        private System.Windows.Forms.Label configDuplicationLbl;
+        private System.Windows.Forms.Label label30;
+        private System.Windows.Forms.Label configScoringLbl;
+        private System.Windows.Forms.Label label26;
+        private System.Windows.Forms.Label configImmigrationLbl;
+        private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.Label configImmigrationRateLbl;
+        private System.Windows.Forms.Label label28;
     }
 }
 

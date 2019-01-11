@@ -1,4 +1,6 @@
-﻿namespace Jarrus.GA.Mutations
+﻿using Jarrus.GA.Models;
+
+namespace Jarrus.GA.Mutations
 {
     public class InternalMutation : Mutation
     {

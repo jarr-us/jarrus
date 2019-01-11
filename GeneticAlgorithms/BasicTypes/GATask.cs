@@ -1,7 +1,7 @@
 ﻿using Jarrus.GA.Solution;
 using System;
 
-namespace Jarrus.GA.BasicTypes
+namespace Jarrus.GA.Models
 {
     public class GATask : GAProperties
     {

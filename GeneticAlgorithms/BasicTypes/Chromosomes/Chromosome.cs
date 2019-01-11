@@ -1,18 +1,16 @@
-﻿using Jarrus.GA.BasicTypes.Genes;
-using Jarrus.GA.Enums;
+﻿using Jarrus.GA.Enums;
 using Jarrus.GA.Factory.Enums;
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 
-namespace Jarrus.GA
+namespace Jarrus.GA.Models
 {
-    [DebuggerDisplay("{FirstName} {LastName} {FitnessScore}")]
+    [DebuggerDisplay("{FirstName} {LastName} {FitnessScore} / {AdjustedFitnessScore}")]
     public abstract class Chromosome
     {
         public int Age, GenerationNumber;
         public Gene[] Genes;
-        public double FitnessScore;
+        public double FitnessScore, AdjustedFitnessScore;
         public int Children;
         public FirstName FirstName;
         public LastName LastName;
@@ -92,9 +90,9 @@ namespace Jarrus.GA
         {
             var castedObject = (Chromosome)obj;
 
-            for(int i = 0; i < Genes.Length; i++)
+            for (int i = 0; i < castedObject.Genes.Length; i++)
             {
-                if (Genes[i] != castedObject.Genes[i])
+                if (Genes[i].GetHashCode() != castedObject.Genes[i].GetHashCode())
                 {
                     return false;
                 }
@@ -102,6 +100,9 @@ namespace Jarrus.GA
 
             return true;
         }
+
+        public bool IsOrdered() { return typeof(OrderedChromosome).IsAssignableFrom(GetType()); }
+        public bool IsUnordered() { return typeof(UnorderedChromosome).IsAssignableFrom(GetType()); }
 
         public void ReplaceGenes(int startingPosition, params Gene[] genes)
         {

@@ -1,4 +1,4 @@
-﻿using Jarrus.GA.BasicTypes.Chromosomes;
+﻿using Jarrus.GA.Models;
 
 namespace Jarrus.GA.Crossovers.Unordered
 {

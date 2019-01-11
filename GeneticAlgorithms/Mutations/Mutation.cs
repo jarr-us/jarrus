@@ -1,4 +1,5 @@
 ﻿using Jarrus.GA.Factory.Enums;
+using Jarrus.GA.Models;
 
 namespace Jarrus.GA.Mutations
 {

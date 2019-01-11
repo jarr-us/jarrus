@@ -1,6 +1,4 @@
-﻿using Jarrus.GA.BasicTypes.Genes;
-
-namespace Jarrus.GA.BasicTypes.Chromosomes
+﻿namespace Jarrus.GA.Models
 {
     public class OrderedChromosome : Chromosome
     {

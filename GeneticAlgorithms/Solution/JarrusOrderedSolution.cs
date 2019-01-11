@@ -1,4 +1,4 @@
-﻿using Jarrus.GA.BasicTypes.Genes;
+﻿using Jarrus.GA.Models;
 namespace Jarrus.GA.Solution
 {
     public abstract class JarrusOrderedSolution : JarrusSolution
@@ -10,7 +10,6 @@ namespace Jarrus.GA.Solution
             Configuration = configuration;
 
             var options = GetOptions();
-            Configuration.GeneSize = options.Length;
             GeneticAlgorithm = new OrderedGeneticAlgorithm(Configuration, options);
             return GeneticAlgorithm.Run();
         }

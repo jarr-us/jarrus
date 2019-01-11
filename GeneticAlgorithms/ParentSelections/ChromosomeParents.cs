@@ -1,4 +1,4 @@
-﻿using Jarrus.GA.BasicTypes;
+﻿using Jarrus.GA.Models;
 
 namespace Jarrus.GA.ParentSelections
 {

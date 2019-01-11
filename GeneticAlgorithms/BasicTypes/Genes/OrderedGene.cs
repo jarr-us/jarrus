@@ -1,11 +1,8 @@
-﻿namespace Jarrus.GA.BasicTypes.Genes
+﻿namespace Jarrus.GA.Models
 {
     public abstract class OrderedGene : Gene
     {
         public abstract override string ToString();
-        public abstract override bool Equals(object obj);
-        public override int GetHashCode() { return base.GetHashCode(); }
-
         public OrderedGene() : base() { }
     }
 }

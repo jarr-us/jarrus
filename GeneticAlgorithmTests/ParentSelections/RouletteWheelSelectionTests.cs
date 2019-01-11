@@ -1,7 +1,7 @@
-﻿using Jarrus.GA;
+﻿using Jarrus.GA.Models;
 using Jarrus.GA.ParentSelections;
 using Jarrus.GATests.Models;
-using Jarrus.GATests.Models.FitnessFunctions;
+using Jarrus.GATests.Models.FitnessCalculators;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Jarrus.GATests.ParentSelections
@@ -10,12 +10,12 @@ namespace Jarrus.GATests.ParentSelections
     public class RouletteWheelSelectionTests
     {
         private Chromosome[] _pool;
-
+        
         [TestInitialize]
         public void Setup()
         {
             _pool = GATestHelper.GetTravelingSalesmanPopulation();
-            var calc = new TravelingSalesmanFitnessFunction();
+            var calc = new SimpleTravelingSalesmanSolution();
             foreach (var chromosome in _pool)
             {
                 chromosome.FitnessScore = calc.GetFitnessScoreFor(chromosome);
@@ -72,7 +72,7 @@ namespace Jarrus.GATests.ParentSelections
             for (int i = 0; i < 1000; i++)
             {
                 var parent = parentSelection.GetParents();
-                Assert.AreNotEqual(parent.Father, parent.Mother);
+                Assert.IsFalse(ReferenceEquals(parent.Father, parent.Mother));
             }
         }
     }

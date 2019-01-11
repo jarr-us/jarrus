@@ -1,7 +1,7 @@
 ﻿using GeneralHux.CRUD;
 using GeneralHux.ErrorHandling;
 using Jarrus.GA;
-using Jarrus.GA.BasicTypes;
+using Jarrus.GA.Models;
 using Jarrus.GA.Factory.Enums;
 using Jarrus.GA.Solution;
 using Jarrus.GA.Utility;
@@ -60,7 +60,7 @@ namespace Jarrus.Data
                 {
                     var solution = dao.GetString("SolutionType");
 
-                    var task = new GATask((JarrusOrderedSolution)Reflection.GetObjectFromType(solution));
+                    var task = new GATask((JarrusSolution)Reflection.GetObjectFromType(solution));
 
                     task.UUID = dao.GetGuid("UUID");
                     task.Session = dao.GetString("Session");

@@ -1,5 +1,5 @@
 ﻿using Jarrus.GA;
-using Jarrus.GA.BasicTypes;
+using Jarrus.GA.Models;
 using Jarrus.GA.Enums;
 using System.Collections.Generic;
 using System.Linq;

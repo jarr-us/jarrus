@@ -1,6 +1,6 @@
 ﻿using System;
-using Jarrus.GA;
 using Jarrus.GA.Crossovers.Ordered;
+using Jarrus.GA.Models;
 using Jarrus.GA.Utility;
 using Jarrus.GATests.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

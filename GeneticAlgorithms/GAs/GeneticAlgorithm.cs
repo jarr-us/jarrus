@@ -1,4 +1,4 @@
-﻿using Jarrus.GA.BasicTypes.Genes;
+﻿using Jarrus.GA.Models;
 using Jarrus.GA.Factory.Enums;
 using System;
 using System.Collections.Generic;
@@ -18,7 +18,7 @@ namespace Jarrus.GA
         public Chromosome BestChromosomeEver;
 
         protected void StandardConstructorLogic()
-        {
+        {            
             ValidateConfiguration();
             ValidateGeneSize();
             Configuration.Validate();
@@ -27,9 +27,9 @@ namespace Jarrus.GA
             GenerateInitialPopulation();
         }
 
-        private void ValidateGeneSize()
+        protected void ValidateGeneSize()
         {
-            if (Configuration.GeneSize <= 1) { throw new ArgumentException("Gene size must be set or larger that 2"); }
+            if (Configuration.IsUnorderedConfiguration() && Configuration.GeneSize <= 1) { throw new ArgumentException("Gene size must be set or larger that 2"); }
         }
         
         protected abstract void ValidateConfiguration();
@@ -42,12 +42,18 @@ namespace Jarrus.GA
             for (GARun.CurrentGeneration = 0; GARun.CurrentGeneration < Configuration.MaxGenerations; GARun.CurrentGeneration++)
             {
                 var nextGeneration = GARun.Population.Advance();
-
+                                
                 Retired = GARun.Population.Retired.OrderBy(o => o.FitnessScore).ToList();
 
-                DetermineBestChromosomeEver(GARun.Population);
-                Generation = nextGeneration.GenerationNumber;
                 GARun.Population = nextGeneration;
+                Generation = nextGeneration.GenerationNumber;
+                DetermineBestChromosomeEver(GARun.Population);                
+                
+                if (GARun.Population.UnableToProgress || Configuration.Solution.ShouldTerminate(GARun.Population))
+                {
+                    GARun.End = DateTime.UtcNow;
+                    return GARun;
+                }
             }
 
             GARun.End = DateTime.UtcNow;

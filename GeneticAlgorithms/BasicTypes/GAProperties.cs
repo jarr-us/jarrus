@@ -1,7 +1,7 @@
 ﻿using Jarrus.GA.Factory.Enums;
 using Jarrus.GA.Solution;
 
-namespace Jarrus.GA.BasicTypes
+namespace Jarrus.GA.Models
 {
     public abstract class GAProperties
     {

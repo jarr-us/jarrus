@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Jarrus.GA;
+using Jarrus.GA.Models;
 using Jarrus.GA.Factory.Enums;
 using Jarrus.GA.Utility;
 using Jarrus.GATests.Models;
@@ -25,7 +25,7 @@ namespace Jarrus.GATests
         [TestMethod]
         public void ItHasAValidConstructor()
         {
-            var population = new Population(GATestHelper.GetTravelingSalesmanDefaultConfiguration(), _pool, _possibleValues);
+            var population = new OrderedPopulation(GATestHelper.GetTravelingSalesmanDefaultConfiguration(), _pool, _possibleValues);
             Assert.IsNotNull(population.Configuration);
             Assert.IsNotNull(population.Chromosomes);
         }
@@ -37,7 +37,7 @@ namespace Jarrus.GATests
             configuration.GeneSize = 11;
             var pool = PopulationGenerator.GenerateUnorderedPopulation(configuration, typeof(PhraseGene));
 
-            var population = new Population(GATestHelper.GetTravelingSalesmanDefaultConfiguration(), _pool, typeof(PhraseGene));
+            var population = new UnorderedPopulation(GATestHelper.GetTravelingSalesmanDefaultConfiguration(), _pool, typeof(PhraseGene));
             Assert.IsNotNull(population.Configuration);
             Assert.IsNotNull(population.Chromosomes);
         }
@@ -46,34 +46,34 @@ namespace Jarrus.GATests
         [ExpectedException(typeof(ArgumentException))]
         public void ItThrowsAnExceptionIfConfigurationIsNull()
         {
-            new Population(null, _pool, _possibleValues);
+            new OrderedPopulation(null, _pool, _possibleValues);
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void ItThrowsAnExceptionIfThePoolIsNull()
         {
-            new Population(GATestHelper.GetTravelingSalesmanDefaultConfiguration(), null, _possibleValues);
+            new OrderedPopulation(GATestHelper.GetTravelingSalesmanDefaultConfiguration(), null, _possibleValues);
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void ItThrowsAnExceptionIfThePoolIsNotLargeEnough()
         {
-            new Population(GATestHelper.GetTravelingSalesmanDefaultConfiguration(), _pool.Subset(0, 2), _possibleValues);
+            new OrderedPopulation(GATestHelper.GetTravelingSalesmanDefaultConfiguration(), _pool.Subset(0, 2), _possibleValues);
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void ItThrowsAnExceptionIfThePossibleValuesAreNotSet()
         {
-            new Population(GATestHelper.GetTravelingSalesmanDefaultConfiguration(), _pool);
+            new OrderedPopulation(GATestHelper.GetTravelingSalesmanDefaultConfiguration(), _pool);
         }
 
         [TestMethod]
         public void ItCanAdvanceToTheNextGeneration()
         {
-            var population = new Population(GATestHelper.GetTravelingSalesmanDefaultConfiguration(), _pool, _possibleValues);
+            var population = new OrderedPopulation(GATestHelper.GetTravelingSalesmanDefaultConfiguration(), _pool, _possibleValues);
             var nextGen = population.Advance();
 
             Assert.AreEqual(1, population.GenerationNumber);
@@ -87,7 +87,7 @@ namespace Jarrus.GATests
             config.CrossoverRate = 0.0;
             config.ElitismRate = 0.0;
 
-            var population = new Population(config, _pool, _possibleValues);
+            var population = new OrderedPopulation(config, _pool, _possibleValues);
             var nextGen = population.Advance();
 
             Assert.AreEqual(1, population.GenerationNumber);
@@ -106,7 +106,7 @@ namespace Jarrus.GATests
             var config = GATestHelper.GetTravelingSalesmanDefaultConfiguration();
             config.ElitismRate = 0.01 * toKeep;
 
-            var population = new Population(config, _pool, _possibleValues);
+            var population = new OrderedPopulation(config, _pool, _possibleValues);
             var nextGen = population.Advance();
 
             Assert.IsTrue(nextGen.Chromosomes.Where(o => o.GenerationNumber == 1).Count() > 0);
@@ -116,7 +116,7 @@ namespace Jarrus.GATests
         public void ItDeterminesFitnessScoreOnCreation()
         {
             var config = GATestHelper.GetTravelingSalesmanDefaultConfiguration();
-            var population = new Population(config, _pool, _possibleValues);
+            var population = new OrderedPopulation(config, _pool, _possibleValues);
             
             foreach(var chromosome in population.Chromosomes)
             {
@@ -132,7 +132,7 @@ namespace Jarrus.GATests
             config.MaxGenerations = 1;
             config.PopulationSize = 10;
 
-            var population = new Population(config, _pool, _possibleValues);
+            var population = new OrderedPopulation(config, _pool, _possibleValues);
 
             var nextGen = population.Advance();
             Assert.IsTrue(nextGen.Retired.Count() > 0);
@@ -144,10 +144,10 @@ namespace Jarrus.GATests
             var config = GATestHelper.GetTravelingSalesmanDefaultConfiguration();
             config.PopulationSize = 10;
 
-            _pool = GATestHelper.GetTravelingSalesmanGenome(config);
+            _pool = GATestHelper.GetTravelingSalesmanPopulation(config);
 
             config.DuplicationType = DuplicationType.Prevent;
-            var population = new Population(config, _pool, _possibleValues);
+            var population = new OrderedPopulation(config, _pool, _possibleValues);
 
             var nextGen = population.Advance();
             var hashset = new HashSet<string>();
@@ -164,7 +164,7 @@ namespace Jarrus.GATests
         public void ItAllowsDuplicates()
         {
             var config = GATestHelper.GetTravelingSalesmanDefaultConfiguration();
-            var population = new Population(config, _pool, _possibleValues);
+            var population = new OrderedPopulation(config, _pool, _possibleValues);
 
             var nextGen = population.Advance();
             var hashset = new HashSet<string>();

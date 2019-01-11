@@ -1,6 +1,4 @@
-﻿using Jarrus.GA;
-using Jarrus.GA.BasicTypes.Chromosomes;
-using Jarrus.GA.Crossovers;
+﻿using Jarrus.GA.Models;
 using Jarrus.GA.Crossovers.Unordered;
 using Jarrus.GATests.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

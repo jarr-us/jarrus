@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Jarrus.GA.Models;
+using System;
 
 namespace Jarrus.GA.Solution
 {

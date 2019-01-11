@@ -1,4 +1,4 @@
-﻿using Jarrus.GA.BasicTypes.Genes;
+﻿using Jarrus.GA.Models;
 using Jarrus.GA.Solution;
 using Jarrus.GA.Utility;
 using System;
@@ -9,8 +9,9 @@ namespace Jarrus.GA
     {
         public OrderedGeneticAlgorithm(GAConfiguration configuration, params Gene[] possibleValues)
         {
-            Configuration = configuration;
-            PossibleValues = possibleValues;
+            Configuration = configuration;            
+            PossibleValues = possibleValues;            
+
             StandardConstructorLogic();
         }
 
@@ -31,7 +32,7 @@ namespace Jarrus.GA
         protected override void GenerateInitialPopulation()
         {
             var randomPool = PopulationGenerator.GenerateOrderedPopulation(Configuration, PossibleValues);
-            GARun.Population = new Population(Configuration, randomPool, PossibleValues);
+            GARun.Population = new OrderedPopulation(Configuration, randomPool, PossibleValues);
             GARun.BestChromosome = GARun.Population.Chromosomes[0];
         }
     }

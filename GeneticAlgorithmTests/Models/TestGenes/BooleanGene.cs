@@ -1,5 +1,5 @@
-﻿using Jarrus.GA.BasicTypes;
-using Jarrus.GA.BasicTypes.Attributes;
+﻿using Jarrus.GA.Models;
+using Jarrus.GA.Models.Attributes;
 using System;
 
 namespace Jarrus.GATests.Models.TestGenes
@@ -10,6 +10,7 @@ namespace Jarrus.GATests.Models.TestGenes
         public bool Value;
 
         public BooleanGene(Random random) : base(random) { }
+        public override int GetHashCode() { return Value.GetHashCode(); }
         public override string ToString() { return Value.ToString(); }
     }
 }

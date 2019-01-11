@@ -50,6 +50,10 @@ namespace Jarrus
             FControls.RetiredNumberLbl = retiredNumberLbl;
             FControls.TicksPerChromosome = ticksPerChromosomeLbl;
 
+            FControls.ConfigImmigrationRateLbl = configImmigrationRateLbl;
+            FControls.ConfigImmigrationLbl = configImmigrationLbl;
+            FControls.ConfigScoringLbl = configScoringLbl;
+            FControls.ConfigDuplicationLbl = configDuplicationLbl;
             FControls.ConfigPoolSizeLbl = configPoolSizeLbl;
             FControls.ConfigIterationsLbl = configIterationsLbl;
             FControls.ConfigCrossoverRateLbl = configCrossoverRateLbl;

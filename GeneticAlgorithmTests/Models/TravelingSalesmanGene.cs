@@ -1,4 +1,4 @@
-﻿using Jarrus.GA.BasicTypes.Genes;
+﻿using Jarrus.GA.Models;
 
 namespace Jarrus.GATests.Models
 {

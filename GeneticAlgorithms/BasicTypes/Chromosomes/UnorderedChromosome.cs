@@ -1,7 +1,6 @@
-﻿using Jarrus.GA.BasicTypes.Genes;
-using System;
+﻿using System;
 
-namespace Jarrus.GA.BasicTypes.Chromosomes
+namespace Jarrus.GA.Models
 {
     public class UnorderedChromosome : Chromosome
     {

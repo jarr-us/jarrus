@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using Jarrus.GA;
-using Jarrus.GA.BasicTypes.Chromosomes;
+using Jarrus.GA.Models;
 using Jarrus.GA.Enums;
 using Jarrus.GA.Utility;
 using Jarrus.GATests.Models;

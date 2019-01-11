@@ -1,17 +1,16 @@
-﻿using Jarrus.GA.BasicTypes.Attributes;
+﻿using Jarrus.GA.Models.Attributes;
 using Jarrus.GA.Factory.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace Jarrus.GA.BasicTypes.Genes
+namespace Jarrus.GA.Models
 {
     public abstract class Gene
     {
         public abstract override string ToString();
-        public abstract override bool Equals(object obj);
-        public override int GetHashCode() { return base.GetHashCode(); }
+        public abstract override int GetHashCode();
         private Random _random;
 
         public Gene() { }
@@ -27,7 +26,7 @@ namespace Jarrus.GA.BasicTypes.Genes
             PerformBoundaryMutation(type);
             PerformFlipMutation(type);
         }
-
+        
         private void PerformRandomMutation(MutationType type)
         {
             if (type != MutationType.Random) { return; }
@@ -134,6 +133,11 @@ namespace Jarrus.GA.BasicTypes.Genes
             }
 
             return attributes.Count;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return GetHashCode() == obj.GetHashCode();
         }
 
         public static bool operator ==(Gene obj1, Gene obj2)

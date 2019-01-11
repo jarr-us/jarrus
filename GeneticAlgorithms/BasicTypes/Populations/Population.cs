@@ -1,74 +1,29 @@
-﻿using Jarrus.GA.BasicTypes.Chromosomes;
-using Jarrus.GA.BasicTypes.Genes;
-using Jarrus.GA.Factory.Enums;
+﻿using Jarrus.GA.Factory.Enums;
 using Jarrus.GA.ParentSelections;
-using Jarrus.GA.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Jarrus.GA
+namespace Jarrus.GA.Models
 {
-    public class Population
+    public abstract class Population
     {
         public Chromosome[] Chromosomes;
         public GAConfiguration Configuration;
         public int GenerationNumber = 1;
-        private List<Chromosome> NextGeneration = new List<Chromosome>();
+        public List<Chromosome> NextGeneration = new List<Chromosome>();
         public HashSet<Chromosome> OptionsInPool = new HashSet<Chromosome>();
         public List<Chromosome> Retired = new List<Chromosome>();
-        private Gene[] _possibleValues;
-        private Type _geneType;
-                
-        public Population(GAConfiguration configuration, Chromosome[] chromosomes, params Gene[] possibleValues)
-        {
-            if (configuration == null || chromosomes == null || chromosomes.Length <= 2 || possibleValues == null || possibleValues.Length <= 2) { throw new ArgumentException("Invalid parameters passed to the Population"); }
+        protected Gene[] PossibleValues;
+        protected Type GeneType;
+        public bool UnableToProgress;
             
-            Chromosomes = chromosomes;
-            Configuration = configuration;
-            _possibleValues = possibleValues;
-
-            StandardConstructorLogic();
-        }
-
-        public Population(GAConfiguration configuration, Chromosome[] chromosomes, Type geneType)
-        {
-            if (configuration == null || chromosomes == null || chromosomes.Length <= 2 || geneType == null) { throw new ArgumentException("Invalid parameters passed to the Population"); }
-            _geneType = geneType;
-            Chromosomes = chromosomes;
-            Configuration = configuration;
-
-            StandardConstructorLogic();
-        }
-
-        private void StandardConstructorLogic()
+        protected void StandardConstructorLogic()
         {
             Retire();
             SetChromosomesGenerationAndAge();
             DetermineFitnessScores();
-        }
-
-        private Population(GAConfiguration configuration, Chromosome[] chromosomes, int generationNumber, Gene[] possibleValues, List<Chromosome> retired = null)
-        {
-            Chromosomes = chromosomes;
-            Configuration = configuration;
-            GenerationNumber = ++generationNumber;
-            _possibleValues = possibleValues;
-            Retired = retired;
-
-            StandardConstructorLogic();
-        }
-
-        private Population(GAConfiguration configuration, Chromosome[] chromosomes, int generationNumber, Type geneType, List<Chromosome> retired = null)
-        {
-            Chromosomes = chromosomes;
-            Configuration = configuration;
-            GenerationNumber = ++generationNumber;
-            _geneType = geneType;
-            Retired = retired;
-
-            StandardConstructorLogic();
         }
 
         private void SetChromosomesGenerationAndAge()
@@ -100,20 +55,18 @@ namespace Jarrus.GA
             DetermineNextGeneration();
             DetermineFitnessScores();
 
-            if (Configuration.IsOrderedConfiguration())
-            {
-                return new Population(Configuration, NextGeneration.ToArray(), GenerationNumber, _possibleValues, Retired);
-            } else
-            {
-                return new Population(Configuration, NextGeneration.ToArray(), GenerationNumber, _geneType, Retired);
-            }
+            var population = AdvancePopulation();
+            population.UnableToProgress = UnableToProgress;
+            return population;
         }
+
+        protected abstract Population AdvancePopulation();
 
         private void DetermineFitnessScores()
         {
             Parallel.ForEach(Chromosomes.Where(o => o.FitnessScore == 0).ToList(), chromosome =>
             {
-                chromosome.FitnessScore = Configuration.FitnessFunction.GetFitnessScoreFor(chromosome);
+                chromosome.FitnessScore = Configuration.Solution.GetFitnessScoreFor(chromosome);
             });
         }
 
@@ -135,14 +88,26 @@ namespace Jarrus.GA
             }
         }
 
+        private int _attemptsToDetermineNextChromosome = 0;
         private void DetermineNextGeneration()
         {
             AddElitiesToNextGeneration();
             AddImmigrantsToNextGeneration();
             
-            while (NextGeneration.Count < Chromosomes.Length)
+            while (NextGeneration.Count < Chromosomes.Length && !UnableToProgress)
             {
                 GetNextGenerationChromosome();
+                _attemptsToDetermineNextChromosome++;
+                CheckIfAbleToProgress();
+            }
+        }
+
+        
+        private void CheckIfAbleToProgress()
+        {
+            if (_attemptsToDetermineNextChromosome >= Configuration.PopulationSize * 2)
+            {
+                UnableToProgress = true;
             }
         }
 
@@ -240,12 +205,12 @@ namespace Jarrus.GA
             }
         }
 
-        private void AddToNextGeneration(List<Chromosome> chromosomes)
+        public void AddToNextGeneration(List<Chromosome> chromosomes)
         {
             foreach (var chromosome in chromosomes) { AddToNextGeneration(chromosome); }
         }
 
-        private void AddToNextGeneration(Chromosome chromosome)
+        public void AddToNextGeneration(Chromosome chromosome)
         {
             if (Configuration.DuplicationType == DuplicationType.Prevent)
             {
@@ -268,22 +233,7 @@ namespace Jarrus.GA
             }
         }
 
-        private Chromosome GetNewChromosome()
-        {
-            if (Configuration.IsOrderedConfiguration())
-            {
-                var newChromosome = new OrderedChromosome(_possibleValues);
-
-                newChromosome.Genes.Shuffle(Configuration.RandomPool);
-                newChromosome.FirstName = NameGenerator.GetFirstName(Configuration.RandomFirstNameSeed);
-                newChromosome.LastName = NameGenerator.GetLastName(Configuration.RandomLastNameSeed);
-
-                return newChromosome;
-            } else
-            {
-                return new UnorderedChromosome(Configuration.GeneSize, _geneType, Configuration.Random);
-            }            
-        }
+        protected abstract Chromosome GetNewChromosome();
 
         private Chromosome GetChild(ChromosomeParents parents)
         {

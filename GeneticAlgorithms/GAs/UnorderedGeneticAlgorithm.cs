@@ -1,4 +1,5 @@
-﻿using Jarrus.GA.Solution;
+﻿using Jarrus.GA.Models;
+using Jarrus.GA.Solution;
 using Jarrus.GA.Utility;
 using System;
 
@@ -30,7 +31,7 @@ namespace Jarrus.GA
         protected override void GenerateInitialPopulation()
         {
             var randomPool = PopulationGenerator.GenerateUnorderedPopulation(Configuration, GeneType);
-            GARun.Population = new Population(Configuration, randomPool, GeneType);
+            GARun.Population = new UnorderedPopulation(Configuration, randomPool, GeneType);
             GARun.BestChromosome = GARun.Population.Chromosomes[0];
         }
     }

@@ -1,7 +1,5 @@
-﻿using Jarrus.GA.BasicTypes;
-using Jarrus.GA.Crossovers;
+﻿using Jarrus.GA.Crossovers;
 using Jarrus.GA.Factory;
-using Jarrus.GA.FitnessFunctions;
 using Jarrus.GA.Mutations;
 using Jarrus.GA.ParentSelections;
 using Jarrus.GA.Solution;
@@ -9,14 +7,13 @@ using Jarrus.GA.Utility;
 using System;
 using System.Linq;
 
-namespace Jarrus.GA
+namespace Jarrus.GA.Models
 {
     public class GAConfiguration : GAProperties
     {
         internal Crossover Crossover;
         internal Mutation Mutation;
         internal ParentSelection ParentSelection;
-        internal FitnessFunction FitnessFunction;
 
         public int GeneSize;
         public Random Random;
@@ -30,8 +27,9 @@ namespace Jarrus.GA
             if (task == null) { throw new ArgumentException("Task can not be null"); }
 
             TaskUUID = task.UUID;
-            Reflection.CopyProperties(task, this);
+            Reflection.CopyProperties(task, this);            
             ValidateProperties();
+            SetGeneSize();
             SetupStrategies(task);
             SetupRandomVariables();
             ValidateFactoryObjects();
@@ -43,12 +41,19 @@ namespace Jarrus.GA
             ValidateFactoryObjects();
         }
 
+        private void SetGeneSize()
+        {
+            if (!IsOrderedConfiguration()) {
+                var unorderedSolution = (JarrusUnorderedSolution)Solution;
+                GeneSize = unorderedSolution.GetGeneSize();
+            }
+        }
+
         private void SetupStrategies(GATask task)
         {
             Crossover = JarrusObjectFactory.Instance.GetCrossover(CrossoverType);
             Mutation = JarrusObjectFactory.Instance.GetMutation(MutationType);
             ParentSelection = JarrusObjectFactory.Instance.GetParentSelection(ParentSelectionType);
-            FitnessFunction = task.Solution.GetFitnessFunction();
         }
 
         private void SetupRandomVariables()
@@ -71,7 +76,7 @@ namespace Jarrus.GA
             RandomPool = new Random(RandomPoolGenerationSeed);
 
             RandomFirstNameSeed = new Random(RandomSeed);
-            RandomLastNameSeed = new Random(RandomPoolGenerationSeed);
+            RandomLastNameSeed = new Random(RandomSeed);
     }
 
         public void ValidateProperties()

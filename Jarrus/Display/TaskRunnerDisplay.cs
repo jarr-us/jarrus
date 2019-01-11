@@ -8,7 +8,7 @@ using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
 using Jarrus.GA.Factory.Enums;
-using Jarrus.GA.BasicTypes;
+using Jarrus.GA.Models;
 using Jarrus.GA.Solution;
 
 namespace Jarrus.Display
@@ -113,13 +113,17 @@ namespace Jarrus.Display
             UIUpdater.SetText(Form, Controls.ConfigCrossoverRateLbl, Config.CrossoverRate + "");
             UIUpdater.SetText(Form, Controls.ConfigMutationRateLbl, Config.MutationRate + "");
             UIUpdater.SetText(Form, Controls.ConfigElitismRateLbl, Config.ElitismRate + "");
+            UIUpdater.SetText(Form, Controls.ConfigImmigrationRateLbl, Config.ImmigrationRate + "");
             UIUpdater.SetText(Form, Controls.ConfigMaxLifeLbl, Config.MaxRetirement + "");
             UIUpdater.SetText(Form, Controls.ConfigChildrenPerCoupleLbl, Config.ChildrenPerParents + "");
 
             UIUpdater.SetText(Form, Controls.ConfigParentSelectionLbl, Config.ParentSelectionType.ToString());
             UIUpdater.SetText(Form, Controls.ConfigCrossoverLbl, Config.CrossoverType.ToString());
             UIUpdater.SetText(Form, Controls.ConfigMutationLbl, Config.MutationType.ToString());
-            UIUpdater.SetText(Form, Controls.ConfigRetirementLbl, "true");
+            UIUpdater.SetText(Form, Controls.ConfigRetirementLbl, Config.RetirementType.ToString());
+            UIUpdater.SetText(Form, Controls.ConfigImmigrationLbl, Config.ImmigrationType.ToString());
+            UIUpdater.SetText(Form, Controls.ConfigScoringLbl, Config.ScoringType.ToString());
+            UIUpdater.SetText(Form, Controls.ConfigDuplicationLbl, Config.DuplicationType.ToString());
         }
 
         private void DrawFamilyDetails()
@@ -165,7 +169,27 @@ namespace Jarrus.Display
         private void RunUnorderedConfiguration(GAConfiguration config)
         {
             if (!config.IsUnorderedConfiguration()) { return; }
-            return;
+
+            var solution = (JarrusUnorderedSolution)config.Solution;
+            var ga = new UnorderedGeneticAlgorithm(config, solution.GetGeneType());
+
+            Config = config;
+            GARun = ga.GARun;
+            RunConfiguration(ga);
+        }
+
+        private void RunConfiguration(GeneticAlgorithm ga)
+        {
+            UIUpdater.SetText(Form, Controls.SessionNameLbl, Config.Session);
+            UIUpdater.SetText(Form, Controls.SolutionNameLbl, Config.Solution.GetType().Name.Replace("Solution", "").ToString());
+            MinScoreSeen = GARun.Population.Chromosomes.Select(o => o.FitnessScore).Min();
+            MaxScoreSeen = GARun.Population.Chromosomes.Select(o => o.FitnessScore).Max();
+
+            ga.Run();
+            _jarrusDAO.InsertCompletedRun(Config, GARun);
+            _jarrusDAO.DeleteTask(Config.TaskUUID);
+
+            RunNumber++;
         }
 
         private void RunOrderedConfiguration(GAConfiguration config)
@@ -179,17 +203,7 @@ namespace Jarrus.Display
 
             Config = config;
             GARun = ga.GARun;
-
-            UIUpdater.SetText(Form, Controls.SessionNameLbl, config.Session);
-            UIUpdater.SetText(Form, Controls.SolutionNameLbl, config.Solution.GetType().Name.Replace("Solution", "").ToString());
-            MinScoreSeen = GARun.Population.Chromosomes.Select(o => o.FitnessScore).Min();
-            MaxScoreSeen = GARun.Population.Chromosomes.Select(o => o.FitnessScore).Max();
-
-            ga.Run();
-            _jarrusDAO.InsertCompletedRun(Config, GARun);
-            _jarrusDAO.DeleteTask(config.TaskUUID);
-
-            RunNumber++;
+            RunConfiguration(ga);
         }
     }
 }

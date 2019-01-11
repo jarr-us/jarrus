@@ -1,6 +1,6 @@
 ﻿using System;
-using Jarrus.GA;
 using Jarrus.GA.Factory.Enums;
+using Jarrus.GA.Models;
 using Jarrus.GATests.Models;
 using Jarrus.GATests.Models.FitnessCalculators;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

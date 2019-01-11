@@ -1,6 +1,4 @@
-﻿using Jarrus.GA.BasicTypes;
-using Jarrus.GA.BasicTypes.Chromosomes;
-using Jarrus.GA.BasicTypes.Genes;
+﻿using Jarrus.GA.Models;
 using System;
 
 namespace Jarrus.GA.Utility

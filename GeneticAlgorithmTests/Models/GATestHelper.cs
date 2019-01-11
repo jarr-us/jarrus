@@ -1,6 +1,4 @@
-﻿using Jarrus.GA;
-using Jarrus.GA.BasicTypes;
-using Jarrus.GA.BasicTypes.Chromosomes;
+﻿using Jarrus.GA.Models;
 using Jarrus.GA.Factory.Enums;
 using Jarrus.GA.Solution;
 using Jarrus.GA.Utility;
@@ -71,10 +69,10 @@ namespace Jarrus.GATests.Models
 
         public static Chromosome[] GetTravelingSalesmanPopulation()
         {
-            return GetTravelingSalesmanGenome(GetTravelingSalesmanDefaultConfiguration());
+            return GetTravelingSalesmanPopulation(GetTravelingSalesmanDefaultConfiguration());
         }
 
-        public static Chromosome[] GetTravelingSalesmanGenome(GAConfiguration config)
+        public static Chromosome[] GetTravelingSalesmanPopulation(GAConfiguration config)
         {
             var chromosome = GetTravelingSalesmanChromosome();
             return PopulationGenerator.GenerateOrderedPopulation(config, chromosome.Genes);
@@ -152,7 +150,8 @@ namespace Jarrus.GATests.Models
                 CrossoverType = CrossoverType.TwoPoint,
                 RetirementType = RetirementType.MaxAge,
                 ImmigrationType = ImmigrationType.Dynamic,
-                DuplicationType = DuplicationType.Allow,                
+                DuplicationType = DuplicationType.Allow,
+                ScoringType = ScoringType.Lowest,
 
                 MaxRetirement = 10,
                 PopulationSize = 100,
@@ -160,11 +159,10 @@ namespace Jarrus.GATests.Models
                 RandomSeed = 13,
                 ChildrenPerParents = 2,
                 Session = "Test",
-                ScoringType = ScoringType.Lowest,
-                CrossoverRate = 0.4321,
-                MutationRate = 0.1234,
-                ElitismRate = 0.123,
-                MaxGenerations = 2
+                CrossoverRate = 0.95,
+                MutationRate = 0.12,
+                ElitismRate = 0.22,
+                MaxGenerations = 20
             };
 
             return task;
