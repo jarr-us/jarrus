@@ -15,5 +15,7 @@ namespace Jarrus.GA.Solution
             GeneticAlgorithm = new UnorderedGeneticAlgorithm(Configuration, GetGeneType());
             return GeneticAlgorithm.Run();
         }
+
+
     }
 }

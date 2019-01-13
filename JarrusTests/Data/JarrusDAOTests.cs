@@ -37,21 +37,21 @@ namespace JarrusTests.Data
             var task = new GATask(solution);
             task.ParentSelectionStrategy = ParentSelectionStrategy.TournamentFive;
             task.MutationStrategy = MutationStrategy.Random;
-            task.CrossoverStrategy = CrossoverStrategy.Uniform;
+            task.CrossoverStrategy = CrossoverStrategy.TwoPoint;
             task.ImmigrationStrategy = ImmigrationStrategy.Dynamic;
-            task.RetirementStrategy = RetirementStrategy.MaxAge;
+            task.RetirementStrategy = RetirementStrategy.None;
             task.ScoringStrategy = ScoringStrategy.Lowest;
-            task.DuplicationStrategy = DuplicationStrategy.Allow;
+            task.DuplicationStrategy = DuplicationStrategy.Prevent;
             
             task.PopulationSize = 1000;
             task.MaxGenerations = 100;
-            task.CrossoverRate = 0.972880;
-            task.MutationRate = 0.011700;
-            task.ElitismRate = 0.054710;
-            task.ImmigrationRate = 0.012040;
-            task.MaxRetirement = 17;
-            task.ChildrenPerParents = 5;
-            task.RandomSeed = 1655556878;
+            task.CrossoverRate = 0.659410;
+            task.MutationRate = 0.074880;
+            task.ElitismRate = 0.021880;
+            task.ImmigrationRate = 0.150480;
+            task.MaxRetirement = 0;
+            task.ChildrenPerParents = 1;
+            task.RandomSeed = 567545391;
             task.RandomPoolGenerationSeed = 22;
 
             var config = new GAConfiguration(task);
@@ -67,7 +67,7 @@ namespace JarrusTests.Data
         //    var tasks = new List<GATask>();
 
         //    var random = new Random();
-        //    for (int i = 0; i < 203; i++)
+        //    for (int i = 0; i < 150000; i++)
         //    {
         //        var task = new GATask(new ShakespeareSolution())
         //        {
@@ -110,20 +110,29 @@ namespace JarrusTests.Data
 
         //        task.PopulationSize = 1000;
 
-        //        randomNumber = random.Next(88000, 98000 + 1);
+        //        randomNumber = random.Next(60000, 99000 + 1);
         //        task.CrossoverRate = randomNumber * 0.00001;
 
-        //        randomNumber = random.Next(1000, 3000 + 1);
+        //        randomNumber = random.Next(1000, 20000 + 1);
         //        task.MutationRate = randomNumber * 0.00001;
 
-        //        randomNumber = random.Next(1000, 10000 + 1);
+        //        randomNumber = random.Next(1000, 20000 + 1);
         //        task.ElitismRate = randomNumber * 0.00001;
 
-        //        randomNumber = random.Next(1000, 10000 + 1);
+        //        randomNumber = random.Next(1000, 20000 + 1);
         //        task.ImmigrationRate = randomNumber * 0.00001;
 
-        //        randomNumber = random.Next((task.MaxGenerations / 8), (task.MaxGenerations / 4) + 1);
-        //        task.MaxRetirement = randomNumber;
+        //        if (task.RetirementStrategy == RetirementStrategy.MaxAge)
+        //        {
+        //            randomNumber = random.Next(40, 60 + 1);
+        //            task.MaxRetirement = randomNumber;
+        //        }
+
+        //        if (task.RetirementStrategy == RetirementStrategy.MaxChildren)
+        //        {
+        //            randomNumber = random.Next(200, 400 + 1);
+        //            task.MaxRetirement = randomNumber;
+        //        }
 
         //        randomNumber = random.Next(1, 8 + 1);
         //        task.ChildrenPerParents = randomNumber;
@@ -141,7 +150,7 @@ namespace JarrusTests.Data
         //    var tasks = new List<GATask>();
 
         //    var random = new Random();
-        //    for (int i = 0; i < 50000; i++)
+        //    for (int i = 0; i < 605601; i++)
         //    {
         //        var task = new GATask(new MLBDriveTimeSolution())
         //        {
@@ -190,19 +199,19 @@ namespace JarrusTests.Data
 
         //        task.PopulationSize = 50;
 
-        //        randomNumber = random.Next(88000, 98000 + 1);
+        //        randomNumber = random.Next(60000, 99000 + 1);
         //        task.CrossoverRate = randomNumber * 0.00001;
 
-        //        randomNumber = random.Next(1000, 3000 + 1);
+        //        randomNumber = random.Next(1000, 20000 + 1);
         //        task.MutationRate = randomNumber * 0.00001;
 
-        //        randomNumber = random.Next(1000, 10000 + 1);
+        //        randomNumber = random.Next(1000, 20000 + 1);
         //        task.ElitismRate = randomNumber * 0.00001;
 
         //        randomNumber = random.Next(1000, 10000 + 1);
         //        task.ImmigrationRate = randomNumber * 0.00001;
 
-        //        randomNumber = random.Next((task.MaxGenerations / 8), (task.MaxGenerations / 4) + 1);
+        //        randomNumber = random.Next((task.MaxGenerations / 8), (task.MaxGenerations / 2) + 1);
         //        task.MaxRetirement = randomNumber;
 
         //        randomNumber = random.Next(1, 8 + 1);
@@ -308,14 +317,14 @@ namespace JarrusTests.Data
         //    InsertTasksToDatabase(tasks, 24);
         //}
 
-        private void InsertTasksToDatabase(List<GATask> tasks, double priority)
-        {
-            var dao = new JarrusDAO();
+        //private void InsertTasksToDatabase(List<GATask> tasks, double priority)
+        //{
+        //    var dao = new JarrusDAO();
 
-            Parallel.ForEach(tasks, new ParallelOptions { MaxDegreeOfParallelism = 4 },task =>
-            {
-                dao.InsertTask(task, priority);
-            });
-        }
+        //    Parallel.ForEach(tasks, new ParallelOptions { MaxDegreeOfParallelism = 8 },task =>
+        //    {
+        //        dao.InsertTask(task, priority);
+        //    });
+        //}
     }
 }

@@ -2,6 +2,7 @@
 using Jarrus.GA.ParentSelections;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -93,7 +94,7 @@ namespace Jarrus.GA.Models
         {
             AddElitiesToNextGeneration();
             AddImmigrantsToNextGeneration();
-            
+
             while (NextGeneration.Count < Chromosomes.Length && !UnableToProgress)
             {
                 GetNextGenerationChromosome();
@@ -189,14 +190,24 @@ namespace Jarrus.GA.Models
 
             if (Configuration.GetNextDouble() <= Configuration.CrossoverRate)
             {
+                var sw = new Stopwatch();
+                sw.Start();
+
                 var parents = Configuration.ParentSelection.GetParents();
+                var getParentsTicks = sw.ElapsedTicks;
+
 
                 for (int i = 0; i < Configuration.ChildrenPerParents; i++)
                 {
                     var child = GetChild(parents);
+                    var getChildTicks = sw.ElapsedTicks - getParentsTicks;
+
                     Configuration.Mutation.Mutate(child, Configuration);
+                    var mutateTicks = sw.ElapsedTicks - getChildTicks;
 
                     AddToNextGeneration(child);
+                    var addToNextGenTicks = sw.ElapsedTicks - mutateTicks;
+                    var one = 1;
                 }
             }
             else

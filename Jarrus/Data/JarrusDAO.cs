@@ -1,11 +1,14 @@
-﻿using GeneralHux.CRUD;
-using GeneralHux.ErrorHandling;
+﻿using GeneralHux.ErrorHandling;
 using Jarrus.GA;
 using Jarrus.GA.Models;
 using Jarrus.GA.Factory.Enums;
 using Jarrus.GA.Solution;
 using Jarrus.GA.Utility;
 using System;
+using System.Text;
+using GeneralHux.CRUD;
+using System.Collections.Generic;
+using System.Globalization;
 
 namespace Jarrus.Data
 {
@@ -14,29 +17,25 @@ namespace Jarrus.Data
         private Random random = new Random();
         private int threadId;
 
-        public GATask CheckoutATaskToRun()
+        public void CheckoutTasks(int numberOfTasks)
         {
-            var sql = "UPDATE TOP (1) [DB_9B8C9C_jarrus].[dbo].[GA_Tasks] SET [Checkout] = GETUTCDATE(), [ComputerName] = @ComputerName ";
-            sql += "WHERE [uuid] = (select top 1 uuid FROM [DB_9B8C9C_jarrus].[dbo].[GA_Tasks] where checkout is null or [checkout] < DATEADD(HOUR, -1, GETUTCDATE()) order by priority)";
+            var sql = GetCheckoutTaskSQL(numberOfTasks);
             var dao = new DAO();
+            dao.SimpleExecute(Server.JARRUS, sql);
+        }
 
-            try
-            {
-                dao.OpenConnection(Server.JARRUS, sql);
-                dao.AddParameter("@ComputerName", GetComputerName());
-                dao.Execute();
-            }
-            catch (Exception ex)
-            {
-                ErrorHandlingSystem.HandleError(ex, "Unable to checkout a GA Task");
-                return null;
-            }
-            finally
-            {
-                dao.CloseConnection();
-            }
+        private string GetCheckoutTaskSQL(int numberOfTasksToCheckout)
+        {
+            var sb = new StringBuilder();
 
-            return FetchMyFirstTask();
+            sb.Append(";WITH subset AS (SELECT TOP ");
+            sb.Append(numberOfTasksToCheckout);
+            sb.Append(" * FROM [DB_9B8C9C_jarrus].[dbo].[GA_Tasks] where checkout is null or [checkout] < DATEADD(HOUR, -1, GETUTCDATE()) order by priority) ");
+            sb.Append("UPDATE subset SET[Checkout] = GETUTCDATE(), [ComputerName] = '");
+            sb.Append(GetComputerName());
+            sb.Append("' ");
+
+            return sb.ToString();
         }
 
         private string GetComputerName()
@@ -45,10 +44,11 @@ namespace Jarrus.Data
             return Environment.MachineName + "::" + threadId;
         }
 
-        public GATask FetchMyFirstTask()
+        public List<GATask> FetchMyTasks()
         {
-            var sql = "SELECT TOP 1 * FROM [DB_9B8C9C_jarrus].[dbo].[GA_Tasks] WHERE [ComputerName] = @ComputerName order by [Priority]";
+            var sql = "SELECT * FROM [DB_9B8C9C_jarrus].[dbo].[GA_Tasks] WHERE [ComputerName] = @ComputerName order by [Priority]";            
             var dao = new DAO();
+            var list = new List<GATask>();
 
             try
             {
@@ -84,124 +84,91 @@ namespace Jarrus.Data
                     task.MutationStrategy = (MutationStrategy)Enum.Parse(typeof(MutationStrategy), dao.GetString("MutationStrategy"));
                     task.ParentSelectionStrategy = (ParentSelectionStrategy)Enum.Parse(typeof(ParentSelectionStrategy), dao.GetString("ParentSelectionStrategy"));
 
-                    return task;
+                    list.Add(task);
                 }
             }
             catch (Exception ex)
             {
-                ErrorHandlingSystem.HandleError(ex, "Unable to fetch a GA Task");
+                ErrorHandlingSystem.HandleError(ex, "Unable to fetch GA Tasks");
+                return new List<GATask>();
             }
             finally
             {
                 dao.CloseConnection();
             }
 
-            return null;
+            return list;
         }
 
-        public void InsertTask(GATask task, double priority)
+        public void InsertCompletedRunsAndClearTasks(List<TaskCompleted> completed)
         {
-            var sql = "INSERT INTO [dbo].[GA_Tasks] ([Session],[Priority],[Checkout],[ComputerName],[SolutionStrategy],[ParentSelectionStrategy],[MutationStrategy],[CrossoverStrategy],[ImmigrationStrategy],[RetirementStrategy],[ScoringStrategy],[PopulationSize],[MaxGenerations],[CrossoverRate],[MutationRate],[ElitismRate],[ImmigrationRate],[DuplicationStrategy],[MaxRetirement],[ChildrenPerParents],[RandomSeed],[RandomPoolGenerationSeed]) ";
-            sql += "VALUES(@Session, @Priority, @Checkout, @ComputerName, @SolutionStrategy, @ParentSelectionStrategy, @MutationStrategy, @CrossoverStrategy, @ImmigrationStrategy, @RetirementStrategy, @ScoringStrategy, @PopulationSize, @MaxGenerations, @CrossoverRate, @MutationRate, @ElitismRate, @ImmigrationRate, @DuplicationStrategy, @MaxRetirement, @ChildrenPerParents, @RandomSeed, @RandomPoolGenerationSeed)";
-
+            if (completed == null || completed.Count == 0) { return; }
             var dao = new DAO();
-            try
-            {
-                dao.OpenConnection(Server.JARRUS, sql);
-
-                dao.AddParameter("@Priority", priority);
-                dao.AddParameter("@Checkout", null);
-                AddGATaskParameters(dao, task);
-
-                dao.Execute();
-            }
-            catch (Exception ex)
-            {
-                ErrorHandlingSystem.HandleError(ex, "Unable to insert GA Task");
-            }
-            finally
-            {
-                dao.CloseConnection();
-            }
-        }
-
-        public void InsertCompletedRun(GAConfiguration config, GARun run)
-        {
-            var dao = new DAO();
-            var sql = "INSERT INTO [dbo].[GA_Results]([Session],[Start],[End],[ComputerName],[SolutionStrategy],[ParentSelectionStrategy],[MutationStrategy],[CrossoverStrategy],[ImmigrationStrategy],[RetirementStrategy],[ScoringStrategy],[PopulationSize],[MaxGenerations],[CrossoverRate],[MutationRate],[ElitismRate],[ImmigrationRate],[DuplicationStrategy],[MaxRetirement],[ChildrenPerParents],[RandomSeed],[RandomPoolGenerationSeed],[BestScore],[BestScoreGeneration],[StringRepresentation]) ";
-            sql += "VALUES (@Session,@Start,@End,@ComputerName,@SolutionStrategy,@ParentSelectionStrategy,@MutationStrategy,@CrossoverStrategy,@ImmigrationStrategy,@RetirementStrategy,@ScoringStrategy,@PopulationSize,@MaxGenerations,@CrossoverRate,@MutationRate,@ElitismRate,@ImmigrationRate,@DuplicationStrategy,@MaxRetirement,@ChildrenPerParents,@RandomSeed,@RandomPoolGenerationSeed,@BestScore,@BestScoreGeneration,@StringRepresentation)";
 
             try
             {
-                dao.OpenConnection(Server.JARRUS, sql);
+                dao.OpenTransaction(Server.JARRUS);
 
-                dao.AddParameter("@Start", run.Start);
-                dao.AddParameter("@End", run.End);
-                dao.AddParameter("@BestScore", run.BestChromosome.FitnessScore);
-                dao.AddParameter("@BestScoreGeneration", run.BestChromosome.GenerationNumber);
-                dao.AddParameter("@StringRepresentation", run.BestChromosome.ToString());
-                AddGATaskParameters(dao, config);
+                foreach(var complete in completed)
+                {
+                    dao.AddSqlStatementToTransaction(GetCompletedRunSql(complete));
+                    dao.AddSqlStatementToTransaction(GetDeleteTaskSql(complete.Config.TaskUUID));
+                }                
 
-                dao.Execute();
-            }
-            catch (Exception ex)
+                dao.ExecuteTransaction();
+            } catch (Exception ex)
             {
-                ErrorHandlingSystem.HandleError(ex, "Unable to insert GA Run Result");
-            }
-            finally
+                ErrorHandlingSystem.HandleError(ex);
+                throw ex;
+            } finally
             {
                 dao.CloseConnection();
             }
         }
 
-        public void DeleteTask(string uuid)
+        private string GetCompletedRunSql(TaskCompleted completed)
         {
-            var dao = new DAO();
-            var sql = "delete FROM [DB_9B8C9C_jarrus].[dbo].[GA_Tasks] where uuid = @UUID";
+            var run = completed.Run;
+            var config = completed.Config;
 
-            try
-            {
-                dao.OpenConnection(Server.JARRUS, sql);
+            var sb = new StringBuilder();
 
-                dao.AddParameter("@UUID", uuid);
+            sb.Append("INSERT INTO [dbo].[GA_Results]([Session],[Start],[End],[ComputerName],[SolutionStrategy],[ParentSelectionStrategy],[MutationStrategy],[CrossoverStrategy],[ImmigrationStrategy],[RetirementStrategy],[ScoringStrategy],[PopulationSize],[MaxGenerations],[CrossoverRate],[MutationRate],[ElitismRate],[ImmigrationRate],[DuplicationStrategy],[MaxRetirement],[ChildrenPerParents],[RandomSeed],[RandomPoolGenerationSeed],[BestScore],[BestScoreGeneration],[StringRepresentation]) ");
+            sb.Append(" VALUES ( ");
 
-                dao.Execute();
-            }
-            catch (Exception ex)
-            {
-                ErrorHandlingSystem.HandleError(ex, "Unable to delete UUID");
-            }
-            finally
-            {
-                dao.CloseConnection();
-            }
+            sb.Append("'" + config.Session + "',");
+            sb.Append("'" + run.Start.ToString("yyyy-MM-dd HH:mm:ss.fff", CultureInfo.InvariantCulture) + "',");
+            sb.Append("'" + run.End.ToString("yyyy-MM-dd HH:mm:ss.fff", CultureInfo.InvariantCulture) + "',");
+            sb.Append("'" + GetComputerName() + "',");
+            sb.Append("'" + config.Solution.GetType().AssemblyQualifiedName + "',");
+            sb.Append("'" + config.ParentSelectionStrategy.ToString() + "',");
+            sb.Append("'" + config.MutationStrategy.ToString() + "',");
+            sb.Append("'" + config.CrossoverStrategy.ToString() + "',");
+            sb.Append("'" + config.ImmigrationStrategy.ToString() + "',");
+            sb.Append("'" + config.RetirementStrategy.ToString() + "',");
+            sb.Append("'" + config.ScoringStrategy.ToString() + "',");
+            sb.Append(config.PopulationSize + ",");
+            sb.Append(config.MaxGenerations + ",");
+            sb.Append(config.CrossoverRate + ",");
+            sb.Append(config.MutationRate + ",");
+            sb.Append(config.ElitismRate + ",");
+            sb.Append(config.ImmigrationRate + ",");
+            sb.Append("'" + config.DuplicationStrategy.ToString() + "',");
+            sb.Append(config.MaxRetirement + ",");
+            sb.Append(config.ChildrenPerParents + ",");
+            sb.Append(config.RandomSeed + ",");
+            sb.Append(config.RandomPoolGenerationSeed + ",");
+            sb.Append(run.BestChromosome.FitnessScore + ",");
+            sb.Append(run.BestChromosome.GenerationNumber + ",");
+            sb.Append("'" + run.BestChromosome.ToString() + "'");
+
+            sb.Append(")");
+            return sb.ToString();
         }
-
-        private void AddGATaskParameters(DAO dao, GAProperties properties)
+        
+        private string GetDeleteTaskSql(string uuid)
         {
-            dao.AddParameter("@Session", properties.Session);
-            dao.AddParameter("@ComputerName", properties.ComputerName);
-
-            dao.AddParameter("@SolutionStrategy", properties.Solution.GetType().AssemblyQualifiedName);
-            dao.AddParameter("@ParentSelectionStrategy", properties.ParentSelectionStrategy.ToString());
-            dao.AddParameter("@MutationStrategy", properties.MutationStrategy.ToString());
-            dao.AddParameter("@ImmigrationStrategy", properties.ImmigrationStrategy.ToString());
-            dao.AddParameter("@RetirementStrategy", properties.RetirementStrategy.ToString());
-            dao.AddParameter("@CrossoverStrategy", properties.CrossoverStrategy.ToString());
-            dao.AddParameter("@ScoringStrategy", properties.ScoringStrategy.ToString());
-            dao.AddParameter("@DuplicationStrategy", properties.DuplicationStrategy.ToString());
-
-            dao.AddParameter("@MaxGenerations", properties.MaxGenerations);
-            dao.AddParameter("@CrossoverRate", properties.CrossoverRate);
-            dao.AddParameter("@MutationRate", properties.MutationRate);
-            dao.AddParameter("@ElitismRate", properties.ElitismRate);
-            dao.AddParameter("@ImmigrationRate", properties.ImmigrationRate);
-
-            dao.AddParameter("@PopulationSize", properties.PopulationSize);
-            dao.AddParameter("@MaxRetirement", properties.MaxRetirement);
-            dao.AddParameter("@ChildrenPerParents", properties.ChildrenPerParents);
-            dao.AddParameter("@RandomSeed", properties.RandomSeed);
-            dao.AddParameter("@RandomPoolGenerationSeed", properties.RandomPoolGenerationSeed);
+            return "delete FROM [DB_9B8C9C_jarrus].[dbo].[GA_Tasks] where uuid = '" + uuid + "'";
         }
     }
 }

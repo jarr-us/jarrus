@@ -11,6 +11,7 @@ using Jarrus.GA.Factory.Enums;
 using Jarrus.GA.Models;
 using Jarrus.GA.Solution;
 using GeneralHux.ErrorHandling;
+using System.Collections.Generic;
 
 namespace Jarrus.Display
 {
@@ -157,9 +158,10 @@ namespace Jarrus.Display
             UIUpdater.SetProgressBar(Form, progressBar, percentage);
         }
 
+        private JarrusTaskRepository _taskRepo = new JarrusTaskRepository();
         public void RunIteration()
         {
-            var task = _jarrusDAO.CheckoutATaskToRun();
+            var task = _taskRepo.GetTask();
             if (task == null || !task.IsValid()) { Thread.Sleep(1000); return; }
             var config = new GAConfiguration(task);
 
@@ -192,8 +194,7 @@ namespace Jarrus.Display
             MaxScoreSeen = GARun.Population.Chromosomes.Select(o => o.FitnessScore).Max();
 
             ga.Run();
-            _jarrusDAO.InsertCompletedRun(Config, GARun);
-            _jarrusDAO.DeleteTask(Config.TaskUUID);
+            _taskRepo.InsertCompletedRun(new TaskCompleted(GARun, Config));
 
             RunNumber++;
         }

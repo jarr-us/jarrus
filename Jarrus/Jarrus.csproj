@@ -28,7 +28,7 @@
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>install.htm</WebPage>
     <ApplicationRevision>1</ApplicationRevision>
-    <ApplicationVersion>4.4.1.%2a</ApplicationVersion>
+    <ApplicationVersion>4.4.2.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
@@ -93,7 +93,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\DAO.cs" />
     <Compile Include="Data\JarrusDAO.cs" />
+    <Compile Include="Data\JarrusTaskRepository.cs" />
+    <Compile Include="Data\TaskCompleted.cs" />
     <Compile Include="Display\FormControls.cs" />
     <Compile Include="Display\TaskRunnerDisplay.cs" />
     <Compile Include="MainForm.cs">
