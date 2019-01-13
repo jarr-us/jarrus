@@ -29,7 +29,7 @@ namespace Jarrus.GATests.BasicTypes.Populations
         public void ItCanPreventDuplication()
         {
             var config = GetUnorderedConfiguration();
-            config.DuplicationType = DuplicationType.Prevent;
+            config.DuplicationStrategy = DuplicationStrategy.Prevent;
             var population = GetUnorderedChromosomes(config);
 
             var up = new UnorderedPopulation(config, population, typeof(PhraseGene));

@@ -14,7 +14,7 @@ namespace Jarrus.GATests.BasicTypes.Populations
         {
             var population = GetExamplePopulationForOrdered();
             var config = GetConfigurationForOrdered();
-            config.DuplicationType = DuplicationType.Prevent;
+            config.DuplicationStrategy = DuplicationStrategy.Prevent;
 
             var orderedPopulation = new OrderedPopulation(config, population, population[0].Genes);
             Assert.IsNotNull(orderedPopulation);
@@ -29,7 +29,7 @@ namespace Jarrus.GATests.BasicTypes.Populations
         {
             var population = GetExamplePopulationForOrdered();
             var config = GetConfigurationForOrdered();
-            config.DuplicationType = DuplicationType.Prevent;
+            config.DuplicationStrategy = DuplicationStrategy.Prevent;
 
             var orderedPopulation = new OrderedPopulation(config, population, population[0].Genes);
             Assert.IsNotNull(orderedPopulation);

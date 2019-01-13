@@ -25,7 +25,7 @@ namespace Jarrus.GATests
         private void SetConfiguration()
         {
             _configuration = GATestHelper.GetTravelingSalesmanDefaultConfiguration();
-            _configuration.DuplicationType = DuplicationType.Prevent;
+            _configuration.DuplicationStrategy = DuplicationStrategy.Prevent;
             _configuration.PopulationSize = 10;
             _configuration.MaxRetirement = 2;
             _configuration.MaxGenerations = 5;
@@ -44,7 +44,7 @@ namespace Jarrus.GATests
         {
             var ga = new OrderedGeneticAlgorithm(_configuration, _exampleGenes);
             var runDetails = ga.Run();
-            Assert.AreEqual(_configuration.MaxGenerations + 1, ga.Generation);
+            Assert.AreEqual(_configuration.MaxGenerations, runDetails.CurrentGeneration);
         }
 
         [TestMethod]
@@ -52,7 +52,7 @@ namespace Jarrus.GATests
         {
             var ga = new OrderedGeneticAlgorithm(_configuration, _exampleGenes);
             var runDetails = ga.Run();
-            Assert.AreEqual(_configuration.MaxGenerations + 1, ga.Generation);
+            Assert.AreEqual(_configuration.MaxGenerations, runDetails.CurrentGeneration);
 
             Assert.AreEqual(LastName.Bernard, runDetails.BestChromosome.LastName);
             Assert.AreEqual(80, runDetails.BestChromosome.FitnessScore);
@@ -63,7 +63,7 @@ namespace Jarrus.GATests
         {
             var ga = new OrderedGeneticAlgorithm(_configuration, _exampleGenes);
             var runDetails = ga.Run();
-            Assert.AreEqual(_configuration.MaxGenerations + 1, ga.Generation);
+            Assert.AreEqual(_configuration.MaxGenerations, runDetails.CurrentGeneration);
 
             Assert.AreEqual(LastName.Bernard, runDetails.BestChromosome.LastName);
             Assert.AreEqual(FirstName.Anakin, runDetails.BestChromosome.FirstName);
@@ -71,8 +71,8 @@ namespace Jarrus.GATests
 
             var lowest = runDetails.Population.Chromosomes.Select(o => o.FitnessScore).Min();
             var lastBestSeen = runDetails.Population.Chromosomes.Where(o => o.FitnessScore == lowest).First();
-            Assert.AreEqual(LastName.Fry, lastBestSeen.LastName);
-            Assert.AreEqual(FirstName.Ira, lastBestSeen.FirstName);
+            Assert.AreEqual(LastName.Strickland, lastBestSeen.LastName);
+            Assert.AreEqual(FirstName.Aylin, lastBestSeen.FirstName);
         }
 
         [TestMethod]
@@ -81,7 +81,7 @@ namespace Jarrus.GATests
             var ga = new OrderedGeneticAlgorithm(_configuration, _exampleGenes);
             var run = ga.Run();
 
-            Assert.AreEqual(_configuration.MaxGenerations + 1, ga.Generation);
+            Assert.AreEqual(_configuration.MaxGenerations, run.CurrentGeneration);
             Assert.AreNotEqual(-1, run.BestChromosome.FitnessScore);
         }
 
@@ -91,7 +91,7 @@ namespace Jarrus.GATests
             var ga = new OrderedGeneticAlgorithm(_configuration, _exampleGenes);
             var run = ga.Run();
 
-            Assert.AreEqual(_configuration.MaxGenerations + 1, ga.Generation);
+            Assert.AreEqual(_configuration.MaxGenerations, run.CurrentGeneration);
             Assert.IsTrue(run.GetTotalMSToRun() >= 0);
         }
 

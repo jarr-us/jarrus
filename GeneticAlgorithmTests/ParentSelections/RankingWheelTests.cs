@@ -11,22 +11,33 @@ namespace Jarrus.GATests.ParentSelections
     [TestClass]
     public class RankingWheelTests
     {
-        private RouletteWheelSelection _roulette;
+        private RouletteWheelSelection _rankSelection;
         private GAConfiguration _config;
         private Random _random = new Random(22);
 
         [TestInitialize]
         public void BeforeEach()
         {
-            _roulette = new RouletteWheelSelection();
+            _rankSelection = new RouletteWheelSelection();
             _config = GetConfiguration();
+        }
+
+        [TestMethod]
+        public void ItCanSetupRankSelection()
+        {
+            _config.ParentSelectionStrategy = ParentSelectionStrategy.Rank;
+            var rankings = GetRankingsForStep(1);
+            ItSetsUpTheRankingsInOrder(rankings);
+
+            _rankSelection.Setup(GetZeroesAndOnesChromosomes(), _config);
+            ItSetsUpTheRankingsInOrder(_rankSelection.Rankings);
         }
 
         [TestMethod]
         public void ItCanSetupTheRankings()
         {
-            _roulette.Setup(GetStepChromosomes(1), _config);
-            Assert.AreEqual(100, _roulette.Rankings.Count);
+            _rankSelection.Setup(GetStepChromosomes(1), _config);
+            Assert.AreEqual(100, _rankSelection.Rankings.Count);
         }
 
         [TestMethod]
@@ -39,8 +50,8 @@ namespace Jarrus.GATests.ParentSelections
         [TestMethod]
         public void ItSupportsZeroFitnessScores_Step()
         {
-            _roulette.Setup(GetZeroesAndOnesChromosomes(), _config);
-            ItCanSupportZeroFitnessScores(_roulette.Rankings);
+            _rankSelection.Setup(GetZeroesAndOnesChromosomes(), _config);
+            ItCanSupportZeroFitnessScores(_rankSelection.Rankings);
         }
 
         [TestMethod]
@@ -53,14 +64,14 @@ namespace Jarrus.GATests.ParentSelections
         [TestMethod]
         public void ItSupportsZeroFitnessScores_Equal()
         {
-            _roulette.Setup(GetZeroesAndOnesChromosomes(), _config);
-            ItCanSupportZeroFitnessScores(_roulette.Rankings);
+            _rankSelection.Setup(GetZeroesAndOnesChromosomes(), _config);
+            ItCanSupportZeroFitnessScores(_rankSelection.Rankings);
         }
 
         [TestMethod]
         public void ItSupportsLowestFitnessScoresBeingBest()
         {
-            var rankings = GetRankingsForStep(1, ScoringType.Lowest);
+            var rankings = GetRankingsForStep(1, ScoringStrategy.Lowest);
             ItSetsUpTheRankingsInOrder(rankings);
         }
         
@@ -105,18 +116,18 @@ namespace Jarrus.GATests.ParentSelections
             }
         }
 
-        private List<double> GetRankingsForStep(int offset = 0, ScoringType scoringType = ScoringType.Highest)
+        private List<double> GetRankingsForStep(int offset = 0, ScoringStrategy scoringType = ScoringStrategy.Highest)
         {
-            _config.ScoringType = scoringType;
-            _roulette.Setup(GetStepChromosomes(offset), _config);
-            return _roulette.Rankings;
+            _config.ScoringStrategy = scoringType;
+            _rankSelection.Setup(GetStepChromosomes(offset), _config);
+            return _rankSelection.Rankings;
         }
 
         private List<double> GetRankingsForEqual(int offset = 0)
         {
-            _config.ScoringType = ScoringType.Highest;
-            _roulette.Setup(GetStepChromosomes(offset), _config);
-            return _roulette.Rankings;
+            _config.ScoringStrategy = ScoringStrategy.Highest;
+            _rankSelection.Setup(GetStepChromosomes(offset), _config);
+            return _rankSelection.Rankings;
         }
 
         private Chromosome[] GetStepChromosomes(int offset = 0)

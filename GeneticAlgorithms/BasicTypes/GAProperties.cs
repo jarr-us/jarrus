@@ -5,13 +5,13 @@ namespace Jarrus.GA.Models
 {
     public abstract class GAProperties
     {
-        public ParentSelectionType ParentSelectionType;
-        public MutationType MutationType;
-        public CrossoverType CrossoverType;
-        public ImmigrationType ImmigrationType = ImmigrationType.None;
-        public RetirementType RetirementType = RetirementType.None;
-        public ScoringType ScoringType = ScoringType.Highest;
-        public DuplicationType DuplicationType = DuplicationType.Prevent;
+        public ParentSelectionStrategy ParentSelectionStrategy;
+        public MutationStrategy MutationStrategy;
+        public CrossoverStrategy CrossoverStrategy;
+        public ImmigrationStrategy ImmigrationStrategy = ImmigrationStrategy.None;
+        public RetirementStrategy RetirementStrategy = RetirementStrategy.None;
+        public ScoringStrategy ScoringStrategy = ScoringStrategy.Highest;
+        public DuplicationStrategy DuplicationStrategy = DuplicationStrategy.Prevent;
 
         public JarrusSolution Solution;
 

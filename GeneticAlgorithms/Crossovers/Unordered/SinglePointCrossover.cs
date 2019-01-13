@@ -11,7 +11,7 @@ namespace Jarrus.GA.Crossovers.Unordered
             var childOne = new UnorderedChromosome(geneCount);
             var childTwo = new UnorderedChromosome(geneCount);
 
-            var crossoverPoint = configuration.GetRandomInteger(1, father.Genes.Length - 2);
+            var crossoverPoint = configuration.GetRandomInteger(1, father.Genes.Length - 1);
 
             for (int i = 0; i < geneCount; i++)
             {

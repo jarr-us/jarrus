@@ -10,7 +10,7 @@ namespace Jarrus.GATests.Factory.Enums
         [TestMethod]
         public void ItOnlyContainsPositiveNumbers()
         {
-            foreach (MutationType type in Enum.GetValues(typeof(MutationType)))
+            foreach (MutationStrategy type in Enum.GetValues(typeof(MutationStrategy)))
             {
                 Assert.IsTrue((int)type > 0);
             }
@@ -19,7 +19,7 @@ namespace Jarrus.GATests.Factory.Enums
         [TestMethod]
         public void ItDoesNotContainAValueForZero()
         {
-            foreach (MutationType type in Enum.GetValues(typeof(MutationType)))
+            foreach (MutationStrategy type in Enum.GetValues(typeof(MutationStrategy)))
             {
                 Assert.IsTrue((int)type != 0);
             }

@@ -10,7 +10,7 @@ namespace Jarrus.GATests.Factory.Enums
         [TestMethod]
         public void ItOnlyContainsPositiveNumbers()
         {
-            foreach (ParentSelectionType type in Enum.GetValues(typeof(ParentSelectionType)))
+            foreach (ParentSelectionStrategy type in Enum.GetValues(typeof(ParentSelectionStrategy)))
             {
                 Assert.IsTrue((int)type > 0);
             }
@@ -19,7 +19,7 @@ namespace Jarrus.GATests.Factory.Enums
         [TestMethod]
         public void ItDoesNotContainAValueForZero()
         {
-            foreach (ParentSelectionType type in Enum.GetValues(typeof(ParentSelectionType)))
+            foreach (ParentSelectionStrategy type in Enum.GetValues(typeof(ParentSelectionStrategy)))
             {
                 Assert.IsTrue((int)type != 0);
             }

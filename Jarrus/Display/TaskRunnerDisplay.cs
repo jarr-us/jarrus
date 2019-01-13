@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using Jarrus.GA.Factory.Enums;
 using Jarrus.GA.Models;
 using Jarrus.GA.Solution;
+using GeneralHux.ErrorHandling;
 
 namespace Jarrus.Display
 {
@@ -70,7 +71,7 @@ namespace Jarrus.Display
             if (population.Chromosomes.Count() == 0) { return; }
 
             var currentBestScore = population.Chromosomes.Min(o => o.FitnessScore);
-            if (Config.ScoringType == ScoringType.Highest) { currentBestScore = population.Chromosomes.Max(o => o.FitnessScore); }
+            if (Config.ScoringStrategy == ScoringStrategy.Highest) { currentBestScore = population.Chromosomes.Max(o => o.FitnessScore); }
 
             var currentBest = population.Chromosomes.Where(o => o.FitnessScore == currentBestScore).First();
 
@@ -117,13 +118,13 @@ namespace Jarrus.Display
             UIUpdater.SetText(Form, Controls.ConfigMaxLifeLbl, Config.MaxRetirement + "");
             UIUpdater.SetText(Form, Controls.ConfigChildrenPerCoupleLbl, Config.ChildrenPerParents + "");
 
-            UIUpdater.SetText(Form, Controls.ConfigParentSelectionLbl, Config.ParentSelectionType.ToString());
-            UIUpdater.SetText(Form, Controls.ConfigCrossoverLbl, Config.CrossoverType.ToString());
-            UIUpdater.SetText(Form, Controls.ConfigMutationLbl, Config.MutationType.ToString());
-            UIUpdater.SetText(Form, Controls.ConfigRetirementLbl, Config.RetirementType.ToString());
-            UIUpdater.SetText(Form, Controls.ConfigImmigrationLbl, Config.ImmigrationType.ToString());
-            UIUpdater.SetText(Form, Controls.ConfigScoringLbl, Config.ScoringType.ToString());
-            UIUpdater.SetText(Form, Controls.ConfigDuplicationLbl, Config.DuplicationType.ToString());
+            UIUpdater.SetText(Form, Controls.ConfigParentSelectionLbl, Config.ParentSelectionStrategy.ToString());
+            UIUpdater.SetText(Form, Controls.ConfigCrossoverLbl, Config.CrossoverStrategy.ToString());
+            UIUpdater.SetText(Form, Controls.ConfigMutationLbl, Config.MutationStrategy.ToString());
+            UIUpdater.SetText(Form, Controls.ConfigRetirementLbl, Config.RetirementStrategy.ToString());
+            UIUpdater.SetText(Form, Controls.ConfigImmigrationLbl, Config.ImmigrationStrategy.ToString());
+            UIUpdater.SetText(Form, Controls.ConfigScoringLbl, Config.ScoringStrategy.ToString());
+            UIUpdater.SetText(Form, Controls.ConfigDuplicationLbl, Config.DuplicationStrategy.ToString());
         }
 
         private void DrawFamilyDetails()
@@ -173,9 +174,14 @@ namespace Jarrus.Display
             var solution = (JarrusUnorderedSolution)config.Solution;
             var ga = new UnorderedGeneticAlgorithm(config, solution.GetGeneType());
 
-            Config = config;
-            GARun = ga.GARun;
-            RunConfiguration(ga);
+            try {
+                Config = config;
+                GARun = ga.GARun;
+                RunConfiguration(ga);
+            } catch (Exception ex)
+            {
+                try { ErrorHandlingSystem.HandleError(ex, "Something failed in the process."); } catch (Exception) {  }
+            }            
         }
 
         private void RunConfiguration(GeneticAlgorithm ga)

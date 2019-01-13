@@ -113,12 +113,12 @@ namespace Jarrus.GATests.Models
         {
             var task = new GATask(solution)
             {
-                ParentSelectionType = ParentSelectionType.RouletteWheel,
-                MutationType = MutationType.Swap,
-                CrossoverType = CrossoverType.Order,
-                RetirementType = RetirementType.MaxAge,
-                ImmigrationType = ImmigrationType.Dynamic,
-                DuplicationType = DuplicationType.Allow,
+                ParentSelectionStrategy = ParentSelectionStrategy.RouletteWheel,
+                MutationStrategy = MutationStrategy.Swap,
+                CrossoverStrategy = CrossoverStrategy.Order,
+                RetirementStrategy = RetirementStrategy.MaxAge,
+                ImmigrationStrategy = ImmigrationStrategy.Dynamic,
+                DuplicationStrategy = DuplicationStrategy.Allow,
 
                 MaxRetirement = 10,
                 PopulationSize = 100,
@@ -126,7 +126,7 @@ namespace Jarrus.GATests.Models
                 RandomSeed = 13,
                 ChildrenPerParents = 2,
                 Session = "Test",
-                ScoringType = ScoringType.Lowest,
+                ScoringStrategy = ScoringStrategy.Lowest,
                 CrossoverRate = 0.4321,
                 MutationRate = 0.1234,
                 ElitismRate = 0.123,
@@ -145,13 +145,13 @@ namespace Jarrus.GATests.Models
         {
             var task = new GATask(solution)
             {
-                ParentSelectionType = ParentSelectionType.RouletteWheel,
-                MutationType = MutationType.Random,
-                CrossoverType = CrossoverType.TwoPoint,
-                RetirementType = RetirementType.MaxAge,
-                ImmigrationType = ImmigrationType.Dynamic,
-                DuplicationType = DuplicationType.Allow,
-                ScoringType = ScoringType.Lowest,
+                ParentSelectionStrategy = ParentSelectionStrategy.RouletteWheel,
+                MutationStrategy = MutationStrategy.Random,
+                CrossoverStrategy = CrossoverStrategy.TwoPoint,
+                RetirementStrategy = RetirementStrategy.MaxAge,
+                ImmigrationStrategy = ImmigrationStrategy.Dynamic,
+                DuplicationStrategy = DuplicationStrategy.Allow,
+                ScoringStrategy = ScoringStrategy.Lowest,
 
                 MaxRetirement = 10,
                 PopulationSize = 100,

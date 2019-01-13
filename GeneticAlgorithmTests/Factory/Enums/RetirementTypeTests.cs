@@ -23,7 +23,7 @@ namespace Jarrus.GATests.Factory.Enums
         [TestMethod]
         public void ItOnlyContainsPositiveNumbers()
         {
-            foreach (RetirementType type in Enum.GetValues(typeof(RetirementType)))
+            foreach (RetirementStrategy type in Enum.GetValues(typeof(RetirementStrategy)))
             {
                 Assert.IsTrue((int)type > 0);
             }
@@ -32,7 +32,7 @@ namespace Jarrus.GATests.Factory.Enums
         [TestMethod]
         public void ItDoesNotContainAValueForZero()
         {
-            foreach (RetirementType type in Enum.GetValues(typeof(RetirementType)))
+            foreach (RetirementStrategy type in Enum.GetValues(typeof(RetirementStrategy)))
             {
                 Assert.IsTrue((int)type != 0);
             }
@@ -41,7 +41,7 @@ namespace Jarrus.GATests.Factory.Enums
         [TestMethod]
         public void ItRetiresPeopleByAge()
         {
-            _config.RetirementType = RetirementType.MaxAge;
+            _config.RetirementStrategy = RetirementStrategy.MaxAge;
             _config.MaxRetirement = 2;
 
             var gaRun = _solution.Run(_config);
@@ -56,9 +56,31 @@ namespace Jarrus.GATests.Factory.Enums
         }
 
         [TestMethod]
+        public void ItCanDetermineIfAChromosomeItShouldRetireByAge()
+        {
+            _config.RetirementStrategy = RetirementStrategy.MaxAge;
+            var chromosome = new OrderedChromosome(8);
+            chromosome.Age = 10;
+
+            Assert.AreEqual(true, chromosome.ShouldRetire(_config));
+        }
+
+        [TestMethod]
+        public void ItCanDetermineIfAChromosomeItShouldRetireByChildrenSired()
+        {
+            _config.RetirementStrategy = RetirementStrategy.MaxChildren;
+            _config.MaxRetirement = 9;
+            var chromosome = new OrderedChromosome(8);
+            chromosome.Age = 0;
+            chromosome.Children = 100;
+
+            Assert.AreEqual(true, chromosome.ShouldRetire(_config));
+        }
+
+        [TestMethod]
         public void ItCanNotRetirePeople()
         {
-            _config.RetirementType = RetirementType.None;
+            _config.RetirementStrategy = RetirementStrategy.None;
 
             var gaRun = _solution.Run(_config);
             Assert.AreEqual(true, gaRun.BestChromosome.FitnessScore > 0);
@@ -69,7 +91,7 @@ namespace Jarrus.GATests.Factory.Enums
         [TestMethod]
         public void ItRetiresPeopleByChildrenSired()
         {
-            _config.RetirementType = RetirementType.MaxChildren;
+            _config.RetirementStrategy = RetirementStrategy.MaxChildren;
             _config.MaxRetirement = 2;
 
             var gaRun = _solution.Run(_config);

@@ -10,7 +10,7 @@ namespace Jarrus.GATests.Factory.Enums
         [TestMethod]
         public void ItOnlyContainsPositiveNumbers()
         {
-            foreach (CrossoverType type in Enum.GetValues(typeof(CrossoverType)))
+            foreach (CrossoverStrategy type in Enum.GetValues(typeof(CrossoverStrategy)))
             {
                 Assert.IsTrue((int) type > 0);
             }
@@ -19,7 +19,7 @@ namespace Jarrus.GATests.Factory.Enums
         [TestMethod]
         public void ItDoesNotContainAValueForZero()
         {
-            foreach (CrossoverType type in Enum.GetValues(typeof(CrossoverType)))
+            foreach (CrossoverStrategy type in Enum.GetValues(typeof(CrossoverStrategy)))
             {
                 Assert.IsTrue((int)type != 0);
             }

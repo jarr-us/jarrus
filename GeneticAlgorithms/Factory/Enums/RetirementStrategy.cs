@@ -1,6 +1,6 @@
 ﻿namespace Jarrus.GA.Factory.Enums
 {
-    public enum RetirementType
+    public enum RetirementStrategy
     {
         None = 1,
         MaxAge = 2,

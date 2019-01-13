@@ -51,9 +51,9 @@ namespace Jarrus.GA.Models
 
         private void SetupStrategies(GATask task)
         {
-            Crossover = JarrusObjectFactory.Instance.GetCrossover(CrossoverType);
-            Mutation = JarrusObjectFactory.Instance.GetMutation(MutationType);
-            ParentSelection = JarrusObjectFactory.Instance.GetParentSelection(ParentSelectionType);
+            Crossover = JarrusObjectFactory.Instance.GetCrossover(CrossoverStrategy);
+            Mutation = JarrusObjectFactory.Instance.GetMutation(MutationStrategy);
+            ParentSelection = JarrusObjectFactory.Instance.GetParentSelection(ParentSelectionStrategy);
         }
 
         private void SetupRandomVariables()
@@ -86,16 +86,16 @@ namespace Jarrus.GA.Models
                 throw new ArgumentException("GAConfiguration rates must be between 0 and 1");
             }
 
-            if (RetirementType != Factory.Enums.RetirementType.None)
+            if (RetirementStrategy != Factory.Enums.RetirementStrategy.None)
             {
-                if (MaxRetirement <= 0) { throw new ArgumentException("Retirement maximum must be above 0 for this type of retirement type"); }
+                if (MaxRetirement <= 1) { throw new ArgumentException("Retirement maximum must be above 1 for this type of retirement type"); }
             }
 
-            if (!Enum.IsDefined(RetirementType.GetType(), (int) RetirementType)) { throw new ArgumentException("RetirementType must be defined"); }
-            if (!Enum.IsDefined(CrossoverType.GetType(), (int)CrossoverType)) { throw new ArgumentException("CrossoverType must be defined"); }
-            if (!Enum.IsDefined(ImmigrationType.GetType(), (int)ImmigrationType)) { throw new ArgumentException("ImmigrationType must be defined"); }
-            if (!Enum.IsDefined(MutationType.GetType(), (int)MutationType)) { throw new ArgumentException("MutationType must be defined"); }
-            if (!Enum.IsDefined(ParentSelectionType.GetType(), (int)ParentSelectionType)) { throw new ArgumentException("ParentSelectionType must be defined"); }
+            if (!Enum.IsDefined(RetirementStrategy.GetType(), (int) RetirementStrategy)) { throw new ArgumentException("RetirementType must be defined"); }
+            if (!Enum.IsDefined(CrossoverStrategy.GetType(), (int)CrossoverStrategy)) { throw new ArgumentException("CrossoverType must be defined"); }
+            if (!Enum.IsDefined(ImmigrationStrategy.GetType(), (int)ImmigrationStrategy)) { throw new ArgumentException("ImmigrationType must be defined"); }
+            if (!Enum.IsDefined(MutationStrategy.GetType(), (int)MutationStrategy)) { throw new ArgumentException("MutationType must be defined"); }
+            if (!Enum.IsDefined(ParentSelectionStrategy.GetType(), (int)ParentSelectionStrategy)) { throw new ArgumentException("ParentSelectionType must be defined"); }
         }
 
         public void ValidateFactoryObjects()

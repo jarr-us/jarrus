@@ -42,7 +42,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BasicTypes\Attributes\GeneRangeAttribute.cs" />
     <Compile Include="BasicTypes\Chromosomes\OrderedChromosome.cs" />
     <Compile Include="BasicTypes\Chromosomes\UnorderedChromosome.cs" />
     <Compile Include="BasicTypes\GAProperties.cs" />
@@ -64,13 +63,13 @@
     <Compile Include="Crossovers\Unordered\UniformCrossover.cs" />
     <Compile Include="Enums\FirstName.cs" />
     <Compile Include="Enums\LastName.cs" />
-    <Compile Include="Factory\Enums\CrossoverType.cs" />
-    <Compile Include="Factory\Enums\DuplicationType.cs" />
-    <Compile Include="Factory\Enums\ImmigrationType.cs" />
-    <Compile Include="Factory\Enums\MutationType.cs" />
+    <Compile Include="Factory\Enums\CrossoverStrategy.cs" />
+    <Compile Include="Factory\Enums\DuplicationStrategy.cs" />
+    <Compile Include="Factory\Enums\ImmigrationStrategy.cs" />
+    <Compile Include="Factory\Enums\MutationStrategy.cs" />
     <Compile Include="Factory\Enums\ParentSelectionType.cs" />
-    <Compile Include="Factory\Enums\RetirementType.cs" />
-    <Compile Include="Factory\Enums\ScoringType.cs" />
+    <Compile Include="Factory\Enums\RetirementStrategy.cs" />
+    <Compile Include="Factory\Enums\ScoringStrategy.cs" />
     <Compile Include="Factory\JarrusObjectFactory.cs" />
     <Compile Include="BasicTypes\Configurations\GAConfiguration.cs" />
     <Compile Include="BasicTypes\GARun.cs" />
@@ -87,8 +86,14 @@
     <Compile Include="ParentSelections\ChromosomeParents.cs" />
     <Compile Include="ParentSelections\ParentSelection.cs" />
     <Compile Include="ParentSelections\RankingWheel.cs" />
+    <Compile Include="ParentSelections\RankSelection.cs" />
     <Compile Include="ParentSelections\RouletteWheelSelection.cs" />
     <Compile Include="ParentSelections\StochasticUniversalSamplingSelection.cs" />
+    <Compile Include="ParentSelections\TournamentFiveSelection.cs" />
+    <Compile Include="ParentSelections\TournamentFourSelection.cs" />
+    <Compile Include="ParentSelections\TournamentSelection.cs" />
+    <Compile Include="ParentSelections\TournamentThreeSelection.cs" />
+    <Compile Include="ParentSelections\TournamentTwoSelection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Solution\JarrusOrderedSolution.cs" />
     <Compile Include="Solution\JarrusSolution.cs" />

@@ -36,9 +36,9 @@ namespace Jarrus.GATests.Utility
             var task = GATestHelper.GetDummyTravelingSalesmanTask();
             var config = new GAConfiguration(task);
 
-            Assert.AreEqual(task.MutationType, config.MutationType);
-            Assert.AreEqual(task.CrossoverType, config.CrossoverType);
-            Assert.AreEqual(task.ParentSelectionType, config.ParentSelectionType);
+            Assert.AreEqual(task.MutationStrategy, config.MutationStrategy);
+            Assert.AreEqual(task.CrossoverStrategy, config.CrossoverStrategy);
+            Assert.AreEqual(task.ParentSelectionStrategy, config.ParentSelectionStrategy);
         }
     }
 }

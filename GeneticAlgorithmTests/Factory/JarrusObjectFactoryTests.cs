@@ -12,14 +12,14 @@ namespace Jarrus.GATests.Factory
         [TestMethod]
         public void ItCanGetACrossover()
         {
-            var order = JarrusObjectFactory.Instance.GetCrossover(CrossoverType.Order);
+            var order = JarrusObjectFactory.Instance.GetCrossover(CrossoverStrategy.Order);
             Assert.IsNotNull(order);
         }
 
         [TestMethod]
         public void ItCanGetAllCrossovers()
         {
-            foreach (CrossoverType type in Enum.GetValues(typeof(CrossoverType)))
+            foreach (CrossoverStrategy type in Enum.GetValues(typeof(CrossoverStrategy)))
             {
                 var crossover = JarrusObjectFactory.Instance.GetCrossover(type);
                 Assert.IsNotNull(crossover);
@@ -31,36 +31,36 @@ namespace Jarrus.GATests.Factory
         {
             var hashset = new HashSet<string>();
 
-            foreach (CrossoverType type in Enum.GetValues(typeof(CrossoverType)))
+            foreach (CrossoverStrategy type in Enum.GetValues(typeof(CrossoverStrategy)))
             {
                 var crossover = JarrusObjectFactory.Instance.GetCrossover(type);
                 Assert.IsNotNull(crossover);
                 hashset.Add(crossover.GetType().AssemblyQualifiedName);
             }
 
-            Assert.AreEqual(hashset.Count, Enum.GetValues(typeof(CrossoverType)).Length);
+            Assert.AreEqual(hashset.Count, Enum.GetValues(typeof(CrossoverStrategy)).Length);
         }
 
         [TestMethod]
         public void ItCanGetAMutation()
         {
-            var obj = JarrusObjectFactory.Instance.GetMutation(MutationType.Swap);
+            var obj = JarrusObjectFactory.Instance.GetMutation(MutationStrategy.Swap);
             Assert.IsNotNull(obj);
         }
 
         [TestMethod]
         public void ItSetsTheMutationTypeWhenGettingAMutation()
         {
-            var obj = JarrusObjectFactory.Instance.GetMutation(MutationType.Swap);
+            var obj = JarrusObjectFactory.Instance.GetMutation(MutationStrategy.Swap);
             Assert.IsNotNull(obj);
 
-            Assert.AreEqual(MutationType.Swap, obj.MutationType);
+            Assert.AreEqual(MutationStrategy.Swap, obj.MutationType);
         }
 
         [TestMethod]
         public void ItCanGetAllMutationsForOrderedTypes()
         {
-            foreach (MutationType type in Enum.GetValues(typeof(MutationType)))
+            foreach (MutationStrategy type in Enum.GetValues(typeof(MutationStrategy)))
             {
                 var obj = JarrusObjectFactory.Instance.GetMutation(type);
                 Assert.IsNotNull(obj);
@@ -72,7 +72,7 @@ namespace Jarrus.GATests.Factory
         {
             var hashset = new HashSet<string>();
 
-            foreach (MutationType type in Enum.GetValues(typeof(MutationType)))
+            foreach (MutationStrategy type in Enum.GetValues(typeof(MutationStrategy)))
             {
                 var obj = JarrusObjectFactory.Instance.GetMutation(type);
                 Assert.IsNotNull(obj);
@@ -83,14 +83,14 @@ namespace Jarrus.GATests.Factory
         [TestMethod]
         public void ItCanGetAParentSelection()
         {
-            var obj = JarrusObjectFactory.Instance.GetParentSelection(ParentSelectionType.RouletteWheel);
+            var obj = JarrusObjectFactory.Instance.GetParentSelection(ParentSelectionStrategy.RouletteWheel);
             Assert.IsNotNull(obj);
         }
 
         [TestMethod]
         public void ItCanGetAllParentSelections()
         {
-            foreach (ParentSelectionType type in Enum.GetValues(typeof(ParentSelectionType)))
+            foreach (ParentSelectionStrategy type in Enum.GetValues(typeof(ParentSelectionStrategy)))
             {
                 var obj = JarrusObjectFactory.Instance.GetParentSelection(type);
                 Assert.IsNotNull(obj);
@@ -102,14 +102,14 @@ namespace Jarrus.GATests.Factory
         {
             var hashset = new HashSet<string>();
 
-            foreach (ParentSelectionType type in Enum.GetValues(typeof(ParentSelectionType)))
+            foreach (ParentSelectionStrategy type in Enum.GetValues(typeof(ParentSelectionStrategy)))
             {
                 var obj = JarrusObjectFactory.Instance.GetParentSelection(type);
                 Assert.IsNotNull(obj);
                 hashset.Add(obj.GetType().AssemblyQualifiedName);
             }
 
-            Assert.AreEqual(hashset.Count, Enum.GetValues(typeof(ParentSelectionType)).Length);
+            Assert.AreEqual(hashset.Count, Enum.GetValues(typeof(ParentSelectionStrategy)).Length);
         }
     }
 }

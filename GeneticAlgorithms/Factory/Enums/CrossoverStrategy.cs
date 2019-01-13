@@ -1,6 +1,6 @@
 ﻿namespace Jarrus.GA.Factory.Enums
 {
-    public enum CrossoverType
+    public enum CrossoverStrategy
     {
         Order = 1, 
         Cycle = 2,

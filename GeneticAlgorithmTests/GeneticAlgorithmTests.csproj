@@ -94,6 +94,7 @@
     <Compile Include="ParentSelections\RouletteWheelSelectionTests.cs" />
     <Compile Include="ParentSelections\StochasticUniversalSamplingSelectionTests.cs" />
     <Compile Include="ParentSelections\RankingWheelTests.cs" />
+    <Compile Include="ParentSelections\TournamentSelectionTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BasicTypes\Configurations\GAConfigurationTests.cs" />
     <Compile Include="BasicTypes\Chromosomes\ChromosomeTests.cs" />

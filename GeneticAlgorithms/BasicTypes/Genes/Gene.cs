@@ -18,18 +18,18 @@ namespace Jarrus.GA.Models
         public Gene(Random random)
         {
             _random = random ?? throw new ArgumentException("When instantiating a Gene, the random object may not be null.");
-            Mutate(MutationType.Random);
+            Mutate(MutationStrategy.Random);
         }
 
-        public void Mutate(MutationType type) {
+        public void Mutate(MutationStrategy type) {
             PerformRandomMutation(type);
             PerformBoundaryMutation(type);
             PerformFlipMutation(type);
         }
         
-        private void PerformRandomMutation(MutationType type)
+        private void PerformRandomMutation(MutationStrategy type)
         {
-            if (type != MutationType.Random) { return; }
+            if (type != MutationStrategy.Random) { return; }
 
             var attributes = new List<object>();
 
@@ -49,9 +49,9 @@ namespace Jarrus.GA.Models
             }
         }
 
-        private void PerformBoundaryMutation(MutationType type)
+        private void PerformBoundaryMutation(MutationStrategy type)
         {
-            if (type != MutationType.Boundary) { return; }
+            if (type != MutationStrategy.Boundary) { return; }
 
             var attributes = new List<object>();
 
@@ -72,9 +72,9 @@ namespace Jarrus.GA.Models
             }
         }
 
-        private void PerformFlipMutation(MutationType type)
+        private void PerformFlipMutation(MutationStrategy type)
         {
-            if (type != MutationType.Flip) { return; }
+            if (type != MutationStrategy.Flip) { return; }
 
             var attributes = new List<object>();
 

@@ -58,15 +58,15 @@ namespace Jarrus.GA.Models
 
         public bool ShouldRetire(GAConfiguration config)
         {
-            switch(config.RetirementType)
+            switch(config.RetirementStrategy)
             {
-                case RetirementType.None:
+                case RetirementStrategy.None:
                     return false;
 
-                case RetirementType.MaxAge:
+                case RetirementStrategy.MaxAge:
                     return Age >= config.MaxRetirement && config.MaxRetirement != 0;
 
-                case RetirementType.MaxChildren:
+                case RetirementStrategy.MaxChildren:
                     return Children >= config.MaxRetirement && config.MaxRetirement != 0;
             }
 

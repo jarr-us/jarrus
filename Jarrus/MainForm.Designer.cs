@@ -72,6 +72,8 @@
             this.family3Lbl = new System.Windows.Forms.Label();
             this.family2Lbl = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.configImmigrationRateLbl = new System.Windows.Forms.Label();
+            this.label28 = new System.Windows.Forms.Label();
             this.configChildrenPerCoupleLbl = new System.Windows.Forms.Label();
             this.label23 = new System.Windows.Forms.Label();
             this.configMutationRateLbl = new System.Windows.Forms.Label();
@@ -112,8 +114,6 @@
             this.retiredNumberLbl = new System.Windows.Forms.Label();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.poolScoreChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.configImmigrationRateLbl = new System.Windows.Forms.Label();
-            this.label28 = new System.Windows.Forms.Label();
             this.menuStrip.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -535,6 +535,25 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Configuration";
             // 
+            // configImmigrationRateLbl
+            // 
+            this.configImmigrationRateLbl.Location = new System.Drawing.Point(97, 84);
+            this.configImmigrationRateLbl.Name = "configImmigrationRateLbl";
+            this.configImmigrationRateLbl.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.configImmigrationRateLbl.Size = new System.Drawing.Size(89, 13);
+            this.configImmigrationRateLbl.TabIndex = 27;
+            this.configImmigrationRateLbl.Text = "0";
+            this.configImmigrationRateLbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label28
+            // 
+            this.label28.AutoSize = true;
+            this.label28.Location = new System.Drawing.Point(6, 84);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(86, 13);
+            this.label28.TabIndex = 26;
+            this.label28.Text = "Immigration Rate";
+            // 
             // configChildrenPerCoupleLbl
             // 
             this.configChildrenPerCoupleLbl.Location = new System.Drawing.Point(97, 110);
@@ -706,9 +725,9 @@
             this.label30.AutoSize = true;
             this.label30.Location = new System.Drawing.Point(6, 102);
             this.label30.Name = "label30";
-            this.label30.Size = new System.Drawing.Size(87, 13);
+            this.label30.Size = new System.Drawing.Size(60, 13);
             this.label30.TabIndex = 38;
-            this.label30.Text = "Duplication Type";
+            this.label30.Text = "Duplication";
             // 
             // configScoringLbl
             // 
@@ -725,9 +744,9 @@
             this.label26.AutoSize = true;
             this.label26.Location = new System.Drawing.Point(6, 89);
             this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(70, 13);
+            this.label26.Size = new System.Drawing.Size(43, 13);
             this.label26.TabIndex = 36;
-            this.label26.Text = "Scoring Type";
+            this.label26.Text = "Scoring";
             // 
             // configImmigrationLbl
             // 
@@ -950,25 +969,6 @@
             this.poolScoreChart.Size = new System.Drawing.Size(378, 106);
             this.poolScoreChart.TabIndex = 9;
             this.poolScoreChart.Text = "poolScore";
-            // 
-            // configImmigrationRateLbl
-            // 
-            this.configImmigrationRateLbl.Location = new System.Drawing.Point(97, 84);
-            this.configImmigrationRateLbl.Name = "configImmigrationRateLbl";
-            this.configImmigrationRateLbl.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.configImmigrationRateLbl.Size = new System.Drawing.Size(89, 13);
-            this.configImmigrationRateLbl.TabIndex = 27;
-            this.configImmigrationRateLbl.Text = "0";
-            this.configImmigrationRateLbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // label28
-            // 
-            this.label28.AutoSize = true;
-            this.label28.Location = new System.Drawing.Point(6, 84);
-            this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(86, 13);
-            this.label28.TabIndex = 26;
-            this.label28.Text = "Immigration Rate";
             // 
             // MainForm
             // 

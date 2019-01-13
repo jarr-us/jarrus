@@ -25,7 +25,7 @@ namespace Jarrus.GATests
         public void ItAllowsAValidCrossoverType()
         {
             var task = GATestHelper.GetDummyTravelingSalesmanTask();
-            task.CrossoverType = CrossoverType.AlternatingPosition;
+            task.CrossoverStrategy = CrossoverStrategy.AlternatingPosition;
             var settings = new GAConfiguration(task);
         }
 
@@ -34,7 +34,7 @@ namespace Jarrus.GATests
         public void ItDoesNotAllowsAnInvalidCrossoverType()
         {
             var task = GATestHelper.GetDummyTravelingSalesmanTask();
-            task.CrossoverType = 0;
+            task.CrossoverStrategy = 0;
             var settings = new GAConfiguration(task);
         }
 
@@ -42,7 +42,7 @@ namespace Jarrus.GATests
         public void ItAllowsAValidImmigrationType()
         {
             var task = GATestHelper.GetDummyTravelingSalesmanTask();
-            task.ImmigrationType = ImmigrationType.Constant;
+            task.ImmigrationStrategy = ImmigrationStrategy.Constant;
             var settings = new GAConfiguration(task);
         }
 
@@ -51,7 +51,7 @@ namespace Jarrus.GATests
         public void ItDoesNotAllowsAnInvalidImmigrationType()
         {
             var task = GATestHelper.GetDummyTravelingSalesmanTask();
-            task.ImmigrationType = 0;
+            task.ImmigrationStrategy = 0;
             var settings = new GAConfiguration(task);
         }
 
@@ -59,7 +59,7 @@ namespace Jarrus.GATests
         public void ItAllowsAValidMutationType()
         {
             var task = GATestHelper.GetDummyTravelingSalesmanTask();
-            task.MutationType = MutationType.Boundary;
+            task.MutationStrategy = MutationStrategy.Boundary;
             var settings = new GAConfiguration(task);
         }
 
@@ -68,7 +68,7 @@ namespace Jarrus.GATests
         public void ItDoesNotAllowsAnInvalidMutationType()
         {
             var task = GATestHelper.GetDummyTravelingSalesmanTask();
-            task.MutationType = 0;
+            task.MutationStrategy = 0;
             var settings = new GAConfiguration(task);
         }
 
@@ -76,7 +76,7 @@ namespace Jarrus.GATests
         public void ItAllowsAValidParentSelectionType()
         {
             var task = GATestHelper.GetDummyTravelingSalesmanTask();
-            task.ParentSelectionType = ParentSelectionType.RouletteWheel;
+            task.ParentSelectionStrategy = ParentSelectionStrategy.RouletteWheel;
             var settings = new GAConfiguration(task);
         }
 
@@ -85,7 +85,7 @@ namespace Jarrus.GATests
         public void ItDoesNotAllowsAnInvalidParentSelectionType()
         {
             var task = GATestHelper.GetDummyTravelingSalesmanTask();
-            task.ParentSelectionType = 0;
+            task.ParentSelectionStrategy = 0;
             var settings = new GAConfiguration(task);
         }
 
@@ -93,7 +93,7 @@ namespace Jarrus.GATests
         public void ItAllowsAValidRetirementType()
         {
             var task = GATestHelper.GetDummyTravelingSalesmanTask();
-            task.RetirementType = RetirementType.MaxChildren;
+            task.RetirementStrategy = RetirementStrategy.MaxChildren;
             var settings = new GAConfiguration(task);
         }
 
@@ -102,7 +102,7 @@ namespace Jarrus.GATests
         public void ItDoesNotAllowsAnInvalidRetirementType()
         {
             var task = GATestHelper.GetDummyTravelingSalesmanTask();
-            task.RetirementType = 0;
+            task.RetirementStrategy = 0;
             var settings = new GAConfiguration(task);
         }
 
@@ -114,11 +114,11 @@ namespace Jarrus.GATests
         }
 
         [TestMethod]
-        public void ItAllowsRetirementTypeMaxAgeWhenRetirementMaximumIsAboveZero()
+        public void ItAllowsRetirementTypeMaxAgeWhenRetirementMaximumIsAboveOne()
         {
             var task = GATestHelper.GetDummyTravelingSalesmanTask();
-            task.RetirementType = RetirementType.MaxAge;
-            task.MaxRetirement = 1;
+            task.RetirementStrategy = RetirementStrategy.MaxAge;
+            task.MaxRetirement = 2;
             var settings = new GAConfiguration(task);
         }
 
@@ -127,7 +127,7 @@ namespace Jarrus.GATests
         public void ItThrowsAnExceptionIfRetirementTypeMaxAgeWhenRetirementMaximumIsAtZero()
         {
             var task = GATestHelper.GetDummyTravelingSalesmanTask();
-            task.RetirementType = RetirementType.MaxAge;
+            task.RetirementStrategy = RetirementStrategy.MaxAge;
             task.MaxRetirement = 0;
             var settings = new GAConfiguration(task);
         }
@@ -137,17 +137,17 @@ namespace Jarrus.GATests
         public void ItThrowsAnExceptionIfRetirementTypeMaxAgeWhenRetirementMaximumIsBelowZero()
         {
             var task = GATestHelper.GetDummyTravelingSalesmanTask();
-            task.RetirementType = RetirementType.MaxAge;
+            task.RetirementStrategy = RetirementStrategy.MaxAge;
             task.MaxRetirement = 0;
             var settings = new GAConfiguration(task);
         }
 
         [TestMethod]
-        public void ItAllowsRetirementTypeMaxChildrenWhenRetirementMaximumIsAboveZero()
+        public void ItAllowsRetirementTypeMaxChildrenWhenRetirementMaximumIsAboveOne()
         {
             var task = GATestHelper.GetDummyTravelingSalesmanTask();
-            task.RetirementType = RetirementType.MaxChildren;
-            task.MaxRetirement = 1;
+            task.RetirementStrategy = RetirementStrategy.MaxChildren;
+            task.MaxRetirement = 2;
             var settings = new GAConfiguration(task);
         }
 
@@ -156,7 +156,7 @@ namespace Jarrus.GATests
         public void ItThrowsAnExceptionIfRetirementTypeMaxChildrenWhenRetirementMaximumIsAtZero()
         {
             var task = GATestHelper.GetDummyTravelingSalesmanTask();
-            task.RetirementType = RetirementType.MaxChildren;
+            task.RetirementStrategy = RetirementStrategy.MaxChildren;
             task.MaxRetirement = 0;
             var settings = new GAConfiguration(task);
         }
@@ -166,7 +166,7 @@ namespace Jarrus.GATests
         public void ItThrowsAnExceptionIfRetirementTypeMaxChildrenWhenRetirementMaximumIsBelowZero()
         {
             var task = GATestHelper.GetDummyTravelingSalesmanTask();
-            task.RetirementType = RetirementType.MaxChildren;
+            task.RetirementStrategy = RetirementStrategy.MaxChildren;
             task.MaxRetirement = 0;
             var settings = new GAConfiguration(task);
         }
@@ -175,7 +175,7 @@ namespace Jarrus.GATests
         public void ItAllowsRetirementTypeNoneWhenRetirementMaximumIsAboveZero()
         {
             var task = GATestHelper.GetDummyTravelingSalesmanTask();
-            task.RetirementType = RetirementType.None;
+            task.RetirementStrategy = RetirementStrategy.None;
             task.MaxRetirement = 1;
             var settings = new GAConfiguration(task);
         }
@@ -184,7 +184,7 @@ namespace Jarrus.GATests
         public void ItAllowsRetirementTypeNoneWhenRetirementMaximumIsAtZero()
         {
             var task = GATestHelper.GetDummyTravelingSalesmanTask();
-            task.RetirementType = RetirementType.None;
+            task.RetirementStrategy = RetirementStrategy.None;
             task.MaxRetirement = 1;
             var settings = new GAConfiguration(task);
         }
@@ -193,7 +193,7 @@ namespace Jarrus.GATests
         public void ItAllowsRetirementTypeNoneWhenRetirementMaximumIsBelowZero()
         {
             var task = GATestHelper.GetDummyTravelingSalesmanTask();
-            task.RetirementType = RetirementType.None;
+            task.RetirementStrategy = RetirementStrategy.None;
             task.MaxRetirement = 1;
             var settings = new GAConfiguration(task);
         }
@@ -211,7 +211,7 @@ namespace Jarrus.GATests
         public void ItsConstructorsCanSetTheStrategiesWhenUnordered()
         {
             var task = GATestHelper.GetDummyTravelingSalesmanTask();
-            task.MutationType = MutationType.Random;
+            task.MutationStrategy = MutationStrategy.Random;
 
             var settings = new GAConfiguration(task);
 
@@ -273,14 +273,14 @@ namespace Jarrus.GATests
         public void ItContainsAValidValueForImmigrationType()
         {
             var config = GATestHelper.GetTravelingSalesmanDefaultConfiguration();
-            Assert.AreEqual(ImmigrationType.Dynamic, config.ImmigrationType);
+            Assert.AreEqual(ImmigrationStrategy.Dynamic, config.ImmigrationStrategy);
         }
 
         [TestMethod]
         public void ItContainsAValidValueForRetirementType()
         {
             var config = GATestHelper.GetTravelingSalesmanDefaultConfiguration();
-            Assert.AreEqual(RetirementType.MaxAge, config.RetirementType);
+            Assert.AreEqual(RetirementStrategy.MaxAge, config.RetirementStrategy);
         }
 
         [TestMethod]

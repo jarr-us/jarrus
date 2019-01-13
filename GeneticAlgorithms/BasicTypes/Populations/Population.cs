@@ -11,7 +11,7 @@ namespace Jarrus.GA.Models
     {
         public Chromosome[] Chromosomes;
         public GAConfiguration Configuration;
-        public int GenerationNumber = 1;
+        public int GenerationNumber = 0;
         public List<Chromosome> NextGeneration = new List<Chromosome>();
         public HashSet<Chromosome> OptionsInPool = new HashSet<Chromosome>();
         public List<Chromosome> Retired = new List<Chromosome>();
@@ -33,7 +33,7 @@ namespace Jarrus.GA.Models
                 chromosome.GenerationNumber = GenerationNumber;
             }
 
-            foreach (var chromosome in Chromosomes.Where(o => o.GenerationNumber != 0))
+            foreach (var chromosome in Chromosomes)
             {
                 chromosome.Age++;
             }
@@ -41,7 +41,7 @@ namespace Jarrus.GA.Models
 
         private void Retire()
         {
-            if (Configuration.RetirementType == RetirementType.None) { return; }
+            if (Configuration.RetirementStrategy == RetirementStrategy.None) { return; }
 
             foreach (var chromosome in Retired)
             {
@@ -78,7 +78,7 @@ namespace Jarrus.GA.Models
 
         private double GetBestScore()
         {
-            if (Configuration.ScoringType == ScoringType.Lowest)
+            if (Configuration.ScoringStrategy == ScoringStrategy.Lowest)
             {
                 return Chromosomes.Select(o => o.FitnessScore).Min();
             }
@@ -120,7 +120,7 @@ namespace Jarrus.GA.Models
                 numberToGrab = Math.Max(1, numberToGrab);
             }
 
-            if (Configuration.ScoringType == ScoringType.Lowest)
+            if (Configuration.ScoringStrategy == ScoringStrategy.Lowest)
             {
                 var ordered = Chromosomes.Where(k => !k.ShouldRetire(Configuration))
                     .OrderBy(o => o.FitnessScore).Take(numberToGrab).ToList();
@@ -135,7 +135,7 @@ namespace Jarrus.GA.Models
 
         private void AddImmigrantsToNextGeneration()
         {
-            if (Configuration.ImmigrationType != ImmigrationType.Constant) { return; }
+            if (Configuration.ImmigrationStrategy != ImmigrationStrategy.Constant) { return; }
 
             var numberToGrab = (int)(Configuration.ImmigrationRate * Chromosomes.Length);
 
@@ -158,7 +158,7 @@ namespace Jarrus.GA.Models
 
         private void GetNextGenerationForNonDynamicImmigration()
         {
-            if (Configuration.ImmigrationType == ImmigrationType.Dynamic) { return; }
+            if (Configuration.ImmigrationStrategy == ImmigrationStrategy.Dynamic) { return; }
             var parents = Configuration.ParentSelection.GetParents();
 
             if (Configuration.GetNextDouble() <= Configuration.CrossoverRate)
@@ -185,7 +185,7 @@ namespace Jarrus.GA.Models
 
         private void GetNextGenerationForDynamicImmigration()
         {
-            if (Configuration.ImmigrationType != ImmigrationType.Dynamic) { return; }
+            if (Configuration.ImmigrationStrategy != ImmigrationStrategy.Dynamic) { return; }
 
             if (Configuration.GetNextDouble() <= Configuration.CrossoverRate)
             {
@@ -212,7 +212,7 @@ namespace Jarrus.GA.Models
 
         public void AddToNextGeneration(Chromosome chromosome)
         {
-            if (Configuration.DuplicationType == DuplicationType.Prevent)
+            if (Configuration.DuplicationStrategy == DuplicationStrategy.Prevent)
             {
                 if (!OptionsInPool.Contains(chromosome))
                 {

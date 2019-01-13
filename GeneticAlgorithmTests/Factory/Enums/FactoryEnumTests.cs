@@ -10,7 +10,7 @@ namespace Jarrus.GATests.Factory.Enums
         [TestMethod]
         public void ItDoesNotContainAValueForZeroForCrossoverTypes()
         {
-            foreach (CrossoverType type in Enum.GetValues(typeof(CrossoverType)))
+            foreach (CrossoverStrategy type in Enum.GetValues(typeof(CrossoverStrategy)))
             {
                 var value = (int)type;
                 Assert.AreNotEqual(0, value);
@@ -20,7 +20,7 @@ namespace Jarrus.GATests.Factory.Enums
         [TestMethod]
         public void ItDoesNotContainANegativeNumberValueForZeroForCrossoverTypes()
         {
-            foreach (CrossoverType type in Enum.GetValues(typeof(CrossoverType)))
+            foreach (CrossoverStrategy type in Enum.GetValues(typeof(CrossoverStrategy)))
             {
                 var value = (int)type;
                 Assert.IsTrue(value >= 1);
@@ -30,7 +30,7 @@ namespace Jarrus.GATests.Factory.Enums
         [TestMethod]
         public void ItDoesNotContainAValueForZeroForMutationTypes()
         {
-            foreach (MutationType type in Enum.GetValues(typeof(MutationType)))
+            foreach (MutationStrategy type in Enum.GetValues(typeof(MutationStrategy)))
             {
                 var value = (int)type;
                 Assert.AreNotEqual(0, value);
@@ -40,7 +40,7 @@ namespace Jarrus.GATests.Factory.Enums
         [TestMethod]
         public void ItDoesNotContainANegativeNumberValueForZeroForMutationTypes()
         {
-            foreach (MutationType type in Enum.GetValues(typeof(MutationType)))
+            foreach (MutationStrategy type in Enum.GetValues(typeof(MutationStrategy)))
             {
                 var value = (int)type;
                 Assert.IsTrue(value >= 1);
@@ -50,7 +50,7 @@ namespace Jarrus.GATests.Factory.Enums
         [TestMethod]
         public void ItDoesNotContainAValueForZeroForParentSelectionTypes()
         {
-            foreach (ParentSelectionType type in Enum.GetValues(typeof(ParentSelectionType)))
+            foreach (ParentSelectionStrategy type in Enum.GetValues(typeof(ParentSelectionStrategy)))
             {
                 var value = (int)type;
                 Assert.AreNotEqual(0, value);
@@ -60,7 +60,7 @@ namespace Jarrus.GATests.Factory.Enums
         [TestMethod]
         public void ItDoesNotContainANegativeNumberValueForZeroForParentSelectionTypes()
         {
-            foreach (ParentSelectionType type in Enum.GetValues(typeof(ParentSelectionType)))
+            foreach (ParentSelectionStrategy type in Enum.GetValues(typeof(ParentSelectionStrategy)))
             {
                 var value = (int)type;
                 Assert.IsTrue(value >= 1);

@@ -21,32 +21,33 @@ namespace Jarrus.GA.ParentSelections
 
         private void DetermineAdjustedFitnessScores()
         {
-            foreach(var ch in Population) { ch.AdjustedFitnessScore = ch.FitnessScore; }
             AdjustFitnessScoresToAllBeAboveOne();
-            AdjustFitnessScoresToBeInversed();
+            AdjustFitnessScoreToBeRanked();
         }
 
         private void AdjustFitnessScoresToAllBeAboveOne()
         {
+            if (Configuration.ParentSelectionStrategy == ParentSelectionStrategy.Rank) { return; }
             var minValue = Population.Min(o => o.AdjustedFitnessScore);
             if (minValue == 0) { minValue = -1; }
             if (minValue > 0) { return; }
-            
-            foreach(var ch in Population)
+
+            foreach (var ch in Population)
             {
                 ch.AdjustedFitnessScore += Math.Abs(minValue);
             }
         }
 
-        private void AdjustFitnessScoresToBeInversed()
+        private void AdjustFitnessScoreToBeRanked()
         {
-            if (Configuration.ScoringType != ScoringType.Lowest) { return; }
+            if (Configuration.ParentSelectionStrategy != ParentSelectionStrategy.Rank) { return; }
 
-            var maxValue = Population.Max(o => o.AdjustedFitnessScore) + 1;
+            var length = Population.Length;
+            Population = Population.OrderByDescending(o => o.AdjustedFitnessScore).ToArray();
 
-            foreach (var ch in Population)
+            for (int i = 0; i < Population.Length; i++)
             {
-                ch.AdjustedFitnessScore = Math.Abs(maxValue - ch.AdjustedFitnessScore);
+                Population[i].AdjustedFitnessScore = length - i;
             }
         }
 

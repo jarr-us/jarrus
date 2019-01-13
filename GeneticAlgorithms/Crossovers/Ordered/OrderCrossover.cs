@@ -12,7 +12,7 @@ namespace Jarrus.GA.Crossovers.Ordered
         {
             var geneCount = father.Genes.Length;
             var child = new OrderedChromosome(geneCount);
-            var crossoverPoint = settings.GetRandomInteger(1, father.Genes.Length - 2);
+            var crossoverPoint = settings.GetRandomInteger(1, father.Genes.Length - 1);
 
             var seen = new HashSet<Gene>();
 

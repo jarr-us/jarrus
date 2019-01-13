@@ -10,7 +10,7 @@ namespace Jarrus.GATests.Factory.Enums
         [TestMethod]
         public void ItOnlyContainsPositiveNumbers()
         {
-            foreach (DuplicationType type in Enum.GetValues(typeof(DuplicationType)))
+            foreach (DuplicationStrategy type in Enum.GetValues(typeof(DuplicationStrategy)))
             {
                 Assert.IsTrue((int)type > 0);
             }
@@ -19,7 +19,7 @@ namespace Jarrus.GATests.Factory.Enums
         [TestMethod]
         public void ItDoesNotContainAValueForZero()
         {
-            foreach (DuplicationType type in Enum.GetValues(typeof(DuplicationType)))
+            foreach (DuplicationStrategy type in Enum.GetValues(typeof(DuplicationStrategy)))
             {
                 Assert.IsTrue((int)type != 0);
             }

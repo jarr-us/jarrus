@@ -76,8 +76,8 @@ namespace Jarrus.GATests
             var population = new OrderedPopulation(GATestHelper.GetTravelingSalesmanDefaultConfiguration(), _pool, _possibleValues);
             var nextGen = population.Advance();
 
-            Assert.AreEqual(1, population.GenerationNumber);
-            Assert.AreEqual(2, nextGen.GenerationNumber);
+            Assert.AreEqual(0, population.GenerationNumber);
+            Assert.AreEqual(1, nextGen.GenerationNumber);
         }
 
         [TestMethod]
@@ -90,12 +90,12 @@ namespace Jarrus.GATests
             var population = new OrderedPopulation(config, _pool, _possibleValues);
             var nextGen = population.Advance();
 
-            Assert.AreEqual(1, population.GenerationNumber);
-            Assert.AreEqual(2, nextGen.GenerationNumber);
+            Assert.AreEqual(0, population.GenerationNumber);
+            Assert.AreEqual(1, nextGen.GenerationNumber);
 
             foreach(var chromosome in nextGen.Chromosomes)
             {
-                Assert.AreEqual(2, chromosome.GenerationNumber);
+                Assert.AreEqual(1, chromosome.GenerationNumber);
             }
         }
 
@@ -128,8 +128,10 @@ namespace Jarrus.GATests
         public void ItCanRetireChromosomes()
         {
             var config = GATestHelper.GetTravelingSalesmanDefaultConfiguration();
+            config.RetirementStrategy = RetirementStrategy.MaxAge;
+            config.ElitismRate = 0.10;
             config.MaxRetirement = 1;
-            config.MaxGenerations = 1;
+            config.MaxGenerations = 4;
             config.PopulationSize = 10;
 
             var population = new OrderedPopulation(config, _pool, _possibleValues);
@@ -146,7 +148,7 @@ namespace Jarrus.GATests
 
             _pool = GATestHelper.GetTravelingSalesmanPopulation(config);
 
-            config.DuplicationType = DuplicationType.Prevent;
+            config.DuplicationStrategy = DuplicationStrategy.Prevent;
             var population = new OrderedPopulation(config, _pool, _possibleValues);
 
             var nextGen = population.Advance();

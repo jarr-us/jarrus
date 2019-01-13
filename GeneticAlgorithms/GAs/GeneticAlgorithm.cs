@@ -9,7 +9,6 @@ namespace Jarrus.GA
     public abstract class GeneticAlgorithm
     {
         public GAConfiguration Configuration;
-        public int Generation;
         public Gene[] PossibleValues;
         public GARun GARun;
 
@@ -39,16 +38,15 @@ namespace Jarrus.GA
         {
             GARun.Start = DateTime.UtcNow;
 
-            for (GARun.CurrentGeneration = 0; GARun.CurrentGeneration < Configuration.MaxGenerations; GARun.CurrentGeneration++)
+            for (int i = 0; i < Configuration.MaxGenerations; i++)
             {
                 var nextGeneration = GARun.Population.Advance();
-                                
-                Retired = GARun.Population.Retired.OrderBy(o => o.FitnessScore).ToList();
+                GARun.CurrentGeneration = nextGeneration.GenerationNumber;
 
+                Retired = GARun.Population.Retired.OrderBy(o => o.FitnessScore).ToList();
                 GARun.Population = nextGeneration;
-                Generation = nextGeneration.GenerationNumber;
-                DetermineBestChromosomeEver(GARun.Population);                
-                
+                DetermineBestChromosomeEver(GARun.Population);
+
                 if (GARun.Population.UnableToProgress || Configuration.Solution.ShouldTerminate(GARun.Population))
                 {
                     GARun.End = DateTime.UtcNow;
@@ -65,12 +63,12 @@ namespace Jarrus.GA
             var highestScoringChromosome = GARun.Population.Chromosomes.Where(o => o.FitnessScore == GARun.Population.Chromosomes.Max(k => k.FitnessScore)).First();
             var lowestScoringChromosome = GARun.Population.Chromosomes.Where(o => o.FitnessScore == GARun.Population.Chromosomes.Min(k => k.FitnessScore)).First();
 
-            if (Configuration.ScoringType == ScoringType.Highest && highestScoringChromosome.FitnessScore > GARun.BestChromosome.FitnessScore)
+            if (Configuration.ScoringStrategy == ScoringStrategy.Highest && highestScoringChromosome.FitnessScore > GARun.BestChromosome.FitnessScore)
             {
                 GARun.BestChromosome = highestScoringChromosome;
             }
 
-            if (Configuration.ScoringType == ScoringType.Lowest && lowestScoringChromosome.FitnessScore < GARun.BestChromosome.FitnessScore)
+            if (Configuration.ScoringStrategy == ScoringStrategy.Lowest && lowestScoringChromosome.FitnessScore < GARun.BestChromosome.FitnessScore)
             {
                 GARun.BestChromosome = lowestScoringChromosome;
             }

@@ -1,6 +1,6 @@
 ﻿namespace Jarrus.GA.Factory.Enums
 {
-    public enum ImmigrationType
+    public enum ImmigrationStrategy
     {
         None = 1,
         Constant = 2,

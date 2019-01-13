@@ -23,7 +23,7 @@ namespace Jarrus.GATests.BasicTypes
             var numberGene = new IntegerGene(_r);
             Assert.AreEqual(1, numberGene.GetNumberOfGeneAttributes());
 
-            numberGene.Mutate(MutationType.Random);
+            numberGene.Mutate(MutationStrategy.Random);
             Assert.AreEqual(8, numberGene.Value);
         }
 
@@ -33,7 +33,7 @@ namespace Jarrus.GATests.BasicTypes
             var gene = new CharacterGene(_r);
             Assert.AreEqual('C', gene.Value);
 
-            gene.Mutate(MutationType.Random);
+            gene.Mutate(MutationStrategy.Random);
             Assert.AreEqual('H', gene.Value);
         }
 
@@ -43,16 +43,16 @@ namespace Jarrus.GATests.BasicTypes
             var gene = new CharacterGene(_r);
             Assert.AreEqual('C', gene.Value);
 
-            gene.Mutate(MutationType.Random);
+            gene.Mutate(MutationStrategy.Random);
             Assert.AreEqual('H', gene.Value);
 
-            gene.Mutate(MutationType.Random);
+            gene.Mutate(MutationStrategy.Random);
             Assert.AreEqual('E', gene.Value);
 
-            gene.Mutate(MutationType.Random);
+            gene.Mutate(MutationStrategy.Random);
             Assert.AreEqual('G', gene.Value);
 
-            gene.Mutate(MutationType.Random);
+            gene.Mutate(MutationStrategy.Random);
             Assert.AreEqual('A', gene.Value);
         }
 
@@ -62,7 +62,7 @@ namespace Jarrus.GATests.BasicTypes
             var gene = new StringGene(_r);
             Assert.AreEqual("C3", gene.Value);
 
-            gene.Mutate(MutationType.Random);
+            gene.Mutate(MutationStrategy.Random);
             Assert.AreEqual("H8", gene.Value);
         }
 
@@ -79,7 +79,7 @@ namespace Jarrus.GATests.BasicTypes
             var numberGene = new IntegerGene(_r);
             Assert.AreEqual(1, numberGene.GetNumberOfGeneAttributes());
 
-            numberGene.Mutate(MutationType.Random);
+            numberGene.Mutate(MutationStrategy.Random);
             Assert.AreEqual(8, numberGene.Value);
         }
 
@@ -89,7 +89,7 @@ namespace Jarrus.GATests.BasicTypes
             var numberGene = new IntegerGene(_r);
             Assert.AreEqual(1, numberGene.GetNumberOfGeneAttributes());
 
-            numberGene.Mutate(MutationType.Boundary);
+            numberGene.Mutate(MutationStrategy.Boundary);
             Assert.AreEqual(9, numberGene.Value);
         }
 
@@ -100,7 +100,7 @@ namespace Jarrus.GATests.BasicTypes
             Assert.AreEqual(1, gene.GetNumberOfGeneAttributes());
             Assert.AreEqual(false, gene.Value);
 
-            gene.Mutate(MutationType.Flip);
+            gene.Mutate(MutationStrategy.Flip);
             Assert.AreEqual(true, gene.Value);
         }
     }

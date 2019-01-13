@@ -17,14 +17,14 @@ namespace Jarrus.GATests.Factory.Enums
         public void BeforeEach()
         {
             _config = GATestHelper.GetTravelingSalesmanDefaultConfiguration();
-            _config.DuplicationType = DuplicationType.Allow;
+            _config.DuplicationStrategy = DuplicationStrategy.Allow;
             _solution = new SimpleTravelingSalesmanSolution();
         }
 
         [TestMethod]
         public void ItOnlyContainsPositiveNumbers()
         {
-            foreach (ImmigrationType type in Enum.GetValues(typeof(ImmigrationType)))
+            foreach (ImmigrationStrategy type in Enum.GetValues(typeof(ImmigrationStrategy)))
             {
                 Assert.IsTrue((int)type > 0);
             }
@@ -33,7 +33,7 @@ namespace Jarrus.GATests.Factory.Enums
         [TestMethod]
         public void ItDoesNotContainAValueForZero()
         {
-            foreach (ImmigrationType type in Enum.GetValues(typeof(ImmigrationType)))
+            foreach (ImmigrationStrategy type in Enum.GetValues(typeof(ImmigrationStrategy)))
             {
                 Assert.IsTrue((int)type != 0);
             }
@@ -42,7 +42,7 @@ namespace Jarrus.GATests.Factory.Enums
         [TestMethod]
         public void ItReturnsAValueWhenDynamicIsChosen()
         {
-            _config.ImmigrationType = ImmigrationType.Dynamic;
+            _config.ImmigrationStrategy = ImmigrationStrategy.Dynamic;
             var gaRun = _solution.Run(_config);
             Assert.AreEqual(true, gaRun.BestChromosome.FitnessScore > 0);
         }
@@ -50,7 +50,7 @@ namespace Jarrus.GATests.Factory.Enums
         [TestMethod]
         public void ItReturnsAValueWhenNoneIsChosen()
         {
-            _config.ImmigrationType = ImmigrationType.None;
+            _config.ImmigrationStrategy = ImmigrationStrategy.None;
             var gaRun = _solution.Run(_config);
             Assert.AreEqual(true, gaRun.BestChromosome.FitnessScore > 0);
         }
@@ -58,7 +58,7 @@ namespace Jarrus.GATests.Factory.Enums
         [TestMethod]
         public void ItReturnsAValueWhenConstantIsChosen()
         {
-            _config.ImmigrationType = ImmigrationType.Constant;
+            _config.ImmigrationStrategy = ImmigrationStrategy.Constant;
             _config.ImmigrationRate = 0.01;
             var gaRun = _solution.Run(_config);
             Assert.AreEqual(true, gaRun.BestChromosome.FitnessScore > 0);

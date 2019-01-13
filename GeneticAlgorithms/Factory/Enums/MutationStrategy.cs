@@ -1,6 +1,6 @@
 ﻿namespace Jarrus.GA.Factory.Enums
 {
-    public enum MutationType
+    public enum MutationStrategy
     {
         //Ordered
         Insert = 1,

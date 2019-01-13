@@ -5,7 +5,7 @@ namespace Jarrus.GA.Mutations
 {
     public abstract class Mutation
     {
-        public MutationType MutationType;
+        public MutationStrategy MutationType;
 
         public void Mutate(Chromosome chromosome, GAConfiguration settings)
         {

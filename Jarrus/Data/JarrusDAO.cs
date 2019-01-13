@@ -58,7 +58,7 @@ namespace Jarrus.Data
 
                 while (dao.HasNextRow())
                 {
-                    var solution = dao.GetString("SolutionType");
+                    var solution = dao.GetString("SolutionStrategy");
 
                     var task = new GATask((JarrusSolution)Reflection.GetObjectFromType(solution));
 
@@ -76,13 +76,13 @@ namespace Jarrus.Data
                     task.RandomSeed = dao.GetInt("RandomSeed");
                     task.RandomPoolGenerationSeed = dao.GetInt("RandomPoolGenerationSeed");
 
-                    task.DuplicationType = (DuplicationType)Enum.Parse(typeof(DuplicationType), dao.GetString("DuplicationType"));
-                    task.ScoringType = (ScoringType)Enum.Parse(typeof(ScoringType), dao.GetString("ScoringType"));
-                    task.ImmigrationType = (ImmigrationType)Enum.Parse(typeof(ImmigrationType), dao.GetString("ImmigrationType"));
-                    task.RetirementType = (RetirementType)Enum.Parse(typeof(RetirementType), dao.GetString("RetirementType"));
-                    task.CrossoverType = (CrossoverType)Enum.Parse(typeof(CrossoverType), dao.GetString("CrossoverType"));
-                    task.MutationType = (MutationType)Enum.Parse(typeof(MutationType), dao.GetString("MutationType"));
-                    task.ParentSelectionType = (ParentSelectionType)Enum.Parse(typeof(ParentSelectionType), dao.GetString("ParentSelectionType"));
+                    task.DuplicationStrategy = (DuplicationStrategy)Enum.Parse(typeof(DuplicationStrategy), dao.GetString("DuplicationStrategy"));
+                    task.ScoringStrategy = (ScoringStrategy)Enum.Parse(typeof(ScoringStrategy), dao.GetString("ScoringStrategy"));
+                    task.ImmigrationStrategy = (ImmigrationStrategy)Enum.Parse(typeof(ImmigrationStrategy), dao.GetString("ImmigrationStrategy"));
+                    task.RetirementStrategy = (RetirementStrategy)Enum.Parse(typeof(RetirementStrategy), dao.GetString("RetirementStrategy"));
+                    task.CrossoverStrategy = (CrossoverStrategy)Enum.Parse(typeof(CrossoverStrategy), dao.GetString("CrossoverStrategy"));
+                    task.MutationStrategy = (MutationStrategy)Enum.Parse(typeof(MutationStrategy), dao.GetString("MutationStrategy"));
+                    task.ParentSelectionStrategy = (ParentSelectionStrategy)Enum.Parse(typeof(ParentSelectionStrategy), dao.GetString("ParentSelectionStrategy"));
 
                     return task;
                 }
@@ -90,7 +90,6 @@ namespace Jarrus.Data
             catch (Exception ex)
             {
                 ErrorHandlingSystem.HandleError(ex, "Unable to fetch a GA Task");
-                throw ex;
             }
             finally
             {
@@ -102,8 +101,8 @@ namespace Jarrus.Data
 
         public void InsertTask(GATask task, double priority)
         {
-            var sql = "INSERT INTO [dbo].[GA_Tasks] ([Session],[Priority],[Checkout],[ComputerName],[SolutionType],[ParentSelectionType],[MutationType],[CrossoverType],[ImmigrationType],[RetirementType],[ScoringType],[PopulationSize],[MaxGenerations],[CrossoverRate],[MutationRate],[ElitismRate],[ImmigrationRate],[DuplicationType],[MaxRetirement],[ChildrenPerParents],[RandomSeed],[RandomPoolGenerationSeed]) ";
-            sql += "VALUES(@Session, @Priority, @Checkout, @ComputerName, @SolutionType, @ParentSelectionType, @MutationType, @CrossoverType, @ImmigrationType, @RetirementType, @ScoringType, @PopulationSize, @MaxGenerations, @CrossoverRate, @MutationRate, @ElitismRate, @ImmigrationRate, @DuplicationType, @MaxRetirement, @ChildrenPerParents, @RandomSeed, @RandomPoolGenerationSeed)";
+            var sql = "INSERT INTO [dbo].[GA_Tasks] ([Session],[Priority],[Checkout],[ComputerName],[SolutionStrategy],[ParentSelectionStrategy],[MutationStrategy],[CrossoverStrategy],[ImmigrationStrategy],[RetirementStrategy],[ScoringStrategy],[PopulationSize],[MaxGenerations],[CrossoverRate],[MutationRate],[ElitismRate],[ImmigrationRate],[DuplicationStrategy],[MaxRetirement],[ChildrenPerParents],[RandomSeed],[RandomPoolGenerationSeed]) ";
+            sql += "VALUES(@Session, @Priority, @Checkout, @ComputerName, @SolutionStrategy, @ParentSelectionStrategy, @MutationStrategy, @CrossoverStrategy, @ImmigrationStrategy, @RetirementStrategy, @ScoringStrategy, @PopulationSize, @MaxGenerations, @CrossoverRate, @MutationRate, @ElitismRate, @ImmigrationRate, @DuplicationStrategy, @MaxRetirement, @ChildrenPerParents, @RandomSeed, @RandomPoolGenerationSeed)";
 
             var dao = new DAO();
             try
@@ -119,7 +118,6 @@ namespace Jarrus.Data
             catch (Exception ex)
             {
                 ErrorHandlingSystem.HandleError(ex, "Unable to insert GA Task");
-                throw ex;
             }
             finally
             {
@@ -130,8 +128,8 @@ namespace Jarrus.Data
         public void InsertCompletedRun(GAConfiguration config, GARun run)
         {
             var dao = new DAO();
-            var sql = "INSERT INTO [dbo].[GA_Results]([Session],[Start],[End],[ComputerName],[SolutionType],[ParentSelectionType],[MutationType],[CrossoverType],[ImmigrationType],[RetirementType],[ScoringType],[PopulationSize],[MaxGenerations],[CrossoverRate],[MutationRate],[ElitismRate],[ImmigrationRate],[DuplicationType],[MaxRetirement],[ChildrenPerParents],[RandomSeed],[RandomPoolGenerationSeed],[BestScore],[BestScoreGeneration],[StringRepresentation]) ";
-            sql += "VALUES (@Session,@Start,@End,@ComputerName,@SolutionType,@ParentSelectionType,@MutationType,@CrossoverType,@ImmigrationType,@RetirementType,@ScoringType,@PopulationSize,@MaxGenerations,@CrossoverRate,@MutationRate,@ElitismRate,@ImmigrationRate,@DuplicationType,@MaxRetirement,@ChildrenPerParents,@RandomSeed,@RandomPoolGenerationSeed,@BestScore,@BestScoreGeneration,@StringRepresentation)";
+            var sql = "INSERT INTO [dbo].[GA_Results]([Session],[Start],[End],[ComputerName],[SolutionStrategy],[ParentSelectionStrategy],[MutationStrategy],[CrossoverStrategy],[ImmigrationStrategy],[RetirementStrategy],[ScoringStrategy],[PopulationSize],[MaxGenerations],[CrossoverRate],[MutationRate],[ElitismRate],[ImmigrationRate],[DuplicationStrategy],[MaxRetirement],[ChildrenPerParents],[RandomSeed],[RandomPoolGenerationSeed],[BestScore],[BestScoreGeneration],[StringRepresentation]) ";
+            sql += "VALUES (@Session,@Start,@End,@ComputerName,@SolutionStrategy,@ParentSelectionStrategy,@MutationStrategy,@CrossoverStrategy,@ImmigrationStrategy,@RetirementStrategy,@ScoringStrategy,@PopulationSize,@MaxGenerations,@CrossoverRate,@MutationRate,@ElitismRate,@ImmigrationRate,@DuplicationStrategy,@MaxRetirement,@ChildrenPerParents,@RandomSeed,@RandomPoolGenerationSeed,@BestScore,@BestScoreGeneration,@StringRepresentation)";
 
             try
             {
@@ -149,7 +147,6 @@ namespace Jarrus.Data
             catch (Exception ex)
             {
                 ErrorHandlingSystem.HandleError(ex, "Unable to insert GA Run Result");
-                throw ex;
             }
             finally
             {
@@ -173,7 +170,6 @@ namespace Jarrus.Data
             catch (Exception ex)
             {
                 ErrorHandlingSystem.HandleError(ex, "Unable to delete UUID");
-                throw ex;
             }
             finally
             {
@@ -186,14 +182,14 @@ namespace Jarrus.Data
             dao.AddParameter("@Session", properties.Session);
             dao.AddParameter("@ComputerName", properties.ComputerName);
 
-            dao.AddParameter("@SolutionType", properties.Solution.GetType().AssemblyQualifiedName);
-            dao.AddParameter("@ParentSelectionType", properties.ParentSelectionType.ToString());
-            dao.AddParameter("@MutationType", properties.MutationType.ToString());
-            dao.AddParameter("@ImmigrationType", properties.ImmigrationType.ToString());
-            dao.AddParameter("@RetirementType", properties.RetirementType.ToString());
-            dao.AddParameter("@CrossoverType", properties.CrossoverType.ToString());
-            dao.AddParameter("@ScoringType", properties.ScoringType.ToString());
-            dao.AddParameter("@DuplicationType", properties.DuplicationType.ToString());
+            dao.AddParameter("@SolutionStrategy", properties.Solution.GetType().AssemblyQualifiedName);
+            dao.AddParameter("@ParentSelectionStrategy", properties.ParentSelectionStrategy.ToString());
+            dao.AddParameter("@MutationStrategy", properties.MutationStrategy.ToString());
+            dao.AddParameter("@ImmigrationStrategy", properties.ImmigrationStrategy.ToString());
+            dao.AddParameter("@RetirementStrategy", properties.RetirementStrategy.ToString());
+            dao.AddParameter("@CrossoverStrategy", properties.CrossoverStrategy.ToString());
+            dao.AddParameter("@ScoringStrategy", properties.ScoringStrategy.ToString());
+            dao.AddParameter("@DuplicationStrategy", properties.DuplicationStrategy.ToString());
 
             dao.AddParameter("@MaxGenerations", properties.MaxGenerations);
             dao.AddParameter("@CrossoverRate", properties.CrossoverRate);
