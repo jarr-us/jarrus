@@ -49,6 +49,8 @@
     <Compile Include="BasicTypes\Genes\Gene.cs" />
     <Compile Include="BasicTypes\Chromosomes\Chromosome.cs" />
     <Compile Include="BasicTypes\Attributes\GeneOptionAttribute.cs" />
+    <Compile Include="BasicTypes\Genes\GeneField.cs" />
+    <Compile Include="BasicTypes\Genes\GeneFieldRepository.cs" />
     <Compile Include="BasicTypes\Genes\OrderedGene.cs" />
     <Compile Include="BasicTypes\Genes\UnorderedGene.cs" />
     <Compile Include="BasicTypes\Populations\OrderedPopulation.cs" />

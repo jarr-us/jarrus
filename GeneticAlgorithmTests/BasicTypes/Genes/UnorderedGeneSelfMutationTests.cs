@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Diagnostics;
 using Jarrus.GA.Factory.Enums;
+using Jarrus.GATests.Models;
 using Jarrus.GATests.Models.TestGenes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -9,6 +11,20 @@ namespace Jarrus.GATests.BasicTypes
     public class UnorderedGeneTests
     {
         private readonly Random _r = new Random(24);
+
+        [TestMethod]
+        public void ItCanCreateAGeneInLessThan100Ticks()
+        {
+            var gene = new PhraseGene(new Random());
+
+            var sw = new Stopwatch();
+            sw.Start();
+            gene = new PhraseGene(new Random());
+            sw.Stop();
+
+            Console.Out.WriteLine("Ticks to create unordered gene: " + sw.ElapsedTicks);
+            Assert.IsTrue(sw.ElapsedTicks < 100);
+        }
 
         [TestMethod]
         public void ItCanDetermineTheNumberOfGeneAttributesOnAGene()

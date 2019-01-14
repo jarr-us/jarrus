@@ -1,4 +1,5 @@
-﻿using Jarrus.GA.Utility;
+﻿using Jarrus.GA.Solution;
+using Jarrus.GA.Utility;
 using System;
 using System.Collections.Generic;
 
@@ -34,7 +35,7 @@ namespace Jarrus.GA.Models
 
         protected override Chromosome GetNewChromosome()
         {
-            var newChromosome = new UnorderedChromosome(Configuration.GeneSize, GeneType, Configuration.Random);
+            var newChromosome = new UnorderedChromosome(Configuration.Solution, Configuration.Random);
 
             newChromosome.FirstName = NameGenerator.GetFirstName(Configuration.RandomFirstNameSeed);
             newChromosome.LastName = NameGenerator.GetLastName(Configuration.RandomLastNameSeed);

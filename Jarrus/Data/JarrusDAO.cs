@@ -17,43 +17,15 @@ namespace Jarrus.Data
         private Random random = new Random();
         private int threadId;
 
-        public void CheckoutTasks(int numberOfTasks)
+        public List<GATask> CheckoutTasks(int numberOfTasks)
         {
             var sql = GetCheckoutTaskSQL(numberOfTasks);
-            var dao = new DAO();
-            dao.SimpleExecute(Server.JARRUS, sql);
-        }
-
-        private string GetCheckoutTaskSQL(int numberOfTasksToCheckout)
-        {
-            var sb = new StringBuilder();
-
-            sb.Append(";WITH subset AS (SELECT TOP ");
-            sb.Append(numberOfTasksToCheckout);
-            sb.Append(" * FROM [DB_9B8C9C_jarrus].[dbo].[GA_Tasks] where checkout is null or [checkout] < DATEADD(HOUR, -1, GETUTCDATE()) order by priority) ");
-            sb.Append("UPDATE subset SET[Checkout] = GETUTCDATE(), [ComputerName] = '");
-            sb.Append(GetComputerName());
-            sb.Append("' ");
-
-            return sb.ToString();
-        }
-
-        private string GetComputerName()
-        {
-            if (threadId == 0) { threadId = random.Next(); }
-            return Environment.MachineName + "::" + threadId;
-        }
-
-        public List<GATask> FetchMyTasks()
-        {
-            var sql = "SELECT * FROM [DB_9B8C9C_jarrus].[dbo].[GA_Tasks] WHERE [ComputerName] = @ComputerName order by [Priority]";            
             var dao = new DAO();
             var list = new List<GATask>();
 
             try
             {
-                dao.OpenConnection(Server.JARRUS, sql);
-                dao.AddParameter("@ComputerName", GetComputerName());
+                dao.OpenConnection(Server.JARRUS, GetCheckoutTaskSQL(numberOfTasks));
                 dao.Execute();
 
                 while (dao.HasNextRow())
@@ -86,13 +58,10 @@ namespace Jarrus.Data
 
                     list.Add(task);
                 }
-            }
-            catch (Exception ex)
+            } catch (Exception ex)
             {
-                ErrorHandlingSystem.HandleError(ex, "Unable to fetch GA Tasks");
-                return new List<GATask>();
-            }
-            finally
+                ErrorHandlingSystem.HandleError(ex);
+            } finally
             {
                 dao.CloseConnection();
             }
@@ -100,6 +69,34 @@ namespace Jarrus.Data
             return list;
         }
 
+        private string GetCheckoutTaskSQL(int numberOfTasksToCheckout)
+        {
+            var sb = new StringBuilder();
+
+            sb.Append("DECLARE @CurrentTime datetime = GETUTCDATE();");
+            sb.Append("DECLARE @ComputerName varchar(255) = '");
+            sb.Append(GetComputerName());
+            sb.Append("'; ");
+
+            sb.Append(";WITH subset AS (SELECT TOP ");
+            sb.Append(numberOfTasksToCheckout);
+            sb.Append(" *, ROW_NUMBER() OVER(ORDER BY [Priority]) as RowId FROM [DB_9B8C9C_jarrus].[dbo].[GA_Tasks] ");
+            sb.Append("where (checkout is null or [checkout] < DATEADD(HOUR, -1, GETUTCDATE()))) ");
+            sb.Append("UPDATE subset SET[Checkout] = GETUTCDATE(), [ComputerName] = @ComputerName ");
+            sb.Append("OUTPUT INSERTED.[UUID],INSERTED.[Session],INSERTED.[Priority],INSERTED.[Checkout],INSERTED.[ComputerName],INSERTED.[SolutionStrategy],INSERTED.[ParentSelectionStrategy] ");
+            sb.Append(",INSERTED.[MutationStrategy],INSERTED.[CrossoverStrategy],INSERTED.[ImmigrationStrategy],INSERTED.[RetirementStrategy],INSERTED.[ScoringStrategy],INSERTED.[DuplicationStrategy] ");
+            sb.Append(",INSERTED.[PopulationSize],INSERTED.[MaxGenerations],INSERTED.[CrossoverRate],INSERTED.[MutationRate],INSERTED.[ElitismRate],INSERTED.[ImmigrationRate]");
+            sb.Append(",INSERTED.[MaxRetirement],INSERTED.[ChildrenPerParents],INSERTED.[RandomSeed],INSERTED.[RandomPoolGenerationSeed]");
+
+            return sb.ToString();
+        }
+
+        private string GetComputerName()
+        {
+            if (threadId == 0) { threadId = random.Next(); }
+            return Environment.MachineName + "::" + threadId;
+        }
+        
         public void InsertCompletedRunsAndClearTasks(List<TaskCompleted> completed)
         {
             if (completed == null || completed.Count == 0) { return; }

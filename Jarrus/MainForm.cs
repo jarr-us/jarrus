@@ -11,7 +11,7 @@ namespace Jarrus
     {
         public TaskRunnerDisplay FormDisplay;
         public FormControls FControls;
-        private bool _running = true;
+        public static bool IsRunning = true;
         private Thread _procThread, _gaThread;
 
         // TODO: end when a viable fitness score is reached
@@ -97,12 +97,13 @@ namespace Jarrus
             }
         }
 
-        private void GALoop() { while (_running) { RunGAIteration(); UpdateChecker.Check(); } }
+        private void GALoop() { while (IsRunning) { RunGAIteration(); UpdateChecker.Check(); } }
         private void RunGAIteration() { FormDisplay.RunIteration(); }
-        private void DisplayLoop() { while (_running) { UpdateDisplay(); Thread.Sleep(50); } }
+        private void DisplayLoop() { while (IsRunning) { UpdateDisplay(); Thread.Sleep(50); } }
         private void UpdateDisplay() { if (!FormDisplay.IsReadyToUpdateForm()) { return; } FormDisplay.Update(); }
         private void exitToolStripMenuItem_Click(object sender, EventArgs e) { Application.Exit(); }
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e) {
+            IsRunning = false;
             try { _procThread.Interrupt(); } catch (Exception) { }
             try { _gaThread.Interrupt(); } catch (Exception) { }
         }

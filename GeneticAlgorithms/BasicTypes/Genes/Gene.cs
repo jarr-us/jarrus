@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Diagnostics;
+using Jarrus.GA.BasicTypes.Genes;
 
 namespace Jarrus.GA.Models
 {
@@ -17,9 +19,10 @@ namespace Jarrus.GA.Models
 
         public Gene(Random random)
         {
-            _random = random ?? throw new ArgumentException("When instantiating a Gene, the random object may not be null.");
+            _random = random ?? throw new ArgumentException("When instantiating a Gene, the random object may not be null.");            
             Mutate(MutationStrategy.Random);
         }
+
 
         public void Mutate(MutationStrategy type) {
             PerformRandomMutation(type);
@@ -30,22 +33,14 @@ namespace Jarrus.GA.Models
         private void PerformRandomMutation(MutationStrategy type)
         {
             if (type != MutationStrategy.Random) { return; }
-
             var attributes = new List<object>();
-
-            foreach (var field in GetMyFields())
+                        
+            var fields = GeneFieldRepository.Instance.GetFieldsFor(this);
+            foreach (var f in fields)
             {
-                var attributeObjects = field.GetCustomAttributes(typeof(GeneOptionAttribute), false);
-
-                if (attributeObjects.Length > 0)
-                {
-                    var geneAttributes = attributeObjects.Cast<GeneOptionAttribute>().ToArray();
-                    var attribute = geneAttributes[0];
-
-                    SetFieldWithRandomValue(field, attribute.IntValues);
-                    SetFieldWithRandomValue(field, attribute.CharValues);
-                    SetFieldWithRandomValue(field, attribute.StringValues);
-                }
+                SetFieldWithRandomValue(f.Field, f.Attribute.IntValues);
+                SetFieldWithRandomValue(f.Field, f.Attribute.CharValues);
+                SetFieldWithRandomValue(f.Field, f.Attribute.StringValues);
             }
         }
 
@@ -53,51 +48,35 @@ namespace Jarrus.GA.Models
         {
             if (type != MutationStrategy.Boundary) { return; }
 
-            var attributes = new List<object>();
-
-            foreach (var field in GetMyFields())
+           
+            var fields = GeneFieldRepository.Instance.GetFieldsFor(this);
+            foreach(var f in fields)
             {
-                var attributeObjects = field.GetCustomAttributes(typeof(GeneOptionAttribute), false);
+                var shouldSetToTopValue = _random.Next(0, 2) == 1;
 
-                if (attributeObjects.Length > 0)
-                {
-                    var geneAttributes = attributeObjects.Cast<GeneOptionAttribute>().ToArray();
-                    var attribute = geneAttributes[0];
-                    var shouldSetToTopValue = _random.Next(0, 2) == 1;
-
-                    SetFieldWithBoundaryValue(field, attribute.IntValues, shouldSetToTopValue);
-                    SetFieldWithBoundaryValue(field, attribute.CharValues, shouldSetToTopValue);
-                    SetFieldWithBoundaryValue(field, attribute.StringValues, shouldSetToTopValue);
-                }
+                SetFieldWithBoundaryValue(f.Field, f.Attribute.IntValues, shouldSetToTopValue);
+                SetFieldWithBoundaryValue(f.Field, f.Attribute.CharValues, shouldSetToTopValue);
+                SetFieldWithBoundaryValue(f.Field, f.Attribute.StringValues, shouldSetToTopValue);
             }
+        }
+
+        public List<FieldInfo> GetMyFields()
+        {
+            var myType = GetType();
+            return new List<FieldInfo>(myType.GetFields());
         }
 
         private void PerformFlipMutation(MutationStrategy type)
         {
             if (type != MutationStrategy.Flip) { return; }
 
-            var attributes = new List<object>();
-
-            foreach (var field in GetMyFields())
+            var fields = GeneFieldRepository.Instance.GetFieldsFor(this);
+            foreach (var f in fields)
             {
-                var attributeObjects = field.GetCustomAttributes(typeof(GeneOptionAttribute), false);
-
-                if (attributeObjects.Length > 0)
-                {
-                    var geneAttributes = attributeObjects.Cast<GeneOptionAttribute>().ToArray();
-                    var attribute = geneAttributes[0];
-
-                    SetFieldWithFlippedValue(field);
-                    SetFieldWithFlippedValue(field);
-                    SetFieldWithFlippedValue(field);
-                }
+                SetFieldWithFlippedValue(f.Field);
+                SetFieldWithFlippedValue(f.Field);
+                SetFieldWithFlippedValue(f.Field);
             }
-        }
-
-        private List<FieldInfo> GetMyFields()
-        {
-            var myType = GetType();
-            return new List<FieldInfo>(myType.GetFields());
         }
 
         private void SetFieldWithRandomValue<T>(FieldInfo field, T[] options)

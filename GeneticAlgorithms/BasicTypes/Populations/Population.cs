@@ -92,7 +92,7 @@ namespace Jarrus.GA.Models
         private int _attemptsToDetermineNextChromosome = 0;
         private void DetermineNextGeneration()
         {
-            AddElitiesToNextGeneration();
+            AddElitesToNextGeneration();
             AddImmigrantsToNextGeneration();
 
             while (NextGeneration.Count < Chromosomes.Length && !UnableToProgress)
@@ -112,7 +112,7 @@ namespace Jarrus.GA.Models
             }
         }
 
-        private void AddElitiesToNextGeneration()
+        private void AddElitesToNextGeneration()
         {
             var numberToGrab = (int)(Configuration.ElitismRate * Chromosomes.Length);
 
@@ -200,19 +200,14 @@ namespace Jarrus.GA.Models
                 for (int i = 0; i < Configuration.ChildrenPerParents; i++)
                 {
                     var child = GetChild(parents);
-                    var getChildTicks = sw.ElapsedTicks - getParentsTicks;
-
                     Configuration.Mutation.Mutate(child, Configuration);
-                    var mutateTicks = sw.ElapsedTicks - getChildTicks;
-
                     AddToNextGeneration(child);
-                    var addToNextGenTicks = sw.ElapsedTicks - mutateTicks;
-                    var one = 1;
                 }
             }
             else
             {
                 AddToNextGeneration(GetNewChromosome());
+
             }
         }
 

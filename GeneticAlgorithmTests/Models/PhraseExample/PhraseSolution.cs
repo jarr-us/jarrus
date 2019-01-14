@@ -31,7 +31,7 @@ namespace Jarrus.GATests.Models
         }
 
         public override int GetGeneSize() { return Shakespeare.Length; }
-        public override Type GetGeneType() { return typeof(PhraseGene); }
+        public override UnorderedGene GetNewGene(Random random) { return new PhraseGene(random); }
 
         public override bool ShouldTerminate(Population population)
         {

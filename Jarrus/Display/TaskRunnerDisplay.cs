@@ -30,6 +30,7 @@ namespace Jarrus.Display
         public int PoolScoreMaxYSeen;
         public double MinScoreSeen, MaxScoreSeen;
 
+        private JarrusTaskRepository _taskRepo = new JarrusTaskRepository();
         public bool IsReadyToUpdateForm() { return GARun != null; }
         public bool HasAPopulation() { return !GARun.Population.Chromosomes.Any(); }
         private JarrusDAO _jarrusDAO = new JarrusDAO();
@@ -157,8 +158,7 @@ namespace Jarrus.Display
             UIUpdater.SetText(Form, familyLabel, familyName);
             UIUpdater.SetProgressBar(Form, progressBar, percentage);
         }
-
-        private JarrusTaskRepository _taskRepo = new JarrusTaskRepository();
+                
         public void RunIteration()
         {
             var task = _taskRepo.GetTask();
@@ -174,7 +174,7 @@ namespace Jarrus.Display
             if (!config.IsUnorderedConfiguration()) { return; }
 
             var solution = (JarrusUnorderedSolution)config.Solution;
-            var ga = new UnorderedGeneticAlgorithm(config, solution.GetGeneType());
+            var ga = new UnorderedGeneticAlgorithm(config, solution.GetNewGene(new Random()).GetType());
 
             try {
                 Config = config;
