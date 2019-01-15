@@ -27,8 +27,8 @@
     <MinimumRequiredVersion>1.0.0.2</MinimumRequiredVersion>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>install.htm</WebPage>
-    <ApplicationRevision>3</ApplicationRevision>
-    <ApplicationVersion>4.4.3.%2a</ApplicationVersion>
+    <ApplicationRevision>1</ApplicationRevision>
+    <ApplicationVersion>5.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
@@ -52,6 +52,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>jarrus.ico</ApplicationIcon>
@@ -107,6 +108,9 @@
     </Compile>
     <Compile Include="Metadata\FamilyLineage.cs" />
     <Compile Include="Metadata\PoolScoreGenerator.cs" />
+    <Compile Include="Models\TaskRunner.cs" />
+    <Compile Include="Models\TaskThread.cs" />
+    <Compile Include="Models\ThreadRunner.cs" />
     <Compile Include="Models\UIUpdater.cs" />
     <Compile Include="Models\UpdateChecker.cs" />
     <Compile Include="Program.cs" />

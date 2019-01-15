@@ -114,6 +114,14 @@
             this.retiredNumberLbl = new System.Windows.Forms.Label();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.poolScoreChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.runsToInsertLbl = new System.Windows.Forms.Label();
+            this.label32 = new System.Windows.Forms.Label();
+            this.label36 = new System.Windows.Forms.Label();
+            this.tasksInQueueLbl = new System.Windows.Forms.Label();
+            this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.label22 = new System.Windows.Forms.Label();
+            this.threadNumberUpDown = new System.Windows.Forms.NumericUpDown();
             this.menuStrip.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -122,6 +130,9 @@
             this.groupBox5.SuspendLayout();
             this.groupBox6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.poolScoreChart)).BeginInit();
+            this.groupBox7.SuspendLayout();
+            this.groupBox8.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.threadNumberUpDown)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip
@@ -130,7 +141,7 @@
             this.fileToolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
-            this.menuStrip.Size = new System.Drawing.Size(617, 24);
+            this.menuStrip.Size = new System.Drawing.Size(773, 24);
             this.menuStrip.TabIndex = 0;
             this.menuStrip.Text = "menuStrip";
             // 
@@ -154,7 +165,7 @@
             this.versionLbl.BackColor = System.Drawing.SystemColors.Control;
             this.versionLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.versionLbl.ForeColor = System.Drawing.SystemColors.ButtonShadow;
-            this.versionLbl.Location = new System.Drawing.Point(493, 378);
+            this.versionLbl.Location = new System.Drawing.Point(649, 380);
             this.versionLbl.Name = "versionLbl";
             this.versionLbl.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.versionLbl.Size = new System.Drawing.Size(112, 24);
@@ -530,7 +541,7 @@
             this.groupBox3.Controls.Add(this.label17);
             this.groupBox3.Location = new System.Drawing.Point(419, 27);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(191, 159);
+            this.groupBox3.Size = new System.Drawing.Size(191, 139);
             this.groupBox3.TabIndex = 5;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Configuration";
@@ -703,9 +714,9 @@
             this.groupBox4.Controls.Add(this.label31);
             this.groupBox4.Controls.Add(this.label33);
             this.groupBox4.Controls.Add(this.configParentSelectionLbl);
-            this.groupBox4.Location = new System.Drawing.Point(419, 192);
+            this.groupBox4.Location = new System.Drawing.Point(419, 172);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(191, 162);
+            this.groupBox4.Size = new System.Drawing.Size(191, 126);
             this.groupBox4.TabIndex = 6;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Configuration Strategies";
@@ -970,12 +981,109 @@
             this.poolScoreChart.TabIndex = 9;
             this.poolScoreChart.Text = "poolScore";
             // 
+            // groupBox7
+            // 
+            this.groupBox7.Controls.Add(this.runsToInsertLbl);
+            this.groupBox7.Controls.Add(this.label32);
+            this.groupBox7.Controls.Add(this.label36);
+            this.groupBox7.Controls.Add(this.tasksInQueueLbl);
+            this.groupBox7.Location = new System.Drawing.Point(616, 177);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Size = new System.Drawing.Size(150, 71);
+            this.groupBox7.TabIndex = 10;
+            this.groupBox7.TabStop = false;
+            this.groupBox7.Text = "Task Repo Details";
+            // 
+            // runsToInsertLbl
+            // 
+            this.runsToInsertLbl.Location = new System.Drawing.Point(105, 29);
+            this.runsToInsertLbl.Name = "runsToInsertLbl";
+            this.runsToInsertLbl.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.runsToInsertLbl.Size = new System.Drawing.Size(42, 12);
+            this.runsToInsertLbl.TabIndex = 43;
+            this.runsToInsertLbl.Text = "0";
+            this.runsToInsertLbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label32
+            // 
+            this.label32.AutoSize = true;
+            this.label32.Location = new System.Drawing.Point(6, 27);
+            this.label32.Name = "label32";
+            this.label32.Size = new System.Drawing.Size(73, 13);
+            this.label32.TabIndex = 42;
+            this.label32.Text = "Runs to Insert";
+            // 
+            // label36
+            // 
+            this.label36.AutoSize = true;
+            this.label36.Location = new System.Drawing.Point(6, 14);
+            this.label36.Name = "label36";
+            this.label36.Size = new System.Drawing.Size(82, 13);
+            this.label36.TabIndex = 40;
+            this.label36.Text = "Tasks in Queue";
+            // 
+            // tasksInQueueLbl
+            // 
+            this.tasksInQueueLbl.Location = new System.Drawing.Point(105, 16);
+            this.tasksInQueueLbl.Name = "tasksInQueueLbl";
+            this.tasksInQueueLbl.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.tasksInQueueLbl.Size = new System.Drawing.Size(42, 13);
+            this.tasksInQueueLbl.TabIndex = 41;
+            this.tasksInQueueLbl.Text = "0";
+            this.tasksInQueueLbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // groupBox8
+            // 
+            this.groupBox8.Controls.Add(this.label22);
+            this.groupBox8.Controls.Add(this.threadNumberUpDown);
+            this.groupBox8.Location = new System.Drawing.Point(617, 28);
+            this.groupBox8.Name = "groupBox8";
+            this.groupBox8.Size = new System.Drawing.Size(149, 138);
+            this.groupBox8.TabIndex = 11;
+            this.groupBox8.TabStop = false;
+            this.groupBox8.Text = "Application Controls";
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(6, 18);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(46, 13);
+            this.label22.TabIndex = 28;
+            this.label22.Text = "Threads";
+            // 
+            // threadNumberUpDown
+            // 
+            this.threadNumberUpDown.Location = new System.Drawing.Point(88, 16);
+            this.threadNumberUpDown.Maximum = new decimal(new int[] {
+            8,
+            0,
+            0,
+            0});
+            this.threadNumberUpDown.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.threadNumberUpDown.Name = "threadNumberUpDown";
+            this.threadNumberUpDown.Size = new System.Drawing.Size(55, 20);
+            this.threadNumberUpDown.TabIndex = 0;
+            this.threadNumberUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.threadNumberUpDown.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.threadNumberUpDown.ValueChanged += new System.EventHandler(this.threadNumberUpDown_ValueChanged);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(617, 411);
+            this.ClientSize = new System.Drawing.Size(773, 413);
+            this.Controls.Add(this.groupBox8);
+            this.Controls.Add(this.groupBox7);
             this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox4);
@@ -1003,6 +1111,11 @@
             this.groupBox5.PerformLayout();
             this.groupBox6.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.poolScoreChart)).EndInit();
+            this.groupBox7.ResumeLayout(false);
+            this.groupBox7.PerformLayout();
+            this.groupBox8.ResumeLayout(false);
+            this.groupBox8.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.threadNumberUpDown)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1093,6 +1206,14 @@
         private System.Windows.Forms.Label label24;
         private System.Windows.Forms.Label configImmigrationRateLbl;
         private System.Windows.Forms.Label label28;
+        private System.Windows.Forms.GroupBox groupBox7;
+        private System.Windows.Forms.Label runsToInsertLbl;
+        private System.Windows.Forms.Label label32;
+        private System.Windows.Forms.Label label36;
+        private System.Windows.Forms.Label tasksInQueueLbl;
+        private System.Windows.Forms.GroupBox groupBox8;
+        private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.NumericUpDown threadNumberUpDown;
     }
 }
 

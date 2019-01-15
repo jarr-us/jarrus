@@ -1,4 +1,5 @@
-﻿using Jarrus.Display;
+﻿using Jarrus.Data;
+using Jarrus.Display;
 using Jarrus.Models;
 using System;
 using System.Deployment.Application;
@@ -12,22 +13,36 @@ namespace Jarrus
         public TaskRunnerDisplay FormDisplay;
         public FormControls FControls;
         public static bool IsRunning = true;
-        private Thread _procThread, _gaThread;
+        private Thread _procThread, _updateThread;
 
-        // TODO: end when a viable fitness score is reached
         // TODO: Threading now available again
         // TODO: API
 
         public MainForm()
         {
+            var mainThread = ThreadRunner.Instance.GetMainTaskThread();
+
             UpdateChecker.Check();
             InitializeComponent();
 
+            StartThreads();
             SetupControls();            
-            FormDisplay = new TaskRunnerDisplay(this, FControls);
+            FormDisplay = new TaskRunnerDisplay(mainThread.TaskRunner, this, FControls);
 
             UpdateVersionLabel();
             StartProcessing();
+        }
+
+        private void StartThreads()
+        {
+            var computerName = Environment.MachineName;
+
+            if (computerName.Equals("R2-D2") || computerName.Equals("K-2SO"))
+            {
+                threadNumberUpDown.Value = 2;
+            }
+
+            ThreadRunner.Instance.SetThreadCount((int) threadNumberUpDown.Value);
         }
 
         private void SetupControls()
@@ -78,6 +93,9 @@ namespace Jarrus
             FControls.Family3ProgressBar = lastName3ProgressBar;
             FControls.Family4ProgressBar = lastName4ProgressBar;
             FControls.Family5ProgressBar = lastName5ProgressBar;
+
+            FControls.TaskRepoQueuedTasks = tasksInQueueLbl;
+            FControls.TaskRepoFinishedRuns = runsToInsertLbl;
         }
 
         private void StartProcessing()
@@ -85,8 +103,8 @@ namespace Jarrus
             _procThread = new Thread(DisplayLoop);
             _procThread.Start();
 
-            _gaThread = new Thread(GALoop);
-            _gaThread.Start();
+            _updateThread = new Thread(UpdateLoop);
+            _updateThread.Start();
         }
 
         private void UpdateVersionLabel()
@@ -97,15 +115,19 @@ namespace Jarrus
             }
         }
 
-        private void GALoop() { while (IsRunning) { RunGAIteration(); UpdateChecker.Check(); } }
-        private void RunGAIteration() { FormDisplay.RunIteration(); }
         private void DisplayLoop() { while (IsRunning) { UpdateDisplay(); Thread.Sleep(50); } }
         private void UpdateDisplay() { if (!FormDisplay.IsReadyToUpdateForm()) { return; } FormDisplay.Update(); }
+        private void UpdateLoop() { while (IsRunning) { Thread.Sleep(6000); UpdateChecker.Check(); } }
         private void exitToolStripMenuItem_Click(object sender, EventArgs e) { Application.Exit(); }
+
+        private void threadNumberUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            ThreadRunner.Instance.SetThreadCount((int)threadNumberUpDown.Value);
+        }
+
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e) {
             IsRunning = false;
             try { _procThread.Interrupt(); } catch (Exception) { }
-            try { _gaThread.Interrupt(); } catch (Exception) { }
         }
     }
 }

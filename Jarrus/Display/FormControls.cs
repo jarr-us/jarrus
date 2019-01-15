@@ -35,6 +35,8 @@ namespace Jarrus.Display
         public Label ConfigDuplicationLbl;
         public Label MillisecondsPerGeneration;
         public Label SolutionNameLbl;
+        public Label TaskRepoQueuedTasks;
+        public Label TaskRepoFinishedRuns;
 
         public Label Family1Lbl, Family2Lbl, Family3Lbl, Family4Lbl, Family5Lbl;
         public ProgressBar Family1ProgressBar, Family2ProgressBar, Family3ProgressBar, Family4ProgressBar, Family5ProgressBar;

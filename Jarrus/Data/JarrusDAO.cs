@@ -14,9 +14,6 @@ namespace Jarrus.Data
 {
     public class JarrusDAO
     {
-        private Random random = new Random();
-        private int threadId;
-
         public List<GATask> CheckoutTasks(int numberOfTasks)
         {
             var sql = GetCheckoutTaskSQL(numberOfTasks);
@@ -73,6 +70,8 @@ namespace Jarrus.Data
         {
             var sb = new StringBuilder();
 
+            sb.Append("BEGIN TRANSACTION;");
+
             sb.Append("DECLARE @CurrentTime datetime = GETUTCDATE();");
             sb.Append("DECLARE @ComputerName varchar(255) = '");
             sb.Append(GetComputerName());
@@ -80,21 +79,22 @@ namespace Jarrus.Data
 
             sb.Append(";WITH subset AS (SELECT TOP ");
             sb.Append(numberOfTasksToCheckout);
-            sb.Append(" *, ROW_NUMBER() OVER(ORDER BY [Priority]) as RowId FROM [DB_9B8C9C_jarrus].[dbo].[GA_Tasks] ");
-            sb.Append("where (checkout is null or [checkout] < DATEADD(HOUR, -1, GETUTCDATE()))) ");
+            sb.Append(" *, ROW_NUMBER() OVER(ORDER BY [Priority]) as RowId FROM [DB_9B8C9C_jarrus].[dbo].[GA_Tasks]  WITH (HOLDLOCK, ROWLOCK)");
+            sb.Append("where (checkout is null or [checkout] < DATEADD(HOUR, -1, GETUTCDATE())) order by [Priority]) ");
             sb.Append("UPDATE subset SET[Checkout] = GETUTCDATE(), [ComputerName] = @ComputerName ");
             sb.Append("OUTPUT INSERTED.[UUID],INSERTED.[Session],INSERTED.[Priority],INSERTED.[Checkout],INSERTED.[ComputerName],INSERTED.[SolutionStrategy],INSERTED.[ParentSelectionStrategy] ");
             sb.Append(",INSERTED.[MutationStrategy],INSERTED.[CrossoverStrategy],INSERTED.[ImmigrationStrategy],INSERTED.[RetirementStrategy],INSERTED.[ScoringStrategy],INSERTED.[DuplicationStrategy] ");
             sb.Append(",INSERTED.[PopulationSize],INSERTED.[MaxGenerations],INSERTED.[CrossoverRate],INSERTED.[MutationRate],INSERTED.[ElitismRate],INSERTED.[ImmigrationRate]");
-            sb.Append(",INSERTED.[MaxRetirement],INSERTED.[ChildrenPerParents],INSERTED.[RandomSeed],INSERTED.[RandomPoolGenerationSeed]");
+            sb.Append(",INSERTED.[MaxRetirement],INSERTED.[ChildrenPerParents],INSERTED.[RandomSeed],INSERTED.[RandomPoolGenerationSeed];");
+
+            sb.Append("COMMIT TRANSACTION;");
 
             return sb.ToString();
         }
 
         private string GetComputerName()
         {
-            if (threadId == 0) { threadId = random.Next(); }
-            return Environment.MachineName + "::" + threadId;
+            return Environment.MachineName;
         }
         
         public void InsertCompletedRunsAndClearTasks(List<TaskCompleted> completed)
@@ -108,8 +108,8 @@ namespace Jarrus.Data
 
                 foreach(var complete in completed)
                 {
-                    dao.AddSqlStatementToTransaction(GetCompletedRunSql(complete));
                     dao.AddSqlStatementToTransaction(GetDeleteTaskSql(complete.Config.TaskUUID));
+                    dao.AddSqlStatementToTransaction(GetCompletedRunSql(complete));                    
                 }                
 
                 dao.ExecuteTransaction();

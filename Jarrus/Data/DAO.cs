@@ -89,11 +89,12 @@ namespace Jarrus.Data
                 
                 _transaction.Commit();
             }
-            catch (Exception)
+            catch (Exception ex1)
             {
                 try
                 {
                     _transaction.Rollback();
+                    throw ex1;
                 }
                 catch (Exception ex2)
                 {

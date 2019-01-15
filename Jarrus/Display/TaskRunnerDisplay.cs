@@ -17,23 +17,29 @@ namespace Jarrus.Display
 {
     public class TaskRunnerDisplay 
     {
-        public TaskRunnerDisplay(Form form, FormControls controls) { Form = form;  Controls = controls; }
-
-        protected Form Form;
+        public Form Form;
+        public TaskRunner TaskRunner;
         protected FormControls Controls;
-        public GARun GARun;
-        public GAConfiguration Config;
-        public int RunNumber;
         public Stopwatch Stopwatch = new Stopwatch();
         public int LastGenerationSeen;
 
         public int PoolScoreMaxYSeen;
         public double MinScoreSeen, MaxScoreSeen;
 
-        private JarrusTaskRepository _taskRepo = new JarrusTaskRepository();
-        public bool IsReadyToUpdateForm() { return GARun != null; }
-        public bool HasAPopulation() { return !GARun.Population.Chromosomes.Any(); }
+        public bool HasAPopulation() { return !TaskRunner.GARun.Population.Chromosomes.Any(); }
         private JarrusDAO _jarrusDAO = new JarrusDAO();
+        private string _currentSolution;
+
+        public TaskRunnerDisplay(TaskRunner taskRunner, Form form, FormControls controls)
+        {
+            Form = form;
+            Controls = controls;
+            TaskRunner = taskRunner;
+        }
+
+        public bool IsReadyToUpdateForm() {
+            return TaskRunner.GARun != null;
+        }
 
         internal void Update()
         {
@@ -42,18 +48,26 @@ namespace Jarrus.Display
             DrawFamilyDetails();
             DrawConfigurationDetails();
             DrawCharts();
+            DrawTaskRepoDetails();
         }
 
         private void DrawCharts()
         {
-            var chromosomes = GARun.Population.Chromosomes;
-            var min = GARun.Population.Chromosomes.Select(o => o.FitnessScore).Min();
-            var max = GARun.Population.Chromosomes.Select(o => o.FitnessScore).Max();
+            if (_currentSolution != TaskRunner.Config.Solution.GetType().AssemblyQualifiedName)
+            {
+                _currentSolution = TaskRunner.Config.Solution.GetType().AssemblyQualifiedName;
+                MinScoreSeen = TaskRunner.GARun.Population.Chromosomes.Select(o => o.FitnessScore).Min();
+                MaxScoreSeen = TaskRunner.GARun.Population.Chromosomes.Select(o => o.FitnessScore).Max();
+            }
+
+            var chromosomes = TaskRunner.GARun.Population.Chromosomes;
+            var min = TaskRunner.GARun.Population.Chromosomes.Select(o => o.FitnessScore).Min();
+            var max = TaskRunner.GARun.Population.Chromosomes.Select(o => o.FitnessScore).Max();
 
             if (MinScoreSeen > min) { MinScoreSeen = min; }
             if (MaxScoreSeen < max) { MaxScoreSeen = max; }
 
-            var poolScoreGenerator = new PoolScoreGenerator(GARun.Population, MinScoreSeen, MaxScoreSeen);
+            var poolScoreGenerator = new PoolScoreGenerator(TaskRunner.GARun.Population, MinScoreSeen, MaxScoreSeen);
 
             var maxScore = poolScoreGenerator.Points.Max(o => o.Value);
             if (maxScore > PoolScoreMaxYSeen)
@@ -64,16 +78,22 @@ namespace Jarrus.Display
             UIUpdater.SetChart(Form, Controls.PoolScoreChart, poolScoreGenerator.Points, MinScoreSeen, MaxScoreSeen, PoolScoreMaxYSeen);
         }
 
+        private void DrawTaskRepoDetails()
+        {
+            UIUpdater.SetText(Form, Controls.TaskRepoQueuedTasks, JarrusTaskRepository.Instance.GetNumberOfTasksToRun() + "");
+            UIUpdater.SetText(Form, Controls.TaskRepoFinishedRuns, JarrusTaskRepository.Instance.GetNumberOfCompletedRunsToInsert() + "");
+        }
+
         private void DrawIterationDetails()
         {
             if (HasAPopulation()) { return; }
 
-            var allTimeBest = GARun.BestChromosome;
-            var population = GARun.Population;
+            var allTimeBest = TaskRunner.GARun.BestChromosome;
+            var population = TaskRunner.GARun.Population;
             if (population.Chromosomes.Count() == 0) { return; }
 
             var currentBestScore = population.Chromosomes.Min(o => o.FitnessScore);
-            if (Config.ScoringStrategy == ScoringStrategy.Highest) { currentBestScore = population.Chromosomes.Max(o => o.FitnessScore); }
+            if (TaskRunner.Config.ScoringStrategy == ScoringStrategy.Highest) { currentBestScore = population.Chromosomes.Max(o => o.FitnessScore); }
 
             var currentBest = population.Chromosomes.Where(o => o.FitnessScore == currentBestScore).First();
 
@@ -82,56 +102,59 @@ namespace Jarrus.Display
             UIUpdater.SetText(Form, Controls.CurrentBestLastNameLbl, currentBest.LastName + "");
             UIUpdater.SetText(Form, Controls.CurrentBestDirectDescendentsLbl, currentBest.Children + "");
 
-            UIUpdater.SetText(Form, Controls.GenerationLbl, GARun.CurrentGeneration + "");
+            UIUpdater.SetText(Form, Controls.GenerationLbl, TaskRunner.GARun.CurrentGeneration + "");
             UIUpdater.SetText(Form, Controls.GoatBestFirstNameLbl, allTimeBest.FirstName + "");
             UIUpdater.SetText(Form, Controls.GoatBestLastNameLbl, allTimeBest.LastName + "");
             UIUpdater.SetText(Form, Controls.GoatBestLowestScoreLbl, allTimeBest.FitnessScore + "");
             UIUpdater.SetText(Form, Controls.GoatDirectDescendentsLbl, allTimeBest.Children + "");
 
-            UIUpdater.SetText(Form, Controls.RunsCompletedLbl, RunNumber + "");
+            UIUpdater.SetText(Form, Controls.RunsCompletedLbl, JarrusTaskRepository.Instance.NumberOfRunsCompleted + "");
         }
 
         private void DrawMetadataDetails()
         {
             Stopwatch.Stop();
-            var ticksPerChromosome = Stopwatch.ElapsedTicks / (GARun.Population.Chromosomes.Length * 1.0 * (GARun.CurrentGeneration - LastGenerationSeen));
-            var msPerGeneration = Stopwatch.ElapsedMilliseconds / (1.0 * (GARun.CurrentGeneration - LastGenerationSeen));
+            var ticksPerChromosome = Stopwatch.ElapsedTicks / (TaskRunner.GARun.Population.Chromosomes.Length * 1.0 * (TaskRunner.GARun.CurrentGeneration - LastGenerationSeen));
+            var msPerGeneration = Stopwatch.ElapsedMilliseconds / (1.0 * (TaskRunner.GARun.CurrentGeneration - LastGenerationSeen));
 
             if (double.IsInfinity(msPerGeneration)) { Stopwatch.Restart(); return; }
 
-            UIUpdater.SetText(Form, Controls.RetiredNumberLbl, GARun.Population.Retired.Count + "");
+            UIUpdater.SetText(Form, Controls.RetiredNumberLbl, TaskRunner.GARun.Population.Retired.Count + "");
             UIUpdater.SetText(Form, Controls.TicksPerChromosome, ticksPerChromosome.ToString("#,##0"));
             UIUpdater.SetText(Form, Controls.MillisecondsPerGeneration, msPerGeneration.ToString("#,##0.00"));
 
             Stopwatch.Restart();
-            LastGenerationSeen = GARun.CurrentGeneration;
+            LastGenerationSeen = TaskRunner.GARun.CurrentGeneration;
         }
 
         private void DrawConfigurationDetails()
         {
-            if (Config == null) { return; }
+            if (TaskRunner.Config == null) { return; }
 
-            UIUpdater.SetText(Form, Controls.ConfigPoolSizeLbl, Config.PopulationSize + "");
-            UIUpdater.SetText(Form, Controls.ConfigIterationsLbl, Config.MaxGenerations + "");
-            UIUpdater.SetText(Form, Controls.ConfigCrossoverRateLbl, Config.CrossoverRate + "");
-            UIUpdater.SetText(Form, Controls.ConfigMutationRateLbl, Config.MutationRate + "");
-            UIUpdater.SetText(Form, Controls.ConfigElitismRateLbl, Config.ElitismRate + "");
-            UIUpdater.SetText(Form, Controls.ConfigImmigrationRateLbl, Config.ImmigrationRate + "");
-            UIUpdater.SetText(Form, Controls.ConfigMaxLifeLbl, Config.MaxRetirement + "");
-            UIUpdater.SetText(Form, Controls.ConfigChildrenPerCoupleLbl, Config.ChildrenPerParents + "");
+            UIUpdater.SetText(Form, Controls.SessionNameLbl, TaskRunner.Config.Session);
+            UIUpdater.SetText(Form, Controls.SolutionNameLbl, TaskRunner.Config.Solution.GetType().Name.Replace("Solution", "").ToString());
+            
+            UIUpdater.SetText(Form, Controls.ConfigPoolSizeLbl, TaskRunner.Config.PopulationSize + "");
+            UIUpdater.SetText(Form, Controls.ConfigIterationsLbl, TaskRunner.Config.MaxGenerations + "");
+            UIUpdater.SetText(Form, Controls.ConfigCrossoverRateLbl, TaskRunner.Config.CrossoverRate + "");
+            UIUpdater.SetText(Form, Controls.ConfigMutationRateLbl, TaskRunner.Config.MutationRate + "");
+            UIUpdater.SetText(Form, Controls.ConfigElitismRateLbl, TaskRunner.Config.ElitismRate + "");
+            UIUpdater.SetText(Form, Controls.ConfigImmigrationRateLbl, TaskRunner.Config.ImmigrationRate + "");
+            UIUpdater.SetText(Form, Controls.ConfigMaxLifeLbl, TaskRunner.Config.MaxRetirement + "");
+            UIUpdater.SetText(Form, Controls.ConfigChildrenPerCoupleLbl, TaskRunner.Config.ChildrenPerParents + "");
 
-            UIUpdater.SetText(Form, Controls.ConfigParentSelectionLbl, Config.ParentSelectionStrategy.ToString());
-            UIUpdater.SetText(Form, Controls.ConfigCrossoverLbl, Config.CrossoverStrategy.ToString());
-            UIUpdater.SetText(Form, Controls.ConfigMutationLbl, Config.MutationStrategy.ToString());
-            UIUpdater.SetText(Form, Controls.ConfigRetirementLbl, Config.RetirementStrategy.ToString());
-            UIUpdater.SetText(Form, Controls.ConfigImmigrationLbl, Config.ImmigrationStrategy.ToString());
-            UIUpdater.SetText(Form, Controls.ConfigScoringLbl, Config.ScoringStrategy.ToString());
-            UIUpdater.SetText(Form, Controls.ConfigDuplicationLbl, Config.DuplicationStrategy.ToString());
+            UIUpdater.SetText(Form, Controls.ConfigParentSelectionLbl, TaskRunner.Config.ParentSelectionStrategy.ToString());
+            UIUpdater.SetText(Form, Controls.ConfigCrossoverLbl, TaskRunner.Config.CrossoverStrategy.ToString());
+            UIUpdater.SetText(Form, Controls.ConfigMutationLbl, TaskRunner.Config.MutationStrategy.ToString());
+            UIUpdater.SetText(Form, Controls.ConfigRetirementLbl, TaskRunner.Config.RetirementStrategy.ToString());
+            UIUpdater.SetText(Form, Controls.ConfigImmigrationLbl, TaskRunner.Config.ImmigrationStrategy.ToString());
+            UIUpdater.SetText(Form, Controls.ConfigScoringLbl, TaskRunner.Config.ScoringStrategy.ToString());
+            UIUpdater.SetText(Form, Controls.ConfigDuplicationLbl, TaskRunner.Config.DuplicationStrategy.ToString());
         }
 
         private void DrawFamilyDetails()
         {
-            var familyLineage = new FamilyLineage(GARun.Population);
+            var familyLineage = new FamilyLineage(TaskRunner.GARun.Population);
 
             UpdateFamily(Controls.Family1Lbl, Controls.Family1ProgressBar, 0, familyLineage);
             UpdateFamily(Controls.Family2Lbl, Controls.Family2ProgressBar, 1, familyLineage);
@@ -157,60 +180,6 @@ namespace Jarrus.Display
 
             UIUpdater.SetText(Form, familyLabel, familyName);
             UIUpdater.SetProgressBar(Form, progressBar, percentage);
-        }
-                
-        public void RunIteration()
-        {
-            var task = _taskRepo.GetTask();
-            if (task == null || !task.IsValid()) { Thread.Sleep(1000); return; }
-            var config = new GAConfiguration(task);
-
-            RunOrderedConfiguration(config);
-            RunUnorderedConfiguration(config);
-        }
-
-        private void RunUnorderedConfiguration(GAConfiguration config)
-        {
-            if (!config.IsUnorderedConfiguration()) { return; }
-
-            var solution = (JarrusUnorderedSolution)config.Solution;
-            var ga = new UnorderedGeneticAlgorithm(config, solution.GetNewGene(new Random()).GetType());
-
-            try {
-                Config = config;
-                GARun = ga.GARun;
-                RunConfiguration(ga);
-            } catch (Exception ex)
-            {
-                try { ErrorHandlingSystem.HandleError(ex, "Something failed in the process."); } catch (Exception) {  }
-            }            
-        }
-
-        private void RunConfiguration(GeneticAlgorithm ga)
-        {
-            UIUpdater.SetText(Form, Controls.SessionNameLbl, Config.Session);
-            UIUpdater.SetText(Form, Controls.SolutionNameLbl, Config.Solution.GetType().Name.Replace("Solution", "").ToString());
-            MinScoreSeen = GARun.Population.Chromosomes.Select(o => o.FitnessScore).Min();
-            MaxScoreSeen = GARun.Population.Chromosomes.Select(o => o.FitnessScore).Max();
-
-            ga.Run();
-            _taskRepo.InsertCompletedRun(new TaskCompleted(GARun, Config));
-
-            RunNumber++;
-        }
-
-        private void RunOrderedConfiguration(GAConfiguration config)
-        {
-            if (!config.IsOrderedConfiguration()) { return; }
-
-            var solution = (JarrusOrderedSolution)config.Solution;
-
-            var data = solution.GetOptions();
-            var ga = new OrderedGeneticAlgorithm(config, data);
-
-            Config = config;
-            GARun = ga.GARun;
-            RunConfiguration(ga);
         }
     }
 }
