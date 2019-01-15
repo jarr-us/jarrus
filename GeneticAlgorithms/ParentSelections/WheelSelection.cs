@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Jarrus.GA.ParentSelections
 {
-    public abstract class FitnessProportionateSelection : ParentSelection
+    public abstract class WheelSelection : ParentSelection
     {
         public List<double> Rankings = new List<double>();
 
@@ -34,7 +34,7 @@ namespace Jarrus.GA.ParentSelections
 
             foreach (var ch in Population)
             {
-                ch.AdjustedFitnessScore += Math.Abs(minValue);
+                ch.AdjustedFitnessScore += Math.Abs(minValue) + 1;
             }
         }
 

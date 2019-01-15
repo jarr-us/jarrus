@@ -93,7 +93,7 @@
     <Compile Include="ParentSelections\ParentSelectionTests.cs" />
     <Compile Include="ParentSelections\RouletteWheelSelectionTests.cs" />
     <Compile Include="ParentSelections\StochasticUniversalSamplingSelectionTests.cs" />
-    <Compile Include="ParentSelections\FitnessProportionateTests.cs" />
+    <Compile Include="ParentSelections\WheelSelectionTests.cs" />
     <Compile Include="ParentSelections\TournamentSelectionTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BasicTypes\Configurations\GAConfigurationTests.cs" />
