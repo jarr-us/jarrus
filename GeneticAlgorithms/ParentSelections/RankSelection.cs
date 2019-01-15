@@ -1,6 +1,6 @@
 ﻿namespace Jarrus.GA.ParentSelections
 {
-    public class RankSelection : RankingWheel
+    public class RankSelection : FitnessProportionateSelection
     {
         public override ChromosomeParents GetParents()
         {

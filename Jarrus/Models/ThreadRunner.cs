@@ -25,21 +25,37 @@ namespace Jarrus.Models
 
         public void SetThreadCount(int threadCount)
         {
+            _numberOfThreads = threadCount;
+            var t = new Thread(ThreadedChangeThreadCount);
+            t.Start();
+        }
+
+        private void ThreadedChangeThreadCount()
+        {
             lock (threadChangeLock)
             {
-                _numberOfThreads = threadCount;
-
                 for (int i = 0; i < MAX_THREADS; i++)
                 {
                     _threads[i].Stop();
                 }
 
                 while (_threads.Where(o => o.IsAlive).Any()) { Thread.Sleep(1000); }
-                while(_t.IsAlive) { Thread.Sleep(1000); }
+                while (_t.IsAlive) { Thread.Sleep(1000); }
 
                 _t = new Thread(RunLoopedThread);
                 _t.Start();
-            }            
+            }
+        }
+
+        public void Shutdown()
+        {
+            lock (threadChangeLock)
+            {
+                for (int i = 0; i < MAX_THREADS; i++)
+                {
+                    _threads[i].Stop();
+                }
+            }
         }
 
         private void RunLoopedThread()

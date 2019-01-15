@@ -3,7 +3,7 @@ using System;
 
 namespace Jarrus.GA.ParentSelections
 {
-    public class StochasticUniversalSamplingSelection : RankingWheel
+    public class StochasticUniversalSamplingSelection : FitnessProportionateSelection
     {
         public StochasticUniversalSamplingSelection() { }
 

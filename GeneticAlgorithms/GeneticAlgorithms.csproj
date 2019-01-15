@@ -87,7 +87,7 @@
     <Compile Include="Mutations\SwapMutation.cs" />
     <Compile Include="ParentSelections\ChromosomeParents.cs" />
     <Compile Include="ParentSelections\ParentSelection.cs" />
-    <Compile Include="ParentSelections\RankingWheel.cs" />
+    <Compile Include="ParentSelections\FitnessProportionateSelection.cs" />
     <Compile Include="ParentSelections\RankSelection.cs" />
     <Compile Include="ParentSelections\RouletteWheelSelection.cs" />
     <Compile Include="ParentSelections\StochasticUniversalSamplingSelection.cs" />

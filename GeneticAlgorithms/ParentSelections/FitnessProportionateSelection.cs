@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Jarrus.GA.ParentSelections
 {
-    public abstract class RankingWheel : ParentSelection
+    public abstract class FitnessProportionateSelection : ParentSelection
     {
         public List<double> Rankings = new List<double>();
 

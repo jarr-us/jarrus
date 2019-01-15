@@ -19,7 +19,7 @@ namespace Jarrus
         // TODO: API
 
         public MainForm()
-        {
+        {            
             var mainThread = ThreadRunner.Instance.GetMainTaskThread();
 
             UpdateChecker.Check();
@@ -40,9 +40,10 @@ namespace Jarrus
             if (computerName.Equals("R2-D2") || computerName.Equals("K-2SO"))
             {
                 threadNumberUpDown.Value = 2;
+            } else
+            {
+                ThreadRunner.Instance.SetThreadCount((int)threadNumberUpDown.Value);
             }
-
-            ThreadRunner.Instance.SetThreadCount((int) threadNumberUpDown.Value);
         }
 
         private void SetupControls()
@@ -127,6 +128,7 @@ namespace Jarrus
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e) {
             IsRunning = false;
+            ThreadRunner.Instance.Shutdown();
             try { _procThread.Interrupt(); } catch (Exception) { }
         }
     }

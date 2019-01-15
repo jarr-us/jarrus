@@ -9,7 +9,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Jarrus.GATests.ParentSelections
 {
     [TestClass]
-    public class RankingWheelTests
+    public class FitnessProportionateTests
     {
         private RouletteWheelSelection _rankSelection;
         private GAConfiguration _config;

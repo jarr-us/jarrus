@@ -11,6 +11,7 @@ namespace Jarrus.GA.BasicTypes.Genes
         public static GeneFieldRepository Instance = new GeneFieldRepository();
 
         private Dictionary<Type, List<GeneField>> _dict = new Dictionary<Type, List<GeneField>>();
+        private object _changeDictLock = new object();
         private GeneFieldRepository() {}
 
         public List<GeneField> GetFieldsFor(Gene obj)
@@ -24,26 +25,30 @@ namespace Jarrus.GA.BasicTypes.Genes
             var type = obj.GetType();
             if (_dict.ContainsKey(type)) { return; }
 
-            var geneFields = new List<GeneField>();
-            var attributes = new List<object>();
-
-            foreach (var field in obj.GetMyFields())
+            lock(_changeDictLock)
             {
-                var attributeObjects = field.GetCustomAttributes(typeof(GeneOptionAttribute), false);
+                if (_dict.ContainsKey(type)) { return; }
+                var geneFields = new List<GeneField>();
+                var attributes = new List<object>();
 
-                if (attributeObjects.Length > 0)
+                foreach (var field in obj.GetMyFields())
                 {
-                    var geneAttributes = attributeObjects.Cast<GeneOptionAttribute>().ToArray();
-                    var attribute = geneAttributes[0];
+                    var attributeObjects = field.GetCustomAttributes(typeof(GeneOptionAttribute), false);
 
-                    var geneField = new GeneField();
-                    geneField.Attribute = attribute;
-                    geneField.Field = field;
-                    geneFields.Add(geneField);
+                    if (attributeObjects.Length > 0)
+                    {
+                        var geneAttributes = attributeObjects.Cast<GeneOptionAttribute>().ToArray();
+                        var attribute = geneAttributes[0];
+
+                        var geneField = new GeneField();
+                        geneField.Attribute = attribute;
+                        geneField.Field = field;
+                        geneFields.Add(geneField);
+                    }
                 }
-            }
 
-            _dict[type] = geneFields;
+                _dict[type] = geneFields;
+            }
         }
     }
 }
