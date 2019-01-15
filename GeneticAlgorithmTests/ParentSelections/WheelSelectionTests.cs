@@ -41,6 +41,18 @@ namespace Jarrus.GATests.ParentSelections
         }
 
         [TestMethod]
+        public void ItCanSelectAllValues()
+        {
+            _rankSelection.Setup(GetStepChromosomes(1), _config);
+            Assert.AreEqual(100, _rankSelection.Rankings.Count);
+
+            for(var i = 0.00; i <= 1.00; i += 0.001)
+            {
+                var parent = _rankSelection.GetParent(i);
+            }
+        }
+
+        [TestMethod]
         public void ItSetsUpTheRankingsInOrder_Step()
         {
             var rankings = GetRankingsForStep(1);

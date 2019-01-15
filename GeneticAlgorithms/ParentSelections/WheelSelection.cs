@@ -67,17 +67,27 @@ namespace Jarrus.GA.ParentSelections
 
         public Chromosome GetParent(double value)
         {
-            for (int i = 1; i < Population.Length; i++)
-            {
-                var rankingValue = Rankings[i];
+            int index = -1;
+            int middle;
+            int first = 0;
+            int last = Population.Length - 1;
+            middle = (last - first) / 2;
 
-                if (value <= rankingValue)
-                {
-                    return Population[i - 1];
-                }
+            while (index == -1 && first <= last)
+            {
+                if (value < Rankings[middle]) { last = middle; }
+                else if (value > Rankings[middle]) { first = middle; }
+                middle = (first + last) / 2;
+
+                if ((last - first) == 1) { index = last; }
             }
 
-            return Population.Last();
+            if (Rankings[index] >= value)
+            {
+                return Population[index - 1];
+            }
+
+            return Population[index];
         }
     }
 }
